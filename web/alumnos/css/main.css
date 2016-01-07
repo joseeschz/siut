@@ -1,0 +1,314 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+html {
+    background-color: #FFFDD0;
+    height: 100%;
+    -moz-user-select:none;
+}
+body {
+    color: #606060;
+    font-size: 14px;
+    height: 100%;
+}
+input[type="submit"] {
+    color: #0095dd;
+    cursor: pointer;
+}
+input[type="submit"]:active a:active{
+    outline: medium none;
+}
+input[type="submit"]:visited a:visited{
+    outline: medium none;
+}
+input[type="submit"]:focus a:focus{
+    outline: 1px dotted #0095dd;
+}
+a.no-underline{
+    text-decoration: none;
+    color: #53a753;
+}
+#stage {
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    padding: 40px 10px 10px;
+    position: relative;
+    text-align: center;
+    top: 60px;
+    width: 335px;
+    border: 1px solid #606060;
+}
+header h1 {
+    font-size: 24px;
+    font-weight: 200;
+    line-height: 1em;
+    margin: 0 0 20px;
+    text-align: left;
+}
+.description {
+    font-size: 18px;
+}
+.button-row {
+    margin-bottom: 20px;
+    margin-top: 45px;
+}
+.button-row button, .button-row input.button{
+    background: #606060 none repeat scroll 0px 0px;
+    border: medium none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 15px 0;
+    transition-duration: 150ms;
+    transition-property: background-color;
+    width: 100%;
+}
+.button-row input.button{
+    display: inline-block;
+    text-decoration: none;
+}
+.button-row input.button:active, .button-row input.button:hover, .button-row input.button:focus, .button-row button:active, .button-row button:hover, .button-row button:focus {
+    background: #222 none repeat scroll 0px 0px;
+}
+.button-row input.button:active, .button-row button:active{
+    top: 2px;
+    position:relative;
+}
+.graphic-sync-intro {
+   // background-image: url("images/graphic_sync_intro.png");
+    background-repeat: no-repeat;
+    background-size: 150px 195px;
+    height: 195px;
+    margin: 0 auto;
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    width: 150px;
+}
+.description, .button-row {
+    margin-top: 20px;
+}
+.links {
+    margin: 20px 0;
+}
+@media only screen and (max-width: 500px) {
+html {
+    background: none repeat scroll 0 0 gray;
+}
+#stage {
+    width: 100%;
+    background: none repeat scroll 0 0 #fff;
+    border-radius: 0px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    padding: 40px 10px 10px;
+    position: static;
+    text-align: center;
+    top: 60px;
+    width: 100%;
+    border: none;
+    height: 100%;
+}
+.button-row {
+    margin-top: 20px;
+}
+.button-row button, .button-row input[type="submit"].button {
+    padding: 10px 0;
+}
+}
+@media not all, only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+.graphic-sync-intro {
+    //background-image: url("images/graphic_sync_intro@2x.png");
+}
+}
+#content-logo{
+    height: auto;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    top: 70px;
+    width: 420px;
+}
+#boxIDE-logo {
+    background: url(../pictures-system/lock-Box.IDE.png) repeat scroll 0 0 / 80px 80px rgba(0, 0, 0, 0);
+    height: 80px;
+    margin: 0 auto;
+    opacity: 0;
+    position: absolute;
+    left: 47.5%;
+    top: 2%;
+    width: 80px;
+    z-index: 999;
+}
+.input-row input[type="email"], .input-row input[type="password"], .input-row input[type="text"], .input-row select {
+    border-radius: 2px;
+    font-size: 16px;
+    height: 40px;
+}
+.input-row input[type="email"], .input-row input[type="password"], .input-row input[type="text"] {
+    padding: 0 10px;
+}
+strong.email {
+    display: block;
+}
+.input-row input[type="email"], .input-row input[type="password"], .input-row input[type="text"], .input-row select {
+    background-color: #fff;
+    border: 1px solid #8a9ba8;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px #f2f2f2 inset;
+    color: #424f59;
+    font-size: 18px;
+    height: 45px;
+    outline: 0 none;
+    padding: 0 25px;
+    padding-left: 5px;
+    position: relative;
+    transition-duration: 150ms;
+    transition-property: border-color;
+    width: 100%;
+    z-index: 2;
+}
+.input-row input.invalid[type="email"], .input-row input.invalid[type="password"], .input-row input.invalid[type="password"] ~ .show-password-label, .input-row input.invalid[type="text"], .input-row input.invalid[type="text"] ~ .show-password-label, .input-row select.invalid {
+    border-color: #d63920;
+}
+.input-row select {
+    -moz-appearance: normal;
+    -moz-user-select: none;
+    color: #8a9ba8;
+    height: auto;
+    outline: 0 none;
+    padding: 10px 20px;
+    text-indent: 0.01px;
+    text-overflow: "";
+    width: 100%;
+}
+.input-row select:focus, .input-row select:hover, .input-row select:hover:active {
+    background-color: #f2f2f2;
+    transition-duration: 150ms;
+    transition-property: all;
+}
+.input-row select:-moz-focusring {
+    color: transparent !important;
+    text-shadow: 0 0 0 #424f59 !important;
+}
+.input-row input:focus, .input-row select:focus {
+    transition-duration: 150ms;
+    transition-property: border-color;
+}
+.input-row option {
+    background-color: #fff;
+}
+.input-row input:hover, .input-row select:hover, .input-row:hover input:hover, .input-row:hover select:hover {
+    border-color: #424f59;
+    outline: 0 none;
+}
+.input-row input:focus, .input-row select:focus, .input-row:focus input, .input-row:hover input:focus, .input-row:hover select:focus {
+    border-color: #606060;
+    color: #424f59;
+    outline: 0 none;
+}
+input:focus ~ .input-help-focused, label:active ~ .input-help-focused, label:focus ~ .input-help-focused {
+    opacity: 1;
+}
+.label-row label{
+    color:#606060;
+    float: left;
+    font-weight: bold;
+    line-height: 2;
+}
+#dataRemenber{
+    bottom: 5px;
+    float: right;
+    left: 100px;
+    position: absolute;
+    width: 250px;
+}
+.input-row input.user{
+    background-position: right center;
+    background-image: url(../pictures-system/userInactive-Box.IDE.png);
+    background-repeat: no-repeat;
+    background-size: 10%;
+}
+.input-row input.user:focus{
+    background-image: url(../pictures-system/user-Box.IDE.png);
+
+}
+.input-row input.password{
+    background-position: right center;
+    background-image: url(../pictures-system/passwordInactive-Box.IDE.png);
+    background-repeat: no-repeat;
+    background-size: 10%;
+}
+.input-row input.password:focus{
+    background-image: url(../pictures-system/password-Box.IDE.png);
+}
+#face-feling{
+    width: 25%;
+    height: 60%;
+    left: 36%;
+    background-image: url(../pictures-system/faceFeling-Box.IDE.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    position: relative;
+}
+.bar{
+    width: 100%;
+    height: 100px;
+    position: relative;
+    background-color: #0095dd;
+    background-image: url(../pictures-system/nameWhite-Box.IDE.png);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+center>span{
+    font-size: 90px;
+}
+#boxIDE-name{
+    width: 200px;
+    height: 90px;
+    position: absolute;
+    background-image: url(../pictures-system/name-Box.IDE.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+}
+.navbar-nav > li > a.perfil{
+    background-image: url(../pictures-system/user.jpg);
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 8% 100%;
+    padding-left: 40px;
+}
+#projects-BoxIDE{
+    background-image: url("../pictures-system/projects-Box.IDE.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    cursor: pointer;
+    height: 16px;
+    margin-left: 2px;
+    margin-top: 70px;
+    padding: 10px;
+    width: 16px;
+}
+#projects-BoxIDE:hover{
+    background-color: #E7E7E7;
+}
+#palete-BoxIDE{
+    background-image: url("../pictures-system/palete-Box.IDE.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    cursor: pointer;
+    height: 16px;
+    margin-left: 2px;
+    margin-top: 70px;
+    padding: 10px;
+    width: 16px;
+}
+#palete-BoxIDE:hover{
+    background-color: #E7E7E7;
+}
