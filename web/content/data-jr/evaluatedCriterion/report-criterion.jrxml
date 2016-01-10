@@ -1,101 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
-	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="40"/>
-	<property name="ireport.y" value="0"/>
-	<style name="Crosstab Data Text" hAlign="Center"/>
-	<style name="table">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_TH" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_CH" mode="Opaque" backcolor="#FFBFBF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
-			<style backcolor="#EFF7FF"/>
-		</conditionalStyle>
-	</style>
-	<style name="table 3">
-		<box>
-			<pen lineWidth="1.0" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
-		<box>
-			<pen lineWidth="0.5" lineColor="#000000"/>
-		</box>
-	</style>
-	<subDataset name="dataset1" uuid="c10f02f3-98a0-45a3-a4d2-043bf03dad6e">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" language="groovy" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="110"/>
+	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<parameter name="pt_career2" class="java.lang.Integer">
+		<parameter name="pt_career2" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
-		<parameter name="pt_matter2" class="java.lang.Integer">
+		<parameter name="pt_matter2" class="java.lang.String">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
@@ -111,17 +26,17 @@
 		<field name="FL_VALUE_ACTIVITY_KNOW" class="java.lang.String"/>
 		<field name="FL_VALUE_ACTIVITY_KNOW_PERCENT" class="java.lang.String"/>
 	</subDataset>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pt_matter" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
 	<parameter name="pt_study_level" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pt_career" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_matter" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Carlos Antonio\\Documents\\GitHub\\siut\\web\\content\\data-jr\\evaluatedCriterion\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter});]]>
@@ -133,6 +48,9 @@
 	<field name="FL_NAME_CAREER" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
 	</field>
+	<field name="PK_GROUP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FL_NAME_GROUP" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -142,35 +60,39 @@
 	<field name="FL_OBSERVATIONS" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<sortField name="PAGE_COUNT" type="Variable"/>
+	<field name="FK_TEACHER" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_PERIOD" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
 	<pageHeader>
-		<band height="76" splitType="Stretch">
+		<band height="77" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="1" width="100" height="76" uuid="859dec27-1e58-4c3b-89b2-66a4a85004d6"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="100" y="40" width="483" height="20" uuid="21e71b0d-2b81-4ff6-a712-2225ce12d330"/>
+				<reportElement x="101" y="41" width="483" height="20" uuid="d926e0d3-00a3-40fd-a220-d2d9256b95c0"/>
 				<box leftPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font fontName="Calibri" size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
 			</staticText>
-			<image>
-				<reportElement x="0" y="0" width="100" height="76" uuid="b7c70d16-f5a3-4807-a46a-18d8083ab31a"/>
-				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
-			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="121">
-			<staticText>
-				<reportElement x="-1" y="-231" width="584" height="14" uuid="0f2963f1-4136-4d7f-bd03-1aefff81b76a"/>
-				<text><![CDATA[]]></text>
-			</staticText>
+		<band height="120" splitType="Stretch">
 			<elementGroup>
 				<line>
-					<reportElement x="31" y="2" width="527" height="1" forecolor="#009900" uuid="0f7399f0-b77c-4d2b-a43d-94837294dc50"/>
+					<reportElement x="31" y="2" width="527" height="1" forecolor="#009900" uuid="e05d4dc6-5648-48df-943c-689f707b5176"/>
 				</line>
 				<staticText>
-					<reportElement x="0" y="3" width="583" height="20" uuid="b5f46dd0-3bd2-4be6-9f33-e5ade3f079fc"/>
+					<reportElement x="0" y="3" width="583" height="20" uuid="a640561f-d9de-4e27-a600-467e051614c9"/>
 					<box leftPadding="5" rightPadding="5">
 						<topPen lineWidth="0.0"/>
 					</box>
@@ -180,7 +102,7 @@
 					<text><![CDATA[CRITERIOS DE EVALUACIÓN POR ASIGNATURA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="23" width="83" height="15" uuid="3f6ea170-331f-45c0-b36e-39b2ea109e98"/>
+					<reportElement x="0" y="23" width="83" height="15" uuid="4203b4ad-9f26-45c0-beeb-edde04e3889f"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -194,7 +116,7 @@
 					<text><![CDATA[NIVEL:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="83" y="23" width="69" height="15" uuid="b68482c6-4f91-492b-89ab-c7edb35d4604"/>
+					<reportElement x="83" y="23" width="69" height="15" uuid="93fa19ed-b1c4-4552-9513-1d0be0022127"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -208,7 +130,7 @@
 					<text><![CDATA[T.S.U:]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="152" y="23" width="40" height="15" uuid="41533fee-18f1-4665-9a79-882982e347a7"/>
+					<reportElement x="152" y="23" width="40" height="15" uuid="606344cb-f67d-4a42-97b8-3d6c2e6f5235"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -217,7 +139,7 @@
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textField>
-						<reportElement x="12" y="1" width="12" height="12" uuid="26423547-26da-4dd2-ade3-c5d9b46114c5"/>
+						<reportElement x="12" y="1" width="12" height="12" uuid="17edaa11-0fe0-4f5b-b1dd-7444807d5364"/>
 						<box topPadding="0">
 							<pen lineWidth="0.5"/>
 							<topPen lineWidth="0.5"/>
@@ -232,7 +154,7 @@
 					</textField>
 				</frame>
 				<staticText>
-					<reportElement x="192" y="23" width="72" height="15" uuid="e48c899c-f571-4178-917e-02b37198b9a4"/>
+					<reportElement x="192" y="23" width="72" height="15" uuid="d9abcb59-52f2-4425-935e-d8a90e0e7193"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -246,7 +168,7 @@
 					<text><![CDATA[INGENIERÍA:]]></text>
 				</staticText>
 				<frame>
-					<reportElement x="264" y="23" width="126" height="15" uuid="0eb516e5-c0ed-4b5d-a1e0-cae873e159f3"/>
+					<reportElement x="264" y="23" width="126" height="15" uuid="141ba2a7-d1c0-43d6-81d3-62fe731046a8"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -255,7 +177,7 @@
 						<rightPen lineWidth="0.5"/>
 					</box>
 					<textField>
-						<reportElement x="11" y="1" width="12" height="12" uuid="cdee8ecf-3ac8-4fe3-88fc-e80b2ef4ed6e"/>
+						<reportElement x="11" y="1" width="12" height="12" uuid="d5df9a17-c83f-456d-878a-52cbadbd708b"/>
 						<box topPadding="0">
 							<pen lineWidth="0.5"/>
 							<topPen lineWidth="0.5"/>
@@ -270,7 +192,7 @@
 					</textField>
 				</frame>
 				<staticText>
-					<reportElement x="390" y="23" width="71" height="15" uuid="89013455-92e7-4b6b-99c6-341721739fe3"/>
+					<reportElement x="390" y="23" width="71" height="15" uuid="58499475-8063-41fb-a526-e3f9657da657"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -284,7 +206,7 @@
 					<text><![CDATA[PERIODO:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="461" y="23" width="122" height="15" uuid="6d23c2fd-620c-46bd-9baa-a65322e62994"/>
+					<reportElement x="461" y="23" width="122" height="15" uuid="21be78a1-1083-44b4-9d57-4d007dacdbaf"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -298,7 +220,7 @@
 					<textFieldExpression><![CDATA[$F{FL_NAME_PERIDO}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="38" width="83" height="15" uuid="701c2026-2aa9-4c7d-b469-9e64f2e7dae4"/>
+					<reportElement x="0" y="38" width="83" height="15" uuid="6e670dbb-c117-46f1-94ec-88bd79b8127d"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -312,7 +234,7 @@
 					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="83" y="38" width="403" height="15" uuid="7120d955-3c78-4883-bd8b-03aab2d915a4"/>
+					<reportElement x="83" y="38" width="403" height="15" uuid="768c670a-2526-41b5-9bcb-2de005e85350"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -326,7 +248,7 @@
 					<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="486" y="38" width="56" height="15" uuid="3317bdf0-7ba5-42bf-ba0c-1f3b55898d34"/>
+					<reportElement x="486" y="38" width="56" height="15" uuid="b2dd30d8-db54-4f85-8cbf-e866adbd9a8c"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -340,7 +262,7 @@
 					<text><![CDATA[GRUPO:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="542" y="38" width="41" height="15" uuid="cbcb9b57-c14d-4d30-b669-4c8b8c503bc5"/>
+					<reportElement x="542" y="38" width="41" height="15" uuid="7b035aff-a9d5-4d14-b064-c752148d6306"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -354,7 +276,7 @@
 					<textFieldExpression><![CDATA[$F{FL_NAME_GROUP}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="53" width="83" height="15" uuid="593afec6-20ad-46fc-b525-bdb3433aea05"/>
+					<reportElement x="0" y="53" width="83" height="15" uuid="a3d55757-3003-43a9-91e4-9c0f2a9431d1"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.0"/>
@@ -367,7 +289,7 @@
 					<text><![CDATA[ASIGNATURA:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="83" y="53" width="500" height="15" uuid="2bcdddd2-fa8a-45fe-b32e-a78043b7e13d"/>
+					<reportElement x="83" y="53" width="500" height="15" uuid="05960948-86b1-4f5c-b5f2-6b6d522d601e"/>
 					<box leftPadding="5">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.0"/>
@@ -380,197 +302,198 @@
 					<textFieldExpression><![CDATA[$F{FL_NAME_SUBJECT_MATTER}]]></textFieldExpression>
 				</textField>
 			</elementGroup>
-			<elementGroup/>
-			<staticText>
-				<reportElement x="287" y="68" width="296" height="15" uuid="18350cef-9fa4-4bbb-bccf-a71054bc9b4c"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ING]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="68" width="287" height="15" uuid="a5222c7d-9f94-4540-bdc9-a1fe7ea7db20"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[TSU]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="287" y="83" width="79" height="10" uuid="3159a967-9907-4eed-81f1-b1220bf9c4fb"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="83" width="83" height="10" uuid="33a3a6d6-eddb-4de4-9410-c17f8c3cfbb9"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="366" y="83" width="96" height="10" uuid="b4be561b-eac4-43de-9154-734afb790781"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SABER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="83" y="83" width="93" height="10" uuid="3a10b814-6965-4384-83fd-20a81015ddb1"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SABER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="462" y="83" width="121" height="10" uuid="2983a1e9-8f19-418c-bab5-474063d03534"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SABER HACER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="176" y="83" width="111" height="10" uuid="eadf6a7a-c7db-45e8-8fbf-3b999434e424"/>
-				<box>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="true"/>
-				</textElement>
-				<text><![CDATA[SABER HACER]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="93" width="83" height="10" uuid="47ef4d7b-ece7-4460-8fdf-4c7092bcf034"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[1.0]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="83" y="93" width="93" height="10" uuid="801e0f90-3d2e-4fdb-bc74-f6f3e6c5b6d3"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[3.0]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="176" y="93" width="111" height="10" uuid="ca9c973d-fe04-493d-94fc-2af9819f19a1"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[6.0]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="287" y="93" width="79" height="10" uuid="8a3a215c-4a8a-4791-9e8d-185c56fe9e83"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[1.0]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="366" y="93" width="96" height="10" uuid="d5e6d09c-e84a-4e31-b127-c47eac4d0b57"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[4.0]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="462" y="93" width="121" height="10" uuid="4ae896f1-6262-414b-8277-af4c118d4afe"/>
-				<box>
-					<topPen lineWidth="0.0"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Calibri" size="8" isBold="false"/>
-				</textElement>
-				<text><![CDATA[5.0]]></text>
-			</staticText>
+			<elementGroup>
+				<staticText>
+					<reportElement x="0" y="68" width="287" height="15" uuid="2fcd543a-9043-4f0b-a019-306a72ff64ec"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TSU]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="287" y="68" width="296" height="15" uuid="58aa2e9a-e093-4cb9-bc38-a48a1ddf9a5b"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ING]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="287" y="83" width="79" height="10" uuid="0a265118-bc5a-457b-a261-ca56dc3fadb7"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="83" width="83" height="10" uuid="602f78fc-daed-4561-8005-f893f4dfc2f1"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="366" y="83" width="96" height="10" uuid="534ac65b-97ae-4f1a-b118-585b9f40849c"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SABER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="83" y="83" width="93" height="10" uuid="a0d6a9a3-4bc6-4d67-87d1-ccf21a1536be"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SABER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="462" y="83" width="121" height="10" uuid="7b07d265-3dd5-4cd2-a87d-b2496a376667"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SABER HACER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="176" y="83" width="111" height="10" uuid="14818e87-4899-42ff-8b50-46f4fe15670f"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[SABER HACER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="93" width="83" height="10" uuid="3e3fdd63-8b89-48b9-942b-4c6de7b30d6d"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[1.0]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="83" y="93" width="93" height="10" uuid="28ef1176-870e-461b-804f-b370f8a7b03c"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[3.0]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="176" y="93" width="111" height="10" uuid="93629ada-496d-4eea-9ea4-6fdb057d4410"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[6.0]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="287" y="93" width="79" height="10" uuid="b9a1e130-6b46-42f1-bf82-f3bc95bc258e"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[1.0]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="366" y="93" width="96" height="10" uuid="4f10962e-8388-46e8-8246-cc9319854510"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[4.0]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="462" y="93" width="121" height="10" uuid="97c3240f-4d1f-4708-b6e2-03ecddef3d14"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Calibri" size="8" isBold="false"/>
+					</textElement>
+					<text><![CDATA[5.0]]></text>
+				</staticText>
+			</elementGroup>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="277">
+		<band height="178" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table 3" mode="Transparent" x="0" y="0" width="583" height="273" uuid="1e8fffe5-65f3-45fe-90d9-f5bb5b7802ec"/>
+				<reportElement key="table 3" mode="Transparent" x="1" y="0" width="583" height="178" uuid="1453f24d-9ea5-4fa2-b2f9-1509954eb500"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="dataset1" uuid="bae6c4aa-5bd6-4b30-87b1-ea9931250515">
+					<datasetRun subDataset="dataset1" uuid="c4f03638-babb-4476-b233-8d019939f32c">
 						<datasetParameter name="pt_study_level2">
 							<datasetParameterExpression><![CDATA[$P{pt_study_level}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -582,7 +505,7 @@
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="158" uuid="b3287adc-1e2a-4493-923d-d78f90bbdcd2">
+					<jr:columnGroup width="158" uuid="7b6725e3-4e89-4a43-8b00-ff89eb61b712">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -591,21 +514,21 @@
 								<rightPen lineWidth="0.0"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="158" height="19" uuid="c379189d-215d-4545-a16a-a4f24c665d45"/>
+								<reportElement x="0" y="0" width="158" height="19" uuid="9aa2d512-a802-4157-8ed4-1a94b2e87e75"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Ser]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="116" uuid="201c60d3-8e2e-4257-bced-29c52a4baede">
+						<jr:column width="116" uuid="dcbdee19-eb98-45fb-8cfc-70c5e077d189">
 							<jr:columnHeader height="27" rowSpan="2">
 								<box>
 									<leftPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="116" height="27" uuid="0f8f6270-3126-422e-adde-f7013b121ec4"/>
+									<reportElement x="0" y="0" width="116" height="27" uuid="2155a1c5-5ac3-4e59-837a-878519755b9f"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Arial" size="12" isBold="true"/>
 									</textElement>
@@ -620,7 +543,7 @@
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="116" height="15" uuid="03887424-7c27-4192-8993-6c77b32b45cb"/>
+									<reportElement x="0" y="0" width="116" height="15" uuid="f8c4f3c1-2994-4f71-8709-4cefc64009fd"/>
 									<box topPadding="2" leftPadding="2" rightPadding="2"/>
 									<textElement>
 										<font fontName="Arial" size="8"/>
@@ -629,10 +552,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="14cc70db-adaf-4901-9cb3-3004c15f3436">
+						<jr:columnGroup width="42" uuid="8c34a484-2d3f-4026-99c4-bc68b5d439e8">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="526814d0-3112-45fe-9884-0f53ba84a3e9"/>
+									<reportElement x="0" y="0" width="42" height="15" uuid="e18ad8e5-a50e-4abf-8322-d2fb5cf7ab8f"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 									</box>
@@ -642,10 +565,10 @@
 									<text><![CDATA[Valor]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:column width="17" uuid="58fe7fb7-7c96-4816-a026-d63e305e0030">
+							<jr:column width="17" uuid="d7a0ef96-cfee-4e6c-be40-64e7b0e62fe4">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="17" height="12" uuid="3c008717-70b6-4d3a-a9c8-b95337b9d3d4"/>
+										<reportElement x="0" y="0" width="17" height="12" uuid="0e69df90-15c0-4565-ab04-4a281b06830d"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -658,7 +581,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="17" height="15" uuid="9a67154e-243d-477d-9fbe-31face3ffcd9"/>
+										<reportElement x="0" y="0" width="17" height="15" uuid="780710f8-2e9a-47a6-9141-be0f8689f1f9"/>
 										<box topPadding="0" leftPadding="2" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -670,10 +593,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="25" uuid="d03f384b-d2af-4872-896c-70f51e457c18">
+							<jr:column width="25" uuid="bbc6575b-2f6c-4a66-966c-79259ad70d03">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="25" height="12" uuid="f9843cad-6d9c-4c4a-8ffe-d66ddabae5dd"/>
+										<reportElement x="0" y="0" width="25" height="12" uuid="f90825a5-bec0-4106-acaa-73f85c6d08a3"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 										</box>
@@ -685,7 +608,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="25" height="15" uuid="bb65f5f1-77fa-48fc-a16e-226640097635"/>
+										<reportElement x="0" y="0" width="25" height="15" uuid="f934e257-266f-4222-afc3-12ea2e107b5b"/>
 										<box topPadding="0" leftPadding="1" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -699,7 +622,7 @@
 							</jr:column>
 						</jr:columnGroup>
 					</jr:columnGroup>
-					<jr:columnGroup width="187" uuid="f695d818-00ce-4e9a-8d9c-c61d624304cf">
+					<jr:columnGroup width="187" uuid="f26e6c12-2ed0-4aa8-8749-3d7ffdd9bf19">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -708,14 +631,14 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="187" height="19" uuid="a959fb21-af60-4c39-b0f1-8ba186112c24"/>
+								<reportElement x="0" y="0" width="187" height="19" uuid="4230e0f3-d23a-4bce-889e-7a92ca723426"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Saber]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="145" uuid="3c45a626-5a88-4115-bce4-c072d23949f4">
+						<jr:column width="145" uuid="ac714599-a0e2-4a64-bd88-8b5f9d08d103">
 							<jr:columnHeader height="27" rowSpan="2">
 								<box>
 									<topPen lineWidth="0.0"/>
@@ -724,7 +647,7 @@
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="145" height="27" uuid="d1e18f88-3af4-4640-9b3b-be5a333c8f01"/>
+									<reportElement x="0" y="0" width="145" height="27" uuid="be25b989-56bc-4a14-8967-0c3387aedd51"/>
 									<box>
 										<rightPen lineWidth="0.5"/>
 									</box>
@@ -742,7 +665,7 @@
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="145" height="15" uuid="5943f271-64d0-4f8e-aaf9-1ba11275760b"/>
+									<reportElement x="0" y="0" width="145" height="15" uuid="79544a91-6d75-4842-b7af-dab421a2e3e6"/>
 									<box topPadding="2" leftPadding="2" rightPadding="2"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Arial" size="8"/>
@@ -751,10 +674,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="8734edc9-225a-43ff-9a52-ce8b3e60ff0d">
+						<jr:columnGroup width="42" uuid="35d5fe4a-d8ba-4eca-a044-2cfa75a086bf">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="f6c3bca0-d308-4c6b-a8bb-f37378942ac1"/>
+									<reportElement x="0" y="0" width="42" height="15" uuid="08f653f4-d05f-457d-be54-39e1adc0bf57"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 										<rightPen lineWidth="0.5"/>
@@ -765,10 +688,10 @@
 									<text><![CDATA[Valor]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:column width="17" uuid="c046e032-2ad0-4072-ada8-6afd95395e57">
+							<jr:column width="17" uuid="aa7bc0e1-5ceb-4635-910f-0d262b977294">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="17" height="12" uuid="3d036c1d-1ab8-4f45-9131-6ff63a6105d3"/>
+										<reportElement x="0" y="0" width="17" height="12" uuid="02fc3581-4eff-47d7-8c39-26565dd1c46a"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -781,7 +704,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="17" height="15" uuid="b036a1d6-c4c4-46d8-83d0-6b96614e19b2"/>
+										<reportElement x="0" y="0" width="17" height="15" uuid="77ca7307-063a-4cef-a339-53a59b459c75"/>
 										<box topPadding="0" leftPadding="2" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -793,10 +716,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="25" uuid="fc10ff0b-7f50-487f-8141-71c354f85806">
+							<jr:column width="25" uuid="5933f7bd-02b2-4f2e-a6f1-39626213c816">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="25" height="12" uuid="6c4b562c-012f-4a8f-bb80-488601928009"/>
+										<reportElement x="0" y="0" width="25" height="12" uuid="2be5eff3-b3c1-4758-8b9f-b201c9f1451f"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -809,7 +732,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="25" height="15" uuid="fc902e9b-d4be-4683-9792-ceb2eeef8106"/>
+										<reportElement x="0" y="0" width="25" height="15" uuid="5036c42b-47c7-46c4-bbac-0414f46b9714"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -823,7 +746,7 @@
 							</jr:column>
 						</jr:columnGroup>
 					</jr:columnGroup>
-					<jr:columnGroup width="237" uuid="c00392eb-f1d1-4f49-a692-844a1e625aaa">
+					<jr:columnGroup width="237" uuid="9c251983-d961-41f4-a15e-d369a7624e89">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -832,14 +755,14 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="237" height="19" uuid="f235c0ba-5953-4819-ad95-9b1a7255bcd5"/>
+								<reportElement x="0" y="0" width="237" height="19" uuid="c6f00477-fa3a-48b8-83cc-6253644f6f6f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Saber Hacer]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="195" uuid="6bd1207a-bcdf-425f-b7b1-c7a402e8938f">
+						<jr:column width="195" uuid="a3819f1e-f5da-481e-8827-fcfd6395ad58">
 							<jr:columnHeader height="27" rowSpan="2">
 								<box>
 									<topPen lineWidth="0.0"/>
@@ -848,7 +771,7 @@
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="195" height="27" uuid="63a26ded-0d58-4ec8-867f-5419b7a85082"/>
+									<reportElement x="0" y="0" width="195" height="27" uuid="efa998d8-a515-47af-b3aa-93ba2c97cd20"/>
 									<box>
 										<rightPen lineWidth="0.5"/>
 									</box>
@@ -866,7 +789,7 @@
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="195" height="15" uuid="d9b830a1-6cbd-43e9-a0d3-7cee7a96e8c7"/>
+									<reportElement x="0" y="0" width="195" height="15" uuid="84dc0973-0ab4-42fe-bc76-2681468c6f8f"/>
 									<box topPadding="2" leftPadding="2" rightPadding="2"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Arial" size="8"/>
@@ -875,10 +798,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="7b45b0fc-8b38-47db-993b-6c4cad824ed8">
+						<jr:columnGroup width="42" uuid="d1cbd825-e7d4-4a87-a47b-ac4e82acd6e8">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="48ed3446-8401-449f-8b9a-beaaf533df1f"/>
+									<reportElement x="0" y="0" width="42" height="15" uuid="de9a92a4-98ae-4e1f-9b8b-6ab03f41e8c1"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 										<rightPen lineWidth="0.5"/>
@@ -889,10 +812,10 @@
 									<text><![CDATA[Valor]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:column width="20" uuid="48ba7c00-1eb1-49f7-9904-490df4b5cd47">
+							<jr:column width="20" uuid="3755e547-dcf8-4cde-9b03-2c527f110b8a">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="20" height="12" uuid="1370a699-f0c5-43d2-b846-b32a4ef3ff0f"/>
+										<reportElement x="0" y="0" width="20" height="12" uuid="1606067a-dc9e-43ae-aabc-8a1fe6e7e1f7"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -905,7 +828,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="20" height="15" uuid="6592b573-a831-4bac-9d00-fec208896889"/>
+										<reportElement x="0" y="0" width="20" height="15" uuid="d5e35fd6-7d7b-4800-a442-c7e7c0766ec3"/>
 										<box topPadding="0" leftPadding="2" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -917,10 +840,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="22" uuid="fc6d24fa-4006-44fb-9ddd-f445080f5543">
+							<jr:column width="22" uuid="15526ba0-a7db-4f0d-8589-57bc86fbafbb">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="22" height="12" uuid="d2be8466-53dc-4911-83b9-069565098757"/>
+										<reportElement x="0" y="0" width="22" height="12" uuid="cbcf7ae4-2d5b-4622-9795-697d29cbaf3e"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -933,7 +856,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="22" height="15" uuid="a76c3e82-1c05-42d0-9a39-9d08603dadf9"/>
+										<reportElement x="0" y="0" width="22" height="15" uuid="455b89ab-7f3e-4b6c-adc2-c0e16f385c6e"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -952,9 +875,17 @@
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="290">
+		<band height="323" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="2" width="478" height="59" uuid="39ddfb27-b242-4789-9a4e-c52f5cb6e2b8"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Nota: Firman de enterado los integrantes del grupo.]]></text>
+			</staticText>
 			<frame>
-				<reportElement x="0" y="77" width="584" height="78" uuid="fc8c00de-6cf1-46b5-a80b-f0e8bd3444f5"/>
+				<reportElement x="1" y="78" width="584" height="78" uuid="aad9bcb2-1b29-406b-8de1-df150576594d"/>
 				<box>
 					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
@@ -962,7 +893,7 @@
 					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField>
-					<reportElement x="100" y="0" width="484" height="78" uuid="e416d435-a74a-4c35-a968-ee3846a67d64"/>
+					<reportElement x="100" y="0" width="484" height="78" uuid="89a6961a-e276-41f5-b593-22a147db7fe9"/>
 					<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
 					<textElement>
 						<font fontName="Calibri" size="8"/>
@@ -970,7 +901,7 @@
 					<textFieldExpression><![CDATA[$F{FL_OBSERVATIONS}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="100" height="78" uuid="e0a35bfc-9678-4d09-a6c2-3ca90e52462a"/>
+					<reportElement x="0" y="0" width="100" height="78" uuid="35bcb53d-3eaf-40c5-a181-776af24734fd"/>
 					<box leftPadding="5">
 						<rightPen lineWidth="0.5"/>
 					</box>
@@ -982,37 +913,7 @@
 			</frame>
 			<elementGroup>
 				<staticText>
-					<reportElement x="2" y="267" width="163" height="20" uuid="9eaca477-d8ff-430b-adb9-44f135e381f7"/>
-					<box leftPadding="5" rightPadding="5"/>
-					<textElement>
-						<font fontName="Calibri" size="12" isBold="true"/>
-					</textElement>
-					<text><![CDATA[F.E 15-03-2013]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="418" y="267" width="165" height="20" uuid="7fb5c787-4dca-48ad-baed-d36e12f37d1f"/>
-					<box leftPadding="5" rightPadding="5"/>
-					<textElement textAlignment="Right">
-						<font fontName="Calibri" size="12" isBold="true"/>
-					</textElement>
-					<text><![CDATA[FO-DIC-32/06]]></text>
-				</staticText>
-			</elementGroup>
-			<staticText>
-				<reportElement x="0" y="248" width="584" height="20" uuid="bdde5a43-b391-466f-a1d6-f816d691385a"/>
-				<text><![CDATA[]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="2" width="584" height="59" uuid="849bade6-c80f-49ff-9c47-fe0958c5a8d3"/>
-				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5"/>
-				<textElement verticalAlignment="Middle">
-					<font fontName="Calibri" size="12"/>
-				</textElement>
-				<text><![CDATA[Nota: Firman de enterado los integrantes del grupo.]]></text>
-			</staticText>
-			<elementGroup>
-				<staticText>
-					<reportElement x="0" y="180" width="238" height="32" uuid="be556ad1-82db-4be6-8bb6-d6185b85bfa0"/>
+					<reportElement x="0" y="180" width="238" height="32" uuid="c7bb8877-49a5-49ac-a29a-06feb6bb1de8"/>
 					<box leftPadding="5" rightPadding="5">
 						<topPen lineWidth="0.5"/>
 					</box>
@@ -1022,7 +923,7 @@
 					<text><![CDATA[NOMBRE Y FIRMA DEL PROFESOR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="321" y="180" width="262" height="32" uuid="bd98daf8-5602-4063-992b-a1ee695cdddb"/>
+					<reportElement x="321" y="180" width="262" height="32" uuid="6669cf56-53a4-4a9d-be6a-572c6457e7d7"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -1036,7 +937,7 @@
 					<text><![CDATA[NOMBRE Y FIRMA DEL DIRECTOR DE CARRERA]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="227" width="164" height="20" uuid="687ad8ce-09b7-477a-a42e-8b262b25de9f"/>
+					<reportElement x="0" y="227" width="164" height="20" uuid="fde8f8fb-3d0d-4840-a62b-c9b1f4d96a1a"/>
 					<box leftPadding="5"/>
 					<textElement>
 						<font fontName="Calibri" size="12" isBold="true"/>
@@ -1044,27 +945,70 @@
 					<text><![CDATA[FECHA DE ELABORACIÓN:]]></text>
 				</staticText>
 				<textField pattern="dd/MM/yyyy">
-					<reportElement x="164" y="227" width="126" height="20" uuid="b05f7796-1670-4d9e-a9d8-6e3e204061ab"/>
+					<reportElement x="164" y="227" width="126" height="20" uuid="6ee3c127-8588-43a0-b7b6-15934af4e2f3"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="Calibri" size="12" isUnderline="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 			</elementGroup>
+			<staticText>
+				<reportElement x="1" y="248" width="584" height="20" uuid="9a892821-6d2b-4b53-a303-68f1972c7194"/>
+				<text><![CDATA[]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="478" y="247" width="76" height="20" uuid="8587a685-71e7-49cc-b5c5-842cfee8a9d9"/>
+				<reportElement x="479" y="247" width="76" height="20" uuid="7e0576de-b8fc-47f5-aa63-0ee10e94f32f"/>
 				<textElement textAlignment="Right">
 					<font fontName="Calibri"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Hoja "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="558" y="247" width="26" height="20" uuid="5d08cbd1-2565-4b16-bf38-04aa032d24ad"/>
+				<reportElement x="559" y="247" width="26" height="20" uuid="e1b2453e-f895-42eb-901c-3de1c5bb87a9"/>
 				<textElement>
 					<font fontName="Calibri"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
+			<elementGroup>
+				<staticText>
+					<reportElement x="2" y="267" width="163" height="20" uuid="c46fa7e8-5d24-4e92-8db7-e98fa18aaaa2"/>
+					<box leftPadding="5" rightPadding="5"/>
+					<textElement>
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[F.E 15-03-2013]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="418" y="267" width="165" height="20" uuid="33720482-185d-4012-b7f4-5bdb164af137"/>
+					<box leftPadding="5" rightPadding="5"/>
+					<textElement textAlignment="Right">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FO-DIC-32/06]]></text>
+				</staticText>
+			</elementGroup>
 		</band>
 	</pageFooter>
+	<summary>
+		<band height="119">
+			<subreport>
+				<reportElement x="-12" y="0" width="609" height="100" uuid="24fd697b-6578-4100-8158-45b03fca4574"/>
+				<subreportParameter name="pt_study_level">
+					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_career">
+					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_matter">
+					<subreportParameterExpression><![CDATA[$P{pt_matter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion_subreport-content.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</summary>
 </jasperReport>

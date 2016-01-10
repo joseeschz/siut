@@ -105,22 +105,4 @@
 			</textField>
 		</band>
 	</detail>
-	<pageFooter>
-		<band height="50">
-			<textField>
-				<reportElement x="421" y="14" width="80" height="20" uuid="b1bc588f-e26c-45df-a4a2-67765afaf580"/>
-				<textElement textAlignment="Right">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="501" y="14" width="40" height="20" uuid="c7b0912a-7f39-4bbf-bc0f-302351c8bac2"/>
-				<textElement>
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
-	</pageFooter>
 </jasperReport>
