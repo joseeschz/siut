@@ -19,7 +19,7 @@ public class conectionControl {
     public Connection getConexion(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            return java.sql.DriverManager.getConnection("jdbc:mysql://10.10.40.5:3306/db_siut_dev", "root", "utsem_systems");
+            return java.sql.DriverManager.getConnection("jdbc:mysql://10.10.40.5:3306/db_siut_dev", "siut_dev", "utsem_systems");
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(conectionControl.class.getName()).log(Level.SEVERE, null, ex);
         }
