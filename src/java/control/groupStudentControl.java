@@ -38,7 +38,8 @@ public class groupStudentControl {
     public ArrayList<groupStudentModel> SelectGroupStudent(int pt_fk_career, int pt_fk_semester, int pt_fk_group, int pt_fk_period){
         ArrayList<groupStudentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_BY_STUDENTS`('filterable', '"+pt_fk_career+"', '"+pt_fk_semester+"', '"+pt_fk_group+"', '"+pt_fk_period+"')"); ResultSet res = ps.executeQuery()) {
+            //Was removed the parameter pt_fk_semester because is not necesary...
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_BY_STUDENTS`('filterable', '"+pt_fk_career+"', '"+pt_fk_semester+"' ,'"+pt_fk_group+"', '"+pt_fk_period+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupStudentModel allGroupStudent=new groupStudentModel();
                     allGroupStudent.setPK_GRUPOS_BY_STUDENT(res.getInt("PK_GRUPOS_BY_STUDENT"));
