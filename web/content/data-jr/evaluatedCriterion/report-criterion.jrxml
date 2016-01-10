@@ -41,15 +41,18 @@
 	<queryString>
 		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter});]]>
 	</queryString>
+	<field name="PK_GROUP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_PERIOD" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FK_LEVEL" class="java.lang.Long">
 		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
 		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
-	</field>
-	<field name="PK_GROUP" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_GROUP" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -61,9 +64,6 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FK_TEACHER" class="java.lang.Long">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="FK_PERIOD" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<background>
