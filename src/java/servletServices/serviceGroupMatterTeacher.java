@@ -40,10 +40,11 @@ public class serviceGroupMatterTeacher extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if(request.getParameter("view")!=null){
                 int pk_career = Integer.parseInt(request.getParameter("pk_career"));
+                int pk_study_plan = Integer.parseInt(request.getParameter("pk_study_plan"));
                 int pk_period = Integer.parseInt(request.getParameter("pk_period"));
                 int pk_semester = Integer.parseInt(request.getParameter("pk_semester"));
                 int pk_group = Integer.parseInt(request.getParameter("pk_group"));
-                ArrayList<groupMatterTeacherModel> listGroupMatterTeacher=new groupMatterTeacherControl().SelectGroupMatterTecher("filterable",pk_career, pk_semester, pk_group, pk_period);
+                ArrayList<groupMatterTeacherModel> listGroupMatterTeacher=new groupMatterTeacherControl().SelectGroupMatterTecher("filterable",pk_career,pk_study_plan, pk_semester, pk_group, pk_period);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();

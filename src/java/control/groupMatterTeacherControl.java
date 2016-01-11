@@ -21,15 +21,15 @@ import model.groupMatterTeacherModel;
  */
 public class groupMatterTeacherControl {
     public static void main(String[] args) {
-        ArrayList<groupMatterTeacherModel> list=new groupMatterTeacherControl().SelectGroupMatterTecher("filterable", 11, 8,72,2);
+        ArrayList<groupMatterTeacherModel> list=new groupMatterTeacherControl().SelectGroupMatterTecher("filterable", 11, 1, 8,72,2);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_GROUP());
         }
     }
-    public ArrayList<groupMatterTeacherModel> SelectGroupMatterTecher(String command, int pk_career, int pk_semester, int pk_group, int pk_period){
+    public ArrayList<groupMatterTeacherModel> SelectGroupMatterTecher(String command, int pk_career, int pk_study_plan, int pk_semester, int pk_group, int pk_period){
         ArrayList<groupMatterTeacherModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('"+command+"','"+pk_career+"', '"+pk_semester+"', '"+pk_group+"', '"+pk_period+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('"+command+"','"+pk_career+"','"+pk_study_plan+"','"+pk_semester+"', '"+pk_group+"', '"+pk_period+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupMatterTeacherModel allGroupMatterTecher=new groupMatterTeacherModel();
                     allGroupMatterTecher.setPK_GROUP_MATTER_TECHER(res.getInt("PK_GROUP_MATTER_TECHER"));

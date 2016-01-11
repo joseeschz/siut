@@ -38,11 +38,12 @@
         function filterableTable(change){
             if(change){
                 var pk_career = itemCareer.value;
+                var pk_study_plan = itemStudyPlan.value;
                 var pk_period = itemPeriod.value;
                 var pk_semester = itemSemester.value;
                 var pk_group = itemGroup.value;
                 $("#tableGroupMatterTeacher").unbind("bindingComplete");
-                dataAdapter = new $.jqx.dataAdapter(loadSource(pk_career, pk_period, pk_semester, pk_group));
+                dataAdapter = new $.jqx.dataAdapter(loadSource(pk_career, pk_study_plan, pk_period, pk_semester, pk_group));
                 $("#tableGroupMatterTeacher").jqxDataTable({source: dataAdapter});  
             }
         }
@@ -208,7 +209,7 @@
                 evenStudyPlan=false;
             }
         });
-        function loadSource(pk_career, pk_period, pk_semester, pk_group){
+        function loadSource(pk_career, pk_study_plan, pk_period, pk_semester, pk_group){
             var ordersSource ={
                 dataFields: [
                     { name: 'id', type:'int'},
@@ -222,7 +223,7 @@
                 dataType: "json",
                 id: 'id',
                 async: false,
-                url: '../serviceGroupMatterTeacher?view&pk_career='+pk_career+'&pk_period='+pk_period+'&pk_semester='+pk_semester+'&pk_group='+pk_group+'',
+                url: '../serviceGroupMatterTeacher?view&pk_career='+pk_career+'&pk_study_plan='+pk_study_plan+'&pk_period='+pk_period+'&pk_semester='+pk_semester+'&pk_group='+pk_group+'',
                 addRow: function (rowID, rowData, position, commit) {
                     // synchronize with the server - send insert command
                     // call commit with parameter true if the synchronization with the server is successful 
