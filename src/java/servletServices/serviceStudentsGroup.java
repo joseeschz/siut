@@ -39,7 +39,6 @@ public class serviceStudentsGroup extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if(request.getParameter("view")!=null){
-                
                 ArrayList<groupStudentModel> listGroupStudent;
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
