@@ -86,61 +86,35 @@
                 id: 'id',
                 url: '../serviceStudentsGroup?view=insert',
                 addRow: function (rowID, rowData, position, commit) {
-                    // synchronize with the server - send insert command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    
                 },
                 updateRow: function (rowID, rowData, commit) {
-                    // synchronize with the server - send update command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    /*commit(true);
-                    var nameEntity = rowData.dataNameEntity;
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        url: "../serviceGroupMatterTeacher?update",
-                        data:{'pkEntity':rowID,'nameEntity':nameEntity},
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) { 
-                            //If is updated rechange the drowdown in the other flange...
-                            createDropDownEntity('#entityFilterMunicipality', true);
-                            createDropDownEntity('#entityFilterLocality', true);
-                            createDropDownEntity('#entityFilterPreparatory', true);
-                        }
-                    });*/
                 },
                 deleteRow: function (rowID, commit) {
-                    // synchronize with the server - send delete command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    /*commit(true);
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        url: "../serviceGroupMatterTeacher?delete",
-                        data:{'pkEntity':rowID},
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            $("#tableStudentGroup").jqxDataTable('updateBoundData');
-                        }
-                    });*/
                 }
             };
             return ordersSource;
         }
+        $("#jqxWindowAlert").jqxWindow({
+            height: 100,
+            width: 300,
+            theme: theme,
+            autoOpen: false,
+            resizable: false,
+            isModal: true,
+            okButton: $('#ok'),
+            cancelButton: $('#cancel'),
+            initContent: function () {
+                $('#ok').jqxButton({
+                    width: '65px',
+                    theme: theme
+                });
+                $('#cancel').jqxButton({
+                    width: '65px',
+                    theme: theme
+                });
+                $('#ok').focus();
+            }
+        });
         var dataAdapter = new $.jqx.dataAdapter(loadSource());
         $("#tableStudentGroup").jqxGrid({
             width: 500,
@@ -205,6 +179,9 @@
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
                             }else if(data==="Registro Actualizado"){
                                 alert(data);
+                            }else{
+                                $("#data").text(data);
+                                $("#jqxWindowAlert").jqxWindow('open');
                             }
                         }
                     });
@@ -213,6 +190,16 @@
         });
     });
 </script>
+<div id='jqxWindowAlert'>
+    <div>Alerta</div>
+    <div>
+        <div id="data"></div><br>
+        <div>
+            <input type="button" id="ok" value="Si" style="margin-right: 10px" />
+            <input type="button" id="cancel" value="No" />
+        </div>
+    </div>
+</div>
 <div style="float: left; margin-right: 5px;">
     Nivel de estudio<br>
     <div id='studentToGroupFlangeLevelFilter'></div>
