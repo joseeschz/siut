@@ -78,7 +78,9 @@
                     { name: 'id', type:'int'},
                     { name: 'dataProgresivNumber', type:'int'},
                     { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataStudentName', type: 'string' }
+                    { name: 'dataStudentName', type: 'string' },
+                    { name: 'dataStatusRow', type: 'int' },
+                    { name: 'dataStatusRowQuestion', type: 'string' }
                 ],
                 root: "__ENTITIES",
                 dataType: "json",
@@ -95,50 +97,96 @@
             return ordersSource;
         }
         $("#jqxWindowAlert").jqxWindow({
-            height: 100,
-            width: 300,
             theme: theme,
-            autoOpen: false,
+            height: 150,
+            width: 400,
             resizable: false,
+            draggable: true,
+            okButton: $('#okWarning'),
+            autoOpen: false,
             isModal: true,
-            okButton: $('#ok'),
-            cancelButton: $('#cancel'),
+            cancelButton: $('#cancelWarning'),
             initContent: function () {
-                $('#ok').jqxButton({
-                    width: '65px',
+                $('#okWarning').jqxButton({
+                    width: '80px',
                     theme: theme
                 });
-                $('#cancel').jqxButton({
-                    width: '65px',
+                $('#cancelWarning').jqxButton({
+                    width: '80px',
                     theme: theme
                 });
-                $('#ok').focus();
+                $('#okWarning').focus();
             }
         });
-        var dataAdapter = new $.jqx.dataAdapter(loadSource());
-        $("#tableStudentGroup").jqxGrid({
-            width: 500,
-            height:300,
-            selectionMode: "multiplecellsadvanced",
-            localization: getLocalization("es"),
-            pagesizeoptions:['25', '30', '50'],
-            pagesize: 25,
-            editmode: 'dblclick',
-            source: dataAdapter,
-            pageable: false,
-            editable: true,
-            filterable: true,
-            altRows: true,
-            pagerButtonsCount: 10,
-            ready: function(){
-            },
-            columns: [
-                { text: 'NP', selectionmode:'none', disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                { text: 'Matrícula', dataField: 'dataEnrollment', width: 130 },
-                { text: 'Alumno', dataField: 'dataStudentName' }
-            ]
-        });
+        function loadGridStudentGroup(){
+            var dataAdapter = new $.jqx.dataAdapter(loadSource());
+            
+            var cellclass = function (row, columnfield, value) {
+                var classTheme="";
+                var data = $('#tableStudentGroup').jqxGrid('getrowdata', row);
+                if(data.dataStatusRow===0){
+                    classTheme="not-exists";
+                }else if(data.dataStatusRow===2){
+                    classTheme="exist-in-same-group";
+                }else if(data.dataStatusRow===3){
+                    classTheme="exist-in-diferent-group";
+                }else{
+                    classTheme="";
+                }  
+                return classTheme;
+            };
+            $("#tableStudentGroup").jqxGrid({
+                width: 500,
+                height:300,
+                selectionMode: "multiplecellsadvanced",
+                localization: getLocalization("es"),
+                pagesizeoptions:['25', '30', '50'],
+                pagesize: 25,
+                editmode: 'dblclick',
+                source: dataAdapter,
+                pageable: false,
+                editable: true,
+                filterable: true,
+                altRows: true,
+                pagerButtonsCount: 10,
+                ready: function(){
+                    $('#tableStudentGroup').jqxGrid('hidecolumn', 'dataStatusRow');
+                    $('#tableStudentGroup').jqxGrid('hidecolumn', 'dataStatusRowQuestion');
+                },
+                columns: [
+                    { text: 'NP',pageable: false, selectionmode:'none', disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
+                    { cellclassname: cellclass, text: 'Matrícula', dataField: 'dataEnrollment', width: 130 },
+                    { cellclassname: cellclass, text: 'Alumno', dataField: 'dataStudentName' },
+                    { text: 'Estado', dataField: 'dataStatusRow' ,disabled: true, filterable: false, editable: false},
+                    { text: 'Pregunta', dataField: 'dataStatusRowQuestion' ,disabled: true, filterable: false, editable: false}
+                ]
+            });
+            
+        }
+        loadGridStudentGroup();
+        
+        var indexExternal = 0;
+        var reset = true;
         $("#btnBottomAdd").click(function (){
+            if(reset){
+                for(var d=0;d<50; d++){
+                    $("#tableStudentGroup").jqxGrid('setcellvalue', d, "dataStatusRow", "");
+                    $("#tableStudentGroup").jqxGrid('setcellvalue', d, "dataStatusRowQuestion", "");
+                }
+            }
+            insertStudentToGroup();
+        });
+        $("#okWarning").click(function (){
+            changeValQuestionCell(indexExternal, "Si");
+            indexExternal=0;
+            insertStudentToGroup();
+        });
+        $("#cancelWarning").click(function (){
+            changeValQuestionCell(indexExternal, "No");
+            indexExternal=0;
+            insertStudentToGroup();
+        });
+        function insertStudentToGroup(){
             itemCareer = $('#studentToGroupFlangeCareerFilter').jqxDropDownList('getSelectedItem');
             itemCareer = itemCareer.value;
             itemSemester = $('#studentToGroupFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
@@ -151,12 +199,19 @@
             itemPeriod = itemPeriod.value;
             for (var i = 0; i < 50; i++) {
                 var data = $('#tableStudentGroup').jqxGrid('getrowdata', i);
-                if(data.dataEnrollment!==""&&data.dataStudentName!==""){
+                var valueQuestion = $('#tableStudentGroup').jqxGrid('getcellvalue', i, "dataStatusRowQuestion");
+                var url = "";
+                if(valueQuestion=="Si"){
+                    url = "../serviceStudentsGroup?update";
+                }else{
+                    url = "../serviceStudentsGroup?insert";
+                }
+                if(data.dataEnrollment!==""&&data.dataStudentName!==""&&data.dataStatusRowQuestion!=="No"){
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
-                        url: "../serviceStudentsGroup?insert",
+                        url: url,
                         data:{
                             'enrollment': data.dataEnrollment,
                             'fkCareer': itemCareer,
@@ -172,31 +227,74 @@
                             alert("Error interno del servidor");
                         },
                         success: function (data, textStatus, jqXHR) { 
-                            if(data==="Not Exits"){
-                                alert(data);
-                            }else if(data==="Registro Insertado"){
+                            if(data.includes("base de datos")){
+                                $("#messageWarning").html(data+"<br>Por lo que no será asociado a un grupo...");
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "0");
+                                $("#okWarning").hide();
+                                $("#jqxWindowAlert").jqxWindow('open');
+                            }else if(data.includes("Registro Insertado")){
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "1");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
-                            }else if(data==="Registro Actualizado"){
-                                alert(data);
-                            }else{
-                                $("#data").text(data);
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "");
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRowQuestion", "");
+                            }else if(data.includes("Registro Actualizado")){
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "2");
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
+                            }else if(data.includes("en este grupo")){
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "3");
+                                $("#messageWarning").html(data+"<br>Por lo tanto será omitido...");
+                            }else if(data.includes("en el grupo")){
+                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "4");
+                                $("#messageWarning").html(data+"<br>Desea cambiar el alumno al grupo actual...");
+                                $("#okWarning").show();
                                 $("#jqxWindowAlert").jqxWindow('open');
                             }
                         }
                     });
+                    var value = $('#tableStudentGroup').jqxGrid('getcellvalue', i, "dataStatusRow");
+                    
+                    if(value==0){
+                        indexExternal = i;
+                        break;
+                    }
+                    if(value==2){
+                        insertStudentToGroup();
+                    }
+                    if(value==4){
+                        indexExternal = i;
+                        break;
+                    }
                 }
             }
-        });
+        }
+        function changeValQuestionCell(indice, val){
+            $("#tableStudentGroup").jqxGrid('setcellvalue', indice, "dataStatusRowQuestion", val);
+        }
     });
 </script>
+<style>
+    .not-exists{
+        color: red !important;
+    }
+    .exist-in-same-group{
+        color: #026468 !important;
+    }
+    .exist-in-diferent-group{
+        color: gray !important;
+    }
+</style>
 <div id='jqxWindowAlert'>
-    <div>Alerta</div>
+    <div>Advertencia</div>
     <div>
-        <div id="data"></div><br>
-        <div>
-            <input type="button" id="ok" value="Si" style="margin-right: 10px" />
-            <input type="button" id="cancel" value="No" />
+        <div id="iconWarning" class="warning" style="position: absolute;"></div>
+        <span style="color: olive; width: 70%; position: absolute; right: 20px;">
+            <b id="messageWarning"></b>
+        </span>
+        <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
+            <input type="button" id="okWarning" value="OK" style="margin-right: 10px" />
+            <input type="button" id="cancelWarning" value="Cancelar" />
         </div>
     </div>
 </div>
