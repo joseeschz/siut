@@ -101,12 +101,12 @@ public class serviceStudentsGroup extends HttpServlet {
                     out.print(new groupStudentControl().UpdateGroupStudent(dataGroupStudent));
                 }                    
             }
-            /*
             if(request.getParameter("delete")!=null){       
-                if(request.getParameter("pkGroupMatterTeacher") != null){
-                    out.print(new groupMatterTeacherControl().DeleteGroupMatterTeacher(Integer.parseInt(request.getParameter("pkGroupMatterTeacher"))));
+                if(request.getParameter("pkGroupByStudent") != null){
+                    int pkGroupByStudent = Integer.parseInt(request.getParameter("pkGroupByStudent")); 
+                    out.print(new groupStudentControl().DeleteGroupStudent(pkGroupByStudent));
                 }                
-            }*/
+            }
         }
     }
 

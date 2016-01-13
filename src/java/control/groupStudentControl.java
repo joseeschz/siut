@@ -96,4 +96,23 @@ public class groupStudentControl {
         }  
         return request;
     }
+    
+    public String DeleteGroupStudent(int pkGroupByStudent){
+        String request="";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('delete', "+pkGroupByStudent+", NULL, NULL, NULL, NULL, NULL, NULL)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    request = res.getString("FL_RESULT");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return request;
+        } catch (SQLException ex) {
+            request=""+ex.getMessage();
+            Logger.getLogger(groupStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        return request;
+    }
 }

@@ -27,7 +27,6 @@
             itemSemester = $('#studentToGroupFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
             itemSemester = itemSemester.value;
             createDropDownGruop(itemSemester,"#studentToGroupFlangeGroupFilter",true);
-            
         });
         $('#studentToGroupFlangeCareerFilter').on('change',function (event){           
             itemCareer = $('#studentToGroupFlangeCareerFilter').jqxDropDownList('getSelectedItem');
@@ -71,6 +70,10 @@
             itemSemester = $('#studentToGroupFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
             itemSemester = itemSemester.value;
             createDropDownGruop(itemSemester,"#studentToGroupFlangeGroupFilter",true);
+        });
+        $("#studentToGroupFlangeGroupFilter").on('change',function (){
+            console.log(1);
+            resetGrid();
         });
         function loadSource(){
             var ordersSource ={
@@ -119,16 +122,15 @@
             }
         });
         function loadGridStudentGroup(){
-            var dataAdapter = new $.jqx.dataAdapter(loadSource());
-            
+            var dataAdapter = new $.jqx.dataAdapter(loadSource());            
             var cellclass = function (row, columnfield, value) {
                 var classTheme="";
                 var data = $('#tableStudentGroup').jqxGrid('getrowdata', row);
                 if(data.dataStatusRow===0){
                     classTheme="not-exists";
-                }else if(data.dataStatusRow===2){
-                    classTheme="exist-in-same-group";
                 }else if(data.dataStatusRow===3){
+                    classTheme="exist-in-same-group";
+                }else if(data.dataStatusRow===4){
                     classTheme="exist-in-diferent-group";
                 }else{
                     classTheme="";
@@ -154,7 +156,7 @@
                     $('#tableStudentGroup').jqxGrid('hidecolumn', 'dataStatusRowQuestion');
                 },
                 columns: [
-                    { text: 'NP',pageable: false, selectionmode:'none', disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
+                    { text: 'NP', selectionmode:'none', disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
                     { cellclassname: cellclass, text: 'Matrícula', dataField: 'dataEnrollment', width: 130 },
                     { cellclassname: cellclass, text: 'Alumno', dataField: 'dataStudentName' },
                     { text: 'Estado', dataField: 'dataStatusRow' ,disabled: true, filterable: false, editable: false},
@@ -166,14 +168,18 @@
         loadGridStudentGroup();
         
         var indexExternal = 0;
-        var reset = true;
-        $("#btnBottomAdd").click(function (){
-            if(reset){
-                for(var d=0;d<50; d++){
-                    $("#tableStudentGroup").jqxGrid('setcellvalue', d, "dataStatusRow", "");
-                    $("#tableStudentGroup").jqxGrid('setcellvalue', d, "dataStatusRowQuestion", "");
-                }
+        function resetGrid(){
+            $("#jqxWidgetResult").html("<span class='exist-in-diferent-group'>Sin movimientos</span>");
+            for(var i=0;i<50; i++){
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "");
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRowQuestion", "");
             }
+        }
+        $("#btnBottomAdd").click(function (){
+            resetGrid();
+            $("#jqxWidgetResult").html("<span class='exist-in-diferent-group'></span>");
             insertStudentToGroup();
         });
         $("#okWarning").click(function (){
@@ -186,7 +192,7 @@
             indexExternal=0;
             insertStudentToGroup();
         });
-        function insertStudentToGroup(){
+        function insertStudentToGroup(){            
             itemCareer = $('#studentToGroupFlangeCareerFilter').jqxDropDownList('getSelectedItem');
             itemCareer = itemCareer.value;
             itemSemester = $('#studentToGroupFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
@@ -206,7 +212,7 @@
                 }else{
                     url = "../serviceStudentsGroup?insert";
                 }
-                if(data.dataEnrollment!==""&&data.dataStudentName!==""&&data.dataStatusRowQuestion!=="No"){
+                if(data.dataEnrollment!==""&&data.dataStudentName!==""&&(data.dataStatusRowQuestion!=="No")){
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
@@ -226,28 +232,29 @@
                             //This is if exits an error with the server internal can do server off, or page not found
                             alert("Error interno del servidor");
                         },
-                        success: function (data, textStatus, jqXHR) { 
-                            if(data.includes("base de datos")){
-                                $("#messageWarning").html(data+"<br>Por lo que no será asociado a un grupo...");
+                        success: function (data_result, textStatus, jqXHR) { 
+                            if(data_result.includes("base de datos")){
+                                $("#messageWarning").html(data_result+"<br>Por lo que no será asociado a un grupo...");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "0");
                                 $("#okWarning").hide();
                                 $("#jqxWindowAlert").jqxWindow('open');
-                            }else if(data.includes("Registro Insertado")){
+                                $("#jqxWidgetResult").html($("#jqxWidgetResult").html()+"<span class='not-exists'>"+data.dataEnrollment+"----> No fue agregado...</span><br>");
+                            }else if(data_result.includes("Registro Insertado")){                                
+                                $("#jqxWidgetResult").html($("#jqxWidgetResult").html()+"<span class='add-on-group'>"+data.dataEnrollment+"----> Fue agregado...</span><br>");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "1");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
-                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "");
-                                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRowQuestion", "");
-                            }else if(data.includes("Registro Actualizado")){
+                            }else if(data_result.includes("Registro Actualizado")){
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "2");
+                                $("#jqxWidgetResult").html($("#jqxWidgetResult").html()+"<span class='exist-in-diferent-group'>"+data.dataEnrollment+"----> Fue actualizado...</span><br>");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStudentName", "");
-                            }else if(data.includes("en este grupo")){
+                            }else if(data_result.includes("en este grupo")){
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "3");
-                                $("#messageWarning").html(data+"<br>Por lo tanto será omitido...");
-                            }else if(data.includes("en el grupo")){
+                                $("#jqxWidgetResult").html($("#jqxWidgetResult").html()+"<span class='exist-in-same-group'>"+data.dataEnrollment+"----> Fue omitido...</span><br>");
+                            }else if(data_result.includes("en el grupo")){
                                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "4");
-                                $("#messageWarning").html(data+"<br>Desea cambiar el alumno al grupo actual...");
+                                $("#messageWarning").html(data_result+"<br>Desea cambiar el alumno al grupo actual...");
                                 $("#okWarning").show();
                                 $("#jqxWindowAlert").jqxWindow('open');
                             }
@@ -258,6 +265,9 @@
                     if(value==0){
                         indexExternal = i;
                         break;
+                    }
+                    if(value==1){
+                        insertStudentToGroup();
                     }
                     if(value==2){
                         insertStudentToGroup();
@@ -284,7 +294,11 @@
     .exist-in-diferent-group{
         color: gray !important;
     }
+    .add-on-group{
+        color: #35ade6 !important;
+    }
 </style>
+
 <div id='jqxWindowAlert'>
     <div>Advertencia</div>
     <div>
@@ -328,3 +342,8 @@
     <div id="tableStudentGroup"></div>
 </div>
 <button style=" margin: 10px 10px 0 0;" id="btnBottomAdd">Agregar</button>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<h4 style="color: rgb(84, 146, 95);">Regitro de movimientos</h4>
+<div id='jqxWidgetResult' style="padding: 5px; font-size: 13px; font-family: Verdana; min-height: 100px; max-height: 100px; overflow: auto; width: 330px; border: 1px solid rgb(119, 150, 112); color: rgb(84, 146, 95);">
+    <span class="exist-in-diferent-group">Sin movimientos</span>
+</div>
