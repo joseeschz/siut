@@ -269,6 +269,37 @@ function createDropDownGruop(filtrable, selector, update){
     }
 }
 
+function createDropDownGruopCheck(filtrable, selector, update){
+    var sourceGroup ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataPkGruop' },
+            { name: 'dataNameGroup' }
+        ],
+        url: "../serviceGroup?view=combo&fkSemester="+filtrable,
+        async: false
+    };
+    var dataAdapterGroup = new $.jqx.dataAdapter(sourceGroup);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterGroup, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            selectedIndex: 0, 
+            dropDownHeight: 100,
+            checkboxes: true,
+            placeHolder: "SELECCIONAR",
+            source: dataAdapterGroup, 
+            displayMember: "dataNameGroup", 
+            valueMember: "dataPkGruop",
+            width: 150
+        }).css("display","inline-block");
+        $(selector).jqxDropDownList('checkIndex',0);
+    }
+}
+
 function createDropDownPeriod(filtrable, selector){
     var periodSelected = 0;
     if(filtrable==="inscription"){
@@ -427,7 +458,7 @@ function createDropDownSemester(filtrable, selector, update){
             displayMember: "dataNameSemester", 
             valueMember: "dataValueSemester",
             height: 26, 
-            width: 180                
+            width: 150                
         }).css("display","inline-block");
     }
 }
@@ -500,7 +531,7 @@ function createDropDownRol(selector){
     var sourceRol =[
         {"dataNameRol":"DIRECTOR","dataValueRol":"2"},
         {"dataNameRol":"MAESTRO","dataValueRol":"3"},
-        {"dataNameRol":"SECRETARIA","dataValueRol":"4"},
+        {"dataNameRol":"SECRETARIA DE CARRERA","dataValueRol":"4"},
         {"dataNameRol":"ADMINISTRATIVO","dataValueRol":"5"}
     ];
     $(selector).jqxDropDownList({
@@ -1008,7 +1039,7 @@ function createDropDownSemesterByDirector(period, filtrable, selector, update){
     }
 }
 
-function createDropDownGruopByTeacher(period, filtrable, selector, update){
+function createDropDownGruopByTeacher(career, period, filtrable, selector, update){
     var sourceGroup ={
         datatype: "json",
         root: "__ENTITIES",
@@ -1017,7 +1048,7 @@ function createDropDownGruopByTeacher(period, filtrable, selector, update){
             { name: 'dataPkGruop' },
             { name: 'dataNameGroup' }
         ],
-        url: "../serviceGroup?view=combo&&teacher&&fkSemester="+filtrable+"&&pkPeriod="+period+"",
+        url: "../serviceGroup?view=combo&&teacher&&pkCareer="+career+"&&fkSemester="+filtrable+"&&pkPeriod="+period+"",
         async: false
     };
     var dataAdapterGroup = new $.jqx.dataAdapter(sourceGroup);
@@ -1167,10 +1198,10 @@ function createDropDownSubjectMatter(filtrable, selector, update){
         });
     }
 }
-function createDropDownSubjectMatterByTeacher(period, filtrable, group, selector, update){
-    var url="../serviceSubjectMatter?view=combo&&teacher&&pkPeriod="+period+"&&pkGroup="+group+"&&pkSemester="+filtrable+"";
+function createDropDownSubjectMatterByTeacher(period, career, filtrable, group, selector, update){
+    var url="../serviceSubjectMatter?view=combo&&teacher&&pkCareer="+career+"&&pkPeriod="+period+"&&pkGroup="+group+"&&pkSemester="+filtrable+"";
     if(group===null){
-        url="../serviceSubjectMatter?view=comboWithoutGroup&&teacher&&pkPeriod="+period+"&&pkSemester="+filtrable+"";
+        url="../serviceSubjectMatter?view=comboWithoutGroup&&teacher&&pkCareer="+career+"&&pkPeriod="+period+"&&pkSemester="+filtrable+"";
     }
     var sourceGroup ={
         datatype: "json",

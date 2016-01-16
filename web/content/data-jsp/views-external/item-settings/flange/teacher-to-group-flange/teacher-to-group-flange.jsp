@@ -27,7 +27,29 @@
         itemStudyPlan = $('#subjectMattersStudyPlanFilter').jqxDropDownList('getSelectedItem');
         functionFiltrableSubjectMatters(false);
         createLitsBoxTeachers("#listTeacher",false);
-        
+        $("#teacherToGroupFlangeGroupFilter").on('checkChange', function (event) {
+            if (event.args) {
+                var item = event.args.item;
+                if (item) {
+                    var valueelement = $("<div></div>");
+                    valueelement.text("Value: " + item.value);
+                    var labelelement = $("<div></div>");
+                    labelelement.text("Label: " + item.label);
+                    var checkedelement = $("<div></div>");
+                    checkedelement.text("Checked: " + item.checked);
+                    $("#selectionlog").children().remove();
+                    $("#selectionlog").append(labelelement);
+                    $("#selectionlog").append(valueelement);
+                    $("#selectionlog").append(checkedelement);
+                    var items = $("#jqxWidget").jqxDropDownList('getCheckedItems');
+                    var checkedItems = "";
+                    $.each(items, function (index) {
+                        checkedItems += this.label + ", ";                          
+                    });
+                    $("#checkedItemsLog").text(checkedItems);
+                }
+            }
+        });
         itemsListTeacher = $("#listTeacher").jqxListBox('getSelectedItem');
         $("#listTeacher").on('select', function (event){
             var args = event.args;
@@ -169,7 +191,7 @@
             if(bindingCompleteSemester){
                 bindingCompleteGroup = false;
                 itemSemester = $('#teacherToGroupFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
-                createDropDownGruop(itemSemester.value,"#teacherToGroupFlangeGroupFilter",true);
+                createDropDownGruop(itemSemester.value,"#teacherToGroupFlangeGroupFilter", true);
                 if(evenSemester){
                     filterableTable(true);
                 }

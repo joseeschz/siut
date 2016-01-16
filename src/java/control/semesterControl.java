@@ -48,7 +48,7 @@ public class semesterControl {
     public ArrayList<semesterModel> SelectSemesterByTeacher(int pkTeacher, int pkStudyLevel, int pkPeriod){
         ArrayList<semesterModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacher', "+pkTeacher+", "+pkStudyLevel+", "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacher', "+pkTeacher+", "+pkStudyLevel+", null, "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     semesterModel allSemesters=new semesterModel();
                     allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
@@ -69,7 +69,7 @@ public class semesterControl {
     public ArrayList<semesterModel> SelectSemesterByTeacherTutor(int pkTeacher, int pkStudyLevel, int pkPeriod){
         ArrayList<semesterModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacherTutor', "+pkTeacher+", "+pkStudyLevel+", "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacherTutor', "+pkTeacher+", "+pkStudyLevel+", null, "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     semesterModel allSemesters=new semesterModel();
                     allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
@@ -90,7 +90,7 @@ public class semesterControl {
     public ArrayList<semesterModel> SelectSemesterByDirector(int pkTeacher, int pkStudyLevel, int pkPeriod){
         ArrayList<semesterModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByDirector', "+pkTeacher+", "+pkStudyLevel+", "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByDirector', "+pkTeacher+", "+pkStudyLevel+", null, "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     semesterModel allSemesters=new semesterModel();
                     allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));

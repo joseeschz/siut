@@ -20,7 +20,7 @@ import model.groupModel;
  */
 public class groupControl {
     public static void main(String[] args) {
-        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(64,4,8,"242");
+        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(59, 2, 13, 2, null);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_GROUP());
         }
@@ -46,13 +46,13 @@ public class groupControl {
         return list;
     }
     
-    public ArrayList<groupModel> SelectGroupByTeacher(int pkTeacher, int fkPeriod, int fkSemester, String fkMatter){
+    public ArrayList<groupModel> SelectGroupByTeacher(int pkTeacher, int pkCareer, int fkPeriod, int fkSemester, String fkMatter){
         ArrayList<groupModel> list=new ArrayList<>();
         String procedure;
         if(fkMatter!=null){
-            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherByMatter', "+pkTeacher+", null, "+fkPeriod+", "+fkSemester+", null, "+fkMatter+")";
+            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherByMatter', "+pkTeacher+", null, "+pkCareer+", "+fkPeriod+", "+fkSemester+", null, "+fkMatter+")";
         }else{
-            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacher', "+pkTeacher+", null, "+fkPeriod+", "+fkSemester+", null, null)";
+            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacher', "+pkTeacher+", null, "+pkCareer+", "+fkPeriod+", "+fkSemester+", null, null)";
         }
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
@@ -75,7 +75,7 @@ public class groupControl {
     
     public ArrayList<groupModel> SelectGroupByTeacherTutor(int pkTeacher, int fkPeriod, int fkSemester){
         ArrayList<groupModel> list=new ArrayList<>();
-        String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherTutor', "+pkTeacher+", null, "+fkPeriod+", "+fkSemester+", null, null)";
+        String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherTutor', "+pkTeacher+", null, null, "+fkPeriod+", "+fkSemester+", null, null)";
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
@@ -97,7 +97,7 @@ public class groupControl {
     
     public ArrayList<groupModel> SelectGroupByDirector(int pkTeacher, int fkPeriod, int fkSemester){
         ArrayList<groupModel> list=new ArrayList<>();
-        String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByDirector', "+pkTeacher+", null, "+fkPeriod+", "+fkSemester+", null, null)";
+        String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByDirector', "+pkTeacher+", null, null, "+fkPeriod+", "+fkSemester+", null, null)";
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){

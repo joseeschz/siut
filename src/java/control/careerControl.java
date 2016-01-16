@@ -50,7 +50,7 @@ public class careerControl {
     public ArrayList<careerModel> SelectCareerByTeacher(int pk_teacher, int fkLevel){
         ArrayList<careerModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacher', "+pk_teacher+", "+fkLevel+", null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacher', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
@@ -74,7 +74,7 @@ public class careerControl {
     public ArrayList<careerModel> SelectCareerByTeacherTutor(int pk_teacher, int fkLevel){
         ArrayList<careerModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacherTutor', "+pk_teacher+", "+fkLevel+", null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacherTutor', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
@@ -98,7 +98,7 @@ public class careerControl {
     public ArrayList<careerModel> SelectCareerByDirector(int pk_teacher, int fkLevel){
         ArrayList<careerModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByDirector', "+pk_teacher+", "+fkLevel+", null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByDirector', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
