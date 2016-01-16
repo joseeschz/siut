@@ -20,8 +20,8 @@ if(session.getAttribute("logueado") != null){%>
             }
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false });
             $('#averageTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-average.jsp');
-            $('#regularizationTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-regularization.jsp');
-            $('#globalTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-global.jsp');
+//            $('#regularizationTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-regularization.jsp');
+//            $('#globalTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-global.jsp');
         });
     </script>
     <div id='jqxTabs'>

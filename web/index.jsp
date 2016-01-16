@@ -52,7 +52,6 @@
                             </div>
                         </form><!--/ form-->
                         <div class="links">
-                            <a href="http://184.107.80.72/alumno/control.jsf">Seguimiento</a>
                         </div>
                     </section><!--/ seccion-->
                 </div>

@@ -7,28 +7,6 @@
 if(session.getAttribute("logueado") != null){%>
     <script>
         $(document).ready(function (){
-            $('#jqxWindowWarning').jqxWindow({
-                theme: theme,
-                height: 150,
-                width: 350,
-                resizable: false,
-                draggable: false,
-                okButton: $('#ok'),
-                autoOpen: false,
-                isModal: true,
-                cancelButton: $('#cancel'),
-                initContent: function () {
-                    $('#ok').jqxButton({
-                        width: '80px',
-                        theme: theme
-                    });
-                    $('#cancel').jqxButton({
-                        width: '80px',
-                        theme: theme
-                    });
-                    $('#ok').focus();
-                }
-            });
             var tabActive;
             var selectedTab = $.cookie('tabActive');
             $('#jqxTabs').on('selected', function (event) { 
@@ -45,19 +23,6 @@ if(session.getAttribute("logueado") != null){%>
             $("#studentToGroupConsultTab").load("../content/data-jsp/views-external/item-settings/flange/student-to-groups-flange/student-to-group-consult-flange.jsp");
         });
     </script>
-    <div id='jqxWindowWarning'>
-        <div>Advertencia</div>
-        <div>
-            <div class="warning" style="position: absolute;"></div>
-            <span style="color: olive; width: 70%; position: absolute; right: 20px;">
-                <b>¡Estas seguro de borrar este registro sabiendo que todo elemento dependiente de este se perderá!</b>
-            </span>
-            <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
-                <input type="button" id="ok" value="OK" style="margin-right: 10px" />
-                <input type="button" id="cancel" value="Cancelar" />
-            </div>
-        </div>
-    </div>
     <div id='jqxTabs'>
         <ul>
             <li class="jqxTabsTitle" dir="studentToGroupAsignation">Asignación</li>

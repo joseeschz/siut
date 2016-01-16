@@ -42,6 +42,7 @@ public class serviceGroup extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if(request.getParameter("view")!=null){
                 int fkSemester = Integer.parseInt(request.getParameter("fkSemester"));
+                int pkCareer = 0;
                 int pkPeriod;
                 int pkUser=0;
                 String pkMatter;
@@ -55,8 +56,9 @@ public class serviceGroup extends HttpServlet {
                         if(session.getAttribute("logueado")!=null){
                             pkUser=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }if(request.getParameter("teacher")!=null){
+                            pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                             pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                            listGruop=new groupControl().SelectGroupByTeacher(pkUser, pkPeriod, fkSemester, null);
+                            listGruop=new groupControl().SelectGroupByTeacher(pkUser, pkCareer, pkPeriod, fkSemester, null);
                         }else if(request.getParameter("teacherTutor")!=null){
                             pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                             listGruop=new groupControl().SelectGroupByTeacherTutor(pkUser, pkPeriod, fkSemester);
@@ -72,9 +74,10 @@ public class serviceGroup extends HttpServlet {
                             pkUser=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
                         if(request.getParameter("teacher")!=null){
+                            //pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                             pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                             pkMatter = request.getParameter("pkMatter");
-                            listGruop=new groupControl().SelectGroupByTeacher(pkUser, pkPeriod, fkSemester, pkMatter);
+                            listGruop=new groupControl().SelectGroupByTeacher(pkUser, pkCareer, pkPeriod, fkSemester, pkMatter);
                         }else{
                             listGruop=new groupControl().SelectGroup("bySemester", fkSemester);
                         }   

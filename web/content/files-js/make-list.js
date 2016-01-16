@@ -68,7 +68,8 @@ function createLitsBoxTeachers(selector, update){
             width: 270, 
             height: 200,
             filterable:true,
-            filterPlaceHolder: "Buscar"
+            filterPlaceHolder: "Buscar",
+            searchMode: 'contains'
         });
         $(selector).on('select', function (event) {
             if (event.args) {

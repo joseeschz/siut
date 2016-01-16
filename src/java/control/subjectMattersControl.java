@@ -21,7 +21,7 @@ import model.subjectMattersModel;
  */
 public class subjectMattersControl {
     public static void main(String[] args) {
-        ArrayList<subjectMattersModel> list=new subjectMattersControl().SelectSubjectMattersByTeacher(33, 5, 9, 82);
+        ArrayList<subjectMattersModel> list=new subjectMattersControl().SelectSubjectMattersByTeacher(33, 5, 6, 9, 82);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_SUBJECT_MATTER());
         }
@@ -74,13 +74,13 @@ public class subjectMattersControl {
         }
         return list;
     }
-    public ArrayList<subjectMattersModel> SelectSubjectMattersByTeacher(int pkTeacher, int pkPeriod, int pkSemester, int pkGroup){
+    public ArrayList<subjectMattersModel> SelectSubjectMattersByTeacher(int pkTeacher, int pkCareer, int pkPeriod, int pkSemester, int pkGroup){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         String procedure;
         if(pkGroup==0){
-            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('matterByTeacherWithoutGroup', "+pkTeacher+", null, "+pkPeriod+", "+pkSemester+", null, null)";
+            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('matterByTeacherWithoutGroup', "+pkTeacher+", null, "+pkCareer+", "+pkPeriod+", "+pkSemester+", null, null)";
         }else{
-            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('matterByTeacher', "+pkTeacher+", null, "+pkPeriod+", "+pkSemester+", "+pkGroup+", null)";
+            procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('matterByTeacher', "+pkTeacher+", null, "+pkCareer+","+pkPeriod+", "+pkSemester+", "+pkGroup+", null)";
         }
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
