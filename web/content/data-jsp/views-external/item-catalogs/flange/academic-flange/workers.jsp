@@ -25,80 +25,85 @@
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
                     // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    itemRol = $('#workersRolFilter').jqxDropDownList('getSelectedItem');
-                    itemRol = itemRol.value;
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        async: false,
-                        url: "../serviceWorker?insert",
-                        data:{'fkRol':itemRol,'nameWorker':"",'maternName':"",'paternName':"",'keySp':"",'telphoneNumber':"",'addres':"",'photo':""},
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            commit(true);
-                            $("#tableWorkers").jqxDataTable('updateBoundData');
-                            $("#tableWorkers").jqxDataTable('goToPage', 0);
-                            $("#tableWorkers").jqxDataTable('beginRowEdit', 0);
-                        }
-                    });
+//                    itemRol = $('#workersRolFilter').jqxDropDownList('getSelectedItem');
+//                    itemRol = itemRol.value;
+//                    $.ajax({
+//                        //Send the paramethers to servelt
+//                        type: "POST",
+//                        async: false,
+//                        url: "../serviceWorker?insert",
+//                        data:{'fkRol':itemRol,'nameWorker':"",'maternName':"",'paternName':"",'keySp':"",'telphoneNumber':"",'addres':"",'photo':""},
+//                        beforeSend: function (xhr) {
+//                        },
+//                        error: function (jqXHR, textStatus, errorThrown) {
+//                            //This is if exits an error with the server internal can do server off, or page not found
+//                            alert("Error interno del servidor");
+//                        },
+//                        success: function (data, textStatus, jqXHR) {
+//                            commit(true);
+//                            $("#tableWorkers").jqxDataTable('updateBoundData');
+//                            $("#tableWorkers").jqxDataTable('goToPage', 0);
+//                            $("#tableWorkers").jqxDataTable('beginRowEdit', 0);
+//                        }
+//                    });
+                    commit(true);
+                    $("#tableWorkers").jqxDataTable('goToPage', 0);
+                    $("#tableWorkers").jqxDataTable('beginRowEdit', 0);
                 },
                 updateRow: function (rowID, rowData, commit) {
                     // synchronize with the server - send update command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
-                    itemRol = $('#workersRolFilter').jqxDropDownList('getSelectedItem');
-                    itemRol = itemRol.value;
-                    var nameWorker = rowData.dataNameWorker;
-                    var maternName = rowData.dataMaternName;
-                    var paternName = rowData.dataPaternName;
-                    var keySp = rowData.dataKeySp;
-                    var telephoneNumber = rowData.dataTelphoneNumber;
-                    var addres = rowData.dataAddres;
-                    var photo = rowData.dataPhoto;
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        async: false,
-                        url: "../serviceWorker?update",
-                        data:{'pkWorker':rowID,'fkRol':itemRol,'nameWorker':nameWorker,'maternName':maternName,'paternName':paternName,'keySp':keySp,'telephoneNumber':telephoneNumber,'addres':addres,'photo':photo},
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) { 
-                            //If is updated rechange the drowdown in the other flange...
-                            commit(true);
-                        }
-                    });
+//                    itemRol = $('#workersRolFilter').jqxDropDownList('getSelectedItem');
+//                    itemRol = itemRol.value;
+//                    var nameWorker = rowData.dataNameWorker;
+//                    var maternName = rowData.dataMaternName;
+//                    var paternName = rowData.dataPaternName;
+//                    var keySp = rowData.dataKeySp;
+//                    var telephoneNumber = rowData.dataTelphoneNumber;
+//                    var addres = rowData.dataAddres;
+//                    var photo = rowData.dataPhoto;
+//                    $.ajax({
+//                        //Send the paramethers to servelt
+//                        type: "POST",
+//                        async: false,
+//                        url: "../serviceWorker?update",
+//                        data:{'pkWorker':rowID,'fkRol':itemRol,'nameWorker':nameWorker,'maternName':maternName,'paternName':paternName,'keySp':keySp,'telephoneNumber':telephoneNumber,'addres':addres,'photo':photo},
+//                        beforeSend: function (xhr) {
+//                        },
+//                        error: function (jqXHR, textStatus, errorThrown) {
+//                            //This is if exits an error with the server internal can do server off, or page not found
+//                            alert("Error interno del servidor");
+//                        },
+//                        success: function (data, textStatus, jqXHR) { 
+//                            //If is updated rechange the drowdown in the other flange...
+//                            commit(true);
+//                        }
+//                    });
+                    commit(true);
                 },
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        async: false,
-                        url: "../serviceWorker?delete",
-                        data:{'pkWorker':rowID},
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            commit(true);
-                            $("#tableWorkers").jqxDataTable('updateBoundData');
-                        }
-                    });
+//                    $.ajax({
+//                        //Send the paramethers to servelt
+//                        type: "POST",
+//                        async: false,
+//                        url: "../serviceWorker?delete",
+//                        data:{'pkWorker':rowID},
+//                        beforeSend: function (xhr) {
+//                        },
+//                        error: function (jqXHR, textStatus, errorThrown) {
+//                            //This is if exits an error with the server internal can do server off, or page not found
+//                            alert("Error interno del servidor");
+//                        },
+//                        success: function (data, textStatus, jqXHR) {
+//                            commit(true);
+//                            $("#tableWorkers").jqxDataTable('updateBoundData');
+//                        }
+//                    });
+                    commit(true);
                 }
             };
             return ordersSource;
@@ -197,7 +202,15 @@
                     updateButtons('Unselect');
                 });
                 $("#tableWorkers").on('rowEndEdit', function (event) {
-                    updateButtons('End Edit');
+                    if(event.args){
+                        var row = event.args.row;
+                        if(row.dataNameWorker==="" || row.dataPaternName==="" || row.dataMaternName===""){
+                            console.log("1");
+                            updateButtons('Edit');
+                        }else{
+                            updateButtons('End Edit');
+                        }
+                    }
                 });
                 $("#tableWorkers").on('rowBeginEdit', function (event) {
                     updateButtons('Edit');
@@ -205,19 +218,25 @@
                 addButton.click(function (event) {
                     if (!addButton.jqxButton('disabled')) {
                         // add new empty row.
-                        $("#tableWorkers").jqxDataTable('addRow', null, {}, 'first');
+                        $("#tableWorkers").jqxDataTable('addRow', null, {
+                            dataProgresivNumber: "0"
+                        }, 'first');
                         // select the first row and clear the selection.
                         $("#tableWorkers").jqxDataTable('clearSelection');
                         $("#tableWorkers").jqxDataTable('selectRow', 0);
                         // edit the new row.
-                        //$("#tableWorkers").jqxDataTable('beginRowEdit', 0);
+                        $("#tableWorkers").jqxDataTable('beginRowEdit', 0);
                         updateButtons('add');
                     }
                 });
                 cancelButton.click(function (event) {
                     if (!cancelButton.jqxButton('disabled')) {
                         // cancel changes.
-                        $("#tableWorkers").jqxDataTable('endRowEdit', rowIndex, true);
+                        if(true){
+                            
+                        }else{
+                            $("#tableWorkers").jqxDataTable('endRowEdit', rowIndex, true);
+                        }
                     }
                 });
                 updateButton.click(function (event) {

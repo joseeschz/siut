@@ -50,7 +50,6 @@ public class serviceStudyLevel extends HttpServlet {
                 if(request.getParameter("view").equals("combo")){
                     
                     if(request.getParameter("teacher")!=null){
-                        
                         if(session.getAttribute("logueado")!=null){
                             pkUser=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }

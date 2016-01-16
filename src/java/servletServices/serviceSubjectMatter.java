@@ -55,12 +55,13 @@ public class serviceSubjectMatter extends HttpServlet {
                 if(request.getParameter("view").equals("combo")){
                     pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     if(request.getParameter("teacher")!=null){
+                        pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                         pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                         pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
                         if(session.getAttribute("logueado")!=null){
                             pkTeacher=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
-                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByTeacher(pkTeacher, pkPeriod, pkSemester, pkGroup);
+                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByTeacher(pkTeacher, pkCareer, pkPeriod, pkSemester, pkGroup);
                     }else{
                         pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                         pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
@@ -80,11 +81,12 @@ public class serviceSubjectMatter extends HttpServlet {
                 else if(request.getParameter("view").equals("comboWithoutGroup")){
                     pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     if(request.getParameter("teacher")!=null){
+                        pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                         pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                         if(session.getAttribute("logueado")!=null){
                             pkTeacher=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
-                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByTeacher(pkTeacher, pkPeriod, pkSemester, 0);
+                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByTeacher(pkTeacher, pkCareer, pkPeriod, pkSemester, 0);
                     }
                 }else{
                     pkSemester = Integer.parseInt(request.getParameter("pkSemester"));

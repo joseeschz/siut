@@ -52,7 +52,7 @@ public class studyLevelControl {
     public ArrayList<studyLevelModel> SelectStudyLevelByTeacher(int pkTeacher){
         ArrayList<studyLevelModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByTeacher', "+pkTeacher+", null, null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByTeacher', "+pkTeacher+", null, null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studyLevelModel listStudyLevel=new studyLevelModel();
@@ -75,7 +75,7 @@ public class studyLevelControl {
     public ArrayList<studyLevelModel> SelectStudyLevelByDirector(int pkDirector){
         ArrayList<studyLevelModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByDirector', "+pkDirector+", null, null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByDirector', "+pkDirector+", null, null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studyLevelModel listStudyLevel=new studyLevelModel();
@@ -98,7 +98,7 @@ public class studyLevelControl {
     public ArrayList<studyLevelModel> SelectStudyLevelByTeacherTutor(int pkTeacher){
         ArrayList<studyLevelModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByTeacherTutor', "+pkTeacher+", null, null, null, null, null)";
+            String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('studyLevelByTeacherTutor', "+pkTeacher+", null, null, null, null, null, null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studyLevelModel listStudyLevel=new studyLevelModel();
