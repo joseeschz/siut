@@ -11,11 +11,12 @@ package model;
  */
 public class workerModel {
     int PK_WORKER = 0;
+    String FL_PROFESSION = "";
     String FL_NAME_WORKER = "";
     String FL_PATERN_NAME = "";
     String FL_MATERN_NAME = "";
     String FL_KEY_SP = "";
-    String FL_TELEHONE_NUMBER = "";
+    String FL_TELEPHONE_NUMBER = "";
     String FL_USER_NAME = "";
     String FL_ADDRES = "";
     String FL_PHOTO = "";
@@ -38,6 +39,14 @@ public class workerModel {
 
     public void setPK_WORKER(int PK_WORKER) {
         this.PK_WORKER = PK_WORKER;
+    }
+
+    public String getFL_PROFESSION() {
+        return FL_PROFESSION;
+    }
+
+    public void setFL_PROFESSION(String FL_PROFESSION) {
+        this.FL_PROFESSION = FL_PROFESSION;
     }
 
     public String getFL_NAME_WORKER() {
@@ -72,12 +81,12 @@ public class workerModel {
         this.FL_KEY_SP = FL_KEY_SP;
     }
 
-    public String getFL_TELEHONE_NUMBER() {
-        return FL_TELEHONE_NUMBER;
+    public String getFL_TELEPHONE_NUMBER() {
+        return FL_TELEPHONE_NUMBER;
     }
 
-    public void setFL_TELEHONE_NUMBER(String FL_TELEHONE_NUMBER) {
-        this.FL_TELEHONE_NUMBER = FL_TELEHONE_NUMBER;
+    public void setFL_TELEPHONE_NUMBER(String FL_TELEPHONE_NUMBER) {
+        this.FL_TELEPHONE_NUMBER = FL_TELEPHONE_NUMBER;
     }
 
     public String getFL_ADDRES() {

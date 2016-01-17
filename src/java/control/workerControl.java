@@ -74,12 +74,14 @@ public class workerControl {
                     while(res!=null&&res.next()){
                         workerModel listWorker=new workerModel();
                         listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
+                        listWorker.setFL_PROFESSION(res.getString("FL_PROFESSION"));
+                        listWorker.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
                         listWorker.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
                         listWorker.setFL_USER_NAME(res.getString("FL_USER_NAME"));
-                        listWorker.setFL_MATERN_NAME(res.getString("FL_MATERN_NAME"));
                         listWorker.setFL_PATERN_NAME(res.getString("FL_PATERN_NAME"));
+                        listWorker.setFL_MATERN_NAME(res.getString("FL_MATERN_NAME"));                        
                         listWorker.setFL_KEY_SP(res.getString("FL_KEY_SP"));
-                        listWorker.setFL_TELEHONE_NUMBER(res.getString("FL_TELEHONE_NUMBER"));
+                        listWorker.setFL_TELEPHONE_NUMBER(res.getString("FL_TELEPHONE_NUMBER"));
                         listWorker.setFL_ADDRES(res.getString("FL_ADDRES"));
                         listWorker.setFL_PHOTO(res.getString("FL_PHOTO"));
                         list.add(listWorker);
@@ -96,11 +98,47 @@ public class workerControl {
         return list;
     }
     
+    public String GenerateWorker(workerModel dataWorker){
+        String request = "";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('generateUser','worker', null, '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    request = res.getString("FL_RESULT");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    
+    public String CheckKpWorker(String kp){
+        String request = "";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('checkKp', null, null, '', '', '', '', '"+kp+"', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    request = res.getString("FL_RESULT");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    
     public String InsertWorker(workerModel dataWorker){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('insert','worker', null, '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','','')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('insert','worker', null, '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEPHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','','')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -116,7 +154,7 @@ public class workerControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('delete', '','"+pkWorker+"', null, null, null, null, null, null, null, null, null, null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('delete', null, '"+pkWorker+"', null, null, null, null, null, null, null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
                 ps.close();
@@ -132,7 +170,7 @@ public class workerControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('update','"+comand+"', '"+dataWorker.getPK_WORKER()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','"+dataWorker.getFL_TUTOR()+"','"+dataWorker.getFL_JOB_FUNCTIONAL()+"')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('update','"+comand+"', '"+dataWorker.getPK_WORKER()+"', '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEPHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','"+dataWorker.getFL_TUTOR()+"','"+dataWorker.getFL_JOB_FUNCTIONAL()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

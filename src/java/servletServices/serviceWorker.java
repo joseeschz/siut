@@ -53,11 +53,12 @@ public class serviceWorker extends HttpServlet {
                     data.put("id", listWorkers.get(i).getPK_WORKER());
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkWorker", listWorkers.get(i).getPK_WORKER());
+                    data.put("dataProfession", listWorkers.get(i).getFL_PROFESSION());
                     data.put("dataNameWorker", listWorkers.get(i).getFL_NAME_WORKER());
-                    data.put("dataMaternName", listWorkers.get(i).getFL_MATERN_NAME());
                     data.put("dataPaternName", listWorkers.get(i).getFL_PATERN_NAME());
+                    data.put("dataMaternName", listWorkers.get(i).getFL_MATERN_NAME());                    
                     data.put("dataKeySp", listWorkers.get(i).getFL_KEY_SP());
-                    data.put("dataTelphoneNumber", listWorkers.get(i).getFL_TELEHONE_NUMBER());
+                    data.put("dataTelphoneNumber", listWorkers.get(i).getFL_TELEPHONE_NUMBER());
                     data.put("dataAddres", listWorkers.get(i).getFL_ADDRES());
                     data.put("dataPhoto", listWorkers.get(i).getFL_PHOTO());
                     data.put("dataUserName", listWorkers.get(i).getFL_USER_NAME());
@@ -70,14 +71,25 @@ public class serviceWorker extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            if(request.getParameter("checkKp")!=null){
+                out.print(new workerControl().CheckKpWorker(request.getParameter("keySp")));         
+            }
+            if(request.getParameter("generate")!=null){
+                workerModel dataWorker=new workerModel();
+                dataWorker.setFL_NAME_WORKER(request.getParameter("nameWorker"));
+                dataWorker.setFL_MATERN_NAME(request.getParameter("maternName"));
+                dataWorker.setFL_PATERN_NAME(request.getParameter("paternName"));
+                out.print(new workerControl().GenerateWorker(dataWorker));         
+            }
             if(request.getParameter("insert")!=null){
                 if(request.getParameter("fkRol") != null){
                     workerModel dataWorker=new workerModel();
+                    dataWorker.setFL_PROFESSION(request.getParameter("profession"));
                     dataWorker.setFL_NAME_WORKER(request.getParameter("nameWorker"));
-                    dataWorker.setFL_MATERN_NAME(request.getParameter("maternName"));
                     dataWorker.setFL_PATERN_NAME(request.getParameter("paternName"));
+                    dataWorker.setFL_MATERN_NAME(request.getParameter("maternName"));                    
                     dataWorker.setFL_KEY_SP(request.getParameter("keySp"));
-                    dataWorker.setFL_TELEHONE_NUMBER(request.getParameter("telphoneNumber"));
+                    dataWorker.setFL_TELEPHONE_NUMBER(request.getParameter("telphoneNumber"));
                     dataWorker.setFL_ADDRES(request.getParameter("addres"));
                     dataWorker.setFL_PHOTO(request.getParameter("photo"));
                     dataWorker.setFK_ROL(Integer.parseInt(request.getParameter("fkRol")));
@@ -88,11 +100,12 @@ public class serviceWorker extends HttpServlet {
                 if(request.getParameter("pkWorker") != null  && request.getParameter("fkRol") != null){
                     workerModel dataWorker=new workerModel();
                     dataWorker.setPK_WORKER(Integer.parseInt(request.getParameter("pkWorker")));
+                    dataWorker.setFL_PROFESSION(request.getParameter("profession"));
                     dataWorker.setFL_NAME_WORKER(request.getParameter("nameWorker"));
                     dataWorker.setFL_MATERN_NAME(request.getParameter("maternName"));
                     dataWorker.setFL_PATERN_NAME(request.getParameter("paternName"));
                     dataWorker.setFL_KEY_SP(request.getParameter("keySp"));
-                    dataWorker.setFL_TELEHONE_NUMBER(request.getParameter("telephoneNumber"));
+                    dataWorker.setFL_TELEPHONE_NUMBER(request.getParameter("telephoneNumber"));
                     dataWorker.setFL_ADDRES(request.getParameter("addres"));
                     dataWorker.setFL_PHOTO(request.getParameter("photo"));
                     dataWorker.setFK_ROL(Integer.parseInt(request.getParameter("fkRol")));
