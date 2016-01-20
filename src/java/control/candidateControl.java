@@ -20,7 +20,8 @@ import model.studentModel;
  */
 public class candidateControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> list=new candidateControl().SelectCandidates();
+        System.out.print(new candidateControl().GenerateFolioUtsem("13", ""));
+        ArrayList<studentModel> list=new candidateControl().SelectCandidate("20160002");
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME());
         }
@@ -109,7 +110,7 @@ public class candidateControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosUtsem', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
-                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
+                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_FOLIO_TEMP_SYSTEM"));
                     list.add(CandidateAll);
                 }
                 res.close();
@@ -349,7 +350,8 @@ public class candidateControl {
     }
     public String Preregister(String folioTemp, String folioUtsem, String period){
         String request;
-        String procedure1, procedure2;
+        String procedure, procedure1, procedure2;
+        procedure="CALL `SET_CANDIDATE`('update', '"+folioTemp+"', 'FL_PREREGISTER', '1')";
         procedure1="CALL `SET_CANDIDATE`('update', '"+folioTemp+"', 'FL_UTSEM_FOLIO', '"+folioUtsem+"')";
         procedure2="CALL `SET_CANDIDATE`('update', '"+folioTemp+"', 'FK_PERIOD_INSCRIPTION', '"+period+"')";
         try {
@@ -359,6 +361,10 @@ public class candidateControl {
                 ps.close();
             }
             try (PreparedStatement ps = conn.prepareStatement(procedure2)) {
+                ps.executeUpdate();
+                ps.close();
+            }
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
                 ps.close();
             }

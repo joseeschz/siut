@@ -49,7 +49,7 @@
 			</staticText>
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="100" height="83" uuid="ab8bd9f2-4bdf-436d-bfd7-29754184a742"/>
-				<imageExpression><![CDATA["C:\\Users\\Carlos Antonio\\Documents\\GitHub\\siut\\web\\content\\data-jr\\studentsByGroup\\logo-Utsem.png"]]></imageExpression>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>

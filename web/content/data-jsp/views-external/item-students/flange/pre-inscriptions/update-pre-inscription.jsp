@@ -135,7 +135,7 @@ $(document).ready(function () {
             $("[data-type-role=text].telephoneInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].zip-codeInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].calendarInput").jqxDateTimeInput({disabled: status});
-            $("[data-type-role=file]").jqxFileUpload({disabled: status});
+            //$("[data-type-role=file]").jqxFileUpload({disabled: status});
             $('#folioSystemVerify').val("");
             $("[data-field=true]").each(function (){
                 var name_data_fiel;
@@ -1305,7 +1305,7 @@ $(document).ready(function () {
                             <label style="font-size: 16px; line-height: 32px;"><input data-type-role="radio" type="radio" data-field="true" value="No"  name="fl_working"/> No</label>
                         </div>
 
-                        <div class="div-row input-prepend">
+<!--                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_file_id_oficial">Seleccionar identificación oficial</label><br>
                             <span class="add-on"><i class="icon-file"></i></span>
                             <div data-file="true" id="fl_file_id_oficial" data-type-role="file" name="fl_file_id_oficial"></div>
@@ -1325,8 +1325,8 @@ $(document).ready(function () {
                             <div data-file="true" id="fl_file_curp" data-type-role="file" name="fl_file_curp"></div>
                             <br>
                             <span><a target="_blank" href="../serviceFile?viewFile=file_curp">Ver</a></span>
-                        </div>  
-                        <div class="div-row2 input-prepend">
+                        </div>  -->
+                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_curp">CURP</label><br>
                             <span class="add-on"><i class="icon-text-width"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_curp" name="fl_curp" placeholder="CURP" style="width: 185px"/>
@@ -1469,7 +1469,7 @@ $(document).ready(function () {
                             <span class="add-on"><i class="icon-tag"></i></span>  
                             <div data-type-role="text" data-field="true"  class="telephoneInput" id="fl_cell_phone" name="fl_cell_phone"></div>
                         </div>
-                        <div class="div-row1 input-prepend">
+                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_mail">Correo electrónico</label><br>
                             <span class="add-on"><i class="icon-envelope"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_mail" name="fl_mail" placeholder="Correo electrónico..." style="width: 300px"/>
@@ -1479,7 +1479,7 @@ $(document).ready(function () {
                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_facebook" name="fl_facebook" placeholder="Link de facebook..." style="width: 260px"/>
                         </div>
-                        <div class="div-row1 input-prepend">
+                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_twitter">Link de Twitter opcional</label><br>
                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_twitter" name="fl_twitter" placeholder="Link de twitter..." style="width: 360px"/>
@@ -1553,7 +1553,7 @@ $(document).ready(function () {
                             <span class="add-on"><i class="icon-road"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_between_street1_tutor" name="fl_between_street1_tutor" placeholder="Entre calle..." style="width: 260px"/>
                         </div>
-                        <div class="div-row2 input-prepend">
+                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_between_street2_tutor">Y calle</label><br>
                             <span class="add-on"><i class="icon-road"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_between_street2_tutor" name="fl_between_street2_tutor" placeholder="Y calle..." style="width: 360px"/>
@@ -1649,7 +1649,7 @@ $(document).ready(function () {
                             <span class="add-on"><i class="icon-list"></i></span>   
                             <input data-type-role="text" data-field="true" name="fl_occupation_tutor" placeholder="Ocupación..." style="width: 285px"/>
                         </div>
-                        <div class="div-row input-prepend">
+<!--                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_file_id_oficial_tutor">Seleccionar identificación oficial del tutor</label><br>
                             <span class="add-on"><i class="icon-file"></i></span>
                             <div data-file="true" id="fl_file_id_oficial_tutor" data-type-role="file" name="fl_file_id_oficial_tutor"></div>
@@ -1662,7 +1662,7 @@ $(document).ready(function () {
                             <div data-file="true" id="fl_file_curp_tutor" data-type-role="file" name="fl_file_curp_tutor"></div>
                             <br>
                             <span><a target="_blank" href="../serviceFile?viewFile=file_curp_tutor">Ver</a></span>
-                        </div>
+                        </div>-->
                         <div class="div-row input-prepend">
                             <label class="label-row" for="fl_curp_tutor">CURP</label><br>
                             <span class="add-on"><i class="icon-text-width"></i></span>  
