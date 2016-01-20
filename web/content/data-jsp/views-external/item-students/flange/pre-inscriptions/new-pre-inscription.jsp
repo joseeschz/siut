@@ -242,7 +242,7 @@ $(document).ready(function () {
     <div id='periodFilter'></div>
 </div>
 <div style="margin-right: 5px; float: left">
-    Tipo de Inscripsion <br>
+    Tipo de Inscripción <br>
     <div id='typeFilter'></div>
 </div>
 <br>
@@ -252,7 +252,7 @@ $(document).ready(function () {
     <div id="register">
         <div style="padding-left: 15px;">
             <b style="float: left;">Folio Utsem <div id="folioUtsem"></div></b>
-            <div style="float: left; right: 0px; margin-left: 275px;">
+            <div style="float: left; right: 0px; margin-left: 260px;">
                 <b id="labelFolio">Folio Sistema</b><br>
                 <input type="text" id="folioSystem" style="margin: 0px 0px 0px 0px; font-size: 10px;"/>
                 <span id="removeFolio" style="cursor: pointer; font-size: 10px; position: relative; right: 20px;">X</span>

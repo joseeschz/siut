@@ -72,8 +72,7 @@
             createDropDownGruop(itemSemester,"#studentToGroupFlangeGroupFilter",true);
         });
         $("#studentToGroupFlangeGroupFilter").on('change',function (){
-            console.log(1);
-            resetGrid();
+            resetGridAll();
         });
         function loadSource(){
             var ordersSource ={
@@ -169,6 +168,13 @@
         
         var indexExternal = 0;
         function resetGrid(){
+            $("#jqxWidgetResult").html("<span class='exist-in-diferent-group'>Sin movimientos</span>");
+            for(var i=0;i<50; i++){
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRow", "");
+                $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataStatusRowQuestion", "");
+            }
+        }
+        function resetGridAll(){
             $("#jqxWidgetResult").html("<span class='exist-in-diferent-group'>Sin movimientos</span>");
             for(var i=0;i<50; i++){
                 $("#tableStudentGroup").jqxGrid('setcellvalue', i, "dataEnrollment", "");

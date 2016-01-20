@@ -321,7 +321,7 @@ public class serviceCandidate extends HttpServlet {
                     out.print(inserted);
                 }
             }
-            if(request.getParameter("updateField")!=null){     
+            if(request.getParameter("updateField")!=null){
                 String folioSystem =(session.getAttribute("folioSystem").toString());
                 String field_name=request.getParameter("field_name"); 
                 String field_value=request.getParameter("field_value");
