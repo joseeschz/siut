@@ -33,11 +33,12 @@
                         if(itemSubjectMatter!==undefined){
                             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, false);
                             itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
-                            if(itemScaleEvaluation!==undefined){
+                            if(itemScaleEvaluation!==undefined){                                
                                 //exitWorkPlanning();
                                 initDropDownActivities(false);
                                 loadTable();
                             }else{
+                                $("#register").hide();
                                 createDropDownActivities("#calTeacherActivitiesFilter", [], false);
                             }
                         }
@@ -85,16 +86,15 @@
             $("#registerCalFlangeSubjectMatterFilter").on('change',function (){
                 itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
                 itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-                
                 createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, true);
                 itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
-                
                 if(itemScaleEvaluation==undefined){
+                    $("#register").hide();
                     createDropDownActivities("#calTeacherActivitiesFilter", [], true);
                     $('#tableRegisterCalActivities').jqxGrid("clear");
                     $("#evaluateActivity").parent().fadeOut("slow");
                 }else{
-                    
+                    $("#register").show();
                 }
             });
             $("#calTeacherScaleEvaluationFilter").on('change',function (event){

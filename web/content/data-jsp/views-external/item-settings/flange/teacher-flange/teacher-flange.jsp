@@ -41,8 +41,18 @@
             return ordersSource;
         };
         var dataAdapter = new $.jqx.dataAdapter(loadSource());
+        var getEditorDataAdapter = function (datafield) {
+            var dataJobFuntional =
+            [
+                {"dataJobFuntional":"PTC", "dataJobFuntionalValue":"PTC"},
+                {"dataJobFuntional":"PA", "dataJobFuntionalValue":"PA"}
+            ];
+            var source =dataJobFuntional;           
+            var dataAdapter = new $.jqx.dataAdapter(source, { uniqueDataFields: [datafield] });
+            return dataAdapter;
+        };
         $("#tableTeacher").jqxDataTable({
-            width: 500,
+            width: 600,
             height : 300,
             selectionMode: "singleRow",
             localization: getLocalization("es"),
@@ -141,7 +151,7 @@
             },
             columns: [
                 { text: 'NP', editable: false, filterable:false, dataField: 'dataProgresivNumber', width: 30},
-                { text: 'Maestro',editable: false, dataField: 'dataNameWorker', width: 240},
+                { text: 'Maestro',editable: false, dataField: 'dataNameWorker', width: 320},
                 { text: 'Tutor',columntype: 'custom', align:'center', cellsAlign:'center', dataField: 'dataTutor', width: 80,
                     createEditor: function (row, cellvalue, editor, cellText, width, height) {
                         // construct the editor. 
@@ -151,7 +161,8 @@
                         }else{
                             cellvalue = true;
                         }
-                        editor.jqxCheckBox({rtl:true, checked: cellvalue});
+                        editor.jqxCheckBox({rtl: false, checked: cellvalue});
+                        editor.children("div").css({"margin-left": "32px","margin-top": "7px"});
                     },
                     initEditor: function (row, cellvalue, editor, celltext, width, height) {
                         // set the editor's current value. The callback is called each time the editor is displayed.
@@ -171,7 +182,30 @@
                         return value;
                      }
                 },
-                { text: 'Puesto Funcional',  dataField: 'dataJobFuntional'}
+                {
+                    text: 'Puesto Funcional', columntype: 'template', datafield: 'dataJobFuntional',
+                    createEditor: function (row, cellvalue, editor, cellText, width, height) {
+                        // construct the editor. 
+                        editor.jqxDropDownList({
+                            source: getEditorDataAdapter('dataJobFuntional'), 
+                            displayMember: 'dataJobFuntional', 
+                            valueMember: 'dataJobFuntionalValue', 
+                            width: width, 
+                            height: height,
+                            autoDropDownHeight: true,
+                            placeHolder: "SELECCIONAR"
+                        });
+                    },
+                    initEditor: function (row, cellvalue, editor, celltext, width, height) {
+                        // set the editor's current value. The callback is called each time the editor is displayed.
+                        editor.jqxDropDownList({ width: width, height: height });
+                        editor.val(cellvalue);
+                    },
+                    getEditorValue: function (row, cellvalue, editor) {
+                        // return the editor's value.
+                        return editor.val();
+                    }
+                }
             ]
         });
     });

@@ -205,7 +205,7 @@
 <div id='jqxSubTabs'>
     <ul style="margin: 0px;">
         <li style="margin-left: 10px;">
-            Registros
+            Preinscritos
         </li>
         <li>
             Gráfica

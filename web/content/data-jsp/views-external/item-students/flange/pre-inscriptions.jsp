@@ -48,19 +48,37 @@ if(session.getAttribute("logueado") != null){%>
             });
             var tabActive;
             var selectedTab = $.cookie('tabActive');
+            var loaded0=false;
+            var loaded1=false;
+            var loaded2=false;
             $('#jqxTabs').on('selected', function (event) { 
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
+                if(selectedTab===0){                    
+                    if(!loaded0){
+                        $("#updatePre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp");
+                        loaded0=true;
+                    }                    
+                }
+                if(selectedTab===1){                    
+                    if(!loaded1){
+                        $("#newPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/new-pre-inscription.jsp");
+                        loaded1=true;
+                    }   
+                }
+                if(selectedTab===2){                    
+                    if(!loaded2){
+                        $("#allPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/preregisters.jsp");
+                        loaded2=true;
+                    }
+                }
             }); 
             if(selectedTab!==undefined){
                 tabActive = selectedTab;
             }else{
                 tabActive=0;
             }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#newPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/new-pre-inscription.jsp");
-            $("#updatePre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp");
-            $("#allPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/preregisters.jsp");
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false });   
         });
     </script>
     <div id='jqxWindowOk'>
@@ -97,9 +115,9 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="update-inscription">Verificar datos</li>
-            <li class="jqxTabsTitle" dir="new-inscription">Preinscripción</li>
-            <li class="jqxTabsTitle" dir="all-inscription">Preinscritos</li>
+            <li class="jqxTabsTitle" dir="update-pre-inscription">Verificar datos</li>
+            <li class="jqxTabsTitle" dir="new-pre-inscription">Preinscripción</li>
+            <li class="jqxTabsTitle" dir="preregisters">Datos</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

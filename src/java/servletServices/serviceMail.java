@@ -85,7 +85,7 @@ public class serviceMail extends HttpServlet {
                         
                         contentMail=contentMail+"<b>Usuario</b>: <b>"+name+"<br>";
                         contentMail=contentMail+"<b>Contraseña</b>: <b>"+password+"<br><br>";
-                        contentMail=contentMail+"<b>Para iniciar sesión en el <a href='http://10.10.40.5/preregistro'>Sistema de preregristro click aquí.</a></b><br><br>";
+                        contentMail=contentMail+"<b>Para iniciar sesión en el <a href='http://148.223.215.19/preregistro'>Sistema de preregristro click aquí.</a></b><br><br>";
                         contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+email+"</span></span><br><br><br>";
                         contentMail=contentMail+"<b>Nota: </b><b><span style='font-style: italic; color:red;'>En caso de no ser el responsable de este correo favor de eliminarlo y pasar por alto el contenido...!</span><br><br><br><br>";
                         contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
