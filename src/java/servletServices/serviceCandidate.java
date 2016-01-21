@@ -304,14 +304,14 @@ public class serviceCandidate extends HttpServlet {
                         session.removeAttribute("mailCandidate");
                         session.removeAttribute("passwordCandidate");
                         session.removeAttribute("logueadoCandidate");
-                        response.sendRedirect("http://10.10.40.2/ut/?correcto");
+                        response.sendRedirect("http://www.utsem.edu.mx/ut/?correcto");
                         break;
                     default:
                         session.removeAttribute("folioSystem");
                         session.removeAttribute("mailCandidate");
                         session.removeAttribute("passwordCandidate");
                         session.removeAttribute("logueadoCandidate");
-                        response.sendRedirect("http://10.10.40.2");
+                        response.sendRedirect("http://www.utsem.edu.mx/ut/");
                         break;
                 }
             }
