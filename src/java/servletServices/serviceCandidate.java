@@ -270,20 +270,6 @@ public class serviceCandidate extends HttpServlet {
                     out.close();
                 }                
             }
-            if(request.getParameter("checkStatusAcount")!=null){
-                String userName = request.getParameter("userName");
-                String password = request.getParameter("password");
-                int status = new candidateControl().SelectUserStatusAcount(userName, password);
-                out.print(status);
-            }
-            if(request.getParameter("activeAcount")!=null){                
-                if(request.getParameter("userName") != null && request.getParameter("password") != null && request.getParameter("email") != null){
-                    String userName = request.getParameter("userName");
-                    String password = request.getParameter("password");
-                    String email = request.getParameter("email");
-                    out.print(new candidateControl().ActivateAcount(userName, email, password));
-                }                
-            }
             if(request.getParameter("statusAcount")!=null){
                 if(true){                    
                     if(request.getParameter("statusLogin")!=null){
@@ -327,14 +313,14 @@ public class serviceCandidate extends HttpServlet {
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
-                                response.sendRedirect("http://10.10.40.2/ut/?correcto");
+                                response.sendRedirect("http://148.223.215.21/ut/?correcto");
                                 break;
                             default:
                                 session.removeAttribute("folioSystem");
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
-                                response.sendRedirect("http://10.10.40.2");
+                                response.sendRedirect("http://148.223.215.21");
                                 break;
                         }
                     }

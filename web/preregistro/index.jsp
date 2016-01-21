@@ -169,11 +169,24 @@
                     <meta name="viewport" content="width=device-width"/>
                     <meta charset="UTF-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1">
-                        <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
+                    <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
                     <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
+                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.greenUtsem.css" />
                     <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>     
                 </head>
                 <body>
+                    <div style="width: 100%;" id="mainDemoContainer">
+                        <div id='jqxwindow'>
+                            <div>Mensaje</div>
+                            <div style="padding: 20px">
+                                <span id="message"></span>
+                                <br>
+                                <div style="text-align: center">
+                                    <input type="button" id="ok" value="Aceptar" style="margin-right: 10px" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <center class="login">  
                         <div id="stage" style="display: block">
                             <div style="display: none" id="windowBlock">
@@ -277,6 +290,8 @@
                 <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
                 <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
                 <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
+                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script>
+                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxbuttons.js"></script>
                 <script type="text/javascript">
                     $(document).ready(function (){
                         window.location.hash="";
@@ -335,6 +350,8 @@
                                         }, 2000);
                                     }else if(data==="0noLogeado"){
                                         $("#windowBlock").fadeOut("slow");
+                                        $("#message").text("Para iniciar sesión es necesario activar tu cuenta para ello revisa el correo que te hemos mandado.");
+                                        $("#jqxwindow").jqxWindow("open");
                                         $("#MessageError").text("Es necesario activar la cuenta");
                                         $("#MessageError").fadeIn("slow");
                                     }else if(data==="0notExit"){
@@ -535,13 +552,15 @@
                                                 $("#windowBlockRegister").fadeOut("slow");
                                             },
                                             success: function (data, textStatus, jqXHR) {
-                                                if(data==="Success"){
-                                                    alert("Revisa tu correo te hemos mandado tus datos de acceso");
+                                                if(data==="Success"){                                                    
+                                                    $("#message").text("Revisa tu correo te hemos mandado un link para activar tu cuenta.");
+                                                    $("#jqxwindow").jqxWindow("open");
                                                     $(".login").slideDown(2000);
                                                     $(".register").slideUp("slow");
                                                 }else if("FailConnectionNetwork"){
-                                                   alert("Registro creado correctamente pero no fue posible mandar los datos a tu correo!"); 
-                                                   $("#windowBlockRegister").fadeOut("slow");
+                                                    $("#message").text("Registro creado correctamente pero no fue posible mandar los datos a tu correo!");
+                                                    $("#jqxwindow").jqxWindow("open");
+                                                    $("#windowBlockRegister").fadeOut("slow");
                                                 }
                                             }
                                         });
@@ -559,6 +578,24 @@
                         $("#back").click(function (){
                            $(".login").slideDown(2000);
                            $(".register").slideUp("slow");
+                        });
+                        $("#jqxwindow").jqxWindow({
+                            height: 130,
+                            width: 350,
+                            theme: 'greenUtsem',
+                            autoOpen: false,
+                            isModal: true,
+                            showCloseButton: true,
+                            resizable: false,
+                            position: "center",
+                            okButton: $('#ok'),
+                            initContent: function () {
+                                $('#ok').jqxButton({
+                                    width: '65px',
+                                    theme: 'greenUtsem'
+                                });
+                                $('#ok').focus();
+                            }
                         });
                     });
                 </script>
@@ -1369,7 +1406,7 @@
                             if(validateSteps("5")){
                                 $(".buttonFinish").text("Salir");
                                 if($(".buttonFinish").attr("role")==="close"){
-                                    location="../serviceCandidate?statusLogin=out";
+                                    location="../serviceCandidate?statusLogin=out&&statusAcount";
                                 }else{
                                     $.ajax({
                                         type: "POST",
