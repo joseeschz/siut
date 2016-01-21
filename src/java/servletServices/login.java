@@ -62,6 +62,7 @@ public class login extends HttpServlet {
                         session.setAttribute("logueado", name);
                         session.setAttribute("userRol", userRol);
                         session.setAttribute("userRolName", userRolName);
+                        session.setAttribute("userName", userName);
                         out.print("logeado");                   
                     }else{
                         out.print("notExit");
@@ -69,6 +70,7 @@ public class login extends HttpServlet {
                         session.removeAttribute("logueado");
                         session.removeAttribute("userRol");
                         session.removeAttribute("userRolName");
+                        session.removeAttribute("userName");
                     }
                 }
             }
@@ -77,6 +79,7 @@ public class login extends HttpServlet {
             session.removeAttribute("logueado");
             session.removeAttribute("userRol");
             session.removeAttribute("userRolName");
+            session.removeAttribute("userName");
             response.sendRedirect("/admin");
         }
     }

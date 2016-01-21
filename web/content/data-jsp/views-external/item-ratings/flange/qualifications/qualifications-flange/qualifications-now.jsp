@@ -15,7 +15,7 @@
             itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
             createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter",false);
             itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
-            createDropDownSubjectMatterByTeacher(itemPeriod.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", false);
+            createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", false);
             itemSubjectMatter=$('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
             createDropDownGruopByTeacherMattter(itemPeriod.value, itemSemester.value, itemSubjectMatter.value, "#qualificationsGroupFilter",false);
             itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
@@ -29,9 +29,10 @@
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
             });
             $("#qualificationsSemesterFilter").on('change',function (){
+                itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
                 itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
                 itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSubjectMatterByTeacher(itemPeriod.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", true);
+                createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", true);
             });
             $("#qualificationsSubjectMatterFilter").on('change',function (){  
                 itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
@@ -49,7 +50,7 @@
             createDropDownCareerByTeacher(null ,"#qualificationsCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
             createDropDownSemesterByTeacher(null, null,"#qualificationsSemesterFilter",false);
-            createDropDownSubjectMatterByTeacher(null, null, null, "#qualificationsSubjectMatterFilter", false);
+            createDropDownSubjectMatterByTeacher(null, null, null, null, "#qualificationsSubjectMatterFilter", false);
             createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",false);
         }
         function loadSource(){

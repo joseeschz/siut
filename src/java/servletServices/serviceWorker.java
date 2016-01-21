@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.workerModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,7 +38,31 @@ public class serviceWorker extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("getData")!=null){
+                int pkWorker = Integer.parseInt(session.getAttribute("pkUser").toString());                
+                ArrayList<workerModel> listWorkers=new workerControl().SelectWorker(pkWorker);
+                JSONObject data = new JSONObject();
+                for(int i=0;i<listWorkers.size();i++){                    
+                    data.put("pk_worker", listWorkers.get(i).getPK_WORKER());
+                    data.put("fl_profession", listWorkers.get(i).getFL_PROFESSION());
+                    data.put("fl_name_worker", listWorkers.get(i).getFL_NAME_WORKER());
+                    data.put("fl_patern_name", listWorkers.get(i).getFL_PATERN_NAME());
+                    data.put("fl_matern_name", listWorkers.get(i).getFL_MATERN_NAME());                    
+                    data.put("fl_key_sp", listWorkers.get(i).getFL_KEY_SP());
+                    data.put("fl_password", listWorkers.get(i).getFL_PASSWORD());
+                    data.put("fl_telephone_number", listWorkers.get(i).getFL_TELEPHONE_NUMBER());
+                    data.put("fl_mail", listWorkers.get(i).getFL_MAIL());
+                    data.put("fl_addres", listWorkers.get(i).getFL_ADDRES());
+                    data.put("fl_photo", listWorkers.get(i).getFL_PHOTO());
+                    data.put("fl_user_name", listWorkers.get(i).getFL_USER_NAME());
+                }
+                response.setContentType("application/json"); 
+                out.print(data);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("view")!=null){
                 int fkRol= Integer.parseInt(request.getParameter("fkRol"));
                 ArrayList<workerModel> listWorkers=new workerControl().SelectWorker(null, fkRol);
@@ -111,6 +136,13 @@ public class serviceWorker extends HttpServlet {
                     dataWorker.setFK_ROL(Integer.parseInt(request.getParameter("fkRol")));
                     out.print(new workerControl().UpdateWorker("worker",dataWorker));
                 }                
+            }
+            if(request.getParameter("updateField")!=null){       
+                    int pk_worker = Integer.parseInt(session.getAttribute("pkUser").toString()); 
+                    String field_name = request.getParameter("field_name");
+                    String field_value = request.getParameter("field_value");
+                    out.print(new workerControl().UpdateWorker(pk_worker, field_name, field_value));
+                               
             }
             if(request.getParameter("delete")!=null){       
                 if(request.getParameter("pkWorker") != null){

@@ -42,8 +42,8 @@ if(session.getAttribute("logueado") != null){%>
             }
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#qualificationsTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-average.jsp");
-            $("#regulaTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-regula.jsp");
-            $("#globlalTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-global.jsp");
+//            $("#regulaTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-regula.jsp");
+//            $("#globlalTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-global.jsp");
 //            $('#jqxTabs').jqxTabs('disableAt', 1);
 //            $('#jqxTabs').jqxTabs('disableAt', 2);
         });

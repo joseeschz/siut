@@ -48,6 +48,11 @@ public class serviceMail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sessionWeb = request.getSession();
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("rememberPassword")!=null){
+                
+            }
+            
+            
             if(request.getParameter("email")!=null && request.getParameter("userName")!=null && request.getParameter("password")!=null){
                 if(request.getParameter("welcome")!=null){
                     String email = request.getParameter("email");

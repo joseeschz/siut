@@ -200,8 +200,11 @@ if(session.getAttribute("logueado") == null){%>
                                     </div>
                                     <br>
                                     <ul class="dropdown-menu" role="menu" style="cursor: default">
-                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span><%out.print(" "+session.getAttribute("userRolName"));%></span> </li>
+                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span>Usuario</span> </li>
+                                        <li style="color: #54925F; padding-left: 20px " class="dropdown-header"><span><%out.print(" "+session.getAttribute("userName"));%></span> </li>
                                         <li style="cursor: pointer;"><a id="settingsAcount"><img src="../content/pictures-system/settings.acount.png"/> Configurar perfil</a></li>
+                                        
+                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span><%out.print(" "+session.getAttribute("userRolName"));%></span> </li>
                                         <li role="presentation" class="divider"></li>
                                         <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span>Salir</span></li>
                                         <li style="cursor: pointer;"><a id="logOut" href="../login?statusLogin"><img src="../content/pictures-system/logOut.png"/> Cerrar sesión</a></li>

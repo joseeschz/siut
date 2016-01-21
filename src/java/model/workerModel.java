@@ -20,18 +20,11 @@ public class workerModel {
     String FL_USER_NAME = "";
     String FL_ADDRES = "";
     String FL_PHOTO = "";
-    int FK_ROL = 0;
-
-    public String getFL_USER_NAME() {
-        return FL_USER_NAME;
-    }
-
-    public void setFL_USER_NAME(String FL_USER_NAME) {
-        this.FL_USER_NAME = FL_USER_NAME;
-    }
-    //tb_teacher
+    String FL_MAIL = "";
+    String FL_PASSWORD = "";
     String FL_TUTOR = "";
-    String FL_JOB_FUNCTIONAL ="";
+    String FL_JOB_FUNCTIONAL="";
+    int FK_ROL = 0;
 
     public int getPK_WORKER() {
         return PK_WORKER;
@@ -89,6 +82,14 @@ public class workerModel {
         this.FL_TELEPHONE_NUMBER = FL_TELEPHONE_NUMBER;
     }
 
+    public String getFL_USER_NAME() {
+        return FL_USER_NAME;
+    }
+
+    public void setFL_USER_NAME(String FL_USER_NAME) {
+        this.FL_USER_NAME = FL_USER_NAME;
+    }
+
     public String getFL_ADDRES() {
         return FL_ADDRES;
     }
@@ -105,12 +106,20 @@ public class workerModel {
         this.FL_PHOTO = FL_PHOTO;
     }
 
-    public int getFK_ROL() {
-        return FK_ROL;
+    public String getFL_MAIL() {
+        return FL_MAIL;
     }
 
-    public void setFK_ROL(int FK_ROL) {
-        this.FK_ROL = FK_ROL;
+    public void setFL_MAIL(String FL_MAIL) {
+        this.FL_MAIL = FL_MAIL;
+    }
+
+    public String getFL_PASSWORD() {
+        return FL_PASSWORD;
+    }
+
+    public void setFL_PASSWORD(String FL_PASSWORD) {
+        this.FL_PASSWORD = FL_PASSWORD;
     }
 
     public String getFL_TUTOR() {
@@ -127,5 +136,13 @@ public class workerModel {
 
     public void setFL_JOB_FUNCTIONAL(String FL_JOB_FUNCTIONAL) {
         this.FL_JOB_FUNCTIONAL = FL_JOB_FUNCTIONAL;
+    }
+
+    public int getFK_ROL() {
+        return FK_ROL;
+    }
+
+    public void setFK_ROL(int FK_ROL) {
+        this.FK_ROL = FK_ROL;
     }
 }
