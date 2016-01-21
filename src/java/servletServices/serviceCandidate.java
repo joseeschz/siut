@@ -28,7 +28,7 @@ public class serviceCandidate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * methods.v
      *
      * @param request servlet request
      * @param response servlet response
@@ -313,14 +313,14 @@ public class serviceCandidate extends HttpServlet {
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
-                                response.sendRedirect("http://148.223.215.21/ut/?correcto");
+                                response.sendRedirect("http://www.utsem.edu.mx/ut/?correcto");
                                 break;
                             default:
                                 session.removeAttribute("folioSystem");
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
-                                response.sendRedirect("http://148.223.215.21");
+                                response.sendRedirect("http://www.utsem.edu.mx/ut/");
                                 break;
                         }
                     }
