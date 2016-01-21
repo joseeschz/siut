@@ -20,8 +20,7 @@ import model.studentModel;
  */
 public class candidateControl {
     public static void main(String[] args) {
-        System.out.print(new candidateControl().GenerateFolioUtsem("13", ""));
-        ArrayList<studentModel> list=new candidateControl().SelectCandidate("20160002");
+        ArrayList<studentModel> list=new candidateControl().SelectUserLogin("carlo94", "1234");
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME());
         }
@@ -144,6 +143,41 @@ public class candidateControl {
             Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public int SelectUserStatusAcount(String userName, String password){
+        int status = 0;
+        String procedure = "CALL `GET_CANDIDATE`('status', null, '"+userName+"', '"+password+"')";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    status = (res.getInt("FL_STATUS_ACOUNT"));
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public String ActivateAcount(String userName, String mail, String password){
+        String request;
+        String procedure = "CALL `SET_CANDITATE_ACTIVATE_ACOUNT`('activateAcount', '"+userName+"', '"+mail+"', '"+password+"')";
+       try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.executeUpdate();
+                request="Actived";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
     }
     public boolean ValidateUserName(String userName){
         boolean validate = false;

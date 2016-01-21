@@ -270,33 +270,50 @@ public class serviceCandidate extends HttpServlet {
                     out.close();
                 }                
             }
-            if(request.getParameter("statusLogin")!=null){
-                String statusLogin = request.getParameter("statusLogin");
-                switch (statusLogin) {
-                    case "in":
+            if(request.getParameter("statusAcount")!=null){
+                if(true){                    
+                    if(request.getParameter("statusLogin")!=null){
                         String userName = request.getParameter("userName");
                         String password = request.getParameter("password");
-                        String name = "";
-                        String mail = "";
-                        String folioSystem ="";
-                        ArrayList<studentModel> list=new candidateControl().SelectUserLogin(userName, password);
-                        for (studentModel list1 : list) {
-                            name = list1.getFL_NAME();
-                            folioSystem = list1.getFL_FOLIO_TEMP_SYSTEM();
-                            mail = list1.getFL_MAIL();
-                        }   if(userName != null && password != null){
-                            if(list.size()==1){                                
-                                session.setAttribute("folioSystem", folioSystem);
-                                session.setAttribute("mailCandidate", mail);
-                                session.setAttribute("passwordCandidate", password);
-                                session.setAttribute("logueadoCandidate", name);
-                                out.print("logeado");
-                            }else{
-                                out.print("notExit");
+                        int status = new candidateControl().SelectUserStatusAcount(userName, password);
+                        String statusLogin = request.getParameter("statusLogin");
+                        switch (statusLogin) {
+                            case "in":
+                                String name = "";
+                                String mail = "";
+                                String folioSystem ="";
+                                ArrayList<studentModel> list=new candidateControl().SelectUserLogin(userName, password);
+                                for (studentModel list1 : list) {
+                                    name = list1.getFL_NAME();
+                                    folioSystem = list1.getFL_FOLIO_TEMP_SYSTEM();
+                                    mail = list1.getFL_MAIL();
+                                }   
+                                if(userName != null && password != null){
+                                    if(list.size()==1){
+                                        if(status==1){
+                                            session.setAttribute("folioSystem", folioSystem);
+                                            session.setAttribute("mailCandidate", mail);
+                                            session.setAttribute("passwordCandidate", password);
+                                            session.setAttribute("logueadoCandidate", name);
+                                            out.print(status+"logeado");
+                                        }else{
+                                            out.print(status+"noLogeado");
+                                        }                                        
+                                    }else{
+                                        out.print(status+"notExit");
+                                        session.removeAttribute("folioSystem");
+                                        session.removeAttribute("mailCandidate");
+                                        session.removeAttribute("passwordCandidate");
+                                        session.removeAttribute("logueadoCandidate");
+                                    }
+                                }   
+                                break;
+                            case "out":
                                 session.removeAttribute("folioSystem");
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
+<<<<<<< HEAD
                             }
                         }   break;
                     case "out":
@@ -314,6 +331,20 @@ public class serviceCandidate extends HttpServlet {
                         response.sendRedirect("http://www.utsem.edu.mx/ut/");
                         break;
                 }
+=======
+                                response.sendRedirect("http://148.223.215.21/ut/?correcto");
+                                break;
+                            default:
+                                session.removeAttribute("folioSystem");
+                                session.removeAttribute("mailCandidate");
+                                session.removeAttribute("passwordCandidate");
+                                session.removeAttribute("logueadoCandidate");
+                                response.sendRedirect("http://148.223.215.21");
+                                break;
+                        }
+                    }
+                }                
+>>>>>>> develop
             }
             if(request.getParameter("insert")!=null){
                 if(request.getParameter("userNameRegister")!=null && request.getParameter("email")!=null && request.getParameter("password1")!=null){
