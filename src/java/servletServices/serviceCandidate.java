@@ -313,9 +313,9 @@ public class serviceCandidate extends HttpServlet {
                                 session.removeAttribute("mailCandidate");
                                 session.removeAttribute("passwordCandidate");
                                 session.removeAttribute("logueadoCandidate");
-<<<<<<< HEAD
                             }
-                        }   break;
+                        }   
+                    break;
                     case "out":
                         session.removeAttribute("folioSystem");
                         session.removeAttribute("mailCandidate");
@@ -331,7 +331,6 @@ public class serviceCandidate extends HttpServlet {
                         response.sendRedirect("http://www.utsem.edu.mx/ut/");
                         break;
                 }
-=======
                                 response.sendRedirect("http://148.223.215.21/ut/?correcto");
                                 break;
                             default:
@@ -344,7 +343,7 @@ public class serviceCandidate extends HttpServlet {
                         }
                     }
                 }                
->>>>>>> develop
+
             }
             if(request.getParameter("insert")!=null){
                 if(request.getParameter("userNameRegister")!=null && request.getParameter("email")!=null && request.getParameter("password1")!=null){
