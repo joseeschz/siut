@@ -6,6 +6,7 @@
 package servletServices;
 
 import control.AuthControl;
+import control.aes;
 import control.candidateControl;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,7 +76,15 @@ public class serviceMail extends HttpServlet {
                     Session session = Session.getInstance(prop, auth);
                     String contentMail="";
                     Message msg=new MimeMessage(session);
+                    String liga;
+                    String userNameSecurity = "userName";
+                    String emailSecuruty = "mail";
+                    String passwordSecuruty = "password";
+                    
+                    aes sec = new aes();
+                    sec.addKey("2015");   
                     try {
+                        liga = userNameSecurity+"="+name+"&&"+emailSecuruty+"="+email+"&&"+passwordSecuruty+"="+password;
                         InternetAddress[] emails = new InternetAddress[1];
                         emails[0] = new InternetAddress(email);
                         msg.setRecipients(Message.RecipientType.TO, emails);
@@ -90,7 +99,7 @@ public class serviceMail extends HttpServlet {
                         
                         contentMail=contentMail+"<b>Usuario</b>: <b>"+name+"<br>";
                         contentMail=contentMail+"<b>Contraseña</b>: <b>"+password+"<br><br>";
-                        contentMail=contentMail+"<b>Para iniciar sesión en el <a href='http://148.223.215.19/preregistro'>Sistema de preregristro click aquí.</a></b><br><br>";
+                        contentMail=contentMail+"<b>Para iniciar sesión en el Sistema de preregristro es necesario activar tu cuenta para ello<a href='http://148.223.215.19/preregistro?ac="+sec.encriptar(liga)+"'> click aquí.</a></b><br><br>";
                         contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+email+"</span></span><br><br><br>";
                         contentMail=contentMail+"<b>Nota: </b><b><span style='font-style: italic; color:red;'>En caso de no ser el responsable de este correo favor de eliminarlo y pasar por alto el contenido...!</span><br><br><br><br>";
                         contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";

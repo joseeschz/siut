@@ -36,7 +36,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Carlos Antonio\\Documents\\GitHub\\siut\\web\\content\\data-jr\\evaluatedCriterion\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C://glassfish-4.1//glassfish4//glassfish//domains//domain1//applications//siut//content//data-jr//evaluatedCriterion//"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter});]]>
@@ -993,7 +993,7 @@
 	<summary>
 		<band height="119">
 			<subreport>
-				<reportElement x="-12" y="0" width="609" height="100" uuid="24fd697b-6578-4100-8158-45b03fca4574"/>
+				<reportElement x="-12" y="0" width="609" height="119" uuid="4b8c74f1-da13-408a-b733-e0c0f04492ce"/>
 				<subreportParameter name="pt_study_level">
 					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
 				</subreportParameter>
