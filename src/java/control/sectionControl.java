@@ -20,7 +20,7 @@ import model.sectionModel;
  */
 public class sectionControl {
     public static void main(String[] args) {
-        ArrayList<sectionModel> list=new sectionControl().SelectSections(64);
+        ArrayList<sectionModel> list=new sectionControl().SelectSection(4, 3);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getPK_SECTION_MENU_PRINCIPAL());
             System.out.print(list.get(i).getFL_NAME_SECTION()+" ");

@@ -25,6 +25,37 @@ public class workerControl {
             System.out.println(list.get(i).getFL_NAME_WORKER());
         }
     }
+    public ArrayList<workerModel> SelectWorker(int pkWorker){
+        ArrayList<workerModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byPkWorker', '"+pkWorker+"')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    workerModel listWorker=new workerModel();
+                    listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
+                    listWorker.setFL_PROFESSION(res.getString("FL_PROFESSION"));
+                    listWorker.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    listWorker.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    listWorker.setFL_USER_NAME(res.getString("FL_USER_NAME"));
+                    listWorker.setFL_PATERN_NAME(res.getString("FL_PATERN_NAME"));
+                    listWorker.setFL_MATERN_NAME(res.getString("FL_MATERN_NAME"));                        
+                    listWorker.setFL_KEY_SP(res.getString("FL_KEY_SP"));
+                    listWorker.setFL_PASSWORD(res.getString("FL_PASSWORD"));
+                    listWorker.setFL_TELEPHONE_NUMBER(res.getString("FL_TELEPHONE_NUMBER"));
+                    listWorker.setFL_ADDRES(res.getString("FL_ADDRES"));
+                    listWorker.setFL_MAIL(res.getString("FL_MAIL"));
+                    listWorker.setFL_PHOTO(res.getString("FL_PHOTO"));
+                    list.add(listWorker);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(workerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<workerModel> SelectWorker(String comand, int fkRol){
         ArrayList<workerModel> list=new ArrayList<>();
         if(comand!=null){
@@ -171,6 +202,22 @@ public class workerControl {
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('update','"+comand+"', '"+dataWorker.getPK_WORKER()+"', '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEPHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','"+dataWorker.getFL_TUTOR()+"','"+dataWorker.getFL_JOB_FUNCTIONAL()+"')")) {
+                ps.executeUpdate();
+                request="Datos Modificados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String UpdateWorker(int pk_worker, String field_name, String field_value){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GERNERIC_WORKER`('update', '"+field_name+"', '"+field_value+"', "+pk_worker+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

@@ -1,32 +1,190 @@
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".defaultButton").jqxButton({width: 70}).css({"float": "right","margin-right":"10px"});
+        $(".successButton").jqxButton({width: 70, template: "success" }).css({"float": "right", "margin-right":"35px"});
+        $("#fl_telephone_number").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 25  });
+        $("#fl_password").jqxPasswordInput({ height: 27, width: '260px', showStrength: false, showStrengthPosition: "right" });
+        $("#fl_password_new").jqxPasswordInput({height: 27, width: '260px', showStrength: false, showStrengthPosition: "right" });
+        $("#jqxNavigationBar").jqxNavigationBar({ 
+            width: 600, 
+            height: 430, 
+            animationType:'fade',
+            theme: theme
+        });
+        $('#registerForm1').jqxValidator({
+            hintType: 'label',
+            animationDuration: 1000,
+            rules: [
+                { input: '#fl_profession', message: 'La profesión es requerida', action: 'keyup, blur', rule: 'required' },
+                { input: '#fl_name_worker', message: 'El nombre es requerido', action: 'keyup, blur', rule: 'required' },
+                { input: '#fl_name_worker', message: 'Solo deben de ser letras', action: 'keyup, blur', rule: 'notNumber' },
+                { input: '#fl_patern_name', message: 'El apellido paterno es requerido', action: 'keyup', rule: 'required' },
+                { input: '#fl_patern_name', message: 'Solo deben de ser letras', action: 'keyup, blur', rule: 'notNumber' },                   
+                { input: '#fl_matern_name', message: 'El apellido materno es requerido', action: 'keyup', rule: 'required' },
+                { input: '#fl_matern_name', message: 'Solo deben de ser letras', action: 'keyup, blur', rule: 'notNumber' },                   
+                { input: '#fl_key_sp', message: 'La clave del servidor público es requerida', action: 'keyup, blur', rule: 'required' },
+                { input: '#fl_key_sp', message: 'Debe de ser númerica', action: 'keyup, blur', rule: 'number' },
+                {
+                    input: '#fl_key_sp', message: 'La clave ya esta en uso', action: 'blur', rule: function (input, commit) {
+                        // call commit with false, when you are doing server validation and you want to display a validation error on this field. 
+                        var key_sp = 0;
+                        if(input.attr('oldValue')!==input.val()){
+                            key_sp = checkKp(input.val());
+                            if(key_sp==="0"){
+                                return true;
+                            }else if(key_sp==="1"){
+                                if(input.val()===input.attr('oldValue')){
+                                    return true;
+                                }else{
+                                    return false;  
+                                }                                    
+                            }else{
+                                console.log("Error "+key_sp);
+                            }
+                        }    
+                    }
+                }
+            ]
+        });
+        $('#saveRegisterForm').on('click', function () {
+            $('#registerForm1').jqxValidator('validate');
+        });
+        $('#registerForm2').jqxValidator({
+            hintType: 'label',
+            animationDuration: 0,
+            rules: [
+                { input: '#fl_password', message: 'La contraseña es requerida', action: 'keyup, blur', rule: 'required' },
+                { input: '#fl_password', message: 'Tu contraseña debe de contener de 4 a 20 caracteres', action: 'keyup, blur', rule: 'length=4,20' },
+                { input: '#fl_password_new', message: 'Este campo es requerido', action: 'keyup, blur', rule: 'required' },
+                {
+                    input: '#fl_password_new', message: 'La nueva contraseña es requerida', action: 'keyup, focus', rule: function (input, commit) {
+                        // call commit with false, when you are doing server validation and you want to display a validation error on this field. 
+                        if (input.val() === $('#fl_password_new').val()) {
+                            return true;
+                        }
+                        return false;
+                    }
+                },
+                { input: '#fl_mail', message: 'El correo es requerido', action: 'keyup, blur', rule: 'required' },
+                { input: '#fl_mail', message: 'El correo no tiene un formato valido', action: 'keyup', rule: 'email' }
+            ]
+        });
+        $('#registerForm3').jqxValidator({
+            hintType: 'label',
+            animationDuration: 0,
+            rules: [
+                    { input: '#fl_telephone_number', message: 'El número de teléfono es requerido', action: 'keyup, blur', rule: 'required' }
+               ]
+        });
+        $('#registerForm1').on('validationSuccess', function (event) { 
+            $('#registerForm1 [data-field="true"]').each(function (){
+                if($(this).attr('oldValue')!==$(this).val()){
+                    var field_name = $(this).attr("id");
+                    var field_value = $(this).val();
+                    $.ajax({
+                        //Send the paramethers to servelt
+                        type: "POST",
+                        async: false,
+                        url: "../serviceWorker?updateField",
+                        data:{
+                            'field_name' : field_name,
+                            'field_value' : field_value
+                        },
+                        beforeSend: function (xhr) {
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //This is if exits an error with the server internal can do server off, or page not found
+                            alert("Error interno del servidor");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            $("#"+field_name).attr('oldValue', field_value);
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        }); 
+        function checkKp(value){
+            var checkKp = "";
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                url: "../serviceWorker?checkKp",
+                data:{
+                    'keySp': value
+                },
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {
+                    checkKp = data;
+                }
+            });
+            return checkKp;
+        }
+        function loadDataWorker(){
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                url: "../serviceWorker?getData",
+                data:{
+                },
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {
+                    var valueKey = "";
+                    $("[data-field='true']").each(function (){
+                        valueKey =$(this).attr("id");
+                        $(this).val(data[valueKey]);
+                        $(this).attr('oldValue',data[valueKey]);
+                    });
+                }
+            });
+        }
+        loadDataWorker();
+    });
+</script>
 <style>
     .columTop{
         background-color: #BEF298; 
         height: 50px; 
-        width: 100%; 
+        width: 650px; 
         border: 1px solid rgb(165, 159, 159);
     }
     .columBody{
-        width: 100%; 
-        height: 380px; 
+        width: 630px; 
+        height: 430px; 
         border: 1px solid rgb(165, 159, 159);
         border-top: none;
         padding-top: 5px;
+        padding: 10px
     }
     list-group{
         padding-left:0;
-        margin-bottom:20px
+        margin-bottom:10px
     }
     .list-group-item{
         position:relative;
         display:block;
-        padding:10px 15px;
+        padding:2px 2px;
         margin-bottom:-1px;
         background-color:#fff;
         border:1px solid #ddd
     }
-    li{
-        cursor: pointer;
+    .indicator{
+        font-weight: bolder;
+        color: rgb(119, 150, 112);
+        width: 140px; 
+        text-align: right;
     }
 </style>
 <div class="" style="padding: 5px 5px 5px 20px;">
@@ -35,17 +193,134 @@
         <h3 style="color: #586951; margin-bottom: -5px; float: left">Datos de la cuenta</h3>
     </div>
     <div class="columBody">
-        <div data-example-id="simple-list-group" style="width: 250px; padding: 5px; float: left">
-            <ul class="list-group" style="margin-left: 0px">
-                <li class="list-group-item"><a>Información personal</a></li>
-                <li class="list-group-item"><a>Datos del perfil</a></li>
-                <li class="list-group-item"><a>Contacto</a></li>
-                <li class="list-group-item"><a>Datos tipo pofesional</a></li>
-                <li class="list-group-item"><a>Cambiar password</a></li>
-            </ul>
-        </div>
-        <div data-example-id="simple-list-group" style="border-left: 2px solid #A3BC98; height: 360px; width: 70%; padding: 5px; float: left">
-            
+        <div id='jqxNavigationBar'>
+            <!--Header-->
+            <div>Información personal</div>
+            <!--Content-->
+            <div>
+                <form id="registerForm1" action="./">
+                    <ul class="list-group" style="margin-left: 0px">
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Profesión</td>
+                                    <td><input type="text" id="fl_profession" data-field="true" class="text-input" placeholder="Ing, Lic, Mti, etc..." /></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Nombre</td>
+                                    <td><input type="text" id="fl_name_worker" data-field="true" class="text-input" placeholder="Nombre"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Apellido paterno</td>
+                                    <td><input type="text" id="fl_patern_name" data-field="true" class="text-input" placeholder="Apellido paterno"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Apellido materno</td>
+                                    <td><input type="text" id="fl_matern_name" data-field="true" class="text-input" placeholder="Apellido materno"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Clave Servidor Público</td>
+                                    <td><input type="text" id="fl_key_sp" data-field="true" class="text-input" placeholder="Clave Servidor Público"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item" style="height: 24px;">
+                            <div class="successButton" id="saveRegisterForm">Guardar</div>
+                            <div class="defaultButton">Cancelar</div>                            
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <!--Header-->
+            <div>Datos de acceso</div>
+            <!--Content-->
+            <div>
+                <form id="registerForm2" action="./">
+                    <ul class="list-group" style="margin-left: 0px">
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Usuario</td>
+                                    <td><input type="text" readonly="" id="fl_user_name" data-field="true" disabled="" class="text-input"/></td>
+                                </tr>   
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Correo</td>
+                                    <td><input type="text" id="fl_mail" data-field="true" class="text-input" placeholder="alguno@gmail.com"/></td>
+                                </tr>   
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Contraseña actual</td>
+                                    <td><input type="password" id="fl_password" class="text-input"  placeholder="*****"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Nueva contraseña</td>
+                                    <td><input type="password" id="fl_password_new" class="text-input"  placeholder="*****"/></td>
+                                </tr>
+                            </table>
+                        </li>
+                        <li class="list-group-item" style="height: 24px;">
+                            <div class="successButton">Guardar</div>
+                            <div class="defaultButton">Cancelar</div>                            
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <!--Header-->
+            <div>Forma de contacto</div>
+            <!--Content-->
+            <div>
+                <form id="registerForm3" action="./">
+                    <ul class="list-group" style="margin-left: 0px">
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Teléfono</td>
+                                    <td><div id="fl_telephone_number" data-field="true"></div></td>
+                                </tr>   
+                            </table>
+                        </li>
+                        <li class="list-group-item">
+                            <table>
+                                <tr>
+                                    <td class="indicator">Dirección</td>
+                                    <td><td><textarea id="fl_addres" data-field="true"></textarea></td></td>
+                                </tr>   
+                            </table>
+                        </li>                        
+                        <li class="list-group-item" style="height: 24px;">
+                            <div class="successButton">Guardar</div>
+                            <div class="defaultButton">Cancelar</div>                            
+                        </li>
+                    </ul>
+                </form>
+            </div>
         </div>
     </div>
 </div>

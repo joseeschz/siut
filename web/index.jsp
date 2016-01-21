@@ -64,9 +64,19 @@
         <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
         <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
         <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
+        <script type="text/javascript" src="content/files-jq/jquery-migrate-1.3.0.min.js"></script>
         <link type="text/css" rel="Stylesheet" href="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.theme-utsem.css" />
         <script type="text/javascript">
             $(document).ready(function (){
+//                jQuery.each( jQuery.browser, function( i, val ) {
+//                    $( "<div>" + i + " : <span>" + val + "</span>" )
+//                    .appendTo( document.body );
+//                });
+//                console.log(window.opera);
+//                if ($.browser.opera) {
+//                    $("body").children().css({"display":"none"});
+//                    $("body").append("<h1>Esté sistema no es compatible con este navegador :(");
+//                }
                 $("#password, #nameUser").focusin(function (){
                     $("#MessageError").fadeOut("slow");
                 });
