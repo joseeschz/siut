@@ -377,7 +377,7 @@
                                             <div data-type-role="text" data-field="true" name="fl_above_average"  id="fl_above_average"></div>
                                         </div>
                                         <div class="div-row input-prepend">
-                                            <label class="label-row" for="fl_period_bacherol">Periodo en el que realizo el bachillerato</label><br>
+                                            <label class="label-row" for="fl_period_bacherol">Periodo en el que realizó el bachillerato</label><br>
                                             <span class="add-on"><i class="icon-question-sign"></i></span>  
                                             <input type="text" data-type-role="text" data-field="true" name="fl_period_bacherol"  id="fl_period_bacherol"/><br>
                                             <span style="margin-left: 20px; color: rgb(141, 141, 141)">(Año inicio)-(Año final)</span>
@@ -897,7 +897,7 @@
                                         </div>
                                         <div id="fl_what_work_div" style="display: none">
                                             <div class="div-row input-prepend">
-                                                <label class="label-row" for="fl_where_work">¿Dondé?</label><br>
+                                                <label class="label-row" for="fl_where_work">¿Dónde?</label><br>
                                                 <span class="add-on"><i class="icon-text-width"></i></span>      
                                                 <input data-type-role="text" data-field="true" name="fl_where_work" placeholder="Lugar.." style="width: 285px"/>
                                             </div>
