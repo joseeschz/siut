@@ -56,7 +56,25 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
                 if(selectedTab===0){                    
                     if(!loaded0){
-                        $("#updatePre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp");
+                        //$("#updatePre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp");
+                        $("#load-page-external").jqxWindow('open');
+                        $.ajax({
+                            type: "POST",
+                            url: "../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp",
+                            async: true,
+                            beforeSend: function (xhr) {
+                                $("#updatePre-IncriptionTab").css("display","none");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                $("#updatePre-IncriptionTab").html(data);
+                                $("#load-page-external").jqxWindow('close');
+                            }
+                        }).done(function (){
+                            $("#updatePre-IncriptionTab").css("display","block");
+                        });                        
                         loaded0=true;
                     }                    
                 }

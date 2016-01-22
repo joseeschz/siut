@@ -58,6 +58,18 @@ public class studentModel extends careerModel{
     String FL_MAIL="";
     String FL_FACEBOOK="";
     String FL_TWITTER="";
+    String FL_PATERN_NAME_FATHER = "";
+    String FL_MATERN_NAME_FATHER = "";
+    String FL_NAME_FATHER="";
+    String FL_BORN_DATE_FATHER="";
+    String FL_MARITIAL_STATE_FATHER="";
+    String FL_LEVEL_EDUCATION_FATHER="";
+    String FL_PATERN_NAME_MOTHER="";
+    String FL_MATERN_NAME_MOTHER="";
+    String FL_NAME_MOTHER="";
+    String FL_BORN_DATE_MOTHER="";
+    String FL_MARITIAL_STATE_MOTHER="";
+    String FL_LEVEL_EDUCATION_MOTHER="";
     String FL_TUTOR_RELATIONSHIP="";
     String FL_PATERN_NAME_TUTOR="";
     String FL_MATERN_NAME_TUTOR="";
@@ -139,6 +151,10 @@ public class studentModel extends careerModel{
     String FL_SECUTITY_MEDICAL="";
     String FL_SECURITY_NAME="";
     String FL_NUMBER_SECURITY_MEDICAL="";
+    String FL_WHOM_DEPEND="";
+    String FL_DEPEND_ECONOMICALLY_WORK="";
+    String FL_WHERE_WORK="";
+    String FL_WHAT_WORK="";
     int FL_MODIFY=0;
 
     public int getPK_STUDENT() {
@@ -523,6 +539,102 @@ public class studentModel extends careerModel{
 
     public void setFL_TWITTER(String FL_TWITTER) {
         this.FL_TWITTER = FL_TWITTER;
+    }
+
+    public String getFL_PATERN_NAME_FATHER() {
+        return FL_PATERN_NAME_FATHER;
+    }
+
+    public void setFL_PATERN_NAME_FATHER(String FL_PATERN_NAME_FATHER) {
+        this.FL_PATERN_NAME_FATHER = FL_PATERN_NAME_FATHER;
+    }
+
+    public String getFL_MATERN_NAME_FATHER() {
+        return FL_MATERN_NAME_FATHER;
+    }
+
+    public void setFL_MATERN_NAME_FATHER(String FL_MATERN_NAME_FATHER) {
+        this.FL_MATERN_NAME_FATHER = FL_MATERN_NAME_FATHER;
+    }
+
+    public String getFL_NAME_FATHER() {
+        return FL_NAME_FATHER;
+    }
+
+    public void setFL_NAME_FATHER(String FL_NAME_FATHER) {
+        this.FL_NAME_FATHER = FL_NAME_FATHER;
+    }
+
+    public String getFL_BORN_DATE_FATHER() {
+        return FL_BORN_DATE_FATHER;
+    }
+
+    public void setFL_BORN_DATE_FATHER(String FL_BORN_DATE_FATHER) {
+        this.FL_BORN_DATE_FATHER = FL_BORN_DATE_FATHER;
+    }
+
+    public String getFL_MARITIAL_STATE_FATHER() {
+        return FL_MARITIAL_STATE_FATHER;
+    }
+
+    public void setFL_MARITIAL_STATE_FATHER(String FL_MARITIAL_STATE_FATHER) {
+        this.FL_MARITIAL_STATE_FATHER = FL_MARITIAL_STATE_FATHER;
+    }
+
+    public String getFL_LEVEL_EDUCATION_FATHER() {
+        return FL_LEVEL_EDUCATION_FATHER;
+    }
+
+    public void setFL_LEVEL_EDUCATION_FATHER(String FL_LEVEL_EDUCATION_FATHER) {
+        this.FL_LEVEL_EDUCATION_FATHER = FL_LEVEL_EDUCATION_FATHER;
+    }
+
+    public String getFL_PATERN_NAME_MOTHER() {
+        return FL_PATERN_NAME_MOTHER;
+    }
+
+    public void setFL_PATERN_NAME_MOTHER(String FL_PATERN_NAME_MOTHER) {
+        this.FL_PATERN_NAME_MOTHER = FL_PATERN_NAME_MOTHER;
+    }
+
+    public String getFL_MATERN_NAME_MOTHER() {
+        return FL_MATERN_NAME_MOTHER;
+    }
+
+    public void setFL_MATERN_NAME_MOTHER(String FL_MATERN_NAME_MOTHER) {
+        this.FL_MATERN_NAME_MOTHER = FL_MATERN_NAME_MOTHER;
+    }
+
+    public String getFL_NAME_MOTHER() {
+        return FL_NAME_MOTHER;
+    }
+
+    public void setFL_NAME_MOTHER(String FL_NAME_MOTHER) {
+        this.FL_NAME_MOTHER = FL_NAME_MOTHER;
+    }
+
+    public String getFL_BORN_DATE_MOTHER() {
+        return FL_BORN_DATE_MOTHER;
+    }
+
+    public void setFL_BORN_DATE_MOTHER(String FL_BORN_DATE_MOTHER) {
+        this.FL_BORN_DATE_MOTHER = FL_BORN_DATE_MOTHER;
+    }
+
+    public String getFL_MARITIAL_STATE_MOTHER() {
+        return FL_MARITIAL_STATE_MOTHER;
+    }
+
+    public void setFL_MARITIAL_STATE_MOTHER(String FL_MARITIAL_STATE_MOTHER) {
+        this.FL_MARITIAL_STATE_MOTHER = FL_MARITIAL_STATE_MOTHER;
+    }
+
+    public String getFL_LEVEL_EDUCATION_MOTHER() {
+        return FL_LEVEL_EDUCATION_MOTHER;
+    }
+
+    public void setFL_LEVEL_EDUCATION_MOTHER(String FL_LEVEL_EDUCATION_MOTHER) {
+        this.FL_LEVEL_EDUCATION_MOTHER = FL_LEVEL_EDUCATION_MOTHER;
     }
 
     public String getFL_TUTOR_RELATIONSHIP() {
@@ -1171,6 +1283,38 @@ public class studentModel extends careerModel{
 
     public void setFL_NUMBER_SECURITY_MEDICAL(String FL_NUMBER_SECURITY_MEDICAL) {
         this.FL_NUMBER_SECURITY_MEDICAL = FL_NUMBER_SECURITY_MEDICAL;
+    }
+
+    public String getFL_WHOM_DEPEND() {
+        return FL_WHOM_DEPEND;
+    }
+
+    public void setFL_WHOM_DEPEND(String FL_WHOM_DEPEND) {
+        this.FL_WHOM_DEPEND = FL_WHOM_DEPEND;
+    }
+
+    public String getFL_DEPEND_ECONOMICALLY_WORK() {
+        return FL_DEPEND_ECONOMICALLY_WORK;
+    }
+
+    public void setFL_DEPEND_ECONOMICALLY_WORK(String FL_DEPEND_ECONOMICALLY_WORK) {
+        this.FL_DEPEND_ECONOMICALLY_WORK = FL_DEPEND_ECONOMICALLY_WORK;
+    }
+
+    public String getFL_WHERE_WORK() {
+        return FL_WHERE_WORK;
+    }
+
+    public void setFL_WHERE_WORK(String FL_WHERE_WORK) {
+        this.FL_WHERE_WORK = FL_WHERE_WORK;
+    }
+
+    public String getFL_WHAT_WORK() {
+        return FL_WHAT_WORK;
+    }
+
+    public void setFL_WHAT_WORK(String FL_WHAT_WORK) {
+        this.FL_WHAT_WORK = FL_WHAT_WORK;
     }
 
     public int getFL_MODIFY() {
