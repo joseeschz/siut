@@ -20,7 +20,7 @@ import model.studentModel;
  */
 public class studentControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> listStudents2=new studentControl().SelectStudent("onlyDataBasic", "onlyDataBasic");
+        ArrayList<studentModel> listStudents2=new studentControl().SelectStudent("UTS12S-003661", "allData");
         for(int i=0;i<listStudents2.size();i++){
             System.out.println(listStudents2.get(i).getFL_NAME());
         }
@@ -84,7 +84,6 @@ public class studentControl {
                         Student.setPK_MUNICIPALITY(res.getInt("FK_MUNICIPALITY"));
                         Student.setPK_LOCALITY(res.getInt("FK_LOCALITY"));
                         Student.setFK_PREPARATORY(res.getInt("FK_PREPARATORY"));
-                        Student.setFL_MODIFY(res.getInt("FL_MODIFY"));
                         list.add(Student);
                     }
                     res.close();
@@ -146,6 +145,20 @@ public class studentControl {
                         Student.setFL_MAIL(res.getString("FL_MAIL"));
                         Student.setFL_FACEBOOK(res.getString("FL_FACEBOOK"));
                         Student.setFL_TWITTER(res.getString("FL_TWITTER"));
+                        
+                        Student.setFL_PATERN_NAME_FATHER(res.getString("FL_PATERN_NAME_FATHER"));
+                        Student.setFL_MATERN_NAME_FATHER(res.getString("FL_MATERN_NAME_FATHER"));
+                        Student.setFL_NAME_FATHER(res.getString("FL_NAME_FATHER"));
+                        Student.setFL_BORN_DATE_FATHER(res.getString("FL_BORN_DATE_FATHER"));
+                        Student.setFL_MARITIAL_STATE_FATHER(res.getString("FL_MARITIAL_STATE_FATHER"));
+                        Student.setFL_LEVEL_EDUCATION_FATHER(res.getString("FL_LEVEL_EDUCATION_FATHER"));
+                        Student.setFL_PATERN_NAME_MOTHER(res.getString("FL_PATERN_NAME_MOTHER"));
+                        Student.setFL_MATERN_NAME_MOTHER(res.getString("FL_MATERN_NAME_MOTHER"));
+                        Student.setFL_NAME_MOTHER(res.getString("FL_NAME_MOTHER"));
+                        Student.setFL_BORN_DATE_MOTHER(res.getString("FL_BORN_DATE_MOTHER"));
+                        Student.setFL_MARITIAL_STATE_MOTHER(res.getString("FL_MARITIAL_STATE_MOTHER"));
+                        Student.setFL_LEVEL_EDUCATION_MOTHER(res.getString("FL_LEVEL_EDUCATION_MOTHER"));
+                        
                         Student.setFL_TUTOR_RELATIONSHIP(res.getString("FL_TUTOR_RELATIONSHIP"));
                         Student.setFL_PATERN_NAME_TUTOR(res.getString("FL_PATERN_NAME_TUTOR"));
                         Student.setFL_MATERN_NAME_TUTOR(res.getString("FL_MATERN_NAME_TUTOR"));
@@ -224,6 +237,12 @@ public class studentControl {
                         Student.setFL_SECUTITY_MEDICAL(res.getString("FL_SECUTITY_MEDICAL"));
                         Student.setFL_SECURITY_NAME(res.getString("FL_SECURITY_NAME"));
                         Student.setFL_NUMBER_SECURITY_MEDICAL(res.getString("FL_NUMBER_SECURITY_MEDICAL"));   
+                        
+                        Student.setFL_WHOM_DEPEND(res.getString("FL_WHOM_DEPEND"));
+                        Student.setFL_DEPEND_ECONOMICALLY_WORK(res.getString("FL_DEPEND_ECONOMICALLY_WORK"));
+                        Student.setFL_WHERE_WORK(res.getString("FL_WHERE_WORK"));
+                        Student.setFL_WHAT_WORK(res.getString("FL_WHAT_WORK"));
+                        
                         Student.setFL_ACEPT_TERM(res.getString("FL_ACEPT_TERM"));
                         list.add(Student);
                     }
@@ -284,7 +303,7 @@ public class studentControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('insert', '"+dataStudent.getFL_ENROLLMENT()+"', "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('insert', '"+dataStudent.getFL_ENROLLMENT()+"', NULL, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -294,6 +313,24 @@ public class studentControl {
             request=""+e.getMessage();
             e.getMessage();
         }   
+        return request;
+    }
+    public String InsertStudentOfPreregister(studentModel dataStudent){
+        String request = "";
+        String procedure = "CALL `SET_NEW_STUDENT`('insertOfCandidates', '"+dataStudent.getFL_ENROLLMENT()+"', '"+dataStudent.getFL_UTSEM_FOLIO()+"', NULL, NULL, NULL, NULL, NULL)";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    request = (res.getString("FL_STATUS_TRANSACTION"));
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return request;
+        } catch (SQLException ex) {
+            request = ex.getMessage();
+        }
         return request;
     }
     public String DeleteStudent(int pkStudent){
@@ -350,7 +387,7 @@ public class studentControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('update', '"+dataStudent.getFL_ENROLLMENT()+"', "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('update', '"+dataStudent.getFL_ENROLLMENT()+"', null, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

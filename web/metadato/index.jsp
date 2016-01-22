@@ -242,7 +242,7 @@
                             <li>
                                 <a href="#step-3">
                                     <span class="stepNumber">3</span>
-                                    <span class="stepDesc">Datos del padre o tutor<br/>
+                                    <span class="stepDesc">Datos del padre madre y tutor<br/>
                                        <small>Información del tutor</small>
                                     </span>
                                 </a>
@@ -333,7 +333,7 @@
                                             <br>
                                             <span><a target="_blank" href="../serviceFile?viewFile=file_curp">Ver</a></span>
                                         </div>  
-                                        <div class="div-row2 input-prepend">
+                                        <div class="div-row input-prepend">
                                             <label class="label-row" for="fl_curp">CURP</label><br>
                                             <span class="add-on"><i class="icon-text-width"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_curp" name="fl_curp" placeholder="CURP" style="width: 185px"/>
@@ -472,7 +472,7 @@
                                             <span class="add-on"><i class="icon-tag"></i></span>  
                                             <div data-type-role="text" data-field="true"  class="telephoneInput" id="fl_cell_phone" name="fl_cell_phone"></div>
                                         </div>
-                                        <div class="div-row1 input-prepend">
+                                        <div class="div-row input-prepend">
                                             <label class="label-row" for="fl_mail">Correo electrónico</label><br>
                                             <span class="add-on"><i class="icon-envelope"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_mail" name="fl_mail" placeholder="Correo electrónico..." style="width: 300px"/>
@@ -493,7 +493,75 @@
                             <div id="step-3">
                                 <div id="form3" class="form">
                                     <fieldset>
-                                        <h2 class="StepTitle">Registra los datos de nacimiento del padre o tutor</h2>
+                                        <h2 class="StepTitle">Registra los datos del padre</h2>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_name_father">Nombre del padre</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_name_father" name="fl_name_father" placeholder="Nombre..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_patern_name_father">Apellido paterno</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_patern_name_father" name="fl_patern_name_father" placeholder="Apellido paterno..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_matern_name_father">Apellido materno</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_matern_name_father" name="fl_matern_name_father" placeholder="Apellido materno..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_born_date_father">Fecha de nacimiento</label><br>
+                                            <span class="add-on"><i class="icon-calendar"></i></span>  
+                                            <div data-type-role="text" class="calendarInput" data-field="true"  name="fl_born_date_father"  id="fl_born_date_father"></div>
+                                            <br><span>AAAA-MM-DD</span>
+                                        </div> 
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_maritial_state_father">Estado civil</label><br>
+                                            <span class="add-on"><i class="icon-list"></i></span>  
+                                            <div data-type-role="combo" data-field="true" name="fl_maritial_state_father" id="fl_maritial_state_father"></div>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_level_education_father">Nivel de educación</label><br>
+                                            <span class="add-on"><i class="icon-list"></i></span>  
+                                            <div data-type-role="combo" data-field="true" name="fl_level_education_father" id="fl_level_education_father"></div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <h2 class="StepTitle">Registra los datos de la madre</h2>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_name_mother">Nombre de la madre</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_name_mother" name="fl_name_mother" placeholder="Nombre..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_patern_name_mother">Apellido paterno</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_patern_name_mother" name="fl_patern_name_mother" placeholder="Apellido paterno..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_matern_name_mother">Apellido materno</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" id="fl_matern_name_mother" name="fl_matern_name_mother" placeholder="Apellido materno..." style="width: 240px"/>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_born_date_mother">Fecha de nacimiento</label><br>
+                                            <span class="add-on"><i class="icon-calendar"></i></span>  
+                                            <div data-type-role="text" class="calendarInput" data-field="true"  name="fl_born_date_mother"  id="fl_born_date_mother"></div>
+                                            <br><span>AAAA-MM-DD</span>
+                                        </div> 
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_maritial_state_mother">Estado civil</label><br>
+                                            <span class="add-on"><i class="icon-list"></i></span>  
+                                            <div data-type-role="combo" data-field="true" name="fl_maritial_state_mother" id="fl_maritial_state_mother"></div>
+                                        </div>
+                                        <div class="div-row1 input-prepend">
+                                            <label class="label-row" for="fl_level_education_mother">Nivel de educación</label><br>
+                                            <span class="add-on"><i class="icon-list"></i></span>  
+                                            <div data-type-role="combo" data-field="true" name="fl_level_education_mother" id="fl_level_education_mother"></div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <h2 class="StepTitle">Registra los datos de nacimiento del tutor</h2>
                                         <div class="div-row input-prepend">
                                             <label class="label-row" for="fk_born_entity_tutor">Entidad</label><br>
                                             <span class="add-on"><i class="icon-book"></i></span>  
@@ -511,7 +579,7 @@
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                        <h2 class="StepTitle">Registra los datos del padre o tutor donde vive en la actualidad</h2>
+                                        <h2 class="StepTitle">Registra los datos del tutor donde vive en la actualidad</h2>
                                         <div class="div-row input-prepend">
                                             <label class="label-row" for="fk_current_entity_tutor">Entidad</label><br>
                                             <span class="add-on"><i class="icon-list"></i></span>  
@@ -552,7 +620,7 @@
                                             <span class="add-on"><i class="icon-road"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_between_street1_tutor" name="fl_between_street1_tutor" placeholder="Entre calle..." style="width: 260px"/>
                                         </div>
-                                        <div class="div-row2 input-prepend">
+                                        <div class="div-row3 input-prepend">
                                             <label class="label-row" for="fl_between_street2_tutor">Y calle</label><br>
                                             <span class="add-on"><i class="icon-road"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_between_street2_tutor" name="fl_between_street2_tutor" placeholder="Y calle..." style="width: 360px"/>
@@ -815,6 +883,31 @@
                                             </div>
                                         </div>
                                     </fieldset>
+                                    <fieldset>
+                                        <h2 class="StepTitle">Dependiente económico</h2>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_whom_depend">¿De quién dependes económicamente?</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true" name="fl_whom_depend" placeholder="Parentesco"/>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_depend_economically_work">¿De quién dependes económicamente trabaja?</label><br>
+                                            <label style="font-size: 16px; line-height: 32px;"><input type="radio" data-type-role="radio" data-field="true" value="Si" name="fl_depend_economically_work"/> Si</label><br>
+                                            <label style="font-size: 16px; line-height: 32px;"><input type="radio" data-type-role="radio" data-field="true" value="No" name="fl_depend_economically_work"/> No</label>
+                                        </div>
+                                        <div id="fl_what_work_div" style="display: none">
+                                            <div class="div-row input-prepend">
+                                                <label class="label-row" for="fl_where_work">¿Dondé?</label><br>
+                                                <span class="add-on"><i class="icon-text-width"></i></span>      
+                                                <input data-type-role="text" data-field="true" name="fl_where_work" placeholder="Lugar.." style="width: 285px"/>
+                                            </div>
+                                            <div class="div-row input-prepend">
+                                                <label class="label-row" for="fl_what_work">¿En qué trabaja?</label><br>
+                                                <span class="add-on"><i class="icon-text-width"></i></span>  
+                                                <input data-type-role="text" data-field="true" name="fl_what_work" placeholder="Puesto de desempeño"/>
+                                            </div>
+                                        </div>                                    
+                                    </fieldset>
                                 </div>
                             </div>
                             <div id="step-5">
@@ -995,6 +1088,8 @@
                                             }else if(attr_for==="fl_number_security_medical" && $("input[name=fl_secutity_medical]:checked").val()==="No"){
                                             }else if(attr_for==="fl_security_name" && $("input[name=fl_secutity_medical]:checked").val()==="No"){
                                             }else if(attr_for==="fl_indigenous_group_name" && $("input[name=fl_indigenous_group]:checked").val()==="No"){
+                                            }else if(attr_for==="fl_where_work" && $("input[name=fl_depend_economically_work]:checked").val()==="No"){
+                                            }else if(attr_for==="fl_what_work" && $("input[name=fl_depend_economically_work]:checked").val()==="No"){
                                             }else{
                                                 fieldset=fieldset+"<div class='"+$(this).attr("class")+"'><label>"+$(this).children(".label-row").text()+"</label><br><label style='text-decoration: underline;'>"+$("input[name="+attr_for+"]").val()+"</label></div>";
                                             }
@@ -1367,6 +1462,54 @@
                             });
                         }
                     });
+                    $("[name=fl_depend_economically_work]").change(function (){
+                        if($(this).val()==="Si"){
+                            $("#fl_what_work_div").fadeIn();
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                url: "../serviceCandidate?updateField",
+                                data: {"field_name":"fl_depend_economically_work","field_value":$(this).val()},
+                                beforeSend: function (xhr) {
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error interno del servidor");
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                }
+                            });
+                        }else{
+                            $("input[name=fl_where_work]").val("");
+                            $("input[name=fl_what_work]").val("");
+                            $("#fl_what_work_div").fadeOut();
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                url: "../serviceCandidate?updateField",
+                                data: {"field_name":"fl_where_work","field_value":""},
+                                beforeSend: function (xhr) {
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error interno del servidor");
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                }
+                            });
+                            $.ajax({
+                                type: "POST",
+                                async: true,
+                                url: "../serviceCandidate?updateField",
+                                data: {"field_name":"fl_what_work","field_value":""},
+                                beforeSend: function (xhr) {
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error interno del servidor");
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                }
+                            });
+                        }
+                    });
                     $("[name=fl_diffusion_other]").change(function (){
                         if($(this).prop("checked")){
                             $("#fl_diffusion_other_div").fadeIn();
@@ -1577,6 +1720,13 @@
                                             $("#fl_number_security_medical_div").fadeOut();
                                         }
                                     }
+                                    if("fl_depend_economically_work"===name_data_fiel){
+                                        if($("[name=fl_depend_economically_work]").prop('checked')){
+                                            $("#fl_what_work_div").fadeIn();
+                                        }else{
+                                            $("#fl_what_work_div").fadeOut();
+                                        }
+                                    }
                                 }
                                 if(data_rol==="combo"){    
                                     itemEntity = $("#"+name_data_fiel).jqxDropDownList('getItemByValue', data[name_data_fiel]);
@@ -1730,7 +1880,22 @@
                     
                     var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
                     $("#fl_maritial_state_tutor").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
-                    
+
+                    var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
+                    $("#fl_maritial_state_father").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
+
+                    var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
+                    $("#fl_maritial_state_mother").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
+
+                    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+                    $("#fl_level_education").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
+
+                    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+                    $("#fl_level_education_father").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
+
+                    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+                    $("#fl_level_education_mother").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
+
                     var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
                     $("#fl_level_education").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
                     

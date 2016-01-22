@@ -109,7 +109,7 @@ function createInputFolioUtsem(selector, update){
             placeHolder: "Folio Utsem",
             displayMember: "dataNameFolio", 
             valueMember: "dataProgresivNumber",
-            width: 90, 
+            width: 120, 
             height: 15
         });
     }

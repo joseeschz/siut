@@ -145,6 +145,18 @@ public class serviceStudent extends HttpServlet {
                     datos.put("fl_mail", listStudent.get(i).getFL_MAIL());
                     datos.put("fl_facebook", listStudent.get(i).getFL_FACEBOOK());
                     datos.put("fl_twitter", listStudent.get(i).getFL_TWITTER());
+                    datos.put("fl_patern_name_father", listStudent.get(i).getFL_PATERN_NAME_FATHER());
+                    datos.put("fl_matern_name_father", listStudent.get(i).getFL_MATERN_NAME_FATHER());
+                    datos.put("fl_name_father", listStudent.get(i).getFL_NAME_FATHER());
+                    datos.put("fl_born_date_father", listStudent.get(i).getFL_BORN_DATE_FATHER());
+                    datos.put("fl_maritial_state_father", listStudent.get(i).getFL_MARITIAL_STATE_FATHER());
+                    datos.put("fl_level_education_father", listStudent.get(i).getFL_LEVEL_EDUCATION_FATHER());
+                    datos.put("fl_patern_name_mother", listStudent.get(i).getFL_PATERN_NAME_MOTHER());
+                    datos.put("fl_matern_name_mother", listStudent.get(i).getFL_MATERN_NAME_MOTHER());
+                    datos.put("fl_name_mother", listStudent.get(i).getFL_NAME_MOTHER());
+                    datos.put("fl_born_date_mother", listStudent.get(i).getFL_BORN_DATE_MOTHER());
+                    datos.put("fl_maritial_state_mother", listStudent.get(i).getFL_MARITIAL_STATE_MOTHER());
+                    datos.put("fl_level_education_mother", listStudent.get(i).getFL_LEVEL_EDUCATION_MOTHER());
                     datos.put("fl_tutor_relationship", listStudent.get(i).getFL_TUTOR_RELATIONSHIP());
                     datos.put("fl_patern_name_tutor", listStudent.get(i).getFL_PATERN_NAME_TUTOR());
                     datos.put("fl_matern_name_tutor", listStudent.get(i).getFL_MATERN_NAME_TUTOR());
@@ -223,6 +235,10 @@ public class serviceStudent extends HttpServlet {
                     datos.put("fl_secutity_medical", listStudent.get(i).getFL_SECUTITY_MEDICAL());
                     datos.put("fl_security_name", listStudent.get(i).getFL_SECURITY_NAME());
                     datos.put("fl_number_security_medical", listStudent.get(i).getFL_NUMBER_SECURITY_MEDICAL());
+                    datos.put("fl_whom_depend",listStudent.get(i).getFL_WHOM_DEPEND());
+                    datos.put("fl_depend_economically_work",listStudent.get(i).getFL_DEPEND_ECONOMICALLY_WORK());
+                    datos.put("fl_where_work",listStudent.get(i).getFL_WHERE_WORK());
+                    datos.put("fl_what_work",listStudent.get(i).getFL_WHAT_WORK());
                     datos.put("fl_acept_term", listStudent.get(i).getFL_ACEPT_TERM()); 
                     response.setContentType("application/json"); 
                     out.print(datos);
@@ -293,6 +309,17 @@ public class serviceStudent extends HttpServlet {
                 dataStudent.setFL_PATERN_NAME(patern_name);
                 dataStudent.setFK_PREPARATORY(fk_preparatory);
                 out.print(new studentControl().InsertStudent(dataStudent));
+            }
+            if(request.getParameter("insertOfPreregister")!=null){
+                studentModel dataStudent=new studentModel();                
+                if(request.getParameter("enrollment") != null && request.getParameter("utsemFolio") != null){
+                    String enrollment = request.getParameter("enrollment");
+                    String utsemFolio = request.getParameter("utsemFolio");
+                    dataStudent.setFL_ENROLLMENT(enrollment);
+                    dataStudent.setFL_UTSEM_FOLIO(utsemFolio);
+                    out.print(new studentControl().InsertStudentOfPreregister(dataStudent));
+                }
+                
             }
             if(request.getParameter("update")!=null){       
                 studentModel dataStudent=new studentModel();

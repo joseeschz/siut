@@ -27,6 +27,7 @@ $(document).ready(function () {
                 _addHandlers();
                 this.validate();
                 this.showHint('Validation hints.');
+                initConponents();
             },
             //Validating all wizard tabs
             validate: function (notify) {
@@ -77,8 +78,9 @@ $(document).ready(function () {
     }());
     //Initializing the wizard
     //
-    initConponents();
+    
     wizard.init();
+    
     var pk_student=undefined;
     $("#removeFolioSystemVerify").hide();
     $("#medatadaUpdate").jqxExpander({theme:theme, toggleMode: 'none', width: '950px', height: 690, showArrow: false});
@@ -158,8 +160,7 @@ $(document).ready(function () {
                     $("input[type=checkbox]").prop('checked',false);
                 }
             });
-        }else{
-            
+        }else{            
             $("input[data-type-role=text]").jqxInput({disabled: status});
             $("input[data-type-role=radio]").jqxInput({disabled: status});
             $("input[type=button]").jqxInput({disabled: status});
@@ -168,14 +169,14 @@ $(document).ready(function () {
             $("[data-type-role=text].telephoneInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].zip-codeInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].calendarInput").jqxDateTimeInput({disabled: status});
-            $("[data-type-role=file]").jqxFileUpload({disabled: status});
+//            $("[data-type-role=file]").jqxFileUpload({disabled: status});
         }
     }
     function initConponents(){     
-        $("div[data-type-role='text']").css("display","inline-table");
+        $("div[data-type-role='text'][name!='fl_above_average']").css("display","inline-table");
         $("input").jqxInput({theme: theme});
         $("input[data-field=true]").jqxInput({height: '26px'});
-        $("#fl_above_average").jqxNumberInput({theme: theme, width: '60px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 1,digits:2,max:10,min:0});
+        $("#fl_above_average").jqxNumberInput({theme: theme, width: '60px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 1,digits:2,max:10,min:0}).css("display", "inline-block");
         $("#fl_number_members_famly").jqxNumberInput({theme: theme, width: '50px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 0,digits:2,max:20,min:0});
         $(".numberInputMoney").jqxNumberInput({theme: theme, width: '110px', height: '26px',spinButtons: true, decimalDigits: 2,digits:5, min: 0, max: 100000, symbol: '$'});
         $(".zip-codeInput").jqxMaskedInput({theme: theme, mask: '#####', width: '70px', height: '26px'  });
@@ -311,6 +312,54 @@ $(document).ready(function () {
                         }
                     });
                 }
+            }
+        });
+        $("[name=fl_depend_economically_work]").change(function (){
+            if($(this).val()==="Si"){
+                $("#fl_what_work_div").fadeIn();
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "../serviceCandidate?updateField",
+                    data: {"field_name":"fl_depend_economically_work","field_value":$(this).val()},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
+            }else{
+                $("input[name=fl_where_work]").val("");
+                $("input[name=fl_what_work]").val("");
+                $("#fl_what_work_div").fadeOut();
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "../serviceCandidate?updateField",
+                    data: {"field_name":"fl_where_work","field_value":""},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    async: true,
+                    url: "../serviceCandidate?updateField",
+                    data: {"field_name":"fl_what_work","field_value":""},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    }
+                });
             }
         });
         $("[name=fl_diffusion_other]").change(function (){
@@ -528,6 +577,13 @@ $(document).ready(function () {
                                 $("#fl_number_security_medical_div").fadeOut();
                             }
                         }
+                        if("fl_depend_economically_work"===name_data_fiel){
+                            if($("[name=fl_depend_economically_work]").prop('checked')){
+                                $("#fl_what_work_div").fadeIn();
+                            }else{
+                                $("#fl_what_work_div").fadeOut();
+                            }
+                        }
                     }
                     if(data_rol==="combo"){    
                         itemEntity = $("#"+name_data_fiel).jqxDropDownList('getItemByValue', data[name_data_fiel]);
@@ -668,6 +724,21 @@ $(document).ready(function () {
 
     var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
     $("#fl_maritial_state_tutor").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
+
+    var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
+    $("#fl_maritial_state_father").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
+
+    var source = ["CASADO(A)","SOLTERO(A)", "VIUDO(A)","DIVORCIADO(A)","UNIÓN LIBRE"];
+    $("#fl_maritial_state_mother").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
+
+    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+    $("#fl_level_education").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
+
+    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+    $("#fl_level_education_father").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
+
+    var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
+    $("#fl_level_education_mother").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
 
     var source = ["PRIMARIA","SECUNDARIA", "PREPARATORIA", "UNIVERSIDAD", "MAESTRIA", "DOCTORADO", "NINGUNO"];
     $("#fl_level_education").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '150px', height: '26px' }).css("display","inline-block");
@@ -1260,7 +1331,7 @@ $(document).ready(function () {
             <ul>
                 <li style="margin-left: 30px;">Datos personales</li>
                 <li>Datos de ubicación</li>
-                <li>Datos del padre o tutor</li>
+                <li>Datos del padre madre y tutor</li>
                 <li>Situación</li>
                 <li>Difusión</li>
             </ul>
@@ -1494,7 +1565,75 @@ $(document).ready(function () {
             <div class="section">
                 <div id="form3" class="form">
                     <fieldset>
-                        <h2 class="StepTitle">Registra los datos de nacimiento del padre o tutor</h2>
+                        <h2 class="StepTitle">Registra los datos del padre</h2>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_name_father">Nombre del padre</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_name_father" name="fl_name_father" placeholder="Nombre..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_patern_name_father">Apellido paterno</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_patern_name_father" name="fl_patern_name_father" placeholder="Apellido paterno..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_matern_name_father">Apellido materno</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_matern_name_father" name="fl_matern_name_father" placeholder="Apellido materno..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_born_date_father">Fecha de nacimiento</label><br>
+                            <span class="add-on"><i class="icon-calendar"></i></span>  
+                            <div data-type-role="text" class="calendarInput" data-field="true"  name="fl_born_date_father"  id="fl_born_date_father"></div>
+                            <br><span>AAAA-MM-DD</span>
+                        </div> 
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_maritial_state_father">Estado civil</label><br>
+                            <span class="add-on"><i class="icon-list"></i></span>  
+                            <div data-type-role="combo" data-field="true" name="fl_maritial_state_father" id="fl_maritial_state_father"></div>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_level_education_father">Nivel de educación</label><br>
+                            <span class="add-on"><i class="icon-list"></i></span>  
+                            <div data-type-role="combo" data-field="true" name="fl_level_education_father" id="fl_level_education_father"></div>
+                        </div>
+                    </fieldset>
+                     <fieldset>
+                        <h2 class="StepTitle">Registra los datos de la madre</h2>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_name_mother">Nombre de la madre</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_name_mother" name="fl_name_mother" placeholder="Nombre..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_patern_name_mother">Apellido paterno</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_patern_name_mother" name="fl_patern_name_mother" placeholder="Apellido paterno..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_matern_name_mother">Apellido materno</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" id="fl_matern_name_mother" name="fl_matern_name_mother" placeholder="Apellido materno..." style="width: 240px"/>
+                        </div>
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_born_date_mother">Fecha de nacimiento</label><br>
+                            <span class="add-on"><i class="icon-calendar"></i></span>  
+                            <div data-type-role="text" class="calendarInput" data-field="true"  name="fl_born_date_mother"  id="fl_born_date_mother"></div>
+                            <br><span>AAAA-MM-DD</span>
+                        </div> 
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_maritial_state_mother">Estado civil</label><br>
+                            <span class="add-on"><i class="icon-list"></i></span>  
+                            <div data-type-role="combo" data-field="true" name="fl_maritial_state_mother" id="fl_maritial_state_mother"></div>
+                        </div>
+                        <div class="div-row1 input-prepend">
+                            <label class="label-row" for="fl_level_education_mother">Nivel de educación</label><br>
+                            <span class="add-on"><i class="icon-list"></i></span>  
+                            <div data-type-role="combo" data-field="true" name="fl_level_education_mother" id="fl_level_education_mother"></div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <h2 class="StepTitle">Registra los datos de nacimiento tutor</h2>
                         <div class="div-row input-prepend">
                             <label class="label-row" for="fk_born_entity_tutor">Entidad</label><br>
                             <span class="add-on"><i class="icon-book"></i></span>  
@@ -1512,7 +1651,7 @@ $(document).ready(function () {
                         </div>
                     </fieldset>
                     <fieldset>
-                        <h2 class="StepTitle">Registra los datos del padre o tutor donde vive en la actualidad</h2>
+                        <h2 class="StepTitle">Registra los datos del tutor donde vive en la actualidad</h2>
                         <div class="div-row input-prepend">
                             <label class="label-row" for="fk_current_entity_tutor">Entidad</label><br>
                             <span class="add-on"><i class="icon-list"></i></span>  
@@ -1609,7 +1748,7 @@ $(document).ready(function () {
                             <div data-type-role="combo" data-field="true" name="fl_tutor_relationship"  id="fl_tutor_relationship"></div>
                         </div>
                         <div class="div-row1 input-prepend">
-                            <label class="label-row" for="fl_name_tutor">Nombre del padre o tutor</label><br>
+                            <label class="label-row" for="fl_name_tutor">Nombre del tutor</label><br>
                             <span class="add-on"><i class="icon-text-width"></i></span>  
                             <input data-type-role="text" data-field="true" id="fl_name_tutor" name="fl_name_tutor" placeholder="Nombre..." style="width: 240px"/>
                         </div>
@@ -1819,6 +1958,31 @@ $(document).ready(function () {
                                 <input data-type-role="text" data-field="true" name="fl_number_security_medical" placeholder="No."/>
                             </div>
                         </div>
+                    </fieldset>
+                    <fieldset>
+                        <h2 class="StepTitle">Dependiente económico</h2>
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_whom_depend">¿De quién dependes económicamente?</label><br>
+                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                            <input data-type-role="text" data-field="true" name="fl_whom_depend" placeholder="Parentesco"/>
+                        </div>
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fl_depend_economically_work">¿De quién dependes económicamente trabaja?</label><br>
+                            <label style="font-size: 16px; line-height: 32px;"><input type="radio" data-type-role="radio" data-field="true" value="Si" name="fl_depend_economically_work"/> Si</label><br>
+                            <label style="font-size: 16px; line-height: 32px;"><input type="radio" data-type-role="radio" data-field="true" value="No" name="fl_depend_economically_work"/> No</label>
+                        </div>
+                        <div id="fl_what_work_div" style="display: none">
+                            <div class="div-row input-prepend">
+                                <label class="label-row" for="fl_where_work">¿Dondé?</label><br>
+                                <span class="add-on"><i class="icon-text-width"></i></span>      
+                                <input data-type-role="text" data-field="true" name="fl_where_work" placeholder="Lugar.." style="width: 285px"/>
+                            </div>
+                            <div class="div-row input-prepend">
+                                <label class="label-row" for="fl_what_work">¿En qué trabaja?</label><br>
+                                <span class="add-on"><i class="icon-text-width"></i></span>  
+                                <input data-type-role="text" data-field="true" name="fl_what_work" placeholder="Puesto de desempeño"/>
+                            </div>
+                        </div>                                    
                     </fieldset>
                 </div>
                 <div id="basketButtonsWrapper">
