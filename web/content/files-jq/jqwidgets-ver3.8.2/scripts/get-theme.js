@@ -66,6 +66,7 @@ try
     else {
         $(document).ready(function () {
             theme = getDemoTheme();
+            alert(theme)
         });
     }
 }

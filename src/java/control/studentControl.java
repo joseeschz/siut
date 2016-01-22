@@ -20,7 +20,7 @@ import model.studentModel;
  */
 public class studentControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> listStudents2=new studentControl().SelectStudent("onlyDataBasic", "onlyDataBasic");
+        ArrayList<studentModel> listStudents2=new studentControl().SelectStudent("UTS12S-003661", "allData");
         for(int i=0;i<listStudents2.size();i++){
             System.out.println(listStudents2.get(i).getFL_NAME());
         }
@@ -145,6 +145,20 @@ public class studentControl {
                         Student.setFL_MAIL(res.getString("FL_MAIL"));
                         Student.setFL_FACEBOOK(res.getString("FL_FACEBOOK"));
                         Student.setFL_TWITTER(res.getString("FL_TWITTER"));
+                        
+                        Student.setFL_PATERN_NAME_FATHER(res.getString("FL_PATERN_NAME_FATHER"));
+                        Student.setFL_MATERN_NAME_FATHER(res.getString("FL_MATERN_NAME_FATHER"));
+                        Student.setFL_NAME_FATHER(res.getString("FL_NAME_FATHER"));
+                        Student.setFL_BORN_DATE_FATHER(res.getString("FL_BORN_DATE_FATHER"));
+                        Student.setFL_MARITIAL_STATE_FATHER(res.getString("FL_MARITIAL_STATE_FATHER"));
+                        Student.setFL_LEVEL_EDUCATION_FATHER(res.getString("FL_LEVEL_EDUCATION_FATHER"));
+                        Student.setFL_PATERN_NAME_MOTHER(res.getString("FL_PATERN_NAME_MOTHER"));
+                        Student.setFL_MATERN_NAME_MOTHER(res.getString("FL_MATERN_NAME_MOTHER"));
+                        Student.setFL_NAME_MOTHER(res.getString("FL_NAME_MOTHER"));
+                        Student.setFL_BORN_DATE_MOTHER(res.getString("FL_BORN_DATE_MOTHER"));
+                        Student.setFL_MARITIAL_STATE_MOTHER(res.getString("FL_MARITIAL_STATE_MOTHER"));
+                        Student.setFL_LEVEL_EDUCATION_MOTHER(res.getString("FL_LEVEL_EDUCATION_MOTHER"));
+                        
                         Student.setFL_TUTOR_RELATIONSHIP(res.getString("FL_TUTOR_RELATIONSHIP"));
                         Student.setFL_PATERN_NAME_TUTOR(res.getString("FL_PATERN_NAME_TUTOR"));
                         Student.setFL_MATERN_NAME_TUTOR(res.getString("FL_MATERN_NAME_TUTOR"));
@@ -223,6 +237,12 @@ public class studentControl {
                         Student.setFL_SECUTITY_MEDICAL(res.getString("FL_SECUTITY_MEDICAL"));
                         Student.setFL_SECURITY_NAME(res.getString("FL_SECURITY_NAME"));
                         Student.setFL_NUMBER_SECURITY_MEDICAL(res.getString("FL_NUMBER_SECURITY_MEDICAL"));   
+                        
+                        Student.setFL_WHOM_DEPEND(res.getString("FL_WHOM_DEPEND"));
+                        Student.setFL_DEPEND_ECONOMICALLY_WORK(res.getString("FL_DEPEND_ECONOMICALLY_WORK"));
+                        Student.setFL_WHERE_WORK(res.getString("FL_WHERE_WORK"));
+                        Student.setFL_WHAT_WORK(res.getString("FL_WHAT_WORK"));
+                        
                         Student.setFL_ACEPT_TERM(res.getString("FL_ACEPT_TERM"));
                         list.add(Student);
                     }

@@ -20,7 +20,7 @@ import model.studentModel;
  */
 public class candidateControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> list=new candidateControl().SelectUserLogin("carlo94", "1234");
+        ArrayList<studentModel> list=new candidateControl().SelectCandidate("folioSystem","20160004");
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME());
         }
@@ -262,6 +262,20 @@ public class candidateControl {
                         Candidate.setFL_MAIL(res.getString("FL_MAIL"));
                         Candidate.setFL_FACEBOOK(res.getString("FL_FACEBOOK"));
                         Candidate.setFL_TWITTER(res.getString("FL_TWITTER"));
+                        
+                        Candidate.setFL_PATERN_NAME_FATHER(res.getString("FL_PATERN_NAME_FATHER"));
+                        Candidate.setFL_MATERN_NAME_FATHER(res.getString("FL_MATERN_NAME_FATHER"));
+                        Candidate.setFL_NAME_FATHER(res.getString("FL_NAME_FATHER"));
+                        Candidate.setFL_BORN_DATE_FATHER(res.getString("FL_BORN_DATE_FATHER"));
+                        Candidate.setFL_MARITIAL_STATE_FATHER(res.getString("FL_MARITIAL_STATE_FATHER"));
+                        Candidate.setFL_LEVEL_EDUCATION_FATHER(res.getString("FL_LEVEL_EDUCATION_FATHER"));
+                        Candidate.setFL_PATERN_NAME_MOTHER(res.getString("FL_PATERN_NAME_MOTHER"));
+                        Candidate.setFL_MATERN_NAME_MOTHER(res.getString("FL_MATERN_NAME_MOTHER"));
+                        Candidate.setFL_NAME_MOTHER(res.getString("FL_NAME_MOTHER"));
+                        Candidate.setFL_BORN_DATE_MOTHER(res.getString("FL_BORN_DATE_MOTHER"));
+                        Candidate.setFL_MARITIAL_STATE_MOTHER(res.getString("FL_MARITIAL_STATE_MOTHER"));
+                        Candidate.setFL_LEVEL_EDUCATION_MOTHER(res.getString("FL_LEVEL_EDUCATION_MOTHER"));
+                        
                         Candidate.setFL_TUTOR_RELATIONSHIP(res.getString("FL_TUTOR_RELATIONSHIP"));
                         Candidate.setFL_PATERN_NAME_TUTOR(res.getString("FL_PATERN_NAME_TUTOR"));
                         Candidate.setFL_MATERN_NAME_TUTOR(res.getString("FL_MATERN_NAME_TUTOR"));
@@ -340,6 +354,12 @@ public class candidateControl {
                         Candidate.setFL_SECUTITY_MEDICAL(res.getString("FL_SECUTITY_MEDICAL"));
                         Candidate.setFL_SECURITY_NAME(res.getString("FL_SECURITY_NAME"));
                         Candidate.setFL_NUMBER_SECURITY_MEDICAL(res.getString("FL_NUMBER_SECURITY_MEDICAL"));   
+                        
+                        Candidate.setFL_WHOM_DEPEND(res.getString("FL_WHOM_DEPEND"));
+                        Candidate.setFL_DEPEND_ECONOMICALLY_WORK(res.getString("FL_DEPEND_ECONOMICALLY_WORK"));
+                        Candidate.setFL_WHERE_WORK(res.getString("FL_WHERE_WORK"));
+                        Candidate.setFL_WHAT_WORK(res.getString("FL_WHAT_WORK"));
+                        
                         Candidate.setFL_ACEPT_TERM(res.getString("FL_ACEPT_TERM"));
                         list.add(Candidate);
                     }
@@ -366,7 +386,7 @@ public class candidateControl {
                 conn.close();
             }
         } catch (SQLException e) {
-            request="error";
+            request="error"+e;
             e.getMessage();
         }   
         return request;
