@@ -83,27 +83,34 @@ $(document).ready(function () {
         ]
     });
     $('#registerUpdateFormUpdate').on('validationSuccess', function (event) {
+        $("#jqxWindowWarningIncriptionsUpdate").jqxWindow('open');
+    });
+    $("#okWarningUpdate").click(function (){
         //en el evento submit del fomulario
         itemPreparatory=$('#preparatoryFilterUpdate').jqxDropDownList('getSelectedItem');
         itemCareer=$('#careerUpdate').jqxDropDownList('getSelectedItem');
-        var datos = {"enrollmentUpdate":enrollmentUpdate_temp,"nameUpdateStudent":$("#nameUpdate").val(),"maternNameUpdate":$("#matern_nameUpdate").val(),"paternNameUpdate":$("#patern_nameUpdate").val(),"careerUpdate":itemCareer.value,"fkPreparatoryUpdate":itemPreparatory.value}; // los datos del 
-        $("#jqxWindowWarningIncriptions").jqxWindow('open');
-        $("#okWarning").click(function (){
-            $.ajax({
-                type: "POST",
-                url: "../serviceStudent?update",
-                data:datos,
-                async: false,
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error interno del servidor");
-                },
-                success: function (data, textStatus, jqXHR) {
-                }
-            });
-            $("#okWarning").jqxWindow('close');
+        var datos = {
+            "enrollmentUpdate":enrollmentUpdate_temp,
+            "nameUpdateStudent":$("#nameUpdate").val(),
+            "maternNameUpdate":$("#matern_nameUpdate").val(),
+            "paternNameUpdate":$("#patern_nameUpdate").val(),
+            "careerUpdate":itemCareer.value,
+            "fkPreparatoryUpdate":itemPreparatory.value
+        }; // los datos del 
+        $.ajax({
+            type: "POST",
+            url: "../serviceStudent?update",
+            data:datos,
+            async: false,
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) {
+            }
         });
+        $("#okWarningUpdate").jqxWindow('close');
     });
     createInputEnrrollment("#enrollmentUpdate",false);
     $("#enrollmentUpdate").on('select',function (event){

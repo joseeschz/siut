@@ -294,6 +294,17 @@ public class serviceStudent extends HttpServlet {
                 dataStudent.setFK_PREPARATORY(fk_preparatory);
                 out.print(new studentControl().InsertStudent(dataStudent));
             }
+            if(request.getParameter("insertOfPreregister")!=null){
+                studentModel dataStudent=new studentModel();                
+                if(request.getParameter("enrollment") != null && request.getParameter("utsemFolio") != null){
+                    String enrollment = request.getParameter("enrollment");
+                    String utsemFolio = request.getParameter("utsemFolio");
+                    dataStudent.setFL_ENROLLMENT(enrollment);
+                    dataStudent.setFL_UTSEM_FOLIO(utsemFolio);
+                    out.print(new studentControl().InsertStudentOfPreregister(dataStudent));
+                }
+                
+            }
             if(request.getParameter("update")!=null){       
                 studentModel dataStudent=new studentModel();
                 String enrollment = request.getParameter("enrollmentUpdate");

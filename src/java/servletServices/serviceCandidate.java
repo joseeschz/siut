@@ -131,7 +131,8 @@ public class serviceCandidate extends HttpServlet {
                 out.close();
             }           
             if(request.getParameter("selectCandidateByPkCandidate")!=null){
-                String folioSystemCandidate ="";
+                String folioSystemCandidate = "";
+                String folioUtsemCandidate = "";
                 if(session.getAttribute("folioSystem")!=null){
                     folioSystemCandidate=session.getAttribute("folioSystem").toString();
                 }
@@ -139,7 +140,15 @@ public class serviceCandidate extends HttpServlet {
                     folioSystemCandidate=request.getParameter("folioSystem");
                     session.setAttribute("folioSystem", folioSystemCandidate);
                 }
-                ArrayList<studentModel> listCandidate=new candidateControl().SelectCandidate(folioSystemCandidate);
+                if(request.getParameter("folioUtsem")!=null){
+                    folioUtsemCandidate = request.getParameter("folioUtsem");
+                }
+                ArrayList<studentModel> listCandidate;
+                if(!folioSystemCandidate.equals("")){
+                    listCandidate = new candidateControl().SelectCandidate("folioSystem", folioSystemCandidate);
+                }else{
+                    listCandidate = new candidateControl().SelectCandidate("folioUtsem", folioUtsemCandidate);
+                }                
                 JSONObject datos = new JSONObject();
                 for(int i=0;i<listCandidate.size();i++){
                     datos.put("fl_folioSystem_temp_system", listCandidate.get(i).getFL_FOLIO_TEMP_SYSTEM());

@@ -5,7 +5,7 @@
         if(request.getParameter("ac") != null){
             aes sec = new aes();
             sec.addKey("2015");
-            String ligaDescript = sec.desencriptar(request.getParameter("ac"));
+            String ligaDescript = sec.desencriptar(request.getParameter("ac").replace(" ", "+"));
             String userName = null;
             String mail = null;
             String password = null;
@@ -159,7 +159,7 @@
                     <%
                 }                
             }else{
-                response.sendRedirect("http://148.223.215.19/preregistro");
+                //response.sendRedirect("http://148.223.215.19/preregistro");
             }
         }else{%>
             <!DOCTYPE html>
@@ -1959,14 +1959,14 @@
                                 { input: "#fl_curp", message: "Este campo es requerido", action: 'keyup, blur',  rule: "required"}
                             ]
                 });  
-                $("#form2").jqxValidator({
-                    hintType : 'label',
-                    animationDuration: 0,
-                    rules: [
-                                { input: '#fl_mail', message: 'E-mail es Requerido!', action: 'keyup, blur', rule: 'required' },
-                                { input: '#fl_mail', message: 'E-mail invalido!', action: 'keyup', rule: 'email' }
-                            ]
-                });  
+//                $("#form2").jqxValidator({
+//                    hintType : 'label',
+//                    animationDuration: 0,
+//                    rules: [
+//                                { input: '#fl_mail', message: 'E-mail es Requerido!', action: 'keyup, blur', rule: 'required' },
+//                                { input: '#fl_mail', message: 'E-mail invalido!', action: 'keyup', rule: 'email' }
+//                            ]
+//                });  
                 $("#form3").jqxValidator({
                     hintType : 'label',
                     animationDuration: 0,
@@ -2035,12 +2035,12 @@
                         });
                     }
                     if(step === "2"){
-                        if($('#form2').jqxValidator('validate')){ 
-                            $('#wizard').smartWizard('setError',{stepnum:2,iserror: false}); 
-                        }else{
-                            isStepValid = false; 
-                            $('#wizard').smartWizard('setError',{stepnum:2,iserror:true}); 
-                        }
+//                        if($('#form2').jqxValidator('validate')){ 
+//                            $('#wizard').smartWizard('setError',{stepnum:2,iserror: false}); 
+//                        }else{
+//                            isStepValid = false; 
+//                            $('#wizard').smartWizard('setError',{stepnum:2,iserror:true}); 
+//                        }
                     }
                     if(step === "3"){
                         var fl_tutor_relationship = $('#fl_tutor_relationship').jqxDropDownList('getSelectedItem'); 

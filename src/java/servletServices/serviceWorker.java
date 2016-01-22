@@ -114,7 +114,7 @@ public class serviceWorker extends HttpServlet {
                     dataWorker.setFL_PATERN_NAME(request.getParameter("paternName"));
                     dataWorker.setFL_MATERN_NAME(request.getParameter("maternName"));                    
                     dataWorker.setFL_KEY_SP(request.getParameter("keySp"));
-                    dataWorker.setFL_TELEPHONE_NUMBER(request.getParameter("telphoneNumber"));
+                    dataWorker.setFL_TELEPHONE_NUMBER(request.getParameter("telephoneNumber"));
                     dataWorker.setFL_ADDRES(request.getParameter("addres"));
                     dataWorker.setFL_PHOTO(request.getParameter("photo"));
                     dataWorker.setFK_ROL(Integer.parseInt(request.getParameter("fkRol")));
