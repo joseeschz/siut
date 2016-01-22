@@ -109,7 +109,7 @@ public class candidateControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosUtsem', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
-                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_FOLIO_TEMP_SYSTEM"));
+                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
                     list.add(CandidateAll);
                 }
                 res.close();
@@ -209,9 +209,14 @@ public class candidateControl {
         }
         return validate;
     }
-    public ArrayList<studentModel> SelectCandidate(String folio){
+    public ArrayList<studentModel> SelectCandidate(String typeFolio, String folio){
         ArrayList<studentModel> list=new ArrayList<>();
-        String procedure = "CALL `GET_CANDIDATE`('candidateByFolioSystem', '"+folio+"', null, null)";
+        String procedure;
+        if(typeFolio.equals("folioSystem")){
+           procedure = "CALL `GET_CANDIDATE`('candidateByFolioSystem', '"+folio+"', null, null)";
+        }else{
+            procedure = "CALL `GET_CANDIDATE`('candidateByFolioUtsem', '"+folio+"', null, null)";
+        }
             try {
                 try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                     while(res!=null&&res.next()){

@@ -31,31 +31,17 @@ $(document).ready(function () {
         createDropDownCareer(itemLevel.value,"#career",true);
     });
     $('#entity').on('change',function (event){  
-        var args = event.args;
-        if (args) { 
-            var item = args.item;
-            if(item.visible){
-                createDropDownMunicipality(item.value,'xxx',"#municipalityFilter",true);
-            }
-        }  
+        itemEntity= $('#entity').jqxDropDownList('getSelectedItem');
+        createDropDownMunicipality(itemEntity.value,'null',"#municipalityFilter",true);
     });
     $('#municipalityFilter').on('change',function (event){  
-        var args = event.args;
-        if (args) { 
-            var item = args.item;
-            if(item.visible){
-                createDropDownLocality(item.value, 'byPk', "#localityFilter",true);  
-            }
-        } 
+        itemMunicipality= $('#municipalityFilter').jqxDropDownList('getSelectedItem');
+        createDropDownLocality(itemMunicipality.value, 'byPk', "#localityFilter",true);
+        
     });
     $('#localityFilter').on('change',function (event){  
-        var args = event.args;
-        if (args) { 
-            var item = args.item;
-            if(item.visible){
-                createDropDownPreparatory(item.value, "#preparatoryFilter", true);
-            }
-        } 
+        itemLocality= $('#localityFilter').jqxDropDownList('getSelectedItem');
+        createDropDownPreparatory(itemLocality.value, "#preparatoryFilter", true);
     });
     $("#register").jqxExpander({theme:theme, toggleMode: 'none', width: '490px', showArrow: false});
     $('#sendButton').jqxButton({ width: 70, height: 30});
@@ -107,59 +93,40 @@ $(document).ready(function () {
     });
     
     $('#registerForm').on('validationSuccess', function (event) {
-        $("#jqxWindowWarningIncriptions").jqxWindow('open');        
-    });
-    $("#okWarning").click(function (){
         //en el evento submit del fomulario
         itemPreparatory=$('#preparatoryFilter').jqxDropDownList('getSelectedItem');
         itemCareer=$('#career').jqxDropDownList('getSelectedItem');
-        var itemFolio = $('#folio').jqxInput('val');
-        if($("#enrollment").text()!==""){
-            var datos = {
-                "enrollment": $("#enrollment").text(),
-                "utsemFolio": itemFolio.label
-            }; // los datos del alumno
-            $.ajax({
-                type: "POST",
-                async: false,
-                url: "../serviceStudent?insertOfPreregister",
-                data:datos,
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert("Error interno del servidor");
-                },
-                success: function (data, textStatus, jqXHR) {
-                    if(data==="1"){
-                        $("#jqxWindowOk").jqxWindow('open');                        
-                    }else if(data==="0"){
-                        $("#messageFail").text("El registro no pudo ser inscrito verifique bien los datos, en caso que el problema persita consulte al equipo de desarrolo de este sistema");
-                        $("#jqxWindowErrorIncriptions").jqxWindow('open');
-                    }else if(data==="2"){
-                        $("#messageFail").text("El folio utsem ya está registrado en la tabla de alumnos");
-                        $("#jqxWindowErrorIncriptions").jqxWindow('open');
-                    }else{
-                        $("#messageFail").text("Ocurrio un error intenta nuevamente y si el problema persite consulte al equipo de desarrollo de este sistema");
-                        $("#jqxWindowErrorIncriptions").jqxWindow('open');
-                    }                    
-                }
-            });
-        }else{
-            alert("Error al generar matrícula");
-        }
-    });
-    $("#ok").click(function (){
-        generateEnrollment(itemPeriod);
-        $("#removeFolio").hide();
-        $('#folio').val("");
-        $("#name").val("");
-        $("#matern_name").val("");
-        $("#patern_name").val("");
-        $("#entity").jqxDropDownList('selectIndex', 0);
-        $("#jqxWindowOk").jqxWindow('close');
-        $('#sendButton').jqxButton({disabled: true});
-        createInputEnrrollment("#enrollmentUpdate",true);
-        createInputFolioUtsem("#folio",true);
+        var datos = {
+            "enrollment":$("#enrollment").text(),
+            "nameStudent":$("#name").val(),
+            "maternName":$("#matern_name").val(),
+            "paternName":$("#patern_name").val(),
+            "career":itemCareer.value,
+            "fkPreparatory":itemPreparatory.value
+        }; // los datos del alumno
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "../serviceStudent?insert",
+            data:datos,
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) {
+                $("#jqxWindowOk").jqxWindow('open');
+                $("#ok").click(function (){
+                    generateEnrollment(itemPeriod);
+                    $("#name").val("");
+                    $("#matern_name").val("");
+                    $("#patern_name").val("");
+                    $("#ok").unbind("click"); 
+                    $("#jqxWindowOk").jqxWindow('close');
+                    createInputEnrrollment("#enrollmentUpdate",true);
+                });
+            }
+        });
     });
     createInputFolioUtsem("#folio",false);
     $("#folio").on('select',function (event){
@@ -187,7 +154,7 @@ $(document).ready(function () {
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#removeFolio").show();
-                    $('#sendButton').jqxButton({disabled: false});
+                    disableElementsInscription(false);
                     loadDataInscription(data);
                 }
             }).done(function (){
@@ -200,9 +167,6 @@ $(document).ready(function () {
     $('#preregister').bind('unchecked', function (event) {
         $('#folio').jqxInput({disabled: false});
         $("#labelFolio").css("color","#000");
-        if($('#folio').val()!==""){
-            $('#sendButton').jqxButton({disabled: false});
-        }        
     });
     $('#preregister').bind('checked', function (event) { 
         $('#folio').jqxInput({disabled: true});
@@ -223,25 +187,18 @@ $(document).ready(function () {
         $(this).hide();
         disableElementsInscription(true);
     });
-    disableElementsInscription(true);
     function  disableElementsInscription(status){
         if(status){
             $('#folio').val("");
-            $("#name").jqxInput({disabled: status}).val("");
-            $("#patern_name").jqxInput({disabled: status}).val("");
-            $("#matern_name").jqxInput({disabled: status}).val("");
+            $("#name").val("");
+            $("#patern_name").val("");
+            $("#matern_name").val("");
             $("#loadingPicture").hide();
             $("#career").jqxDropDownList("selectIndex", 0);
-            $("#career").jqxDropDownList({disabled: status});
             $("#entity").jqxDropDownList('selectIndex', 0);
-            $("#entity").jqxDropDownList({disabled: status});
             $("#municipalityFilter").jqxDropDownList('selectIndex', 0);
-            $("#municipalityFilter").jqxDropDownList({disabled: status});
             $("#localityFilter").jqxDropDownList('selectIndex', 0);
-            $("#localityFilter").jqxDropDownList({disabled: status});
             $("#preparatoryFilter").jqxDropDownList('selectIndex', 0);
-            $("#preparatoryFilter").jqxDropDownList({disabled: status});
-            $('#sendButton').jqxButton({disabled: status});
         }
     }
     function loadDataInscription(data){

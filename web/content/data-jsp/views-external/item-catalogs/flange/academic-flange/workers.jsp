@@ -396,7 +396,7 @@
             $("#fl_name").val(rowData.dataNameWorker);            
             $("#fl_patern_name").val(rowData.dataPaternName);
             $("#fl_matern_name").val(rowData.dataMaternName);
-            $("#fl_profession").val("");
+            $("#fl_profession").val(rowData.dataProfession);
             $('#fl_key_sp').val(rowData.dataKeySp);
             $('#fl_key_sp').attr('oldValue',$('#fl_key_sp').val());
             $('#fl_telephone_number').val(rowData.dataTelphoneNumber);

@@ -158,8 +158,7 @@ $(document).ready(function () {
                     $("input[type=checkbox]").prop('checked',false);
                 }
             });
-        }else{
-            
+        }else{            
             $("input[data-type-role=text]").jqxInput({disabled: status});
             $("input[data-type-role=radio]").jqxInput({disabled: status});
             $("input[type=button]").jqxInput({disabled: status});
@@ -168,14 +167,14 @@ $(document).ready(function () {
             $("[data-type-role=text].telephoneInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].zip-codeInput").jqxMaskedInput({disabled: status});
             $("[data-type-role=text].calendarInput").jqxDateTimeInput({disabled: status});
-            $("[data-type-role=file]").jqxFileUpload({disabled: status});
+//            $("[data-type-role=file]").jqxFileUpload({disabled: status});
         }
     }
     function initConponents(){     
-        $("div[data-type-role='text']").css("display","inline-table");
+        $("div[data-type-role='text'][name!='fl_above_average']").css("display","inline-table");
         $("input").jqxInput({theme: theme});
         $("input[data-field=true]").jqxInput({height: '26px'});
-        $("#fl_above_average").jqxNumberInput({theme: theme, width: '60px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 1,digits:2,max:10,min:0});
+        $("#fl_above_average").jqxNumberInput({theme: theme, width: '60px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 1,digits:2,max:10,min:0}).css("display", "inline-block");
         $("#fl_number_members_famly").jqxNumberInput({theme: theme, width: '50px',height: '26px',spinButtons: true,groupSize: 0,decimalDigits: 0,digits:2,max:20,min:0});
         $(".numberInputMoney").jqxNumberInput({theme: theme, width: '110px', height: '26px',spinButtons: true, decimalDigits: 2,digits:5, min: 0, max: 100000, symbol: '$'});
         $(".zip-codeInput").jqxMaskedInput({theme: theme, mask: '#####', width: '70px', height: '26px'  });
