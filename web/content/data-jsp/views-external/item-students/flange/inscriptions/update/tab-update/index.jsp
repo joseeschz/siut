@@ -95,7 +95,9 @@ $(document).ready(function () {
             "maternNameUpdate":$("#matern_nameUpdate").val(),
             "paternNameUpdate":$("#patern_nameUpdate").val(),
             "careerUpdate":itemCareer.value,
-            "fkPreparatoryUpdate":itemPreparatory.value
+            "fkPreparatoryUpdate":itemPreparatory.value,
+            "birthCertificate" : $("#birthCertificate").val(),
+            "hightSchoolCertificate" : $("#hightSchoolCertificate").val()
         }; // los datos del 
         $.ajax({
             type: "POST",
@@ -253,6 +255,14 @@ $(document).ready(function () {
                 <div style="float: left; margin-right: 5px;">
                     <span>Preparatoria</span> <br>
                     <div id="preparatoryFilterUpdate"></div>
+                </div>
+                <div style="float: left; margin-right: 5px;">
+                    <span>Número de acta de nacimiento</span> <br>
+                    <input type="text" id="birthCertificate" class="text-input" />
+                </div>
+                <div style="float: left; margin-right: 5px;">
+                    <span>Número de certificado de bachillerato</span> <br>
+                    <input type="text" id="hightSchoolCertificate" class="text-input" />
                 </div>
                 <div style="float: left; margin: 20px; margin-left: 175px;">
                     <input type="button" value="Actualizar" id="sendButtonUpdate" />

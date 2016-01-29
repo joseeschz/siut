@@ -385,6 +385,7 @@ $(document).ready(function () {
                 }
             }
         });
+        createDropDownCareerPreregistro("#fk_career",false);
         $("#fl_period_bacherol").jqxMaskedInput({width: '130px', height: '26px', mask:'(####) - (####)', value: 20152016});
         createDropDownEntity("#fk_entity",'null',false);
         $("#fk_entity").jqxDropDownList({placeHolder: "SELECCIONAR", disabled:false,filterable:true, filterPlaceHolder: "Buscar",autoDropDownHeight: false, dropDownHeight: 300});
@@ -397,7 +398,7 @@ $(document).ready(function () {
         itemLocality=$('#fk_locality').jqxDropDownList('getSelectedItem');
         createDropDownPreparatory(itemLocality.value, "#fk_preparatory", false);
         $("#fk_preparatory").jqxDropDownList({disabled:false,autoDropDownHeight: false, placeHolder: "Seleccionar"});
-
+        
         // prepare the data                    
         $('#fk_entity').on('select',function (event){
             var args = event.args;
@@ -1339,6 +1340,12 @@ $(document).ready(function () {
                 <div id="form1" class="form">
                     <fieldset>
                         <h2 class="StepTitle">Datos personales</h2> 
+                        <div class="div-row input-prepend">
+                            <label class="label-row" for="fk_career">Indique la carrera</label><br>
+                            <span class="add-on"><i class="icon-asterisk"></i></span>
+                            <div data-type-role="combo" data-field="true" name="fk_career"  id="fk_career"></div>
+                            <br>
+                        </div>
                         <div class="div-row1 input-prepend">
                             <label class="label-row" for="fl_name">Nombre</label><br>
                             <span class="add-on"><i class="icon-text-width"></i></span>  

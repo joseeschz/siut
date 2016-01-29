@@ -433,8 +433,9 @@
                 }else{
                     $("#evaluateActivity").parent().show();
                 }
+                $("#captureCal").show();
             }else{
-                $("#register").hide();
+                $("#captureCal").hide();
                 $("#evaluateActivity").parent().show();
             }
         }

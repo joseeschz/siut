@@ -155,6 +155,8 @@ public class studentModel extends careerModel{
     String FL_DEPEND_ECONOMICALLY_WORK="";
     String FL_WHERE_WORK="";
     String FL_WHAT_WORK="";
+    String FL_BIRTH_CERTIFICATE_NUMBER="";
+    String FL_HIGH_SCHOOL_CERTIFICATE="";
     int FL_MODIFY=0;
 
     public int getPK_STUDENT() {
@@ -1323,6 +1325,22 @@ public class studentModel extends careerModel{
 
     public void setFL_MODIFY(int FL_MODIFY) {
         this.FL_MODIFY = FL_MODIFY;
+    }
+
+    public String getFL_BIRTH_CERTIFICATE_NUMBER() {
+        return FL_BIRTH_CERTIFICATE_NUMBER;
+    }
+
+    public void setFL_BIRTH_CERTIFICATE_NUMBER(String FL_BIRTH_CERTIFICATE_NUMBER) {
+        this.FL_BIRTH_CERTIFICATE_NUMBER = FL_BIRTH_CERTIFICATE_NUMBER;
+    }
+
+    public String getFL_HIGH_SCHOOL_CERTIFICATE() {
+        return FL_HIGH_SCHOOL_CERTIFICATE;
+    }
+
+    public void setFL_HIGH_SCHOOL_CERTIFICATE(String FL_HIGH_SCHOOL_CERTIFICATE) {
+        this.FL_HIGH_SCHOOL_CERTIFICATE = FL_HIGH_SCHOOL_CERTIFICATE;
     }
     
 }
