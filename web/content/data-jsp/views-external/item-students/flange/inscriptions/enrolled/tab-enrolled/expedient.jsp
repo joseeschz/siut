@@ -32,6 +32,7 @@
                         // call commit with parameter true if the synchronization with the server is successful 
                         // and with parameter false if the synchronization failder.
                         commit(true);
+                        console.log(rowdata);
                     }
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);
