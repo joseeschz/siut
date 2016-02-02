@@ -117,7 +117,9 @@ $(document).ready(function () {
         if($("#enrollment").text()!==""){
             var datos = {
                 "enrollment": $("#enrollment").text(),
-                "utsemFolio": itemFolio.label
+                "utsemFolio": itemFolio.label,
+                "birthCertificate": $("#birthCertificate").val(),
+                "hightSchoolCertificate": $("#hightSchoolCertificate").val()
             }; // los datos del alumno
             $.ajax({
                 type: "POST",
@@ -155,10 +157,11 @@ $(document).ready(function () {
         $("#name").val("");
         $("#matern_name").val("");
         $("#patern_name").val("");
+        $("#birthCertificate").val("");
+        $("#hightSchoolCertificate").val("");
         $("#entity").jqxDropDownList('selectIndex', 0);
         $("#jqxWindowOk").jqxWindow('close');
         $('#sendButton').jqxButton({disabled: true});
-        createInputEnrrollment("#enrollmentUpdate",true);
         createInputFolioUtsem("#folio",true);
     });
     createInputFolioUtsem("#folio",false);
@@ -316,6 +319,14 @@ $(document).ready(function () {
                 <div style="float: left; margin-right: 5px;">
                     <span>Preparatoria</span> <br>
                     <div id="preparatoryFilter"></div>
+                </div>  
+                <div style="float: left; margin-right: 5px;">
+                    <span>Número de acta de nacimiento</span> <br>
+                    <input type="text" id="birthCertificate" class="text-input" />
+                </div>
+                <div style="float: left; margin-right: 5px;">
+                    <span>Número de certificado de bachillerato</span> <br>
+                    <input type="text" id="hightSchoolCertificate" class="text-input" />
                 </div>
                 <div style="float: left; margin: 20px; margin-left: 175px;">
                     <input type="button" value="Registrar" id="sendButton" />

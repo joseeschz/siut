@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expedientDigital" language="groovy" pageWidth="612" pageHeight="792" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="42" bottomMargin="42" uuid="890b828f-26b7-4ad4-91f1-3a0643a25fdc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="style1" style="table" mode="Opaque" backcolor="#FFFFFF" fontName="Arial" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{FL_PARENT}.equals("Si")]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="dataset" uuid="7358b191-42e2-4085-81ad-2a117b1d076a">
+		<parameter name="pt_pk_student" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="FL_STUDENT_NAME" class="java.lang.String"/>
+		<parameter name="FL_ENROLLMENT" class="java.lang.String"/>
+		<parameter name="FL_NAME_CAREER" class="java.lang.String"/>
+		<parameter name="FL_NAME_CAREER_2" class="java.lang.String"/>
+		<parameter name="FL_GENERATION" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[CALL `GET_REQUIREMENTS`('reportByStudent', $P{pt_pk_student})]]>
+		</queryString>
+		<field name="FL_NAME" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FL_FULFILLMENT" class="java.lang.String"/>
+		<field name="FL_PARENT" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="pt_pk_student" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_REQUIREMENTS`('reportByStudentHeader', $P{pt_pk_student})]]>
+	</queryString>
+	<field name="FL_STUDENT_NAME" class="java.lang.String"/>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER_2" class="java.lang.String"/>
+	<field name="FL_GENERATION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="99" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="1" width="100" height="76" uuid="580e8d2c-3636-4dec-a5b9-636673c9aa9d"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="103" y="34" width="372" height="20" uuid="ce04b37e-7232-4054-aa07-99dd440bdd17"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="77" width="556" height="20" uuid="494077dd-4741-46ac-9e5d-820211128312"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOCUMENTACIÓN  Y REGISTROS QUE CONTIENE EL EXPEDIENTE DEL ESTUDIANTE]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="553" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="556" height="553" uuid="2a172429-9f31-448f-8252-a9861840e603"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset" uuid="bd152871-19dc-4f3d-99bf-58061ee55c49">
+						<datasetParameter name="pt_pk_student">
+							<datasetParameterExpression><![CDATA[$P{pt_pk_student}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FL_STUDENT_NAME">
+							<datasetParameterExpression><![CDATA[$F{FL_STUDENT_NAME}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FL_ENROLLMENT">
+							<datasetParameterExpression><![CDATA[$F{FL_ENROLLMENT}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FL_NAME_CAREER">
+							<datasetParameterExpression><![CDATA[$F{FL_NAME_CAREER}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FL_NAME_CAREER_2">
+							<datasetParameterExpression><![CDATA[$F{FL_NAME_CAREER_2}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="FL_GENERATION">
+							<datasetParameterExpression><![CDATA[$F{FL_GENERATION}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="555" uuid="5c17ae95-cffd-4bc3-b5aa-2631891f1ac4">
+						<jr:columnHeader height="98" rowSpan="1">
+							<frame>
+								<reportElement x="0" y="0" width="555" height="24" uuid="e41776c3-992f-4ad8-92ae-ac88da759359"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="59" height="24" uuid="4ab4d363-c0a2-4f1a-82dd-a8799f9c3616"/>
+									<box leftPadding="5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" isBold="true"/>
+									</textElement>
+									<text><![CDATA[NOMBRE:]]></text>
+								</staticText>
+								<textField>
+									<reportElement x="59" y="0" width="496" height="24" uuid="92a135ee-3807-4b9d-b2ea-5c635b319206"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{FL_STUDENT_NAME}]]></textFieldExpression>
+								</textField>
+							</frame>
+							<frame>
+								<reportElement x="0" y="24" width="555" height="24" uuid="3abd63a8-1ec7-4715-a4d4-094d6f9aa762"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="75" height="24" uuid="236c4d06-f0f3-4122-b98d-849cabda62cc"/>
+									<box leftPadding="5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" isBold="true"/>
+									</textElement>
+									<text><![CDATA[MATRÍCULA:]]></text>
+								</staticText>
+								<textField>
+									<reportElement x="75" y="0" width="135" height="24" uuid="cbfa83f8-f354-4e83-bcd1-f2b80f034227"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{FL_ENROLLMENT}]]></textFieldExpression>
+								</textField>
+								<staticText>
+									<reportElement x="221" y="0" width="86" height="24" uuid="d6b8f04d-5236-4f0a-b931-1a9c07751b8d"/>
+									<box leftPadding="5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" isBold="true"/>
+									</textElement>
+									<text><![CDATA[GENERACIÓN:]]></text>
+								</staticText>
+								<textField>
+									<reportElement x="307" y="0" width="135" height="24" uuid="48ab0b6c-7d73-489e-bd86-e142cfcce2ca"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{FL_GENERATION}]]></textFieldExpression>
+								</textField>
+							</frame>
+							<frame>
+								<reportElement x="0" y="48" width="555" height="24" uuid="4211fb81-cda5-48ef-96d5-71e0e8a981d7"/>
+								<box>
+									<bottomPen lineWidth="1.0"/>
+								</box>
+								<staticText>
+									<reportElement x="0" y="0" width="106" height="24" uuid="5754d494-f72e-4445-aede-305957f710e4"/>
+									<box leftPadding="5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARRERA T.S.U EN:]]></text>
+								</staticText>
+								<textField>
+									<reportElement x="106" y="0" width="449" height="24" uuid="d59a64a3-ec44-4b98-9857-12de6964d413"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{FL_NAME_CAREER}]]></textFieldExpression>
+								</textField>
+							</frame>
+							<frame>
+								<reportElement x="0" y="72" width="555" height="24" uuid="41fa13df-34a4-475d-bf04-807eb833f686"/>
+								<staticText>
+									<reportElement x="0" y="0" width="136" height="24" uuid="d26f7a55-0e9f-4b76-aa5b-c1c8314159b7"/>
+									<box leftPadding="5"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial" isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARRERA LICENCIATURA]]></text>
+								</staticText>
+								<textField>
+									<reportElement x="136" y="0" width="419" height="24" uuid="fb92a0a6-faf4-42a3-a219-706434777502"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="Arial"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$P{FL_NAME_CAREER_2}]]></textFieldExpression>
+								</textField>
+							</frame>
+						</jr:columnHeader>
+						<jr:detailCell style="style1" height="10" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="402" height="10" uuid="16ad7f02-411f-4d59-83ab-0b317b612902"/>
+								<box leftPadding="5">
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement>
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FL_NAME}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="402" y="0" width="153" height="10" uuid="5f17f05c-a459-4fc3-9c5e-058c7df99d87"/>
+								<textElement textAlignment="Center">
+									<font fontName="Arial" size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FL_FULFILLMENT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="193" y="0" width="208" height="34" uuid="7e1218d8-7ef5-4cc2-aa5d-2f357bba1209"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE,  FIRMA Y SELLO DEL 	
+JEFE(A) DEL DEPARTAMENTO	]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="307" y="0" width="165" height="20" uuid="57a71269-6f93-44eb-8eb2-766bc554b011"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FO-DSE-35/06]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="0" width="163" height="20" uuid="812a9c5e-7ad6-4860-9637-81c68bcf3758"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F:E: 12-06-2013]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

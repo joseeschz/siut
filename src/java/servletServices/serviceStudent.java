@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.requirementsModel;
 import model.studentModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -89,6 +90,51 @@ public class serviceStudent extends HttpServlet {
                     out.close();
                 }                
             }
+            if(request.getParameter("selectStudentExpedient")!=null){
+                int pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
+                ArrayList<requirementsModel> listStudent=new studentControl().SelectStudentExpedient(pk_student);
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listStudent.size();i++){
+                    String fulfillment = listStudent.get(i).getFL_FULFILLMENT();
+                    if(fulfillment.equals("Si")){
+                        fulfillment="true";
+                    }else{
+                        fulfillment="false";
+                    }
+                    JSONObject datos = new JSONObject();
+                    datos.put("dataPkRequirement", listStudent.get(i).getFL_ORDER());
+                    datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataName", listStudent.get(i).getFL_NAME());
+                    datos.put("dataFulfillment",  fulfillment);
+                    datos.put("dataParent", listStudent.get(i).getFL_PARENT());
+                    content.add(datos);
+                }      
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("selectStudents")!=null){
+                if(request.getParameter("pt_period")!=null && request.getParameter("pt_career")!=null){
+                    int pt_period = Integer.parseInt(request.getParameter("pt_period"));
+                    int pt_career = Integer.parseInt(request.getParameter("pt_career")); 
+                    ArrayList<studentModel> listStudents=new studentControl().SelectStudents(pt_period, pt_career);
+                    JSONArray content = new JSONArray();
+                    for(int i=0;i<listStudents.size();i++) {
+                        JSONObject datos = new JSONObject();
+                        datos.put("id", listStudents.get(i).getPK_STUDENT());
+                        datos.put("pk_student", listStudents.get(i).getPK_STUDENT());
+                        datos.put("fl_enrollment", listStudents.get(i).getFL_ENROLLMENT());
+                        datos.put("fl_folio_utsem", listStudents.get(i).getFL_UTSEM_FOLIO());
+                        datos.put("fl_name", listStudents.get(i).getFL_NAME());
+                        content.add(datos); 
+                    }                
+                    response.setContentType("application/json"); 
+                    out.print(content);
+                    out.flush(); 
+                    out.close();
+                }     
+            }  
             if(request.getParameter("selectStudentByPkStudent")!=null){
                 String enrrollmentStudent="";
                 if(session.getAttribute("enrrollmentStudent")!=null){
@@ -315,8 +361,12 @@ public class serviceStudent extends HttpServlet {
                 if(request.getParameter("enrollment") != null && request.getParameter("utsemFolio") != null){
                     String enrollment = request.getParameter("enrollment");
                     String utsemFolio = request.getParameter("utsemFolio");
+                    String birth_certificate=request.getParameter("birthCertificate");
+                    String hight_school_certificate=request.getParameter("hightSchoolCertificate");
                     dataStudent.setFL_ENROLLMENT(enrollment);
                     dataStudent.setFL_UTSEM_FOLIO(utsemFolio);
+                    dataStudent.setFL_BIRTH_CERTIFICATE_NUMBER(birth_certificate);
+                    dataStudent.setFL_HIGH_SCHOOL_CERTIFICATE(hight_school_certificate);
                     out.print(new studentControl().InsertStudentOfPreregister(dataStudent));
                 }
                 
@@ -328,6 +378,8 @@ public class serviceStudent extends HttpServlet {
                 int career=Integer.parseInt(request.getParameter("careerUpdate"));
                 String mater_name=request.getParameter("maternNameUpdate");
                 String patern_name=request.getParameter("paternNameUpdate");
+                String birth_certificate=request.getParameter("birthCertificate");
+                String hight_school_certificate=request.getParameter("hightSchoolCertificate");
                 int fk_preparatory=Integer.parseInt(request.getParameter("fkPreparatoryUpdate"));
                 dataStudent.setFL_ENROLLMENT(enrollment);
                 dataStudent.setFK_CAREER(career);
@@ -335,6 +387,8 @@ public class serviceStudent extends HttpServlet {
                 dataStudent.setFL_MATERN_NAME(mater_name);
                 dataStudent.setFL_PATERN_NAME(patern_name);
                 dataStudent.setFK_PREPARATORY(fk_preparatory);
+                dataStudent.setFL_BIRTH_CERTIFICATE_NUMBER(birth_certificate);
+                dataStudent.setFL_HIGH_SCHOOL_CERTIFICATE(hight_school_certificate);
                 out.print(new studentControl().UpdateStudent(dataStudent));
             }
             if(request.getParameter("updateField")!=null){     
