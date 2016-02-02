@@ -33,68 +33,82 @@
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');     
             createLitsBoxPeriodByTeacher(itemCareer.value, itemSemester.value, itemSubjectMatter.value, itemScaleEvaluation.value, "#valorateActivitiesPeriodHistoryFilter");
             $('#valorateActivitiesLevelFilter').on('change',function (event){  
-                itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
-                createDropDownCareerByTeacher(itemLevel.value, "#valorateActivitiesCareerFilter", true);
-                itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-                itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
-                itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
-                itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-                createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",itemLevel.value, true);
-                itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');     
+                var args = event.args;
+                if(args){
+                    itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownCareerByTeacher(itemLevel.value, "#valorateActivitiesCareerFilter", true);                    
+                }        
             });
-            $('#valorateActivitiesCareerFilter').on('change',function (event){    
-                itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
-                itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-                itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
-            });
-            var evenPeriod = false;
-            $('#valorateActivitiesPeriodFilter').on('click',function (event){   
-                evenPeriod=true; 
-            });
-            $('#valorateActivitiesPeriodFilter').on('keyup',function (event){   
-                evenPeriod=true; 
+            $('#valorateActivitiesCareerFilter').on('change',function (event){  
+                var args = event.args;
+                if(args){                    
+                    itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);                    
+                }
             });
             $('#valorateActivitiesPeriodFilter').on('change',function (event){   
-                itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-                itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-                itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
-                itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
-                itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
-                var pkSemester=0;
-                if(itemSemester!==null){
-                    pkSemester = itemSemester.value;
+                var args = event.args;
+                if(args){
+                    itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
+                    itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
+                    itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
+                    var pkSemester=0;
+                    if(itemSemester!==null){
+                        pkSemester = itemSemester.value;
+                    }
+                    createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, pkSemester, null, "#valorateActivitiesSubjectMatterFilter", true);
+                    var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
+                    $("#tableRegisterActivities").jqxDataTable({source: dataAdapter});
                 }
-                createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, pkSemester, null, "#valorateActivitiesSubjectMatterFilter", true);
-                var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-                $("#tableRegisterActivities").jqxDataTable({source: dataAdapter});
             });
-            $("#valorateActivitiesSemesterFilter").on('change',function (){
-                itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-                itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-                itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#valorateActivitiesSubjectMatterFilter", true);
-            });
-            $("#valorateActivitiesSubjectMatterFilter").on('change',function (){
-                existWorkPlanning();     
-            });
-            $("#valorateActivitiesScaleEvaluationFilter").on('change',function (){
-                existWorkPlanning(); 
-                
-            });
-            $("#valorateActivitiesPeriodHistoryFilter").on('change',function (){
-                $('#jqxSplitter').jqxSplitter('collapse'); 
-                var dataAdapter = new $.jqx.dataAdapter(loadSource("history"));
-                loadTableRegisterActivitiesHistory(dataAdapter); 
-                if($("#divHistory").attr("style")!=="float: left;" && $("#divHistory").attr("style")!=="float: left; display: block;"){
-                    $("#contentTRegisterActivitiesHistory").css("width","0px");
-                    $("#divHistory").fadeIn("slow");
-                    $("#contentTRegisterActivitiesHistory").animate({ "width": "585px" }, "fast");
+            
+            $("#valorateActivitiesSemesterFilter").on('change',function (event){
+                var args = event.args;
+                if(args){
+                    itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#valorateActivitiesSubjectMatterFilter", true);
                 }
-                if(!existWorkPlanning()){
-                    $("#addWorkPlannin").click();
+            });
+            $("#valorateActivitiesSubjectMatterFilter").on('change',function (event){
+                var args = event.args;
+                if(args){
+                    itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",itemLevel.value, true);
+                    itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem'); 
+                    if(itemScaleEvaluation!==null){
+                        $("#contentTRegisterActivities").show();
+                    }else{
+                        $("#contentTRegisterActivities").hide();
+                    }
+                }
+            });
+            $("#valorateActivitiesScaleEvaluationFilter").on('change',function (event){
+                var args = event.args;
+                if(args){
+                    existWorkPlanning(); 
+                }                
+            });
+            $("#valorateActivitiesPeriodHistoryFilter").on('change',function (event){
+                var args = event.args;
+                if(args){
+                    $('#jqxSplitter').jqxSplitter('collapse'); 
+                    var dataAdapter = new $.jqx.dataAdapter(loadSource("history"));
+                    loadTableRegisterActivitiesHistory(dataAdapter); 
+                    if($("#divHistory").attr("style")!=="float: left;" && $("#divHistory").attr("style")!=="float: left; display: block;"){
+                        $("#contentTRegisterActivitiesHistory").css("width","0px");
+                        $("#divHistory").fadeIn("slow");
+                        $("#contentTRegisterActivitiesHistory").animate({ "width": "585px" }, "fast");
+                    }
+                    if(!existWorkPlanning()){
+                        $("#addWorkPlannin").click();
+                    }
                 }
             });
             existWorkPlanning();
@@ -836,8 +850,8 @@
                     });
                     infoButton.click(function () {
                         if (!infoButton.jqxButton('disabled')){
-                            $(".alert").removeClass("alert-success").addClass("alert-warning");
-                            $(".alert").hide();
+                            //$(".alert").removeClass("alert-success").addClass("alert-warning");
+                            //$(".alert").hide();
                             $(".alert").fadeIn("slow");
                             indicationsImpor = "La tabla de titulo periodo contiene los\n\
                                                 grupos de actividades que \n\
@@ -1234,7 +1248,7 @@
         <div id="tableRegisterActivities"></div>
     </div>
 </div>
-<div style="width: 450px; margin-right: 5px;">
+<div style="width: 450px; margin-right: 5px; display: none">
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div id="indicationsx"></div>

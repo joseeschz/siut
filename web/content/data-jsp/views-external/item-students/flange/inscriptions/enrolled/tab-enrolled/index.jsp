@@ -1,23 +1,50 @@
 <script type="text/javascript">
     $(document).ready(function () {
+        var itemLevel = 0;
+        var itemCareer = 0;
+        var itemPeriod = 0;
+        createDropDownStudyLevel("#levelFilter",false);
+        itemLevel = $('#levelFilter').jqxDropDownList('getSelectedItem');
+        if(itemLevel!==undefined){
+            createDropDownCareer( itemLevel.value ,"#careerFilter",false);
+            createDropDownPeriod("inscription","#periodFilter");
+        }else{
+            createDropDownCareer( null ,"#careerFilter",false);
+        }        
+        $('#levelFilter').on('change',function (event){  
+            itemLevel = $('#levelFilter').jqxDropDownList('getSelectedItem');
+            createDropDownCareer( itemLevel.value ,"#careerFilter", true);
+        });
+        $('#careerFilter').on('change',function (event){         
+            initWidgets(0);            
+        });
+        $('#periodFilter').on('change',function (event){         
+            initWidgets(0);            
+        });
+        
         var initDataTable = function () {
-            var url = "../serviceCandidate?selectCandidatesInscription";
+            itemPeriod = $('#periodFilter').jqxDropDownList('getSelectedItem');
+            itemCareer = $('#careerFilter').jqxDropDownList('getSelectedItem');
+            var url = "../serviceStudent?selectStudents";
             // prepare the data
             var source =
             {
                 datatype: "json",
                 datafields: [
-                    { name: 'fl_folioSystem_temp_system', type: 'string' },
-                    { name: 'fl_utsem_folioSystem', type: 'string' },
-                    { name: 'fl_register_date', type: 'string' },
-                    { name: 'fl_name', type: 'string' },
-                    { name: 'fl_career', type: 'string' }
+                    { name: 'pk_student', type: 'string' },
+                    { name: 'fl_enrollment', type: 'string' },
+                    { name: 'fl_folio_utsem', type: 'string' },
+                    { name: 'fl_name', type: 'string' }
                 ],
                 id: 'id',
-                url: url
+                url: url,
+                data :{
+                    "pt_period":itemPeriod.value,
+                    "pt_career":itemCareer.value
+                }
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
-            $("#jqxDataTablePreregisters").jqxDataTable({
+            $("#jqxDataTableEnrolled").jqxDataTable({
                 width: 748,
                 height: 521, 
                 pageable: true,
@@ -25,11 +52,9 @@
                 source: dataAdapter,
                 filterable: true,
                 columns: [
-                    { text: 'Nombre', datafield: 'fl_name', width: 'auto', filterable: false },
-                    { text: 'Carrera', datafield: 'fl_career', width: 120,cellsalign: 'center' },
-                    { text: 'Fecha registro', datafield: 'fl_register_date', width: 120, resizable: false, filterable: false },
-                    { text: 'Folio Utsem', datafield: 'fl_utsem_folioSystem', width: 110, resizable: false},
-                    { text: 'Folio Sistema', datafield: 'fl_folioSystem_temp_system', width: 110, resizable: false }
+                    { text: 'Matrícula', datafield: 'fl_enrollment', width: 180, resizable: false },
+                    { filterable: false, text: 'Nombre', datafield: 'fl_name', width: 'auto'},
+                    { filterable: false, text: 'Folio Utsem', datafield: 'fl_folio_utsem', width: 110, resizable: false}                    
                 ]
             });
         };
@@ -109,14 +134,16 @@
         };
         // create context menu
         var contextMenu = $("#jqxMenuContext").jqxMenu({ 
-            width: 150, 
-            height: 65, 
+            width: 200, 
+            height: 100, 
             autoOpenPopup: false, 
             mode: 'popup'
         });
-        contextMenu.jqxMenu('disable', 'options', true); 
+//        contextMenu.jqxMenu('disable', 'options', true); 
+//        contextMenu.jqxMenu('disable', 'add', true); 
+//        contextMenu.jqxMenu('disable', 'generate', true); 
         // initialize the popup window and buttons.
-        var popupWindow = $("#popupWindowCedule").jqxWindow({ 
+        var popupWindow = $("#popupWindowDoc").jqxWindow({ 
             width: 800,
             minWidth: '1200px',
             height: 800,
@@ -126,39 +153,47 @@
             autoOpen: false, 
             modalOpacity: 0.7 
         });
-        $("#jqxDataTablePreregisters").on('contextmenu', function () {
+        var popupWindowExpedient = $("#popupWindowExpedient").jqxWindow({ 
+            width: 860,
+            minWidth: '1050px',
+            height: 525,
+            resizable: false, 
+            isModal: true, 
+            autoOpen: false, 
+            modalOpacity: 0.7 
+        });
+        $("#jqxDataTableEnrolled").on('contextmenu', function () {
             return false;
         });
-        var fl_folioSystem_temp_system=undefined;
-        $('#jqxDataTablePreregisters').on('rowSelect', function (event){
+        var pt_pk_student=undefined;
+        $('#jqxDataTableEnrolled').on('rowSelect', function (event){
             contextMenu.jqxMenu('close');
         });
-        $('#jqxDataTablePreregisters').on('rowDoubleClick', function (event){
+        $('#jqxDataTableEnrolled').on('rowDoubleClick', function (event){
             var row = event.args.row;
-            fl_folioSystem_temp_system=row.fl_folioSystem_temp_system;
+            pt_pk_student=row.pk_student;
             $.ajax({
                 type: "POST",
-                async: true,
-                url: "../servicePdf?cedule=session",
-                data: {"folioSystem": fl_folioSystem_temp_system},
+                async: false,
+                url: "../content/data-jsp/views-external/item-students/flange/inscriptions/enrolled/tab-enrolled/expedient.jsp",
+                data: {"pt_pk_student": pt_pk_student},
                 beforeSend: function (xhr) {
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    var iframe = $('<iframe style="width: 1185px; height: 810px;">');
-                    iframe.attr('src','../servicePdf?cedule=print');
-                    $('#contentPDF').html(iframe);
+                    $('#contentExpedient').html(data);
                 }
             });
-            popupWindow.jqxWindow('show');
+            popupWindowExpedient.jqxWindow('show');
+            
         });
-        $("#jqxDataTablePreregisters").on('rowClick', function (event) {
+        $("#jqxDataTableEnrolled").on('rowClick', function (event) {
             if (event.args.originalEvent.button==2) {
-                $("#jqxDataTablePreregisters").jqxDataTable('selectRow', event.args.rowindex);
+                $("#jqxDataTableEnrolled").jqxDataTable('selectRow', event.args.rowindex);
                 var row = event.args.row;
-                fl_folioSystem_temp_system=row.fl_folioSystem_temp_system;
+                pt_pk_student=row.pk_student;
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
                 contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
@@ -168,12 +203,12 @@
         // handle context menu clicks.
         contextMenu.on('itemclick', function (event) {
             var args = event.args;
-            if ($.trim($(args).text()) === "Generar Cédula") {
+            if ($.trim($(args).text()) === "Expediente") {
                 $.ajax({
                     type: "POST",
                     async: false,
-                    url: "../servicePdf?cedule=session",
-                    data: {"folioSystem": fl_folioSystem_temp_system},
+                    url: "../../content/data-jr/expedientDigital/index.jsp?sessionExpedientDigital",
+                    data: {"pt_pk_student": pt_pk_student},
                     beforeSend: function (xhr) {
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
@@ -181,12 +216,50 @@
                     },
                     success: function (data, textStatus, jqXHR) {
                         var iframe = $('<iframe style="width: 1185px; height: 810px;">');
-                        iframe.attr('src','../servicePdf?cedule=print');
+                        iframe.attr('src','../../content/data-jr/expedientDigital/index.jsp');
                         $('#contentPDF').html(iframe);
                     }
                 });
                 popupWindow.jqxWindow('show');
             }
+            if ($.trim($(args).text()) === "Cotejo de documentos") {
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../../content/data-jr/documentsAgreement/index.jsp?SessionDocumentsAgreement",
+                    data: {"pt_pk_student": pt_pk_student},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        var iframe = $('<iframe style="width: 1185px; height: 810px;">');
+                        iframe.attr('src','../../content/data-jr/documentsAgreement/index.jsp');
+                        $('#contentPDF').html(iframe);
+                    }
+                });
+                popupWindow.jqxWindow('show');
+            }
+            if ($.trim($(args).text()) === "Carta compromiso") {
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../../content/data-jr/letterCommitment/index.jsp?sessionLetterCommitment",
+                    data: {"pt_pk_student": pt_pk_student},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        var iframe = $('<iframe style="width: 1185px; height: 810px;">');
+                        iframe.attr('src','../../content/data-jr/letterCommitment/index.jsp');
+                        $('#contentPDF').html(iframe);
+                    }
+                });
+                popupWindow.jqxWindow('show');
+            }            
         });
         // init widgets.
         var initWidgets = function (tab) {
@@ -202,31 +275,48 @@
         $('#jqxSubTabs').jqxTabs({ width: 750, height: 560,  initTabContent: initWidgets });
     });
 </script>
+<div style="float: left; margin-right: 5px;">
+    Nivel de estudio<br>
+    <div id='levelFilter'></div>
+</div>
+<div style="float: left; margin-right: 5px;">
+    Carrera <br>
+    <div id='careerFilter'></div>
+</div>
+<div style="float: right; margin-right: 5px;">
+    Periodo <br>
+    <div id='periodFilter'></div>
+</div>
 <div id='jqxSubTabs'>
     <ul style="margin: 0px;">
         <li style="margin-left: 10px;">
-            Preinscritos
+            Registros
         </li>
-        <li>
+<!--        <li>
             Gráfica
-        </li>
+        </li>-->
     </ul>
     <div style="overflow: hidden;">
-        <div id="jqxDataTablePreregisters"></div>
+        <div id="jqxDataTableEnrolled"></div>
     </div>
-    <div style="overflow: hidden;">
+<!--    <div style="overflow: hidden;">
         <div style="border:none; width: 720px; height: 500px;" id="jqxChart"></div>
-    </div>
+    </div>-->
 </div>
 <div id='jqxMenuContext'>
     <ul>
-        <li id="options"><span>Opsiones</span></li>
-        <li type='separator'></li>
-        <li>Generar Cédula</li>
+        <li>Expediente</li>
+        <li>Carta compromiso</li>
+        <li>Cotejo de documentos</li>
     </ul>
 </div>
-<div id="popupWindowCedule">
-    <div>Cédula</div>
+<div id="popupWindowExpedient">
+    <div>Expediente</div>
+    <div style="overflow: hidden;" id="contentExpedient">
+    </div>
+</div>
+<div id="popupWindowDoc">
+    <div>Documento</div>
     <div style="overflow: hidden;" id="contentPDF">
     </div>
 </div>

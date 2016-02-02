@@ -48,55 +48,18 @@ if(session.getAttribute("logueado") != null){%>
             });
             var tabActive;
             var selectedTab = $.cookie('tabActive');
-            var loaded0=false;
-            var loaded1=false;
-            var loaded2=false;
             $('#jqxTabs').on('selected', function (event) { 
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
-                if(selectedTab===0){                    
-                    if(!loaded0){
-                        //$("#updatePre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp");
-                        $("#load-page-external").jqxWindow('open');
-                        $.ajax({
-                            type: "POST",
-                            url: "../content/data-jsp/views-external/item-students/flange/pre-inscriptions/update-pre-inscription.jsp",
-                            async: true,
-                            beforeSend: function (xhr) {
-                                $("#updatePre-IncriptionTab").css("display","none");
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                alert("Error interno del servidor");
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                $("#updatePre-IncriptionTab").html(data);
-                                $("#load-page-external").jqxWindow('close');
-                            }
-                        }).done(function (){
-                            $("#updatePre-IncriptionTab").css("display","block");
-                        });                        
-                        loaded0=true;
-                    }                    
-                }
-                if(selectedTab===1){                    
-                    if(!loaded1){
-                        $("#newPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/new-pre-inscription.jsp");
-                        loaded1=true;
-                    }   
-                }
-                if(selectedTab===2){                    
-                    if(!loaded2){
-                        $("#allPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/pre-inscriptions/preregisters.jsp");
-                        loaded2=true;
-                    }
-                }
-            }); 
+            });
+            
             if(selectedTab!==undefined){
                 tabActive = selectedTab;
             }else{
                 tabActive=0;
             }
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false });   
+            $("#students-enrolledmentTab").load("../content/data-jsp/views-external/item-students/flange/inscriptions/enrolled/tab-enrolled/index.jsp");
         });
     </script>
     <div id='jqxWindowOk'>
@@ -133,23 +96,11 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="update-pre-inscription">Verificar datos</li>
-            <li class="jqxTabsTitle" dir="new-pre-inscription">Preinscripción</li>
-            <li class="jqxTabsTitle" dir="preregisters">Datos</li>
+            <li class="jqxTabsTitle" dir="students-enrollment">Inscritos</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
-                <div id="updatePre-IncriptionTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="newPre-IncriptionTab" style="padding: 20px;"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="allPre-IncriptionTab" style="padding: 20px;"></div>
+                <div id="students-enrolledmentTab" style="padding: 20px"></div>
             </div>
         </div>
     </div>

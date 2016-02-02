@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.requirementsModel;
 import model.studentModel;
 
 /**
@@ -20,7 +21,7 @@ import model.studentModel;
  */
 public class studentControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> listStudents2=new studentControl().SelectStudent("UTS12S-003661", "allData");
+        ArrayList<requirementsModel> listStudents2=new studentControl().SelectStudentExpedient(819);
         for(int i=0;i<listStudents2.size();i++){
             System.out.println(listStudents2.get(i).getFL_NAME());
         }
@@ -45,13 +46,17 @@ public class studentControl {
         }
         return list;
     }
-    public ArrayList<studentModel> SelectStudents(){
+    public ArrayList<studentModel> SelectStudents(int pt_period, int pt_career){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(""); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENROLLED`('studentsInscription', '', "+pt_career+", "+pt_period+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
-                    studentModel StudentAll=new studentModel();
-                    list.add(StudentAll);
+                    studentModel CandidateAll=new studentModel();
+                    CandidateAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
+                    CandidateAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    CandidateAll.setFL_NAME(res.getString("FL_NAME"));
+                    list.add(CandidateAll);
                 }
                 res.close();
                 ps.close();
@@ -63,7 +68,33 @@ public class studentControl {
         }
         return list;
     }
-
+    public ArrayList<requirementsModel> SelectStudentExpedient(int pt_pk_student){
+        ArrayList<requirementsModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REQUIREMENTS`('reportByStudent', "+pt_pk_student+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    requirementsModel requirementAll=new requirementsModel();
+                    requirementAll.setPK_REQUIREMENT(res.getInt("PK_REQUIREMENT"));
+                    requirementAll.setFL_ORDER(res.getString("FL_ORDER"));
+                    requirementAll.setFL_NAME(res.getString("FL_NAME"));
+                    if(res.getString("FL_FULFILLMENT").equals("CUMPLIMIENTO DE REQUISITOS")){
+                        requirementAll.setFL_FULFILLMENT("");
+                    }else{
+                        requirementAll.setFL_FULFILLMENT(res.getString("FL_FULFILLMENT"));
+                    }      
+                    requirementAll.setFL_PARENT(res.getString("FL_PARENT"));
+                    list.add(requirementAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<studentModel> SelectStudent(String enrollment, String condition){
         ArrayList<studentModel> list=new ArrayList<>();
         String procedure;
@@ -303,7 +334,7 @@ public class studentControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('insert', '"+dataStudent.getFL_ENROLLMENT()+"', NULL, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('insert', '"+dataStudent.getFL_ENROLLMENT()+"', NULL, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+", '"+dataStudent.getFL_BIRTH_CERTIFICATE_NUMBER()+"', '"+dataStudent.getFL_HIGH_SCHOOL_CERTIFICATE()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -317,7 +348,7 @@ public class studentControl {
     }
     public String InsertStudentOfPreregister(studentModel dataStudent){
         String request = "";
-        String procedure = "CALL `SET_NEW_STUDENT`('insertOfCandidates', '"+dataStudent.getFL_ENROLLMENT()+"', '"+dataStudent.getFL_UTSEM_FOLIO()+"', NULL, NULL, NULL, NULL, NULL)";
+        String procedure = "CALL `SET_NEW_STUDENT`('insertOfCandidates', '"+dataStudent.getFL_ENROLLMENT()+"', '"+dataStudent.getFL_UTSEM_FOLIO()+"', NULL, NULL, NULL, NULL, NULL, '"+dataStudent.getFL_BIRTH_CERTIFICATE_NUMBER()+"', '"+dataStudent.getFL_HIGH_SCHOOL_CERTIFICATE()+"')";
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
@@ -387,7 +418,7 @@ public class studentControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('update', '"+dataStudent.getFL_ENROLLMENT()+"', null, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_NEW_STUDENT`('update', '"+dataStudent.getFL_ENROLLMENT()+"', null, "+dataStudent.getFK_CAREER()+", '"+dataStudent.getFL_NAME()+"', '"+dataStudent.getFL_MATERN_NAME()+"', '"+dataStudent.getFL_PATERN_NAME()+"', "+dataStudent.getFK_PREPARATORY()+", '"+dataStudent.getFL_BIRTH_CERTIFICATE_NUMBER()+"', '"+dataStudent.getFL_HIGH_SCHOOL_CERTIFICATE()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

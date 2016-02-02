@@ -21,7 +21,7 @@ import model.studyLevelModel;
  */
 public class studyLevelControl {
     public static void main(String[] args) {
-        ArrayList<studyLevelModel> list=new studyLevelControl().SelectStudyLevelByTeacher(64);
+        ArrayList<studyLevelModel> list=new studyLevelControl().SelectStudyLevel("byStatus");
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_LEVEL());
         }

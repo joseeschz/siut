@@ -47,8 +47,7 @@ public class serviceStudyLevel extends HttpServlet {
                 JSONArray content = new JSONArray();
                 int pkUser=0;
                 settings.put("__careerModel","StudyLevel");
-                if(request.getParameter("view").equals("combo")){
-                    
+                if(request.getParameter("view").equals("combo")){                    
                     if(request.getParameter("teacher")!=null){
                         if(session.getAttribute("logueado")!=null){
                             pkUser=Integer.parseInt(session.getAttribute("pkUser").toString());
