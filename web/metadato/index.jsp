@@ -20,7 +20,7 @@
                             <div id="WindowLoad"></div>
                             <div id="loadingPicture"></div>
                         </div>
-                        <span id="loginText" style="font-size: 47px;">BIENVENIDO</span>
+                        <span id="loginText" style="font-size: 35px; line-height: normal;">METADATO</span><br><br>  
                         <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 18px; right: 20px; top: 90px">Error datos incorrectos</span>
                         <div id="intro" style="display: block;">
                             <section>
@@ -32,7 +32,7 @@
                                                 <label for="env">Matrícula</label>
                                             </div>
                                             <div class="input-row">
-                                                <input title="Ingresa tu matrícula para poder ingresar" name="enrrollment" type="text" id="nameUser"autofocus="" placeholder="UTSXXS-00XXXX">
+                                                <input title="Ingresa tu matrícula para poder ingresar" name="enrollment" type="text" id="nameUser"autofocus="" placeholder="UTSXXS-00XXXX">
                                             </div>
                                         </div>
                                         <div style="position: relative; height: 70px;">
@@ -43,16 +43,65 @@
                                                 <input title="Ingresa tu contraseña para poder ingresar" name="password" type="password" id="password" placeholder="Contraseña">
                                             </div>
                                         </div>
-                                    </div><br>
-                                    <div class="description">Inicia sesión para completar tu registro.</div>
+                                    </div>
+                                    <!--<div class="description">Inicia sesión para completar tu registro.</div>-->  
+                                    <div class="description" id="rememberPass" style="cursor: pointer; text-decoration: underline; font-size: 18px; text-align: right;">No recuerdo mi contraseña</div>
                                     <div class="button-row">
                                         <input type="submit" id="buttonGetStarted" class="button" value="Ingresar" />
                                     </div>
+                                    
+                                </form><!--/ form-->
+                            </section><!--/ seccion-->
+                            <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata.pdf" download="Documento piloto de metadato"><img src="../content/pictures-system/pdf.png"></a>
+                        </div>
+                    </div>
+                    <div id="stage" class="rememberPass" style="display: none">
+                        <div style="display: none" id="windowBlockRemember">
+                            <div id="WindowLoad"></div>
+                            <div id="loadingPicture"></div>
+                        </div>
+                        <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 18px; right: 20px; top: 90px">Error datos incorrectos</span>
+                        <div id="intro" style="display: block;">
+                            <section>
+                                <form id="formLoginRemember" method="post" >
+                                    <div id="tmm-form-wizard" class="form-login substrate">
+                                        <div style="position: relative; height: 70px;">
+                                            <div class="label-row">
+                                                <label for="env">Matrícula</label>
+                                            </div>
+                                            <div class="input-row">
+                                                <input title="Ingresa tu matrícula para poder ingresar" name="enrollment" type="text" id="enrollment"autofocus="" placeholder="UTSXXS-00XXXX">
+                                            </div>
+                                        </div>
+                                        <div style="position: relative; height: 70px;">
+                                            <div class="label-row">
+                                                <label for="password">Correo</label>
+                                            </div>
+                                            <div class="input-row">
+                                                <input title="Ingresa tu contraseña para poder ingresar" name="mail" type="text"  id="mail" placeholder="Correo">
+                                            </div>
+                                        </div>
+                                    </div><br>
+                                    <div class="description">Indica tu matrícula y correo.</div>                                    
+                                    <div class="button-row">
+                                        <input type="submit" id="buttonRemember" class="button" value="Recordar" />
+                                    </div>
+                                    <div class="description" id="back" style="cursor: pointer; text-decoration: underline; font-size: 18px; text-align: right;">Regresar</div>
                                 </form><!--/ form-->
                             </section><!--/ seccion-->
                         </div>
                     </div>
                 </center>  
+                <div id='jqxwindow'>
+                    <div>Mensaje</div>
+                    <div style="padding: 20px">
+                        <span id="message"></span>
+                        <br><br>
+                        <div style="text-align: center">
+                            <input type="button" id="okMessage" value="Aceptar" style="margin-right: 10px" />
+                        </div>
+                    </div>
+                </div>
             </body>
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
             <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/localization.js"></script>
@@ -61,8 +110,28 @@
             <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
             <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
             <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
+            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script>
+            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxbuttons.js"></script>
             <script type="text/javascript">
                 $(document).ready(function (){
+                    $("#jqxwindow").jqxWindow({
+                        height: 130,
+                        width: 350,
+                        theme: 'greenUtsem',
+                        autoOpen: false,
+                        isModal: true,
+                        showCloseButton: true,
+                        resizable: false,
+                        position: "center",
+                        okButton: $('#okMessage'),
+                        initContent: function () {
+                            $('#okMessage').jqxButton({
+                                width: '65px',
+                                theme: 'greenUtsem'
+                            });
+                            $('#okMessage').focus();
+                        }
+                    });
                     $("#password").jqxPasswordInput({width: '260px', showStrength: false, showStrengthPosition: "right" });
                     $("#password, #nameUser").focusin(function (){
                         $("#MessageError").fadeOut("slow");
@@ -85,19 +154,50 @@
                                     }
                                 ]
                     });
+                    $("#formLoginRemember").jqxValidator({
+                        hintType: 'label',
+                        animationDuration: 0,
+                        rules: [
+                                    {
+                                        input: "#enrollment", 
+                                        message: "Este campo es requerido!", 
+                                        action: 'keyup, blur', 
+                                        rule: "required"
+                                    },
+                                    {   
+                                        input: "#mail", 
+                                        message: "El correo es necesario!", 
+                                        action: 'keyup, blur', 
+                                        rule: 'required' 
+                                    },
+                                    {   
+                                        input: "#mail", 
+                                        message: "El correo parece ser incorrecto", 
+                                        action: 'keyup, blur', 
+                                        rule: 'email' 
+                                    }
+                                ]
+                    });
                     $("#buttonGetStarted").click(function (){
                         $('#formLogin').jqxValidator('validate');
                         return false;
                     });
+                    $("#buttonRemember").click(function (){
+                        $('#formLoginRemember').jqxValidator('validate');
+                        return false;
+                    });
                     $('#formLogin').submit(function (){
                         $('#formLogin').jqxValidator('validate');
+                    });
+                    $('#formLoginRemember').submit(function (){
+                        $('#formLoginRemember').jqxValidator('validate');
                     });
                     $('#formLogin').on('validationSuccess', function (event) {
                         //en el evento submit del fomulario
                         var datos = $("#formLogin").serialize(); // los datos del 
                         $.ajax({
                             type: "POST",
-                            async: false,
+                            async: true,
                             url: "../serviceStudent?selectLoginStudent=in",
                             data:datos,
                             beforeSend: function (xhr) {
@@ -119,6 +219,48 @@
                                 }
                             }
                         });
+                    });
+                    $('#formLoginRemember').on('validationSuccess', function (event) {
+                        //en el evento submit del fomulario
+                        var datos = $("#formLoginRemember").serialize(); // los datos del 
+                        $.ajax({
+                            type: "POST",
+                            async: true,
+                            url: "../serviceMail?rememberPassword",
+                            data:datos,
+                            beforeSend: function (xhr) {
+                                $("#windowBlockRemember").fadeIn("slow");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");
+                                $("#windowBlockRemember").fadeOut("slow");
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                if(data==="Success"){
+                                    $("#message").text("Se envió correctamente el recordatorio al correo, favor de revisar...");  
+                                }else if(data==="EmailNotFountForEnrrollment"){
+                                    $("#message").text("Lo sentimos los datos no fueron ingresados de forma correcta favor de verificar...");  
+                                }else if(data==="FailConnectionNetwork"){
+                                    $("#message").text("Lamentamos que estemos teniendo problemas de conexión favor de intentar mas tarde.");  
+                                }else{
+                                    $("#message").text("Al parecer el correo que ingreso no es correcto, intenta corregir este problema.");  
+                                }
+                                $("#jqxwindow").jqxWindow("open");
+                                $("#windowBlockRemember").fadeOut("slow");
+                            }
+                        });
+                    });
+                    $("#rememberPass").click(function (){
+                        $("#stage").fadeOut("slow");
+                        setTimeout(function(){
+                            $(".rememberPass").fadeIn("slow");
+                        },700);                        
+                    });
+                    $("#back").click(function (){
+                        $(".rememberPass").fadeOut("slow");
+                        setTimeout(function(){
+                            $("#stage").fadeIn("slow");
+                        },700);     
                     });
                 });
             </script>
@@ -157,42 +299,54 @@
                         </div>
                     </div>
                 </div>
-                <div id="changePassword" style="display: none">
+                <div id="changePassword" style="display: none; ">
                     <div id="titleMessageChangePassword">Cambiar Contraseña</div>
                     <div id="formChangePassword" style="padding: 10px">
-                        <table>
-                            <td>
-                                <div class="div-row3 input-prepend">
-                                    <label class="label-row" for="fl_passwordOld">Contraseña actual</label><br>
-                                    <span class="add-on"><i class="icon-asterisk"></i></span>  
-                                    <input type="password" data-type-role="text" id="fl_passwordOld" name="fl_passwordOld" placeholder="Contraseña actual"/>
-                                </div>
-
-                                <div class="div-row3 input-prepend">
-                                    <label class="label-row" for="fl_password">Nueva contraseña</label><br>
-                                    <span class="add-on"><i class="icon-star"></i></span>  
-                                    <input type="password" data-type-role="text" id="fl_password" name="fl_password" placeholder="Nueva contraseña"/>
-                                </div><br>
-                                <div class="div-row3 input-prepend">
-                                    <label class="label-row" for="fl_passwordConfirm">Confirmar contraseña</label><br>
-                                    <span class="add-on"><i class="icon-share"></i></span>  
-                                    <input type="password" data-type-role="text" id="fl_passwordConfirm" name="fl_passwordConfirm" placeholder="Confirmar contraseña"/>
-                                </div>
-                            </td>
-                            <td>    
-                                <div id="changinLoad" style="display: none; float: right; top: 75px; position: absolute; right: 40px;">
-                                    <img src="../content/pictures-system/load.GIF"/><br>
-                                    <center>Cambiando...</center>
-                                </div>
-                                <div id="textInfo">
-                                    <div style="background-image: url('../content/pictures-system/password.png'); background-repeat: no-repeat; position: absolute; width: 200px; bottom: 0px; height: 100px; opacity: 0.7; background-position: right center; background-size: 50% auto;"></div>
-                                    <label class="label-row">Sujerencias</label><br>
-                                    <p>Es recomendable cambiar tu contraseña para mantener la integridad de tus datos.</p>
-                                    <p>Al cambiar la contraseña será enviada a tu correo electronico como recordatorio.</p>
-                                </div>
-                            </td>
+                        <table style="width: 300px;float: left; position: relative;">
+                            <tr>
+                                <td>
+                                    <div class="div-row3 input-prepend">
+                                        <label class="label-row" for="fl_passwordOld">Contraseña actual</label><br>
+                                        <span class="add-on"><i class="icon-asterisk"></i></span>  
+                                        <input type="password" data-type-role="text" id="fl_passwordOld" name="fl_passwordOld" placeholder="Contraseña actual"/>
+                                    </div>
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="div-row3 input-prepend">
+                                        <label class="label-row" for="fl_password">Nueva contraseña</label><br>
+                                        <span class="add-on"><i class="icon-star"></i></span>  
+                                        <input type="password" data-type-role="text" id="fl_password" name="fl_password" placeholder="Nueva contraseña"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="div-row3 input-prepend">
+                                        <label class="label-row" for="fl_passwordConfirm">Confirmar contraseña</label><br>
+                                        <span class="add-on"><i class="icon-share"></i></span>  
+                                        <input type="password" data-type-role="text" id="fl_passwordConfirm" name="fl_passwordConfirm" placeholder="Confirmar contraseña"/>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
-                        
+                        <table style="position: relative;">
+                            <tr>
+                                <td>
+                                    <div id="changinLoad" style="display: none; float: right; top: 75px; position: absolute; right: 40px;">
+                                        <img src="../content/pictures-system/load.GIF"/><br>
+                                        <center>Cambiando...</center>
+                                    </div>
+                                    <div id="textInfo">
+                                        <div style="background-image: url('../content/pictures-system/password.png'); background-repeat: no-repeat; position: absolute; width: 200px; bottom: 0px; height: 100px; opacity: 0.7; background-position: right center; background-size: 50% auto;"></div>
+                                        <label class="label-row">Sujerencias</label><br>
+                                        <p>Es recomendable cambiar tu contraseña para mantener la integridad de tus datos.</p>
+                                        <p>Al cambiar la contraseña será enviada a tu correo electronico como recordatorio.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                         <div style="clear: both; position: absolute; bottom: 10px; left: 50px;">
                             <input type="button" id="okChangePassword" value="Cambiar" style="margin-right: 10px" />
                             <input type="button" id="cancelChangePassword" value="Cancelar" />
@@ -214,7 +368,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="../serviceStudent?selectLoginStudent&&statusLogin=out" onclick="$.cookie('itemActive',0); $.removeCookie('intruccions');">Cerrar sesión</a></li>
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#" class="changePasswordBtn">Cambiar contraseña</a></li>
+                                        <li><a class="changePasswordBtn">Cambiar contraseña</a></li>
                                     </ul>
                                 </div>
                             </div>  
@@ -1362,7 +1516,7 @@
                     });
                     $("#changePassword").jqxWindow({
                         theme:theme,
-                        width: 500, 
+                        width: 600, 
                         height: 360,
                         showCloseButton: false, 
                         position: { x: (($(document).width()/2-200)), y: (($(document).height()/2)-200) },

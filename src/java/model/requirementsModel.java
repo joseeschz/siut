@@ -9,13 +9,14 @@ package model;
  *
  * @author CARLOS
  */
-public class requirementsModel {
+public class requirementsModel extends studentModel{
     int PK_REQUIREMENT=0;
     String FL_ORDER="";
-    String FL_NAME="";
+    String FL_NAME_REQUIRIMENT="";
     int FK_SECTION_REQUIREMENT=0;
     String FL_FULFILLMENT="";
     String FL_PARENT="";
+    String FL_OTHER_FLAG="";
 
     public int getPK_REQUIREMENT() {
         return PK_REQUIREMENT;
@@ -33,12 +34,12 @@ public class requirementsModel {
         this.FL_ORDER = FL_ORDER;
     }
 
-    public String getFL_NAME() {
-        return FL_NAME;
+    public String getFL_NAME_REQUIRIMENT() {
+        return FL_NAME_REQUIRIMENT;
     }
 
-    public void setFL_NAME(String FL_NAME) {
-        this.FL_NAME = FL_NAME;
+    public void setFL_NAME_REQUIRIMENT(String FL_NAME_REQUIRIMENT) {
+        this.FL_NAME_REQUIRIMENT = FL_NAME_REQUIRIMENT;
     }
 
     public int getFK_SECTION_REQUIREMENT() {
@@ -63,6 +64,14 @@ public class requirementsModel {
 
     public void setFL_PARENT(String FL_PARENT) {
         this.FL_PARENT = FL_PARENT;
+    }
+
+    public String getFL_OTHER_FLAG() {
+        return FL_OTHER_FLAG;
+    }
+
+    public void setFL_OTHER_FLAG(String FL_OTHER_FLAG) {
+        this.FL_OTHER_FLAG = FL_OTHER_FLAG;
     }
     
 }

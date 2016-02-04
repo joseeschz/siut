@@ -62,7 +62,7 @@
                     }
                     createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, pkSemester, null, "#valorateActivitiesSubjectMatterFilter", true);
                     var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-                    $("#tableRegisterActivities").jqxDataTable({source: dataAdapter});
+                    $("#tableRegisterActivities").jqxGrid({source: dataAdapter});
                 }
             });
             
@@ -110,7 +110,9 @@
                         $("#addWorkPlannin").click();
                     }
                 }
-            });
+            });  
+            var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
+            loadTableRegisterActivities(dataAdapter);
             existWorkPlanning();
         }else{
             $("#addWorkPlannin").hide();
@@ -150,7 +152,7 @@
                 });
             }
             return maxValScale;
-        }
+        }         
         function existWorkPlanning(){
             var exist=false;
             itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
@@ -197,15 +199,16 @@
                                     $(".jqx-icon-export").parent().show();
                                 }else{
                                     $(".jqx-icon-export").parent().hide();
-                                }                                
+                                }     
                                 $(".jqx-icon-plus").parent().hide();
                                 $(".jqx-icon-lock").parent().hide();
                                 $(".jqx-icon-delete").parent().hide();
                                 $(".jqx-icon-edit").parent().hide();
-                                $("#tableRegisterActivities").jqxDataTable({selectionMode: "none",enableHover: false});
+                                
+                                $("#tableRegisterActivities").jqxGrid({selectionMode: "none",enableHover: false});
                             }else{
                                 $("#addWorkPlannin").fadeIn("slow");
-                                $("#tableRegisterActivities").jqxDataTable({selectionMode: "singleRow",enableHover: true});
+                                $("#tableRegisterActivities").jqxGrid({selectionMode: "singleRow",enableHover: true});
                                 $(".jqx-icon-unlock").parent().hide();
                                 $(".jqx-icon-export").parent().hide();
                                 //$("#block-activities").hide();
@@ -357,9 +360,10 @@
         }
             
         //Tiene un evento que se almacena conforme cambias de pagina por lo que hace cargas por cada ves que hay un click anidado
+        var addButton;
         function loadTableRegisterActivities(dataAdapter){
-            $("#tableRegisterActivities").jqxDataTable({
-                width: 585,
+            $("#tableRegisterActivities").jqxGrid({
+                width: 590,
                 height:350,
                 selectionMode: "singleRow",
                 localization: getLocalization("es"),
@@ -369,8 +373,9 @@
                 filterable: false,
                 showToolbar: true,
                 showStatusbar: true,
-                altRows: true,
-                pagerButtonsCount: 10,
+                altRows: false,
+                autoRowHeight: true,
+                pagerButtonsCount: 5,
                 toolbarHeight: 35,
                 statusBarHeight: 45,
                 renderToolbar: function(toolBar){
@@ -382,7 +387,7 @@
                     // appends buttons to the status bar.
                     var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
                     var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-                    var addButton = $(buttonTemplate);
+                    addButton = $(buttonTemplate);
                     var editButton = $(buttonTemplate);
                     var deleteButton = $(buttonTemplate);
                     var lockButton = $(buttonTemplate);
@@ -390,8 +395,11 @@
                     var showButton = $(buttonTemplate);
                     var exportButton = $(buttonTemplate);
                     var infoButton = $(buttonTemplate);
-                    //var updateButton = $(buttonTemplate);
-                    
+//                    editButton.hide();
+//                    deleteButton.hide();
+//                    lockButton.hide();
+//                    unlockButton.hide();
+//                    exportButton.hide();
                     container.append(addButton);
                     container.append(lockButton);
                     container.append(unlockButton);
@@ -400,14 +408,14 @@
                     container.append(exportButton);
                     
                     container.append(infoButton);
-                    container.append(showButton);
-                    //container.append(updateButton);
+                    container.append(showButton);   
                     
                     
                     var rowIndex = null;
                     var rowId = null;
                     var rowData = null;
                     toolBar.append(container);
+                   
                     addButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
                     addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
                     addButton.jqxTooltip({ position: 'bottom', content: "Agregar"});
@@ -442,12 +450,7 @@
                     showButton.find('div:first').addClass(toTheme('jqx-icon-show'));
                     showButton.css({"float":"right","cursor":"pointer"});
                     showButton.jqxTooltip({ position: 'bottom', content: "Agregar observaciones"});
-                    showButton.attr("id","showButton");
-                    
-                    //updateButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    //updateButton.find('div:first').addClass(toTheme('jqx-icon-save'));
-                    //updateButton.jqxTooltip({ position: 'bottom', content: "Guardar"});
-                    
+                    showButton.attr("id","showButton");                    
                     var updateButtons = function (action) {
                         switch (action) {
                             case "Select":
@@ -462,21 +465,9 @@
                                 editButton.jqxButton({ disabled: true });
                                 //updateButton.jqxButton({ disabled: true });
                                 break;
-                            case "Edit":
-                                addButton.jqxButton({ disabled: true });
-                                deleteButton.jqxButton({ disabled: true });
-                                editButton.jqxButton({ disabled: true });
-                                //updateButton.jqxButton({ disabled: false });
-                                break;
-                            case "End Edit":
-                                addButton.jqxButton({ disabled: false });
-                                deleteButton.jqxButton({ disabled: false });
-                                editButton.jqxButton({ disabled: false });
-                                //updateButton.jqxButton({ disabled: true });
-                                break;
                         }
                     };
-                    $("#tableRegisterActivities").on('rowSelect', function (event) {
+                    $("#tableRegisterActivities").on('rowselect', function (event) {
                         var args = event.args;
                         rowIndex = args.index;
                         rowId=args.row;
@@ -484,16 +475,9 @@
                         rowData=args.row;
                         updateButtons('Select');
                     });
-                    $("#tableRegisterActivities").on('rowUnselect', function (event) {
+                    $("#tableRegisterActivities").on('rowunselect', function (event) {
                         updateButtons('Unselect');
-                    });
-                    $("#tableRegisterActivities").on('rowEndEdit', function (event) {
-                        updateButtons('End Edit');
-                    });
-                    $("#tableRegisterActivities").on('rowBeginEdit', function (event) {
-                        updateButtons('Edit');
-                    });
-                    
+                    });                    
                     lockButton.click(function () {
                         if (!lockButton.jqxButton('disabled')){
                             updateButtons('lockButton');
@@ -706,7 +690,7 @@
                             beforeSend: function (xhr) {
                             },
                             success: function (data, textStatus, jqXHR) {
-                                window.open("../content/data-jr/evaluatedCriterion");
+                                window.open("../content/data-jr/evaluatedCriterion/");
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 alert("Error interno del servidor");                
@@ -743,19 +727,19 @@
                     statusbar.append(container);
                     $("#indications").text(indications);
                 }, 
-                ready: function(){
+                ready: function(){            
                     
                 },
                 columns: [
-                    { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Actividad', dataField: 'dataNameActivity', width: 180 },
-                    { text: 'Descripción', dataField: 'dataDescriptionActivity' },
+                    { text: 'NP', filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
+                    { text: 'Actividad', dataField: 'dataNameActivity', width: 150 },
+                    { text: 'Descripción', dataField: 'dataDescriptionActivity', width: 295 },
                     { text: 'Val.#', dataField: 'dataValueActivity', width: 50 },
                     { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
                 ]
             }); 
-            $("#tableRegisterActivities").jqxDataTable('unselectRow', 0);
-            $("#tableRegisterActivities").jqxDataTable('clearSelection');
+            $("#tableRegisterActivities").jqxGrid('unselectRow', 0);
+            $("#tableRegisterActivities").jqxGrid('clearSelection');
         }
         $('#jqxWindowAddActivities').on('close', function (event) { 
             $("#name_activity").val("");
@@ -956,8 +940,8 @@
                     { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
                 ]
             }); 
-            $("#tableRegisterActivities").jqxDataTable('unselectRow', 0);
-            $("#tableRegisterActivities").jqxDataTable('clearSelection');
+            $("#tableRegisterActivities").jqxGrid('unselectRow', 0);
+            $("#tableRegisterActivities").jqxGrid('clearSelection');
         }
         
         $("#ok").click(function (){ 
@@ -1102,9 +1086,6 @@
         //addWorkPlannin.jqxTooltip({ position: 'left', content: "Importar grupo de actividades"});
         addWorkPlannin.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
         
-        
-        
-        $("#contentHistoryPeriods").hide();
         var switchClick = 0;
         $("#importWorkPlanninHitory").click(function (){
             switchClick = switchClick+1;

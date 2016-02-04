@@ -93,7 +93,7 @@
                                                 theme: 'greenUtsem',
                                                 autoOpen: true,
                                                 isModal: true,
-                                                showCloseButton: false,
+                                                showCloseButton: true,
                                                 resizable: false,
                                                 position: "center"
                                             });
@@ -223,10 +223,11 @@
                                                 <input type="submit" id="buttonGetStarted" class="button" value="Ingresar" />
                                             </div>
                                         </div><br>
-                                    </form><!--/ form-->
+                                    </form><!--/ form-->                                    
                                 </section><!--/ seccion-->
+                                <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata-preregister.pdf" download="Documento piloto de metadato"><img src="../content/pictures-system/pdf.png"></a>
                             </div>
-                        </div>
+                        </div>                        
                     </center>
                     <center class="register" style="display: none">
                         <div id="stage">

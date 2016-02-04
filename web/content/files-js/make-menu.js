@@ -8,7 +8,7 @@ $(document).ready(function () {
     //*Menu*//
     /*Este codigo hace un toogle al menu*/
     $("html").on('contextmenu', function () {
-        return false;
+        //return false;
     });
     
     var offset = $("#panel-principal").offset();

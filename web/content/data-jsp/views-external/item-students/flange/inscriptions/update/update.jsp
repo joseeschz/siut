@@ -105,7 +105,7 @@ if(session.getAttribute("logueado") != null){%>
         <div>
             <div class="ok" style="position: absolute;"></div>
             <span style="color: olive; width: 70%; position: absolute; right: 20px;">
-                <b>Se ha guardo correctamente el registro</b>
+                <b>Se ha actualizo correctamente el registro</b>
             </span>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="ok" value="OK" style="margin-right: 10px" />

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" language="groovy" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="110"/>
+	<property name="ireport.y" value="192"/>
 	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -14,7 +14,7 @@
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activities', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2});]]>
+			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activities', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2},null);]]>
 		</queryString>
 		<field name="FL_NAME_ACTIVITY_BE" class="java.lang.String"/>
 		<field name="FL_VALUE_ACTIVITY_BE" class="java.lang.String"/>
@@ -36,10 +36,13 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C://glassfish-4.1//glassfish4//glassfish//domains//domain1//applications//siut//content//data-jr//evaluatedCriterion//"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_group" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter});]]>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_group});]]>
 	</queryString>
 	<field name="PK_GROUP" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -956,20 +959,6 @@
 				<reportElement x="1" y="248" width="584" height="20" uuid="9a892821-6d2b-4b53-a303-68f1972c7194"/>
 				<text><![CDATA[]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="479" y="247" width="76" height="20" uuid="7e0576de-b8fc-47f5-aa63-0ee10e94f32f"/>
-				<textElement textAlignment="Right">
-					<font fontName="Calibri"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Hoja "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report">
-				<reportElement x="559" y="247" width="26" height="20" uuid="e1b2453e-f895-42eb-901c-3de1c5bb87a9"/>
-				<textElement>
-					<font fontName="Calibri"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
 			<elementGroup>
 				<staticText>
 					<reportElement x="2" y="267" width="163" height="20" uuid="c46fa7e8-5d24-4e92-8db7-e98fa18aaaa2"/>
@@ -988,26 +977,103 @@
 					<text><![CDATA[FO-DIC-32/06]]></text>
 				</staticText>
 			</elementGroup>
+			<textField evaluationTime="Report">
+				<reportElement x="558" y="303" width="26" height="20" uuid="9e0a282c-c61c-40c8-8006-539f0e9a913d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="478" y="303" width="76" height="20" uuid="53cf5a6b-1960-4eca-bec6-99a7e99f953d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hoja "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="119">
+		<band height="764">
+			<textField>
+				<reportElement x="477" y="744" width="76" height="20" uuid="7e0576de-b8fc-47f5-aa63-0ee10e94f32f"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hoja "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="557" y="744" width="26" height="20" uuid="e1b2453e-f895-42eb-901c-3de1c5bb87a9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="461" y="27" width="54" height="20" backcolor="#CCCCCC" uuid="32bca84d-c514-4d3f-93c9-0b9d71cc356c"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grupo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="22" y="27" width="87" height="20" backcolor="#CCCCCC" uuid="a25d6ad1-4155-489d-809d-b2c2eb7fdc32"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="515" y="27" width="35" height="20" backcolor="#CCCCCC" uuid="3be753bf-97ac-4c96-adca-f2b9c6123c2d"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_GROUP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="109" y="27" width="352" height="20" backcolor="#CCCCCC" uuid="36acf779-6c5c-4098-b2da-bbd32866c137"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_SUBJECT_MATTER}]]></textFieldExpression>
+			</textField>
 			<subreport>
-				<reportElement x="-12" y="0" width="609" height="119" uuid="4b8c74f1-da13-408a-b733-e0c0f04492ce"/>
-				<subreportParameter name="pt_study_level">
-					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement x="9" y="47" width="531" height="697" uuid="e3e6fad8-a3d7-4060-9efa-4409f7d5d969"/>
 				<subreportParameter name="pt_career">
 					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="pt_matter">
-					<subreportParameterExpression><![CDATA[$P{pt_matter}]]></subreportParameterExpression>
+				<subreportParameter name="pt_group">
+					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR">
-					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				<subreportParameter name="pt_period">
+					<subreportParameterExpression><![CDATA[$F{FK_PERIOD}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion_subreport-content.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion_subreport1_1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
