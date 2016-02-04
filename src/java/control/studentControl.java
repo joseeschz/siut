@@ -5,6 +5,7 @@
  */
 package control;
 
+import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,10 @@ import model.studentModel;
  */
 public class studentControl {
     public static void main(String[] args) {
-        ArrayList<requirementsModel> listStudents2=new studentControl().SelectStudentExpedient(819);
+        studentModel obj = new studentModel();
+        obj.setFL_MAIL("karlos.antoni-1994@hotmail.com");
+        obj.setFL_ENROLLMENT("UTS12S-003661");
+        ArrayList<studentModel> listStudents2=new studentControl().SelectRememberPassword(obj);
         for(int i=0;i<listStudents2.size();i++){
             System.out.println(listStudents2.get(i).getFL_NAME());
         }
@@ -68,6 +72,26 @@ public class studentControl {
         }
         return list;
     }
+    public ArrayList<studentModel> SelectStudentsMetadata(int pt_career, int pt_group){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_METADATA_STUDENTS`('missing', "+pt_career+", "+pt_group+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel StudentsAll=new studentModel();
+                    StudentsAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    StudentsAll.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    list.add(StudentsAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<requirementsModel> SelectStudentExpedient(int pt_pk_student){
         ArrayList<requirementsModel> list=new ArrayList<>();
         try {
@@ -75,14 +99,16 @@ public class studentControl {
                 while(res!=null&&res.next()){
                     requirementsModel requirementAll=new requirementsModel();
                     requirementAll.setPK_REQUIREMENT(res.getInt("PK_REQUIREMENT"));
+                    requirementAll.setPK_STUDENT(pt_pk_student);
                     requirementAll.setFL_ORDER(res.getString("FL_ORDER"));
-                    requirementAll.setFL_NAME(res.getString("FL_NAME"));
+                    requirementAll.setFL_NAME_REQUIRIMENT(res.getString("FL_NAME"));
                     if(res.getString("FL_FULFILLMENT").equals("CUMPLIMIENTO DE REQUISITOS")){
                         requirementAll.setFL_FULFILLMENT("");
                     }else{
                         requirementAll.setFL_FULFILLMENT(res.getString("FL_FULFILLMENT"));
                     }      
                     requirementAll.setFL_PARENT(res.getString("FL_PARENT"));
+                    requirementAll.setFL_OTHER_FLAG(res.getString("FL_OTHERS_FLAG"));
                     list.add(requirementAll);
                 }
                 res.close();
@@ -94,6 +120,38 @@ public class studentControl {
             Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public String updateStudentExpedient(int pt_pk_requirement, int pt_pk_student){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_REQUIREMENTS_BY_STUDENT`('insert', '', '', "+pt_pk_student+", "+pt_pk_requirement+")")) {
+                ps.executeUpdate();
+                request="Dato Insertado";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String deleteStudentExpedient(int pt_pk_requirement, int pt_pk_student){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_REQUIREMENTS_BY_STUDENT`('delete', '', '', "+pt_pk_student+", "+pt_pk_requirement+")")) {
+                ps.executeUpdate();
+                request="Dato Eliminado";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
     }
     public ArrayList<studentModel> SelectStudent(String enrollment, String condition){
         ArrayList<studentModel> list=new ArrayList<>();
@@ -115,6 +173,8 @@ public class studentControl {
                         Student.setPK_MUNICIPALITY(res.getInt("FK_MUNICIPALITY"));
                         Student.setPK_LOCALITY(res.getInt("FK_LOCALITY"));
                         Student.setFK_PREPARATORY(res.getInt("FK_PREPARATORY"));
+                        Student.setFL_BIRTH_CERTIFICATE_NUMBER(res.getString("FL_BIRTH_CERTIFICATE_NUMBER"));
+                        Student.setFL_HIGH_SCHOOL_CERTIFICATE(res.getString("FL_HIGH_SCHOOL_CERTIFICATE"));
                         list.add(Student);
                     }
                     res.close();
@@ -456,6 +516,28 @@ public class studentControl {
                     userLogin.setFL_NAME(res.getString("FL_NAME"));
                     userLogin.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     userLogin.setFL_MAIL(res.getString("FL_MAIL"));
+                    list.add(userLogin);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<studentModel> SelectRememberPassword(studentModel dataUser){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_LOGIN`('rememberPassword', '"+dataUser.getFL_ENROLLMENT()+"', '"+dataUser.getFL_MAIL()+"')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel userLogin=new studentModel();
+                    userLogin.setFL_NAME(res.getString("FL_NAME"));
+                    userLogin.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    userLogin.setFL_MAIL(res.getString("FL_MAIL"));
+                    userLogin.setFL_PASSWORD(res.getString("FL_PASSWORD"));
                     list.add(userLogin);
                 }
                 res.close();

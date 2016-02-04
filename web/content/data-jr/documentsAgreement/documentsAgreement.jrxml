@@ -6,8 +6,11 @@
 	<parameter name="pt_pk_student" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_pk_user" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_DOCUMENTS_AGREEMENT`('reportLetterCommitment', $P{pt_pk_student})]]>
+		<![CDATA[CALL `GET_DOCUMENTS_AGREEMENT`('reportLetterCommitment', $P{pt_pk_student}, $P{pt_pk_user})]]>
 	</queryString>
 	<field name="FL_DAY" class="java.lang.Long"/>
 	<field name="FL_MONTH" class="java.lang.String"/>
@@ -18,8 +21,13 @@
 	<field name="FL_ENROLLMENT" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_BIRTH_CERTIFICATE_NUMBER" class="java.lang.String"/>
-	<field name="FL_HIGH_SCHOOL_CERTIFICATE" class="java.lang.String"/>
+	<field name="FL_BIRTH_CERTIFICATE_NUMBER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_HIGH_SCHOOL_CERTIFICATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_RECEPTOR" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -77,19 +85,6 @@
 						<font fontName="Arial" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[para integrarlos a su expediente y para uso exclusivo del área:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="119" y="337" width="303" height="38" uuid="e95ae9e6-bdb3-455f-9edb-63006931e7b2"/>
-					<box>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="12" isBold="false"/>
-					</textElement>
-					<text><![CDATA[MTRA. TANIA JAZMIN GALAN VENCES]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="0" width="556" height="50" uuid="c3c6fc19-d053-40af-bfcb-3072a4cf56ec"/>
@@ -197,6 +192,19 @@
 						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_YEAR}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="127" y="348" width="275" height="40" uuid="e3264163-061a-4e73-a5c5-fafeee6c6e2f"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_RECEPTOR}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

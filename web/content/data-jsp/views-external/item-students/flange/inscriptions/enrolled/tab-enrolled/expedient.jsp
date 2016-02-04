@@ -18,11 +18,12 @@
                     datatype: "json",
                     datafields: [
                         { name: 'dataPkRequirement', type: 'string' },
+                        { name: 'dataPkStudent', type: 'string' },
                         { name: 'dataName', type: 'string' },
                         { name: 'dataFulfillment', type: 'string' },
                         { name: 'dataParent', type: 'string' }
                     ],
-                    id: 'dataPkRequirement',
+                    id: 'id',
                     url: url,
                     data :{
                         "pt_pk_student": <%out.print(request.getParameter("pt_pk_student"));%>
@@ -31,8 +32,29 @@
                         // synchronize with the server - send update command
                         // call commit with parameter true if the synchronization with the server is successful 
                         // and with parameter false if the synchronization failder.
-                        commit(true);
-                        console.log(rowdata);
+                        var url;
+                        if(rowdata.dataFulfillment){
+                            url = "../serviceStudent?updateStudentExpedient";
+                        }else{
+                            url = "../serviceStudent?deleteStudentExpedient";
+                        }
+                        $.ajax({
+                            type: "POST",
+                            async: false,
+                            url: url,
+                            data: {
+                                "pk_student": rowdata.dataPkStudent,
+                                "pk_requirement": rowdata.dataPkRequirement
+                            },
+                            beforeSend: function (xhr) {
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                commit(true);
+                            }
+                        });
                     }
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source);

@@ -30,9 +30,9 @@ public class sectionControl {
             System.out.println();
         }
     }
-    public ArrayList<sectionModel> SelectSections(int pt_pk_user){
+    public ArrayList<sectionModel> SelectSections(int pt_pk_user, int pt_rol){
         ArrayList<sectionModel> list=new ArrayList<>();
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('menuPrincipal',"+pt_pk_user+", null)"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('menuPrincipal',"+pt_pk_user+", "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
             while(res!=null&&res.next()){
                 sectionModel section=new sectionModel();
                 section.setPK_SECTION_MENU_PRINCIPAL(res.getInt("PK_SECTION_MENU_PRINCIPAL"));

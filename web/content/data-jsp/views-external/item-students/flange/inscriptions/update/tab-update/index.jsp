@@ -110,6 +110,7 @@ $(document).ready(function () {
                 alert("Error interno del servidor");
             },
             success: function (data, textStatus, jqXHR) {
+                $('#jqxWindowOk').jqxWindow('open');
             }
         });
         $("#okWarningUpdate").jqxWindow('close');
@@ -167,11 +168,15 @@ $(document).ready(function () {
         $('#matern_nameUpdate').jqxInput({disabled: status});
         $('#patern_nameUpdate').jqxInput({disabled: status});
         $('#sendButtonUpdate').jqxButton({disabled: status});
+        $("#birthCertificate").jqxInput({disabled: status});
+        $("#hightSchoolCertificate").jqxInput({disabled: status});
         if(status){
             $('#enrollmentUpdate').val("");
             $("#nameUpdate").val("");
             $("#patern_nameUpdate").val("");
             $("#matern_nameUpdate").val("");
+            $("#birthCertificate").val("");
+            $("#hightSchoolCertificate").val("");   
             $("#loadingPictureUpdate").hide();
             $("#careerUpdate").jqxDropDownList("selectIndex", 0);
             $("#entityUpdate").jqxDropDownList('selectIndex', 0);
@@ -200,7 +205,9 @@ $(document).ready(function () {
         $("#preparatoryFilterUpdate").jqxDropDownList('selectItem', itemPreparatory);
         $("#nameUpdate").val(data.dataName);
         $("#patern_nameUpdate").val(data.dataPaternName);
-        $("#matern_nameUpdate").val(data.dataMaternName);        
+        $("#matern_nameUpdate").val(data.dataMaternName);     
+        $("#birthCertificate").val(data.dataBirthCertificate);
+        $("#hightSchoolCertificate").val(data.dataHightSchoolCertificate);         
     }
 });
 </script>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="master" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5f8255a9-ed73-4fb6-8200-9a482638b419">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pt_study_level" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_career" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_matter" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('headerMaster', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, null)]]>
+	</queryString>
+	<field name="PK_GROUP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_PERIOD" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_LEVEL" class="java.lang.Long">
+		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_GROUP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_SUBJECT_MATTER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_OBSERVATIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_TEACHER" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="111" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="612" height="111" uuid="c5cfa784-6734-41c3-a032-991c6fd91c74"/>
+				<subreportParameter name="pt_study_level">
+					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_career">
+					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_matter">
+					<subreportParameterExpression><![CDATA[$P{pt_matter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_group">
+					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
