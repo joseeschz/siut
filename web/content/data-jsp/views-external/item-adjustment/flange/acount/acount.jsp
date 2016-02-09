@@ -24,7 +24,7 @@ if(session.getAttribute("logueado") != null){%>
                     $('#ok').focus();
                 }
             });
-            $('#jqxWindowWarningActivities').jqxWindow({
+            $('#jqxWindowWarningAcount').jqxWindow({
                 theme: theme,
                 height: 100,
                 width: 350,
@@ -59,7 +59,6 @@ if(session.getAttribute("logueado") != null){%>
             }
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#updateDataPefilTab").load("../content/data-jsp/views-external/item-adjustment/flange/acount/acount-flange/update-data.jsp");
-            $("#updateDataPefilTab").html("Hola");
         });
     </script>
     <div id='jqxWindowOk'>
@@ -67,19 +66,19 @@ if(session.getAttribute("logueado") != null){%>
         <div>
             <div class="ok" style="position: absolute;"></div>
             <span style="color: olive; width: 70%; position: absolute; right: 20px;">
-                <b>Se ha guardo correctamente el registro</b>
+                <b id="messageOk"></b>
             </span>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="ok" value="OK" style="margin-right: 10px" />
             </div>
         </div>
     </div>
-    <div id='jqxWindowWarningActivities'>
+    <div id='jqxWindowWarningAcount'>
         <div>Advertencia</div>
         <div>
             <div class="warning" style="position: absolute;"></div>
             <span style="color: olive; width: 70%; position: absolute; right: 20px;">
-                <b>¡Actualizar este registro!</b>
+                <b>¡Actualizar los registros!</b>
             </span>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="okWarning" value="OK" style="margin-right: 10px" />
