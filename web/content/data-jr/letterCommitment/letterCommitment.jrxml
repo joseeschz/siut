@@ -144,19 +144,19 @@
 * Posibilidad de continuar estudios a nivel Licenciatura.
 * Un profesor de tiempo completo por cada 25 o 30 alumnos (as).
 * Laboratorios de inglés y cómputo.
-* Un Programa de Tutorías-
+* Un Programa de Tutorías.
 * Vinculación con el Sector Productivo.
-* Visitas al Sector Productivo]]></text>
+* Visitas al Sector Productivo.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="306" width="472" height="38" uuid="e95ae9e6-bdb3-455f-9edb-63006931e7b2"/>
+				<reportElement x="0" y="306" width="472" height="23" uuid="e95ae9e6-bdb3-455f-9edb-63006931e7b2"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[COMPROMISO QUE ADQUIERE EL ESTUDIANTE:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="347" width="472" height="94" uuid="56a13485-5545-40d8-b9e7-7a59237545bb"/>
+				<reportElement x="0" y="329" width="472" height="112" uuid="56a13485-5545-40d8-b9e7-7a59237545bb"/>
 				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="false"/>
@@ -241,7 +241,7 @@
 				<textElement textAlignment="Right">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FO-DIC-32/06]]></text>
+				<text><![CDATA[FO-DSE-12/08]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="3" y="0" width="163" height="20" uuid="a3e6017e-d676-4bec-9e1f-a8730f10bfbd"/>

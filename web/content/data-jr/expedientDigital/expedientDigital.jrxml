@@ -230,7 +230,8 @@
 								<textElement textAlignment="Center">
 									<font fontName="Arial" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{FL_FULFILLMENT}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[( $F{FL_FULFILLMENT}.equals("No") ? "" : ( $F{FL_FULFILLMENT}.equals("Si") ? "Si" : $F{FL_FULFILLMENT} ) )
+]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -246,7 +247,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[NOMBRE,  FIRMA Y SELLO DEL 	
+				<text><![CDATA[SELLO DEL 	
 JEFE(A) DEL DEPARTAMENTO	]]></text>
 			</staticText>
 		</band>

@@ -52,7 +52,7 @@
                                     
                                 </form><!--/ form-->
                             </section><!--/ seccion-->
-                            <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata.pdf" download="Documento piloto de metadato"><img src="../content/pictures-system/pdf.png"></a>
+                            <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata.pdf" download="Documento piloto de metadato.pdf"><img src="../content/pictures-system/pdf.png"></a>
                         </div>
                     </div>
                     <div id="stage" class="rememberPass" style="display: none">

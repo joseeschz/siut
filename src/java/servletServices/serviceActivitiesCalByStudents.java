@@ -49,30 +49,32 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
                     int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    
                     ArrayList<activitiesToGroupModel> listActivityValMax=new activitiesToGroupControl().SelectActivityToGroup(pkActivity);
-
                     ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudents(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
-                    settings.put("__ActivityByStudent","ActivityByStudent");
-                    for(int i=0;i<listActivity.size();i++){
+                    settings.put("__ActivityByStudent","ActivityByStudent");                    
+                    for(int i=0;i<listActivity.size();i++){                        
                         JSONObject data = new JSONObject();
                         data.put("id", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
                         data.put("dataProgresivNumber", i+1);
                         data.put("dataPkStudent", listActivity.get(i).getFK_STUDENT());
                         data.put("dataEnrollment", listActivity.get(i).getFL_ENROLLMENT());
-                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());
+                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());  
                         data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
-                        data.put("dataValueObtaniedEquivalent", (Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED())*10/listActivityValMax.get(0).getFL_VALUE_ACTIVITY()));
+                        if(listActivity.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
+                            data.put("dataValueObtaniedEquivalent", (Double.parseDouble("0")*10/listActivityValMax.get(0).getFL_VALUE_ACTIVITY()));
+                        }else{
+                            data.put("dataValueObtaniedEquivalent", (Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED())*10/listActivityValMax.get(0).getFL_VALUE_ACTIVITY()));
+                        }                        
                         data.put("dataAcomulatedNow", listActivity.get(i).getFL_ACUMULATED_NOW());
-                        content.add(data); 
+                        content.add(data);                         
                     }
-                    settings.put("__ENTITIES", content);
-                    principal.add(settings);
+                    settings.put("__ENTITIES", content);                    
+                    principal.add(settings);                    
                     response.setContentType("application/json"); 
-                    out.print(principal);
+                    out.print(principal);                    
                     out.flush(); 
                     out.close();
                 }else if(request.getParameter("view").equals("regularization")){

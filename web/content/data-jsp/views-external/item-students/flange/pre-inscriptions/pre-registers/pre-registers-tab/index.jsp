@@ -220,7 +220,7 @@
 </div>
 <div id='jqxMenuContext'>
     <ul>
-        <li id="options"><span>Opsiones</span></li>
+        <li id="options"><span>Opciones</span></li>
         <li type='separator'></li>
         <li>Generar Cédula</li>
     </ul>

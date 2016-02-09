@@ -46,7 +46,7 @@
             var dataAdapter = new $.jqx.dataAdapter(source);
             $("#jqxDataTableEnrolled").jqxDataTable({
                 width: 748,
-                height: 521, 
+                height: 500, 
                 pageable: true,
                 localization: getLocalization("es"),
                 source: dataAdapter,
@@ -135,7 +135,7 @@
         // create context menu
         var contextMenu = $("#jqxMenuContext").jqxMenu({ 
             width: 200, 
-            height: 100, 
+            height: 130, 
             autoOpenPopup: false, 
             mode: 'popup'
         });
@@ -166,6 +166,7 @@
             return false;
         });
         var pt_pk_student=undefined;
+        var pt_enrollment=undefined;
         $('#jqxDataTableEnrolled').on('rowSelect', function (event){
             contextMenu.jqxMenu('close');
         });
@@ -194,6 +195,7 @@
                 $("#jqxDataTableEnrolled").jqxDataTable('selectRow', event.args.rowindex);
                 var row = event.args.row;
                 pt_pk_student=row.pk_student;
+                pt_enrollment=row.fl_enrollment;
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
                 contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
@@ -217,6 +219,25 @@
                     success: function (data, textStatus, jqXHR) {
                         var iframe = $('<iframe style="width: 1185px; height: 810px;">');
                         iframe.attr('src','../../content/data-jr/expedientDigital/index.jsp');
+                        $('#contentPDF').html(iframe);
+                    }
+                });
+                popupWindow.jqxWindow('show');
+            }
+            if ($.trim($(args).text()) === "Cédula") {
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../../content/data-jr/documentRegister/index.jsp?sessionCedule",
+                    data: {"pt_enrollment": pt_enrollment},
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        var iframe = $('<iframe style="width: 1185px; height: 810px;">');
+                        iframe.attr('src','../../content/data-jr/documentRegister/index.jsp');
                         $('#contentPDF').html(iframe);
                     }
                 });
@@ -306,6 +327,7 @@
 <div id='jqxMenuContext'>
     <ul>
         <li>Expediente</li>
+        <li>Cédula</li>
         <li>Carta compromiso</li>
         <li>Cotejo de documentos</li>
     </ul>

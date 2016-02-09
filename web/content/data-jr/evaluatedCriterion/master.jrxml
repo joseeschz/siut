@@ -15,8 +15,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String">
 		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_teacher" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_EVALUATION_CRITERION`('headerMaster', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, null)]]>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('headerMaster', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_teacher})]]>
 	</queryString>
 	<field name="PK_GROUP" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -53,8 +56,11 @@
 				<subreportParameter name="pt_study_level">
 					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="pt_career">
-					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
+				<subreportParameter name="pt_teacher">
+					<subreportParameterExpression><![CDATA[$P{pt_teacher}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_group">
+					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pt_matter">
 					<subreportParameterExpression><![CDATA[$P{pt_matter}]]></subreportParameterExpression>
@@ -62,8 +68,8 @@
 				<subreportParameter name="SUBREPORT_DIR">
 					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="pt_group">
-					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
+				<subreportParameter name="pt_career">
+					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion.jasper"]]></subreportExpression>

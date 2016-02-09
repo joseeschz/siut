@@ -20,9 +20,10 @@ import model.activitiesByStudentsModel;
  */
 public class activitiesByStudentsControl {
     public static void main(String[] args) {
-        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectListActivitiesByStudents(12990, 325, 1, 0);
+        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectActivitiesByStudents(6, 2, 14, 501,  13);
         for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getFL_NAME_ACTIVITY());
+            
+            System.out.println(list.get(i).getFL_VALUE_OBTANIED()+" "+i);
         }
         //System.out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, 0));
     }

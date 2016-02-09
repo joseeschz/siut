@@ -28,28 +28,28 @@
 	<columnHeader>
 		<band height="20">
 			<staticText>
-				<reportElement mode="Opaque" x="40" y="0" width="306" height="20" backcolor="#CCCCCC" uuid="7e815d3f-3bc7-4eb8-bafa-da26f7b76d07"/>
+				<reportElement mode="Opaque" x="134" y="0" width="272" height="20" backcolor="#CCCCCC" uuid="7e815d3f-3bc7-4eb8-bafa-da26f7b76d07"/>
 				<box topPadding="3" leftPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="12" isBold="true"/>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="346" y="0" width="195" height="20" backcolor="#CCCCCC" uuid="eb66d03c-b815-469c-b231-401a26c5e85d"/>
+				<reportElement mode="Opaque" x="406" y="0" width="135" height="20" backcolor="#CCCCCC" uuid="eb66d03c-b815-469c-b231-401a26c5e85d"/>
 				<box topPadding="3" leftPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="12" isBold="true"/>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma]]></text>
 			</staticText>
@@ -62,32 +62,51 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="40" y="0" width="94" height="20" backcolor="#CCCCCC" uuid="669b588e-2dac-4dbb-8603-c11c33fa1d4d"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="18" splitType="Stretch">
 			<textField>
-				<reportElement x="40" y="0" width="306" height="18" uuid="1d519f62-1c2d-4e0f-83ee-e21986fdc0ba"/>
+				<reportElement x="134" y="0" width="272" height="18" uuid="1d519f62-1c2d-4e0f-83ee-e21986fdc0ba"/>
 				<box leftPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{FL_STUDENT_NAME}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="346" y="0" width="195" height="18" uuid="6fbd7a7c-ed54-4620-9c7f-706a9e4b93bb"/>
+				<reportElement x="406" y="0" width="135" height="18" uuid="6fbd7a7c-ed54-4620-9c7f-706a9e4b93bb"/>
 				<box leftPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
 					<bottomPen lineWidth="0.5"/>
 					<rightPen lineWidth="0.5"/>
 				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<textField>
@@ -99,9 +118,22 @@
 					<rightPen lineWidth="0.5"/>
 				</box>
 				<textElement textAlignment="Center" markup="none">
-					<font fontName="Arial" size="12" isBold="true"/>
+					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="94" height="18" uuid="3ff98211-c73a-4195-822b-e4cb62596744"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_ENROLLMENT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
