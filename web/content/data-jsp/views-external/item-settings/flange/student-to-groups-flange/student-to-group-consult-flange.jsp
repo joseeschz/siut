@@ -123,7 +123,6 @@
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server was successful 
                     // and with parameter false if the synchronization has failed.
-                    console.log(rowid);
                     for(var i=0; i<rowid.length; i++){
                         $.ajax({
                             //Send the paramethers to servelt
@@ -222,11 +221,9 @@
                     var rowIDs = new Array();
                     if (!deleteButton.jqxButton('disabled')) {
                         $("#jqxWidgetResultDelete").html("");
-                        selectedrowindexes = $('#tableStudentGroupConsult').jqxGrid('selectedrowindexes'); 
-                        
+                        selectedrowindexes = $('#tableStudentGroupConsult').jqxGrid('getselectedrowindexes');
                         for(var i=0; i<selectedrowindexes.length; i++){
-                            var rowid = $('#tableStudentGroupConsult').jqxGrid('getrowid', i);
-                            rowIDs.push(rowid);
+                            var rowid = $('#tableStudentGroupConsult').jqxGrid('getrowid', selectedrowindexes[i]);
                             var data = $('#tableStudentGroupConsult').jqxGrid('getrowdatabyid', rowid);
                             $("#jqxWidgetResultDelete").html($("#jqxWidgetResultDelete").html()+"<span class='alert-delete'>"+data.dataEnrollment+"...</span><br>");
                         }

@@ -142,6 +142,7 @@ public class serviceActivities extends HttpServlet {
                 data.put("dataRealized",result[3]);
                 data.put("dataRealizedBlock",result[4]);
                 data.put("dataObservations",result[5]);
+                data.put("dataPrintDate",result[6]);
                 out.print(data);
             }
             if(request.getParameter("disponibilityValueByWorkPlanning")!=null){
@@ -214,6 +215,14 @@ public class serviceActivities extends HttpServlet {
                 int fk_subject_matter = Integer.parseInt(request.getParameter("fkMatter"));
                 String fl_observations = request.getParameter("flObservations");
                 out.print(new activitiesToGroupControl().SetObservations(fk_teacher, fk_study_level, fk_subject_matter, fk_period, fl_observations));
+            }
+            if(request.getParameter("setPrintDate")!=null){
+                int fk_period = Integer.parseInt(request.getParameter("fkPeriod"));
+                int fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                int fk_study_level = Integer.parseInt(request.getParameter("fkStudyLevel"));
+                int fk_subject_matter = Integer.parseInt(request.getParameter("fkMatter"));
+                String fl_date_print = request.getParameter("flPrintDate");
+                out.print(new activitiesToGroupControl().SetPrintDate(fk_teacher, fk_study_level, fk_subject_matter, fk_period, fl_date_print));
             }
             if(request.getParameter("update")!=null){       
                 if(request.getParameter("pkActivity") != null){

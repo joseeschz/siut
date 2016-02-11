@@ -954,7 +954,7 @@
 					<text><![CDATA[Nombre y Firma del Director de Carrera]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="0" y="227" width="119" height="20" uuid="fde8f8fb-3d0d-4840-a62b-c9b1f4d96a1a"/>
+					<reportElement x="0" y="227" width="138" height="20" uuid="fde8f8fb-3d0d-4840-a62b-c9b1f4d96a1a"/>
 					<box leftPadding="5"/>
 					<textElement>
 						<font fontName="Calibri" size="12" isBold="true"/>
@@ -1013,7 +1013,7 @@
 				<textFieldExpression><![CDATA[$F{FL_DIRECTOR_NAME}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="119" y="227" width="119" height="20" uuid="0aac019e-c74e-48aa-84a6-1c2c6d2aed9b"/>
+				<reportElement x="138" y="227" width="119" height="20" uuid="0aac019e-c74e-48aa-84a6-1c2c6d2aed9b"/>
 				<textElement verticalAlignment="Top">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
