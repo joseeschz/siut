@@ -160,10 +160,10 @@ $(document).ready(function () {
     $("#settingsAcount").click(function (){
         $.cookie('dir','item-adjustment/flange/acount/acount.jsp');
         dirCookie=$.cookie('dir');
-        $("#ContentPanel").load("../content/data-jsp/views-external/item-adjustment/flange/acount/acount.jsp?lockPage=false");
         $('#jqxTree').jqxTree('selectItem', $("#25")[0]);
         $.cookie('itemParentId',"9");
         $.cookie('itemClickedId',"25");
+        location="/admin";
     });
     if(dirCookie==undefined){
         $.cookie('dir','item-start/start.jsp');

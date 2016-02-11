@@ -55,7 +55,8 @@ public class serviceSemester extends HttpServlet {
                         if(session.getAttribute("logueado")!=null){
                             pkUser = Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
-                        listSemester=new semesterControl().SelectSemesterByTeacher(pkUser, pkStudyLevel, pkPeriod);
+                        int pkCareer=Integer.parseInt(request.getParameter("pkCareer"));
+                        listSemester=new semesterControl().SelectSemesterByTeacher(pkUser, pkStudyLevel, pkCareer, pkPeriod);
                     }else if(request.getParameter("teacherTutor")!=null){
                         pkPeriod=Integer.parseInt(request.getParameter("pkPeriod"));
                         if(session.getAttribute("logueado")!=null){

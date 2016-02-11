@@ -20,7 +20,7 @@ import model.semesterModel;
  */
 public class semesterControl {
     public static void main(String[] args) {
-        ArrayList<semesterModel> list=new semesterControl().SelectSemesterByTeacher(30,1,4);
+        ArrayList<semesterModel> list=new semesterControl().SelectSemesterByTeacher(30,1 ,6,4);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_SEMESTER());
         }
@@ -45,10 +45,10 @@ public class semesterControl {
         }
         return list;
     }
-    public ArrayList<semesterModel> SelectSemesterByTeacher(int pkTeacher, int pkStudyLevel, int pkPeriod){
+    public ArrayList<semesterModel> SelectSemesterByTeacher(int pkTeacher, int pkStudyLevel, int pkCareer, int pkPeriod){
         ArrayList<semesterModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacher', "+pkTeacher+", "+pkStudyLevel+", null, "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('semesterByTeacher', "+pkTeacher+", "+pkStudyLevel+", "+pkCareer+", "+pkPeriod+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     semesterModel allSemesters=new semesterModel();
                     allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));

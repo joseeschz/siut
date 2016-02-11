@@ -11,6 +11,7 @@
     $(document).ready(function () {
         var indications = "";
         var observations = "";
+        var printDate = "";
         var indicationsImpor = "";
         var itemLevel = 0;
         var itemCareer = 0;
@@ -25,13 +26,14 @@
             itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
             createDropDownPeriod("comboActiveYear","#valorateActivitiesPeriodFilter");
             itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-            createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter",false);
+            createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#valorateActivitiesSemesterFilter",false);
             itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
             createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#valorateActivitiesSubjectMatterFilter", false);
             itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
             createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",itemLevel.value,false);
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');     
             createLitsBoxPeriodByTeacher(itemCareer.value, itemSemester.value, itemSubjectMatter.value, itemScaleEvaluation.value, "#valorateActivitiesPeriodHistoryFilter");
+            $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "yyyy/MM/dd", theme: theme, width: '120px', height: '26px'});
             $('#valorateActivitiesLevelFilter').on('change',function (event){  
                 var args = event.args;
                 if(args){
@@ -44,7 +46,7 @@
                 if(args){                    
                     itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
                     itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-                    createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);                    
+                    createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);                    
                 }
             });
             $('#valorateActivitiesPeriodFilter').on('change',function (event){   
@@ -54,7 +56,7 @@
                     itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
                     itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
                     itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
-                    createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
+                    createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#valorateActivitiesSemesterFilter", true);
                     itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
                     var pkSemester=0;
                     if(itemSemester!==null){
@@ -119,7 +121,7 @@
             $(".close").parent().hide(); 
             createDropDownCareerByTeacher(null ,"#valorateActivitiesCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#valorateActivitiesPeriodFilter");
-            createDropDownSemesterByTeacher(null, null,"#valorateActivitiesSemesterFilter",false);
+            createDropDownSemesterByTeacher(null, null, null,"#valorateActivitiesSemesterFilter",false);
             createDropDownSubjectMatterByTeacher(null, null, null, null, "#valorateActivitiesSubjectMatterFilter", false);
             createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",null, false);
             createLitsBoxPeriodByTeacher(null, null, null, null, "#valorateActivitiesPeriodHistoryFilter");
@@ -184,12 +186,14 @@
                         if(data.dataResult==="Exist"){
                             indications = data.dataIndication;
                             observations = data.dataObservations;
+                            printDate = data.dataPrintDate;
                             $("#addWorkPlannin").parent().fadeOut("slow");
                             $("#addWorkPlannin").show();
                             $("#contentTRegisterActivities").fadeIn("slow");
                             $(".close").parent().fadeIn("slow"); 
                             $("#pkWorkPlannig").val(data.dataPkWorkPlanning);
                             $("#indications").text(indications);
+                            $(".calendarInput").val(printDate);
                             var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
                             loadTableRegisterActivities(dataAdapter);
                             if(data.dataRealized==="1"){
@@ -1074,6 +1078,22 @@
                 }
             });
         });
+        $('.calendarInput').on('change', function (event) {
+            if(event.args){
+                $.ajax({
+                    url: "../serviceActivities?setPrintDate",
+                    data: {"fkMatter": itemSubjectMatter.value, "fkPeriod": itemPeriod.value, "fkStudyLevel":itemLevel.value, "flPrintDate": $(this).val() },
+                    type: 'POST',
+                    beforeSend: function (xhr) {
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+                    }
+                });          
+            }
+        }); 
         $(".close").click(function (){
            $(this).parent().fadeOut(); 
         });
@@ -1207,6 +1227,12 @@
     Saber<br>
     <input type="hidden" id="pkWorkPlannig"/>
     <div id='valorateActivitiesScaleEvaluationFilter'></div>
+</div>
+<br><br><br>
+<div style="float: left; margin-right: 5px;">
+    Fecha de impresión<br>
+    <div class="calendarInput" id="datePrint"></div>
+    <span>AAAA-MM-DD</span>
 </div>
 <div style="display: none; float: left; margin-right: 5px; text-align: center;">
     Valor<br>

@@ -104,7 +104,7 @@ public class activitiesToGroupControl {
         return list;
     }
     public String[] SelectWorkPlanning(int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_scale_evaluation, int fk_period){
-        String[] result = new String[6];
+        String[] result = new String[7];
         try {
             String procedure="CALL `GET_WORK_PLANNING`('exist?', "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_scale_evaluation+", "+fk_period+")";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
@@ -115,6 +115,7 @@ public class activitiesToGroupControl {
                     result[3]=res.getString("FL_REALIZED");
                     result[4]=res.getString("FL_REALIZED_BLOCK");
                     result[5]=res.getString("FL_OBSERVATIONS");
+                    result[6]=res.getString("FL_DATE_PRINT");
                 }
                 res.close();
                 ps.close();
@@ -153,6 +154,23 @@ public class activitiesToGroupControl {
         try {
             Connection conn=new conectionControl().getConexion();
             String procedure="CALL `SET_WORK_PLANNING`('setObservations', null, "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", null, "+fk_period+", '"+fl_observations+"')";
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.executeUpdate();
+                request="Datos Modificados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String SetPrintDate(int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_period, String fl_date_print){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            String procedure="CALL `SET_WORK_PLANNING`('setPrintDate', null, "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", null, "+fk_period+", '"+fl_date_print+"')";
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
                 request="Datos Modificados";

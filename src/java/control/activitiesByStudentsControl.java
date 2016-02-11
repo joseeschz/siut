@@ -20,11 +20,13 @@ import model.activitiesByStudentsModel;
  */
 public class activitiesByStudentsControl {
     public static void main(String[] args) {
-        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectActivitiesByStudents(6, 2, 14, 501,  13);
-        for(int i=0;i<list.size();i++){
-            
-            System.out.println(list.get(i).getFL_VALUE_OBTANIED()+" "+i);
-        }
+        double b=0.3333;
+        System.out.println(String.format( "%.2f", b));
+//        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectActivitiesByStudents(6, 2, 14, 501,  13);
+//        for(int i=0;i<list.size();i++){
+//            
+//            System.out.println(list.get(i).getFL_VALUE_OBTANIED()+" "+i);
+//        }
         //System.out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, 0));
     }
     public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkActivity, int pkPeriod){
@@ -34,6 +36,7 @@ public class activitiesByStudentsControl {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getInt("PK_ACTIVITY_BY_STUDENT"));
+                    listActivitiesByStudents.setFL_REALIZED(res.getInt("FL_REALIZED"));
                     listActivitiesByStudents.setFK_STUDENT(res.getInt("PK_STUDENT"));
                     listActivitiesByStudents.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     listActivitiesByStudents.setFL_NAME_STUDENT(res.getString("FL_NAME_STUDENT"));
@@ -141,6 +144,7 @@ public class activitiesByStudentsControl {
                     listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getInt("PK_ACTIVITY_BY_STUDENT"));
                     listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
                     listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                    listActivitiesByStudents.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));  
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
@@ -152,6 +156,22 @@ public class activitiesByStudentsControl {
             Logger.getLogger(activitiesByStudentsModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public String InsertActivitiesByStudent(int pkStudent, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insertByStudent', "+pkStudent+", "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", null)")) {
+                ps.executeUpdate();
+                request="Datos Guardados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
     }
     public String InsertActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         String request;

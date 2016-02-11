@@ -940,7 +940,7 @@ function createDropDownCareerByDirector(filtrable, selector, update){
     }
 }
 
-function createDropDownSemesterByTeacher(period, filtrable, selector, update){
+function createDropDownSemesterByTeacher(period, career, filtrable, selector, update){
     var sourceSemester={
         datatype: "json",
         root: "__ENTITIES",
@@ -949,7 +949,7 @@ function createDropDownSemesterByTeacher(period, filtrable, selector, update){
             { name: 'dataValueSemester' },
             { name: 'dataNameSemester' }
         ],
-        url: "../serviceSemester?pkStudyLevel="+filtrable+"&view=combo&&teacher&pkPeriod="+period+"",
+        url: "../serviceSemester?pkStudyLevel="+filtrable+"&view=combo&&teacher&pkPeriod="+period+"&pkCareer="+career,
         async: false
     };
     var dataAdapterSemester = new $.jqx.dataAdapter(sourceSemester);
