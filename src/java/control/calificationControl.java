@@ -8,29 +8,34 @@ package control;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.calificationModel;
 import model.propetiesTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
  * @author CARLOS
  */
 public class calificationControl {
-    public static void main(String[] args) {
-        /*ArrayList<propetiesTableModel> listStudents=new calificationControl().SelectCalificationNowTutoringColumns(11, 82, 5);
-        for(int i=0;i<listStudents.size();i++){
+    public static void main(String[] args){
+            /*ArrayList<propetiesTableModel> listStudents=new calificationControl().SelectCalificationNowTutoringColumns(11, 82, 5);
+            for(int i=0;i<listStudents.size();i++){
             System.out.println(listStudents.get(i).getFL_TEXT());
             
-        }*/
-        ArrayList<calificationModel> listStudents2=new calificationControl().SelectCalificationNow(61, 366, 9);
-        for(int i=0;i<listStudents2.size();i++){
-            System.out.println(listStudents2.get(i).getFL_NAME());
-        }
-        //System.out.println(new calificationControl().IsCloseWorkPlanningByGroupMatter(1, 366, 61, 9));
+            }*/
+//        ArrayList<calificationModel> listStudents2=new calificationControl().SelectCalificationNow(61, 366, 9);
+//        for(int i=0;i<listStudents2.size();i++){
+//            System.out.println(listStudents2.get(i).getFL_NAME());
+//        }
+            
+            //System.out.println(new calificationControl().IsCloseWorkPlanningByGroupMatter(1, 366, 61, 9));
+        System.out.println(new calificationControl().SelectCalificationsByActivitiesRows(6, 333, 13, 13));
     }
     public ArrayList<calificationModel> SelectCalificationNow(int  pkGroup, int pkMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
@@ -197,6 +202,28 @@ public class calificationControl {
         }
         return list;
     }
+    public JSONArray SelectCalificationsByActivitiesRows(int pkCareer, int fkMatter, int pkGroup, int pkPeriod){
+        JSONArray contentColums = new JSONArray();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('rowsCal', "+pkCareer+", "+fkMatter+", "+pkGroup+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                ResultSetMetaData rsmd = res.getMetaData();                
+                JSONObject columns;
+                while(res!=null&&res.next()){
+                    columns = new JSONObject();
+                    for(int col=0; col<rsmd.getColumnCount(); col++){    
+                        columns.put(rsmd.getColumnName(col+1), res.getString(rsmd.getColumnName(col+1)));
+                    }
+                    contentColums.add(columns);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contentColums;
+    }
     public ArrayList<propetiesTableModel> SelectCalificationNowTutoringColumns(int pkCareer, int  pkGroup, int period){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
@@ -208,6 +235,33 @@ public class calificationControl {
                     allData.setFL_ALIGN(res.getString("FL_ALIGN"));
                     allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
                     allData.setFL_CELLSRENDERER(res.getString("FL_CELLSRENDERER"));
+                    allData.setFL_WIDHT(res.getString("FL_WIDHT"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<propetiesTableModel> SelectCalificationByActivitiesColums(int pkCareer, int  pkGroup, int pkMatter, int period){
+        ArrayList<propetiesTableModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('columsActivities', "+pkCareer+", "+pkMatter+", "+pkGroup+", null, "+period+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    propetiesTableModel allData=new propetiesTableModel();
+                    allData.setFL_TEXT(res.getString("FL_TEXT"));
+                    allData.setFL_TEXT_EXTENDS(res.getString("FL_TEXT_EXTENDS"));
+                    allData.setFL_DATA_FIELD(res.getString("FL_DATA_FIELD"));
+                    allData.setFL_ALIGN(res.getString("FL_ALIGN"));
+                    allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
+                    allData.setFL_CELLSRENDERER(res.getString("FL_CELLSRENDERER"));
+                    allData.setFL_RENDERED(res.getString("FL_RENDERED"));
+                    allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
                     list.add(allData);
                 }

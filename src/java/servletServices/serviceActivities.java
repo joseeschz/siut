@@ -142,6 +142,7 @@ public class serviceActivities extends HttpServlet {
                 data.put("dataRealized",result[3]);
                 data.put("dataRealizedBlock",result[4]);
                 data.put("dataObservations",result[5]);
+                data.put("dataPrintDate",result[6]);
                 out.print(data);
             }
             if(request.getParameter("disponibilityValueByWorkPlanning")!=null){
@@ -185,7 +186,7 @@ public class serviceActivities extends HttpServlet {
             if(request.getParameter("insertImported")!=null){
                 activitiesToGroupModel dataActivitiesToGroup=new activitiesToGroupModel();
                 int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
-                int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                String pkActivity = request.getParameter("pkActivity");
                 dataActivitiesToGroup.setPK_ACTIVITY(pkActivity);
                 dataActivitiesToGroup.setPK_WORK_PLANNING(pkWorkPlanning);
                 out.print(new activitiesToGroupControl().InsertActivitiesToGroupImported(dataActivitiesToGroup));               
@@ -215,10 +216,18 @@ public class serviceActivities extends HttpServlet {
                 String fl_observations = request.getParameter("flObservations");
                 out.print(new activitiesToGroupControl().SetObservations(fk_teacher, fk_study_level, fk_subject_matter, fk_period, fl_observations));
             }
+            if(request.getParameter("setPrintDate")!=null){
+                int fk_period = Integer.parseInt(request.getParameter("fkPeriod"));
+                int fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                int fk_study_level = Integer.parseInt(request.getParameter("fkStudyLevel"));
+                int fk_subject_matter = Integer.parseInt(request.getParameter("fkMatter"));
+                String fl_date_print = request.getParameter("flPrintDate");
+                out.print(new activitiesToGroupControl().SetPrintDate(fk_teacher, fk_study_level, fk_subject_matter, fk_period, fl_date_print));
+            }
             if(request.getParameter("update")!=null){       
                 if(request.getParameter("pkActivity") != null){
                     activitiesToGroupModel dataActivitiesToGroup=new activitiesToGroupModel();
-                    int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                    String pkActivity = request.getParameter("pkActivity");
                     int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                     int pkScaleEvaluation = Integer.parseInt(request.getParameter("pkScaleEvaluation"));
                     String nameActivity=request.getParameter("nameActivity");

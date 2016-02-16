@@ -84,6 +84,8 @@ public class serviceStudent extends HttpServlet {
                     datos.put("dataPkMunicipality", listStudent.get(i).getPK_MUNICIPALITY());
                     datos.put("dataPkLocality", listStudent.get(i).getPK_LOCALITY());
                     datos.put("dataFkPreparatory", listStudent.get(i).getFK_PREPARATORY());
+                    datos.put("dataBirthCertificate", listStudent.get(i).getFL_BIRTH_CERTIFICATE_NUMBER());
+                    datos.put("dataHightSchoolCertificate", listStudent.get(i).getFL_HIGH_SCHOOL_CERTIFICATE());
                     response.setContentType("application/json"); 
                     out.print(datos);
                     out.flush(); 
@@ -102,15 +104,32 @@ public class serviceStudent extends HttpServlet {
                         fulfillment="false";
                     }
                     JSONObject datos = new JSONObject();
-                    datos.put("dataPkRequirement", listStudent.get(i).getFL_ORDER());
+                    datos.put("id", listStudent.get(i).getFL_ORDER());
+                    datos.put("dataPkRequirement", listStudent.get(i).getPK_REQUIREMENT());
+                    datos.put("dataPkStudent", listStudent.get(i).getPK_STUDENT());
                     datos.put("dataProgresivNumber", i+1);
-                    datos.put("dataName", listStudent.get(i).getFL_NAME());
+                    datos.put("dataName", listStudent.get(i).getFL_NAME_REQUIRIMENT());
                     datos.put("dataFulfillment",  fulfillment);
                     datos.put("dataParent", listStudent.get(i).getFL_PARENT());
+                    datos.put("dataOther", listStudent.get(i).getFL_OTHER_FLAG());
                     content.add(datos);
                 }      
                 response.setContentType("application/json"); 
                 out.print(content);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("updateStudentExpedient")!=null){
+                int pk_student = Integer.parseInt(request.getParameter("pk_student"));
+                int pk_requirement = Integer.parseInt(request.getParameter("pk_requirement"));  
+                out.print(new studentControl().updateStudentExpedient(pk_requirement, pk_student));
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("deleteStudentExpedient")!=null){
+                int pk_student = Integer.parseInt(request.getParameter("pk_student"));
+                int pk_requirement = Integer.parseInt(request.getParameter("pk_requirement")); 
+                out.print(new studentControl().deleteStudentExpedient(pk_requirement, pk_student));
                 out.flush(); 
                 out.close();
             }
@@ -135,15 +154,34 @@ public class serviceStudent extends HttpServlet {
                     out.close();
                 }     
             }  
+            if(request.getParameter("selectStudentsMissingMetadata")!=null){
+                if(request.getParameter("pt_career")!=null && request.getParameter("pt_group")!=null){
+                    int pt_career = Integer.parseInt(request.getParameter("pt_career"));
+                    int pt_group = Integer.parseInt(request.getParameter("pt_group")); 
+                    ArrayList<studentModel> listStudents=new studentControl().SelectStudentsMetadata(pt_career, pt_group);
+                    JSONArray content = new JSONArray();
+                    for(int i=0;i<listStudents.size();i++) {
+                        JSONObject datos = new JSONObject();
+                        datos.put("dataProgresivNumber", i+1);
+                        datos.put("dataEnrollment", listStudents.get(i).getFL_ENROLLMENT());
+                        datos.put("dataStudentName", listStudents.get(i).getFL_NAME());
+                        content.add(datos); 
+                    }                
+                    response.setContentType("application/json"); 
+                    out.print(content);
+                    out.flush(); 
+                    out.close();
+                }     
+            }
             if(request.getParameter("selectStudentByPkStudent")!=null){
-                String enrrollmentStudent="";
-                if(session.getAttribute("enrrollmentStudent")!=null){
-                    enrrollmentStudent=session.getAttribute("enrrollmentStudent").toString();
+                String enrollmentStudent="";
+                if(session.getAttribute("enrollmentStudent")!=null){
+                    enrollmentStudent=session.getAttribute("enrollmentStudent").toString();
                 }
-                if(request.getParameter("enrrollmentStudent")!=null){
-                    enrrollmentStudent=request.getParameter("enrrollmentStudent");
+                if(request.getParameter("enrollmentStudent")!=null){
+                    enrollmentStudent=request.getParameter("enrollmentStudent");
                 }
-                ArrayList<studentModel> listStudent=new studentControl().SelectStudent(enrrollmentStudent, "allData");
+                ArrayList<studentModel> listStudent=new studentControl().SelectStudent(enrollmentStudent, "allData");
                 JSONObject datos = new JSONObject();
                 for(int i=0;i<listStudent.size();i++){
                     datos.put("pk_student", listStudent.get(i).getPK_STUDENT());
@@ -295,25 +333,25 @@ public class serviceStudent extends HttpServlet {
             if(request.getParameter("selectLoginStudent")!=null){
                 String statusLogin = request.getParameter("statusLogin");
                 if(statusLogin.equals("in")){
-                    String enrrollment = request.getParameter("enrrollment");
+                    String enrollment = request.getParameter("enrollment");
                     String password = request.getParameter("password");
                     int pkStudent = 0;
                     String name = "";
                     String mail = "";
                     studentModel dataUser=new studentModel();
-                    dataUser.setFL_ENROLLMENT(enrrollment);
+                    dataUser.setFL_ENROLLMENT(enrollment);
                     dataUser.setFL_PASSWORD(password);
                     ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser);
                     for(int i=0;i<list.size();i++){
                         pkStudent = list.get(i).getPK_STUDENT();
                         name = list.get(i).getFL_NAME();
-                        enrrollment = list.get(i).getFL_ENROLLMENT();
+                        enrollment = list.get(i).getFL_ENROLLMENT();
                         mail = list.get(i).getFL_MAIL();
                     }
-                    if(enrrollment != null && password != null){
+                    if(enrollment != null && password != null){
                         if(list.size()==1){
                             session.setAttribute("pkStudent", pkStudent);
-                            session.setAttribute("enrrollmentStudent", enrrollment);
+                            session.setAttribute("enrollmentStudent", enrollment);
                             session.setAttribute("mailStudent", mail);
                             session.setAttribute("passwordStudent", password);
                             session.setAttribute("logueadoStudent", name);
@@ -328,14 +366,14 @@ public class serviceStudent extends HttpServlet {
                     session.removeAttribute("pkStudent");
                     session.removeAttribute("logueadoStudent");
                     session.removeAttribute("mailStudent");
-                    session.removeAttribute("enrrollmentStudent");
+                    session.removeAttribute("enrollmentStudent");
                     session.removeAttribute("passwordStudent");
                     response.sendRedirect("/metadato");
                 }else{
                     session.removeAttribute("pkStudent");
                     session.removeAttribute("logueadoStudent");
                     session.removeAttribute("mailStudent");
-                    session.removeAttribute("enrrollmentStudent");
+                    session.removeAttribute("enrollmentStudent");
                     session.removeAttribute("passwordStudent");
                     response.sendRedirect("/");
                 }

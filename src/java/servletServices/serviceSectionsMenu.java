@@ -91,7 +91,8 @@ public class serviceSectionsMenu extends HttpServlet {
                     }
                     default:
                         int pt_pk_user = Integer.parseInt(session.getAttribute("pkUser").toString());
-                        listSectionMenu=new sectionControl().SelectSections(pt_pk_user);
+                        pt_rol = Integer.parseInt(session.getAttribute("userRol").toString());
+                        listSectionMenu=new sectionControl().SelectSections(pt_pk_user, pt_rol);
                         for(int i=0;i<listSectionMenu.size();i++){
                             JSONObject data = new JSONObject();
                             data.put("id", listSectionMenu.get(i).getPK_SECTION_MENU_PRINCIPAL());

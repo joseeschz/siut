@@ -24,6 +24,7 @@
         //cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf// 
         Map parameters = new HashMap(); 
         parameters.put("pt_pk_student", session.getAttribute("pt_pk_student")); 
+        parameters.put("pt_pk_user", session.getAttribute("pkUser")); 
         //Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)//
 //        
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, connection.getConexion()); 

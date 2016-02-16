@@ -19,19 +19,21 @@
         session.setAttribute("pt_career", pt_career);
         session.setAttribute("pt_study_level", pt_study_level);
         session.setAttribute("pt_matter", pt_matter);
+        session.setAttribute("pt_teacher", session.getAttribute("pkUser"));
     }else{
         //Parametros para realizar la conexión// 
         conectionControl connection=new conectionControl();
         //Establecemos la ruta del reporte//
-        File reportFile = new File(application.getRealPath("content/data-jr/evaluatedCriterion/report-criterion.jasper")); 
+        File reportFile = new File(application.getRealPath("content/data-jr/evaluatedCriterion/master.jasper")); 
         //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 
         //cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf// 
         Map parameters = new HashMap(); 
         parameters.put("pt_career", session.getAttribute("pt_career")); 
         parameters.put("pt_study_level", session.getAttribute("pt_study_level")); 
         parameters.put("pt_matter", session.getAttribute("pt_matter")); 
+        parameters.put("pt_teacher", session.getAttribute("pt_teacher")); 
         //Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)//
-//        
+        
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, connection.getConexion()); 
         //Indicamos que la respuesta va a ser en formato PDF//
         response.setContentType("application/pdf");

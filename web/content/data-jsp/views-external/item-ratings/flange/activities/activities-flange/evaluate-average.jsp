@@ -21,7 +21,7 @@
             createDropDownPeriod("comboActiveYear","#registerCalFlangePeriodFilter");
             itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
             if(itemPeriod!==undefined){
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#registerCalFlangeSemesterFilter",false);
+                createDropDownSemesterByTeacher(itemPeriod.value,itemCareer.value, itemLevel.value,"#registerCalFlangeSemesterFilter",false);
                 itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
                 if(itemSemester!==undefined){
                     createDropDownGruopByTeacher(itemCareer.value, itemPeriod.value, itemSemester.value, "#registerCalFlangeGroupFilter", false);
@@ -52,7 +52,7 @@
                     createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
                 }
             }else{
-                createDropDownSemesterByTeacher(null, null,"#registerCalFlangeSemesterFilter",false);
+                createDropDownSemesterByTeacher(null,null, null,"#registerCalFlangeSemesterFilter",false);
                 createDropDownGruopByTeacher(null, null, null, "#registerCalFlangeGroupFilter",false);
                 createDropDownSubjectMatterByTeacher(null, null, null, null, "#registerCalFlangeSubjectMatterFilter", false);
                 createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
@@ -64,7 +64,7 @@
             $('#registerCalFlangeCareerFilter').on('change',function (event){         
                 itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
                 itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#registerCalFlangeSemesterFilter", true);
+                createDropDownSemesterByTeacher(itemPeriod.value,itemCareer.value,itemLevel.value,"#registerCalFlangeSemesterFilter", true);
                 itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
             });
             $("#registerCalFlangeSemesterFilter").on('change',function (){
@@ -118,7 +118,7 @@
         }else{
             createDropDownCareerByTeacher(null ,"#registerCalFlangeCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#registerCalFlangePeriodFilter");
-            createDropDownSemesterByTeacher(null, null,"#registerCalFlangeSemesterFilter",false);
+            createDropDownSemesterByTeacher(null, null, null,"#registerCalFlangeSemesterFilter",false);
             createDropDownGruopByTeacher(null, null, null, "#registerCalFlangeGroupFilter",false);
             createDropDownSubjectMatterByTeacher(null, null, null, null, "#registerCalFlangeSubjectMatterFilter", false);
             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
@@ -246,6 +246,7 @@
                     { name: 'id', type:'int'},
                     { name: 'dataProgresivNumber', type:'int'},
                     { name: 'dataPkStudent', type:'int'},
+                    { name: 'dataRealized', type:'int'},
                     { name: 'dataEnrollment', type:'string'},
                     { name: 'dataNameStudent', type:'string'},
                     { name: 'dataApproved', type: 'string' },
@@ -292,36 +293,152 @@
         function loadEventRowclick(){
             var varIsClosed = isClosedWorkPlanning();
             if(varIsClosed!=1){
+                $('#tableRegisterCalActivities').off('rowclick');
+                $('#tableRegisterCalActivities').off('rowselect');
                 $('#tableRegisterCalActivities').on('rowclick', function (event){
-                    // event args.
-                    var args = event.args;
-                    // row data.
-                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
-                    $('#tableRegisterCalActivities').jqxGrid({ selectedrowindex: args.rowindex}); 
-                    if(row.dataValueObtanied!=="Sin evaluar"){
-                        $("#dataEnrollment").text(row.dataEnrollment);
-                        $("#dataNameStudent").text(row.dataNameStudent);
-                        $("#dataValueObtanied").val(convertionToFix(row.dataValueObtanied));                        
-                        $("#evaluateActivity").parent().hide();
-                    }else{
-                        $("#evaluateActivity").parent().show();
-                    }
-                });
+                    // event args.                 
+                    if (event.args.rightclick) {
+                        $("#tableRegisterCalActivities").jqxGrid('selectrow', event.args.rowindex);
+                        var scrollTop = $(window).scrollTop();
+                        var scrollLeft = $(window).scrollLeft();
+                        contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                        return false;
+                    }                    
+                });                
                 $('#tableRegisterCalActivities').on('rowselect', function (event){
-                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', event.args.rowindex);//args.row;
-                    if(row.dataValueObtanied!=="Sin evaluar"){
-                        $("#dataEnrollment").text(row.dataEnrollment);
-                        $("#dataNameStudent").text(row.dataNameStudent);
-                        $("#dataValueObtanied").val(convertionToFix(row.dataValueObtanied));
-                        $("#evaluateActivity").parent().hide();
-                    }else{
-                        $("#evaluateActivity").parent().show();
+                    // row data.
+                    var args = event.args;
+                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
+                    $(".slider").hide();
+                    if($('#dataValueObtanied'+row.id).length==0){
+                        var htmlControl=$('<div class="slider" id="dataValueObtanied'+row.id+'" style="float: left;"></div>');
+                        $("#contentDataValueObtanied").append(htmlControl);
+                        $('#dataValueObtanied'+row.id).jqxSlider({
+                            theme:"",
+                            width:"200px",
+                            height:"10px",
+                            mode:'fixed',
+                            tooltip: true,
+                            tooltipPosition: "far",
+                            step:0.1,
+                            ticksFrequency: 1,
+                            showTickLabels: true,
+                            ticksPosition:'bottom'
+                        });   
+                        $('#dataValueObtanied'+row.id).jqxSlider({ 
+                            tooltipFormatFunction: function(value){
+                                return (parseFloat(value).toFixed(1));
+                            }
+                        });  
+                        evaluateActivityByRow(row);
+                    }else{          
+                        evaluateActivityByRow(row);
                     }
                 });
             }else{
                 $('#tableRegisterCalActivities').off('rowclick');
             }
             return varIsClosed;
+        }
+        function evaluateActivityByRow(row){
+            $('#dataValueObtanied'+row.id).show();
+            var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataValueObtanied");
+            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataAcomulatedNow"); 
+            if(anyActivityEvaluated()>=1){                        
+                if(row.dataEnrollment===row.id){    
+                    $("#dataEnrollment").text(row.dataEnrollment);
+                    $("#dataNameStudent").text(row.dataNameStudent);    
+                    $("#evaluateActivity").parent().hide();
+                    $("#captureCal").show();
+                }else{ 
+                    $("#dataEnrollment").text(row.dataEnrollment);
+                    $("#dataNameStudent").text(row.dataNameStudent);
+                    $('#dataValueObtanied'+row.id).val(parseFloat(row.dataValueObtaniedEquivalent));    
+                    $("#evaluateActivity").parent().hide();
+                    $("#captureCal").show();
+                }
+            }else{
+                $("#dataEnrollment").text(row.dataEnrollment);
+                $("#dataNameStudent").text(row.dataNameStudent);                                      
+                $("#evaluateActivity").parent().show();
+                $("#captureCal").hide();                        
+            }
+            
+            dataAcomulatedNow=parseFloat(dataAcomulatedNow);
+            $('#dataValueObtanied'+row.id).off("change");
+            $('#dataValueObtanied'+row.id).on("change", function (){   
+                var dataValueObtaniedNew=parseFloat(convertionInverseToFix($('#dataValueObtanied'+row.id).val()));
+                var total=((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow);
+                if(isNaN(total)){
+                    total=value_max;
+                }
+                console.log(row);
+                var data = {
+                    "update":"1",
+                    "pkActivityByStudent": row.id, 
+                    "valueOptanied": parseFloat(dataValueObtaniedNew)
+                };
+                if(row.dataEnrollment===row.id){
+                    itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                    data = {
+                        "insertByStudent":"",
+                        "pkStudent": row.dataPkStudent, 
+                        "valueOptanied": parseFloat(dataValueObtaniedNew),
+                        "pkCareer": itemCareer.value,
+                        "pkSemester": itemSemester.value,
+                        "pkGroup": itemGroup.value,
+                        "pkMatter": itemSubjectMatter.value,
+                        "pkActivity": itemActivity.value,
+                        "pkPeriod": itemPeriod.value
+                    };
+                }else{
+                    data = {
+                        "update":"1",
+                        "pkActivityByStudent": row.id, 
+                        "valueOptanied": parseFloat(dataValueObtaniedNew)
+                    };
+                }
+                $.ajax({
+                    //Send the paramethers to servelt
+                    type: "POST",
+                    async: false,
+                    url: "../serviceActivitiesCalByStudents",
+                    data: data,
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //This is if exits an error with the server internal can do server off, or page not found
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {  
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataAcomulatedNow", (parseFloat(total).toFixed(2)));
+                        if(parseFloat(dataValueObtaniedNew).toFixed(2)==="0.00"){
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", 0);
+                        }else{
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", parseFloat(dataValueObtaniedNew).toFixed(2));
+                        }
+                        
+                        var equivalent=0;
+                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="10.0"){
+                            equivalent=10;
+                        }else{
+                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
+                        }
+                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="0.0"){
+                            equivalent=0;
+                        }else{
+                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
+                        }
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtaniedEquivalent", parseFloat(equivalent));
+
+                    }
+                });
+            });
         }
         function loadActivities(type_eval, pkStudent){
             var valItemsScaleEvaluation=[];
@@ -336,24 +453,51 @@
                 var trOnTbody="";
                 valItemsScaleEvaluation=itemsScaleEvaluation;
                 $(".tablesActivities"+type_eval).fadeOut();
-                $(".tablesActivities"+type_eval).html("");                
+                $(".tablesActivities"+type_eval).html("");      
                 for(var it=0; it<itemsScaleEvaluation.length; it++){
                     table=$('<table class="table-utsem table-striped table-hover" border="1"></table>');
-                    thead=$('<thead><tr><th align="left" colspan="4">'+valItemsScaleEvaluation[it].label+'</th></tr><tr><th align="center" width="85%" rowspan="2">Actividad</th><th align="center" rowspan="2">Valor</th><th align="center" colspan="2">Calificación</th></tr><tr><th align="center" title="Real">R</th><th align="center" title="Equivalente">E</th></tr></thead>');
+                    thead=$('<thead><tr><th align="left" colspan="5">'+valItemsScaleEvaluation[it].label+'</th></tr><tr><th align="center" width="85%" rowspan="2">Actividad</th><th align="center" colspan="2">Valor</th><th align="center" colspan="2">Calificación</th></tr><tr><th align="center" title="Real">#</th><th align="center" title="Porcentaje">%</th><th align="center" title="Real">R</th><th align="center" title="Equivalente">E</th></tr></thead>');
                     tbody=$('<tbody></tbody>');
                     ordersSource=loadSourceActivities(valItemsScaleEvaluation[it].value, pkStudent);
                     var subtotalScale=0;
                     var subtotalScaleObtanied=0;
+                    var anyActivity=0;
+                    var totalPercent=0;
+                    var totalEquivalent="N/A";
                     for(var ia=0; ia<ordersSource.items.length; ia++){
-                        trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+convertionToFix(ordersSource.items[ia].dataValueObtanied)+'</td></tr>');
+                        anyActivity=anyActivity+1;
+                        totalPercent=totalPercent+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale);
+                        //totalEquivalent=totalEquivalent+ordersSource.items[ia].dataValueObtaniedEquivalent;
+                        trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+ordersSource.items[ia].dataValueObtaniedEquivalent+'</td></tr>');
                         trOnTbody.appendTo(tbody); 
                         subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
                         subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
+                    }                    
+                    var equivalent=(subtotalScaleObtanied*10/subtotalScale).toFixed(1);
+                    if(isNaN(subtotalScale)){
+                        subtotalScale=0;
                     }
-                    tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center">'+subtotalScale+'</th><th align="center">'+subtotalScaleObtanied+'</th><th align="center">'+(subtotalScaleObtanied*10/subtotalScale)+'</th></tr></tfoot>');
+                    if(isNaN(subtotalScaleObtanied)){
+                        subtotalScaleObtanied=0;
+                    }
+                    if(isNaN(subtotalScaleObtanied)){
+                        subtotalScaleObtanied=0;
+                    }
+                    if(isNaN(equivalent)){
+                        equivalent=0;
+                    }
+                    tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center">'+subtotalScale+'</th><th align="center">'+totalPercent+'%</th><th align="center">'+subtotalScaleObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
+                    if(anyActivity===0){
+                        trOnTbody=$('<tr><td colspan="5">Este saber no cuenta con actividades evaluadas</td></tr>');
+                        trOnTbody.appendTo(tbody); 
+                    }else{
+                        table.append(tfoot);
+                        anyActivity=0;
+                    }
+                    
                     table.append(thead);
                     table.append(tbody);
-                    table.append(tfoot);
+                    
                     $(".tablesActivities"+type_eval).append(table);
                 }
                 $(".tablesActivities"+type_eval).fadeIn();
@@ -371,13 +515,19 @@
             var cellclass = function (row, columnfield, value) {
                 var classTheme="";
                 if(status==1){
-                    classTheme="";
                     var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
                     if(data.dataAcomulatedNow>="8"){
                         classTheme="approved";
                     }else{
                         classTheme="not-approved";
                     }                    
+                }else{
+//                    var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
+//                    if(data.dataAcomulatedNow===""){
+//                        classTheme="disabled";
+//                    }else{
+//                        classTheme="";
+//                    } 
                 }
                 return classTheme;
             };
@@ -414,7 +564,7 @@
                 if(status==1){
                     $('#tableRegisterCalActivities').jqxGrid('clearselection');
                     $("#detailsScaleEvaluation").parent().hide("fast");
-                    $("#dataValueObtanied").jqxSlider({ disabled: true }); 
+                    //$("#dataValueObtanied").jqxSlider({ disabled: true }); 
                     btns.jqxButton({disabled: true});
                     $("#dataEnrollment").text("Sin dato");
                     $("#dataNameStudent").text("Sin dato");
@@ -424,20 +574,58 @@
                     $("#dataNameStudent").text("");
                     $("#detailsScaleEvaluation").parent().show("fast");
                     $('#tableRegisterCalActivities').jqxGrid('selectrow', 0);
-                    $("#dataValueObtanied").jqxSlider({ disabled: false }); 
+                    //
+                    //$("#dataValueObtanied").jqxSlider({ disabled: false }); 
                      btns.jqxButton({disabled: false});
-                }
-                var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', 0);
-                if(data.dataValueObtanied!=="Sin evaluar"){
-                    $("#evaluateActivity").parent().hide();
-                }else{
-                    $("#evaluateActivity").parent().show();
-                }
-                $("#captureCal").show();
+                }                
             }else{
                 $("#captureCal").hide();
-                $("#evaluateActivity").parent().show();
             }
+        }
+        function anyActivityEvaluated(){
+            var valItemCareer=0;
+            var valItemSemester=0;
+            var valItemPeriod=0;
+            var valItemGroup=0;
+            var valItemActivity=0;
+            itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
+            itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+            itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            if(itemCareer!==undefined){
+                valItemCareer=itemCareer.value;
+            }
+            if(itemSemester!==undefined){
+                valItemSemester=itemSemester.value;
+            }
+            if(itemPeriod!==undefined){
+                valItemPeriod=itemPeriod.value;
+            }
+            if(itemGroup!==undefined){
+                valItemGroup=itemGroup.value;
+            }
+            if(itemActivity!==undefined){
+                valItemActivity=itemActivity.value;
+            }
+            var returnValue=undefined;
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                dataType: 'json',
+                url: '../serviceActivitiesCalByStudents?anyActivityEvaluated&&pkCareer='+valItemCareer+'&&pkSemester='+valItemSemester+'&&pkActivity='+valItemActivity+'&&pkGroup='+valItemGroup+'&&pkPeriod='+valItemPeriod+'',
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {                    
+                    returnValue=data[0].dataAnyActivityEvaluated;
+                }
+            });
+            return returnValue;
         }
         function exitWorkPlanning(){
             var valItemLevel=0;
@@ -589,50 +777,7 @@
             }else{
                 $('#tableRegisterCalActivities').fadeOut("slow");
             }
-        }
-        $('#dataValueObtanied').jqxSlider({
-            theme:"",
-            width:"200px",
-            height:"10px",
-            mode:'fixed',
-            tooltip: true,
-            tooltipPosition: "far",
-            step:1,
-            ticksFrequency: 1,
-            showTickLabels: true,
-            ticksPosition:'bottom'
-        });
-        $("#dataValueObtanied").on("change", function (){
-            var rowindex = $('#tableRegisterCalActivities').jqxGrid('getselectedrowindex');
-            rowExternal = $('#tableRegisterCalActivities').jqxGrid('getrowdata', rowindex);
-            var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowindex, "dataValueObtanied");
-            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowindex, "dataAcomulatedNow");
-            dataAcomulatedNow=parseFloat(dataAcomulatedNow);
-            var dataValueObtaniedNew=parseFloat(convertionInverseToFix($("#dataValueObtanied").val()));
-            var total=((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow);
-            $.ajax({
-                //Send the paramethers to servelt
-                type: "POST",
-                async: false,
-                url: "../serviceActivitiesCalByStudents",
-                data:{
-                    "update":"1",
-                    "pkActivityByStudent": rowExternal.id, 
-                    "valueOptanied": dataValueObtaniedNew.toFixed(2)
-                },
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    //This is if exits an error with the server internal can do server off, or page not found
-                    alert("Error interno del servidor");
-                },
-                success: function (data, textStatus, jqXHR) {  
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowindex, "dataAcomulatedNow", (total.toFixed(2)));
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowExternal.id, "dataValueObtanied", dataValueObtaniedNew.toFixed(2));
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowExternal.id, "dataValueObtaniedEquivalent", $("#dataValueObtanied").val());
-                }
-            });
-        });
+        }   
         
         btns.jqxButton({theme: theme, cursor: "pointer",  height: 10, width: 20 });
         var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');        
@@ -685,6 +830,9 @@
         function convertionInverseToFix(value){
             return value/10*value_max;
         }
+        $("#tableRegisterCalActivities").on('contextmenu', function () {
+            return false;
+        });
         var contextMenu = $("#jqxMenuContext").jqxMenu({ 
             width: 200, 
             height: 30, 
@@ -714,15 +862,6 @@
             minHeight: 200,
             maxWidth: 500
         }); 
-        $("#tableRegisterCalActivities").on('rowclick', function (event) {
-            if (event.args.rightclick) {
-                $("#tableRegisterCalActivities").jqxGrid('selectrow', event.args.rowindex);
-                var scrollTop = $(window).scrollTop();
-                var scrollLeft = $(window).scrollLeft();
-                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-                return false;
-            }
-        });
     });
 </script>
 <style>
@@ -808,7 +947,7 @@
                 <tr style="height: 40px">
                     <td style="width: 50px">Calificación:</td>
                     <td>
-                        <div id="dataValueObtanied" style="float: left;"></div>
+                        <div id="contentDataValueObtanied"></div>                        
                     </td>
                 </tr>
                 <tr>

@@ -68,7 +68,7 @@ public class serviceFile extends HttpServlet {
                         // Location to save data that is larger than maxMemSize.
 
                         // Path
-                        String enrollment = session.getAttribute("enrrollmentStudent").toString();
+                        String enrollment = session.getAttribute("enrollmentStudent").toString();
                         String path = "C:/temp/"+enrollment;
                         File filePath=new File(path);
                         if(filePath.exists()){
@@ -129,10 +129,10 @@ public class serviceFile extends HttpServlet {
             }
         }
         if(request.getParameter("viewFile")!=null){
-            try(ServletOutputStream out = response.getOutputStream()){
-                String fileType=request.getParameter("viewFile");
-                String enrollment = session.getAttribute("enrrollmentStudent").toString();
-                if(enrollment!=null){
+            try(ServletOutputStream out = response.getOutputStream()){                
+                String fileType=request.getParameter("viewFile");                
+                String enrollment = session.getAttribute("enrollmentStudent").toString();
+                if(enrollment!=null){                    
                     String pdfPath = "C://temp/"+enrollment+"/"+fileType+".pdf";
                     File existFile = new File(pdfPath);
                     if(existFile.exists()){

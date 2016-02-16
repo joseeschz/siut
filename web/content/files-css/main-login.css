@@ -199,12 +199,10 @@ a.no-underline{
     //box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
     padding: 25px 25px 25px;
     position: relative;
-    top: 100px;
+    top: 180px;
     bottom: 100px;
     border:1px solid #236618;
     //color:#fff;
-    min-height: 450px;
-    height: 500px;
     width: 340px;
 }
 #content-logo{

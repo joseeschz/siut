@@ -105,7 +105,7 @@ function createInputFolioUtsem(selector, update){
         $(selector).jqxInput({ 
             theme:theme,
             source: dataAdapter, 
-            maxLength: 8,
+            maxLength: 11,
             placeHolder: "Folio Utsem",
             displayMember: "dataNameFolio", 
             valueMember: "dataProgresivNumber",

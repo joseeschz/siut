@@ -32,7 +32,7 @@
                                     <label for="env">Matrícula</label>
                                 </div>
                                 <div class="input-row">
-                                    <input title="Ingresa tu matrícula para poder ingresar" name="enrrollment" type="text" id="nameUser" autofocus="" placeholder="UTSXXS-00XXXX">
+                                    <input title="Ingresa tu matrícula para poder ingresar" name="enrollment" type="text" id="nameUser" autofocus="" placeholder="UTSXXS-00XXXX">
                                 </div>
                                 <br><br>
                                 <div class="label-row">
