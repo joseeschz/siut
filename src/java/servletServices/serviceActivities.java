@@ -186,7 +186,7 @@ public class serviceActivities extends HttpServlet {
             if(request.getParameter("insertImported")!=null){
                 activitiesToGroupModel dataActivitiesToGroup=new activitiesToGroupModel();
                 int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
-                int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                String pkActivity = request.getParameter("pkActivity");
                 dataActivitiesToGroup.setPK_ACTIVITY(pkActivity);
                 dataActivitiesToGroup.setPK_WORK_PLANNING(pkWorkPlanning);
                 out.print(new activitiesToGroupControl().InsertActivitiesToGroupImported(dataActivitiesToGroup));               
@@ -227,7 +227,7 @@ public class serviceActivities extends HttpServlet {
             if(request.getParameter("update")!=null){       
                 if(request.getParameter("pkActivity") != null){
                     activitiesToGroupModel dataActivitiesToGroup=new activitiesToGroupModel();
-                    int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                    String pkActivity = request.getParameter("pkActivity");
                     int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                     int pkScaleEvaluation = Integer.parseInt(request.getParameter("pkScaleEvaluation"));
                     String nameActivity=request.getParameter("nameActivity");

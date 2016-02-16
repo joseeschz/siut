@@ -10,15 +10,15 @@ package model;
  * @author Carlos
  */
 public class activitiesToGroupModel extends workPlanningModel{
-    int PK_ACTIVITY=0;
+    String PK_ACTIVITY="";
     String FL_NAME_ACTIVITY="";
     double FL_VALUE_ACTIVITY=0; 
 
-    public int getPK_ACTIVITY() {
+    public String getPK_ACTIVITY() {
         return PK_ACTIVITY;
     }
 
-    public void setPK_ACTIVITY(int PK_ACTIVITY) {
+    public void setPK_ACTIVITY(String PK_ACTIVITY) {
         this.PK_ACTIVITY = PK_ACTIVITY;
     }
 

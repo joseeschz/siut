@@ -296,38 +296,149 @@
                 $('#tableRegisterCalActivities').off('rowclick');
                 $('#tableRegisterCalActivities').off('rowselect');
                 $('#tableRegisterCalActivities').on('rowclick', function (event){
-                    // event args.
-                    var args = event.args;
-                    // row data.
-                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
-                    $('#tableRegisterCalActivities').jqxGrid({ selectedrowindex: args.rowindex}); 
-                    if(row.dataValueObtanied!==""){
-                        $("#dataEnrollment").text(row.dataEnrollment);
-                        $("#dataNameStudent").text(row.dataNameStudent);
-                        $("#dataValueObtanied").val(convertionToFix(row.dataValueObtanied));                        
-                        $("#evaluateActivity").parent().hide();
-                    }else{
-                        $("#evaluateActivity").parent().show();
-                    }
-                });
+                    // event args.                 
+                    if (event.args.rightclick) {
+                        $("#tableRegisterCalActivities").jqxGrid('selectrow', event.args.rowindex);
+                        var scrollTop = $(window).scrollTop();
+                        var scrollLeft = $(window).scrollLeft();
+                        contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                        return false;
+                    }                    
+                });                
                 $('#tableRegisterCalActivities').on('rowselect', function (event){
-                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', event.args.rowindex);//args.row;
-                    if(row.dataValueObtanied!==""){
-                        $("#dataEnrollment").text(row.dataEnrollment);
-                        $("#dataNameStudent").text(row.dataNameStudent);
-                        $("#dataValueObtanied").val(convertionToFix(row.dataValueObtanied));
-                        $("#evaluateActivity").parent().hide();
-                        $("#captureCal").show();
-                    }else{
-                        console.log(row);
-                        $("#captureCal").hide();
-                        $("#evaluateActivity").parent().show();
+                    // row data.
+                    var args = event.args;
+                    var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
+                    $(".slider").hide();
+                    if($('#dataValueObtanied'+row.id).length==0){
+                        var htmlControl=$('<div class="slider" id="dataValueObtanied'+row.id+'" style="float: left;"></div>');
+                        $("#contentDataValueObtanied").append(htmlControl);
+                        $('#dataValueObtanied'+row.id).jqxSlider({
+                            theme:"",
+                            width:"200px",
+                            height:"10px",
+                            mode:'fixed',
+                            tooltip: true,
+                            tooltipPosition: "far",
+                            step:0.1,
+                            ticksFrequency: 1,
+                            showTickLabels: true,
+                            ticksPosition:'bottom'
+                        });   
+                        $('#dataValueObtanied'+row.id).jqxSlider({ 
+                            tooltipFormatFunction: function(value){
+                                return (parseFloat(value).toFixed(1));
+                            }
+                        });  
+                        evaluateActivityByRow(row);
+                    }else{          
+                        evaluateActivityByRow(row);
                     }
                 });
             }else{
                 $('#tableRegisterCalActivities').off('rowclick');
             }
             return varIsClosed;
+        }
+        function evaluateActivityByRow(row){
+            $('#dataValueObtanied'+row.id).show();
+            var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataValueObtanied");
+            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataAcomulatedNow"); 
+            if(anyActivityEvaluated()>=1){                        
+                if(row.dataEnrollment===row.id){    
+                    $("#dataEnrollment").text(row.dataEnrollment);
+                    $("#dataNameStudent").text(row.dataNameStudent);    
+                    $("#evaluateActivity").parent().hide();
+                    $("#captureCal").show();
+                }else{ 
+                    $("#dataEnrollment").text(row.dataEnrollment);
+                    $("#dataNameStudent").text(row.dataNameStudent);
+                    $('#dataValueObtanied'+row.id).val(parseFloat(row.dataValueObtaniedEquivalent));    
+                    $("#evaluateActivity").parent().hide();
+                    $("#captureCal").show();
+                }
+            }else{
+                $("#dataEnrollment").text(row.dataEnrollment);
+                $("#dataNameStudent").text(row.dataNameStudent);                                      
+                $("#evaluateActivity").parent().show();
+                $("#captureCal").hide();                        
+            }
+            
+            dataAcomulatedNow=parseFloat(dataAcomulatedNow);
+            $('#dataValueObtanied'+row.id).off("change");
+            $('#dataValueObtanied'+row.id).on("change", function (){   
+                var dataValueObtaniedNew=parseFloat(convertionInverseToFix($('#dataValueObtanied'+row.id).val()));
+                var total=((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow);
+                if(isNaN(total)){
+                    total=value_max;
+                }
+                console.log(row);
+                var data = {
+                    "update":"1",
+                    "pkActivityByStudent": row.id, 
+                    "valueOptanied": parseFloat(dataValueObtaniedNew)
+                };
+                if(row.dataEnrollment===row.id){
+                    itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                    data = {
+                        "insertByStudent":"",
+                        "pkStudent": row.dataPkStudent, 
+                        "valueOptanied": parseFloat(dataValueObtaniedNew),
+                        "pkCareer": itemCareer.value,
+                        "pkSemester": itemSemester.value,
+                        "pkGroup": itemGroup.value,
+                        "pkMatter": itemSubjectMatter.value,
+                        "pkActivity": itemActivity.value,
+                        "pkPeriod": itemPeriod.value
+                    };
+                }else{
+                    data = {
+                        "update":"1",
+                        "pkActivityByStudent": row.id, 
+                        "valueOptanied": parseFloat(dataValueObtaniedNew)
+                    };
+                }
+                $.ajax({
+                    //Send the paramethers to servelt
+                    type: "POST",
+                    async: false,
+                    url: "../serviceActivitiesCalByStudents",
+                    data: data,
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //This is if exits an error with the server internal can do server off, or page not found
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {  
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataAcomulatedNow", (parseFloat(total).toFixed(2)));
+                        if(parseFloat(dataValueObtaniedNew).toFixed(2)==="0.00"){
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", 0);
+                        }else{
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", parseFloat(dataValueObtaniedNew).toFixed(2));
+                        }
+                        
+                        var equivalent=0;
+                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="10.0"){
+                            equivalent=10;
+                        }else{
+                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
+                        }
+                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="0.0"){
+                            equivalent=0;
+                        }else{
+                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
+                        }
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtaniedEquivalent", parseFloat(equivalent));
+
+                    }
+                });
+            });
         }
         function loadActivities(type_eval, pkStudent){
             var valItemsScaleEvaluation=[];
@@ -453,7 +564,7 @@
                 if(status==1){
                     $('#tableRegisterCalActivities').jqxGrid('clearselection');
                     $("#detailsScaleEvaluation").parent().hide("fast");
-                    $("#dataValueObtanied").jqxSlider({ disabled: true }); 
+                    //$("#dataValueObtanied").jqxSlider({ disabled: true }); 
                     btns.jqxButton({disabled: true});
                     $("#dataEnrollment").text("Sin dato");
                     $("#dataNameStudent").text("Sin dato");
@@ -463,22 +574,58 @@
                     $("#dataNameStudent").text("");
                     $("#detailsScaleEvaluation").parent().show("fast");
                     $('#tableRegisterCalActivities').jqxGrid('selectrow', 0);
-                    $("#dataValueObtanied").jqxSlider({ disabled: false }); 
+                    //
+                    //$("#dataValueObtanied").jqxSlider({ disabled: false }); 
                      btns.jqxButton({disabled: false});
-                }
-                var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', 0);
-                if(data.dataValueObtanied!==""){
-                    $("#evaluateActivity").parent().hide();
-                    $("#captureCal").show();
-                }else{                    
-                    $("#evaluateActivity").parent().show();
-                    $("#captureCal").hide();
-                }
-                
+                }                
             }else{
                 $("#captureCal").hide();
-                $("#evaluateActivity").parent().show();
             }
+        }
+        function anyActivityEvaluated(){
+            var valItemCareer=0;
+            var valItemSemester=0;
+            var valItemPeriod=0;
+            var valItemGroup=0;
+            var valItemActivity=0;
+            itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
+            itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+            itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            if(itemCareer!==undefined){
+                valItemCareer=itemCareer.value;
+            }
+            if(itemSemester!==undefined){
+                valItemSemester=itemSemester.value;
+            }
+            if(itemPeriod!==undefined){
+                valItemPeriod=itemPeriod.value;
+            }
+            if(itemGroup!==undefined){
+                valItemGroup=itemGroup.value;
+            }
+            if(itemActivity!==undefined){
+                valItemActivity=itemActivity.value;
+            }
+            var returnValue=undefined;
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                dataType: 'json',
+                url: '../serviceActivitiesCalByStudents?anyActivityEvaluated&&pkCareer='+valItemCareer+'&&pkSemester='+valItemSemester+'&&pkActivity='+valItemActivity+'&&pkGroup='+valItemGroup+'&&pkPeriod='+valItemPeriod+'',
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {                    
+                    returnValue=data[0].dataAnyActivityEvaluated;
+                }
+            });
+            return returnValue;
         }
         function exitWorkPlanning(){
             var valItemLevel=0;
@@ -630,60 +777,7 @@
             }else{
                 $('#tableRegisterCalActivities').fadeOut("slow");
             }
-        }
-        $('#dataValueObtanied').jqxSlider({
-            theme:"",
-            width:"200px",
-            height:"10px",
-            mode:'fixed',
-            tooltip: true,
-            tooltipPosition: "far",
-            step:0.1,
-            ticksFrequency: 1,
-            showTickLabels: true,
-            ticksPosition:'bottom'
-        });
-        $('#dataValueObtanied').jqxSlider({ tooltipFormatFunction: function(value){
-                return (value.toFixed(1));
-            }
-        });
-        $("#dataValueObtanied").on("change", function (){
-            var rowindex = $('#tableRegisterCalActivities').jqxGrid('getselectedrowindex');
-            rowExternal = $('#tableRegisterCalActivities').jqxGrid('getrowdata', rowindex);
-            var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowindex, "dataValueObtanied");
-            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowindex, "dataAcomulatedNow");
-            dataAcomulatedNow=parseFloat(dataAcomulatedNow);
-            var dataValueObtaniedNew=parseFloat(convertionInverseToFix($("#dataValueObtanied").val()));
-            var total=((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow);
-            $.ajax({
-                //Send the paramethers to servelt
-                type: "POST",
-                async: false,
-                url: "../serviceActivitiesCalByStudents",
-                data:{
-                    "update":"1",
-                    "pkActivityByStudent": rowExternal.id, 
-                    "valueOptanied": dataValueObtaniedNew.toFixed(2)
-                },
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    //This is if exits an error with the server internal can do server off, or page not found
-                    alert("Error interno del servidor");
-                },
-                success: function (data, textStatus, jqXHR) {  
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowindex, "dataAcomulatedNow", (total.toFixed(2)));
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowExternal.id, "dataValueObtanied", dataValueObtaniedNew.toFixed(2));
-                    var equivalent=0;
-                    if(($("#dataValueObtanied").val().toFixed(1))==="10.0"){
-                        equivalent=10;
-                    }else{
-                        equivalent = ($("#dataValueObtanied").val().toFixed(1));
-                    }
-                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowExternal.id, "dataValueObtaniedEquivalent", equivalent);
-                }
-            });
-        });
+        }   
         
         btns.jqxButton({theme: theme, cursor: "pointer",  height: 10, width: 20 });
         var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');        
@@ -768,15 +862,6 @@
             minHeight: 200,
             maxWidth: 500
         }); 
-        $("#tableRegisterCalActivities").on('rowclick', function (event) {
-            if (event.args.rightclick) {
-                $("#tableRegisterCalActivities").jqxGrid('selectrow', event.args.rowindex);
-                var scrollTop = $(window).scrollTop();
-                var scrollLeft = $(window).scrollLeft();
-                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-                return false;
-            }
-        });
     });
 </script>
 <style>
@@ -862,7 +947,7 @@
                 <tr style="height: 40px">
                     <td style="width: 50px">Calificación:</td>
                     <td>
-                        <div id="dataValueObtanied" style="float: left;"></div>
+                        <div id="contentDataValueObtanied"></div>                        
                     </td>
                 </tr>
                 <tr>

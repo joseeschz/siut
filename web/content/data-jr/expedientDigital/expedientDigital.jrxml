@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expedientDigital" language="groovy" pageWidth="612" pageHeight="792" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="42" bottomMargin="42" uuid="890b828f-26b7-4ad4-91f1-3a0643a25fdc">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="38"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -90,9 +90,9 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="553" splitType="Stretch">
+		<band height="534" splitType="Stretch">
 			<componentElement>
-				<reportElement key="table" style="table" x="0" y="0" width="556" height="553" uuid="2a172429-9f31-448f-8252-a9861840e603"/>
+				<reportElement key="table" style="table" x="0" y="0" width="556" height="534" uuid="2a172429-9f31-448f-8252-a9861840e603"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="dataset" uuid="bd152871-19dc-4f3d-99bf-58061ee55c49">
 						<datasetParameter name="pt_pk_student">
@@ -230,8 +230,7 @@
 								<textElement textAlignment="Center">
 									<font fontName="Arial" size="8"/>
 								</textElement>
-								<textFieldExpression><![CDATA[( $F{FL_FULFILLMENT}.equals("No") ? "" : ( $F{FL_FULFILLMENT}.equals("Si") ? "Si" : $F{FL_FULFILLMENT} ) )
-]]></textFieldExpression>
+								<textFieldExpression><![CDATA[( $F{FL_FULFILLMENT}.equals("No") ? "" : ( $F{FL_FULFILLMENT}.equals("Si") ? "Si" : $F{FL_FULFILLMENT} ) )]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
@@ -240,15 +239,15 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="35" splitType="Stretch">
+		<band height="54" splitType="Stretch">
 			<staticText>
-				<reportElement x="193" y="0" width="208" height="34" uuid="7e1218d8-7ef5-4cc2-aa5d-2f357bba1209"/>
+				<reportElement x="179" y="0" width="195" height="54" uuid="7e1218d8-7ef5-4cc2-aa5d-2f357bba1209"/>
 				<box leftPadding="0" rightPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SELLO DEL 	
-JEFE(A) DEL DEPARTAMENTO	]]></text>
+JEFE(A) DEL DEPARTAMENTO DE SERVICIOS ESCOLARES	]]></text>
 			</staticText>
 		</band>
 	</columnFooter>

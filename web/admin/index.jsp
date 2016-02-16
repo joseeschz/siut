@@ -1,4 +1,5 @@
 <%
+String vertion = "jqwidgets-ver4.0.0";
 if(session.getAttribute("logueado") == null){%>
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,7 +9,7 @@ if(session.getAttribute("logueado") == null){%>
             <meta charset="UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link title="SIUT" rel="icon" type="image/png" href="../content/pictures-system/favicon.png" />
-            <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
+            <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
             <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>             
         </head>
         <body>
@@ -57,13 +58,13 @@ if(session.getAttribute("logueado") == null){%>
             </center>  
         </body>
         <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxpasswordinput.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxdraw.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxchart.core.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxpasswordinput.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxtooltip.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxinput.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxvalidator.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxdraw.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxchart.core.js"></script>
         <script type="text/javascript">
             $(document).ready(function (){
                 window.location.hash="";
@@ -140,8 +141,8 @@ if(session.getAttribute("logueado") == null){%>
             <!-- Bootstrap core CSS -->
             <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
             <!-- jQWidgets CSS -->
-            <link href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
-            <link href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.bootstrap.css" rel="stylesheet"/>
+            <link href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
+            <link href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.bootstrap.css" rel="stylesheet"/>
             <link href="../content/files-css/clock.css" rel="stylesheet"/>
             <meta http-equiv="Expires" content="0" />
             <meta http-equiv="Pragma" content="no-cache" />
@@ -254,13 +255,13 @@ if(session.getAttribute("logueado") == null){%>
             <!--En esta parte importo mis archivos de jQuery boostrap y jQuery-UI
             ==================================================-->
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/scripts/get-theme.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/localization.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
             <script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
             <script type="text/javascript" src="../content/files-jq/jquery-ui-1.11.1/jquery-ui.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqx-all.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.cultures.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
             <script type="text/javascript" src="../content/files-jq/jquery.cookie.js"></script>
             <script type="text/javascript" src="../content/files-js/make-menu.js" charset="utf-8"></script>
             <script type="text/javascript" src="../content/files-js/make-combo.js"  charset="UTF-8"></script>

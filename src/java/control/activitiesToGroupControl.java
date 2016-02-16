@@ -22,8 +22,10 @@ import model.activitiesToGroupModel;
 public class activitiesToGroupControl {
     public static void main(String[] args) {
         ArrayList<activitiesToGroupModel> list=new activitiesToGroupControl().SelectActivitiesToGroup(0, 12, 64, 1, 325, 1);
+        String[] result = new activitiesToGroupControl().SelectWorkPlanning(28, 1, 329, 1, 13);
+        System.out.println(result[6]);
         for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getFL_NAME_ACTIVITY());
+            //System.out.println(list.get(i).getFL_NAME_ACTIVITY());
         }
         //System.out.println(Arrays.toString(new activitiesToGroupControl().SelectWorkPlanning(33, 3, 109, 4, 5)));
     }
@@ -34,7 +36,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
                     list.add(listActivitiesToGroup);
@@ -56,7 +58,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
@@ -85,7 +87,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
