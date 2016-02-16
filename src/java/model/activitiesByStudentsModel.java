@@ -10,7 +10,7 @@ package model;
  * @author Carlos
  */
 public class activitiesByStudentsModel extends activitiesToGroupModel{
-    int PK_ACTIVITY_BY_STUDENT=0;
+    String PK_ACTIVITY_BY_STUDENT="";
     int FK_ACTIVITY=0;
     int FK_STUDENT=0;
     String FL_ENROLLMENT="";
@@ -44,11 +44,11 @@ public class activitiesByStudentsModel extends activitiesToGroupModel{
         this.FL_APPROVED = FL_APPROVED;
     }
 
-    public int getPK_ACTIVITY_BY_STUDENT() {
+    public String getPK_ACTIVITY_BY_STUDENT() {
         return PK_ACTIVITY_BY_STUDENT;
     }
 
-    public void setPK_ACTIVITY_BY_STUDENT(int PK_ACTIVITY_BY_STUDENT) {
+    public void setPK_ACTIVITY_BY_STUDENT(String PK_ACTIVITY_BY_STUDENT) {
         this.PK_ACTIVITY_BY_STUDENT = PK_ACTIVITY_BY_STUDENT;
     }
 

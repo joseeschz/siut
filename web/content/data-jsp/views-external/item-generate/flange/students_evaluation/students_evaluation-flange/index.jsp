@@ -13,7 +13,7 @@
             itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
             itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
-            createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter",false);
+            createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value,  itemLevel.value,"#qualificationsSemesterFilter",false);
             itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
             createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", false);
             itemSubjectMatter=$('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
@@ -23,7 +23,7 @@
                 itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
                 createDropDownCareerByTeacher(itemLevel.value, "#qualificationsCareerFilter", true);
                 itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
-                createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter", true);   
+                createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value,  itemLevel.value,"#qualificationsSemesterFilter", true);   
             });
             $('#qualificationsCareerFilter').on('change',function (event){           
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
@@ -42,18 +42,18 @@
                 itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
             });
             $("#qualificationsGroupFilter").on('change',function (){  
-                var dataAdapter = new $.jqx.dataAdapter(loadSource());
-                $("#tableQualifications").jqxGrid({source: dataAdapter});
+                loadTableQualifications();
             });
             loadTableQualifications();
         }else{
             createDropDownCareerByTeacher(null ,"#qualificationsCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
-            createDropDownSemesterByTeacher(null, null,"#qualificationsSemesterFilter",false);
+            createDropDownSemesterByTeacher(null, null, null,"#qualificationsSemesterFilter",false);
             createDropDownSubjectMatterByTeacher(null, null, null, null, "#qualificationsSubjectMatterFilter", false);
             createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",false);
         }
         function loadSource(){
+            itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
             itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
             itemSubjectMatter=$('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem');  
             itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
@@ -69,42 +69,94 @@
                     { name: 'dataCalificationDo', type: 'double' },
                     { name: 'dataAvg', type: 'double'}
                 ],
-                root: "__ENTITIES",
                 dataType: "json",
-                id: 'id',
                 async: false,
-                url: '../serviceCalification?view=calificationsNow&&fkPeriod='+itemPeriod.value+'&&fkMatter='+itemSubjectMatter.value+'&&fkGroup='+itemGroup.value+''
+                url: '../serviceCalification?tableByAllActivities&&fkCareer='+itemCareer.value+'&&fkPeriod='+itemPeriod.value+'&&fkMatter='+itemSubjectMatter.value+'&&fkGroup='+itemGroup.value+''
             };
             return ordersSource;
         }
         function loadTableQualifications(){
-        var dataAdapter = new $.jqx.dataAdapter(loadSource());
-            $("#tableQualifications").jqxGrid({
-                width: 750,
-                height: 350,
-                selectionMode: "singlerow",
-                localization: getLocalization("es"),
-                source: dataAdapter,
-                pageable: false,
-                editable: false,
-                filterable: false,
-                altRows: true,
-                ready: function(){
-                    $("#tableQualifications").jqxGrid('focus');
+            var popoverrender = function (element){
+                var desc = $(element.context.innerHTML).children("div").attr("desc");
+                var htmlPopover = $('<div><div>'+desc+'</div></div>');
+                htmlPopover.jqxPopover({offset: {left: 0, top:0}, width:150, isModal: true, arrowOffsetValue: 10, title: "Nombre", showCloseButton: true, selector: $(element.parent().parent()) });  
+            };
+            var dataAdapter = new $.jqx.dataAdapter(loadSource(), {
+                autoBind: true,
+                beforeSend:function (){
+                    $("#tableQualifications").jqxGrid('showloadelement');
                 },
-                columngroups: [
-                    { text: 'Calificación', align: 'center', name: 'calification' }
-                ],
-                columns: [
-                    { text: '#',  disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Matrícula',disabled: true, align: 'center', dataField: 'dataEnrollment', editable: false, width: 150 },
-                    { text: 'Alumno',disabled: true, align: 'center', dataField: 'dataStudentName', editable: false},
-                    { text: 'Ser', columngroup: 'calification', parentgroup: 'calification', dataField: 'dataCalificationBe', cellsalign: 'center', align: 'center', width: 60 },
-                    { text: 'Saber',columngroup: 'calification', cellsalign: 'center', align: 'center', dataField: 'dataCalificationKnow', width: 60},
-                    { text: 'Hacer', columngroup: 'calification', cellsalign: 'center', align: 'center', dataField: 'dataCalificationDo', width: 60},
-                    { text: 'Total', columngroup: 'calification', cellsalign: 'center', align: 'center', dataField: 'dataAvg', width: 80}
-                ]
-            });
+                beforeLoadComplete:function (){
+                    $("#tableQualifications").jqxGrid('hideloadelement');
+                },
+                downloadComplete: function (data) {
+                    //dataExternal=data;
+                    var columns = data[0].columns;
+                    var dataFields = data[1].dataFields;
+                    var rows = data[2].rowsCal;
+                    var gridAdapter = new $.jqx.dataAdapter({
+                        dataFields: dataFields,
+                        id: 'dataProgresivNumber',
+                        localdata: rows
+                    });
+                    var arr = columns;
+                    var str = JSON.stringify(arr);
+                    var newArr = JSON.parse(str);
+                    for(var i=0;i<newArr.length; i++){
+                        if(newArr[i].rendered){
+                            newArr[i].rendered = eval(newArr[i].rendered);
+                        }                        
+                    }
+                    columns=newArr;
+                    $("#tableQualifications").jqxGrid('beginupdate', true);
+                    $("#tableQualifications").jqxGrid({
+                        width: 850,
+                        height: 450,
+                        selectionMode: "singlerow",
+                        localization: getLocalization("es"),
+                        source: gridAdapter,
+                        pageable: false,
+                        editable: false,
+                        filterable: false,
+                        altRows: true,
+                        ready: function(){
+                            $("#tableQualifications").jqxGrid('focus');
+//                            var rows2 = dataExternal[1].rows;
+//                            var rowsCal2 = dataExternal[2].rowsCal;
+//                            if(rows2.length===0){
+//                                $("#tableQualificationsDescription").hide();
+//                                $("#tableQualifications").hide();
+//                            }else{
+//                                loadTableDescription();
+//                                $("#tableQualificationsDescription").fadeIn("slow");
+//                                $("#tableQualifications").fadeIn("slow");
+//                                for(var i1=0; i1<rows2.length; i1++){
+//                                    var dataRow = $('#tableQualifications').jqxGrid('getrowdata', i1);
+//                                    for(var i2=0; i2<rowsCal2.length; i2++){
+//                                        if(dataRow.dataFkStudent===rowsCal2[i2].dataFkStudent){
+//                                            $("#tableQualifications").jqxGrid('setcellvalue', i1, rowsCal2[i2].dataNameMatter, rowsCal2[i2].dataCalMatters);
+//                                        }
+//                                    }
+//                                } 
+//                            }
+                            
+                        },
+                        columngroups: [
+                            { text: 'Ser',  name: 'content_be', cellsalign: 'center', align: 'center' },
+                            { text: 'Actividades', parentgroup: 'content_be', name: 'be', cellsalign: 'center', align: 'center' },
+                            { text: 'Saber', name: 'content_know', cellsalign: 'center', align: 'center' },
+                            { text: 'Actividades', parentgroup: 'content_know', name: 'know',  cellsalign: 'center', align: 'center'},
+                            { text: 'Hacer', name: 'content_do', cellsalign: 'center', align: 'center' },
+                            { text: 'Actividades', parentgroup: 'content_do', name: 'do', cellsalign: 'center', align: 'center'}
+                        ],
+                        columns: columns,
+                        columnsresize: false
+                    });
+                    $("#tableQualifications").jqxGrid('endupdate');
+                }
+            });    
+            
+            
         }
     });
 </script>
@@ -139,3 +191,10 @@
 </div>
 <br><br><br>
 <div id="tableQualifications"></div>
+<div id="popover"></div>
+<style>
+    .texto-vertical {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+    }
+</style>

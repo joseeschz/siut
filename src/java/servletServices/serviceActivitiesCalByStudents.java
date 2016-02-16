@@ -63,16 +63,22 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                         data.put("dataRealized", listActivity.get(i).getFL_REALIZED());
                         data.put("dataEnrollment", listActivity.get(i).getFL_ENROLLMENT());
                         data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());  
-                        data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
                         if(listActivity.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
                             data.put("dataValueObtanied", "");
                             data.put("dataValueObtaniedEquivalent", "");
                             data.put("dataAcomulatedNow", "");
                         }else{
                             double equivalent =  (Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED())*10/listActivityValMax.get(0).getFL_VALUE_ACTIVITY());
-                            data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
+                            double obtanied = Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED());                            
+                            if(String.format( "%.1f", obtanied).equals("0.0")){
+                                data.put("dataValueObtanied", 0);
+                            }else{
+                                data.put("dataValueObtanied", obtanied);
+                            }
                             if(String.format( "%.1f", equivalent).equals("10.0")){
                                 data.put("dataValueObtaniedEquivalent","10");
+                            }else if(String.format( "%.1f", equivalent).equals("0.0")){
+                                data.put("dataValueObtaniedEquivalent",0);
                             }else{
                                 data.put("dataValueObtaniedEquivalent",String.format( "%.1f", equivalent));
                             }                            
@@ -145,6 +151,24 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     out.flush(); 
                     out.close();
                 }
+            }
+            if(request.getParameter("anyActivityEvaluated")!=null){
+                    int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
+                    int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
+                    int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
+                    int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                    int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectAnyActivityEvaluated(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
+                    JSONArray content = new JSONArray();                    
+                    for(int i=0;i<listActivity.size();i++){                        
+                        JSONObject data = new JSONObject();
+                        data.put("dataAnyActivityEvaluated", listActivity.get(i).getFL_REALIZED());
+                        content.add(data);                         
+                    }                  
+                    response.setContentType("application/json"); 
+                    out.print(content);                    
+                    out.flush(); 
+                    out.close();
             }
             if(request.getParameter("listActivitiesByPkStudent")!=null){
                 int pkScale = Integer.parseInt(request.getParameter("pkScale"));
@@ -233,7 +257,8 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                 int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                 int pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
-                out.print(new activitiesByStudentsControl().InsertActivitiesByStudent(pkStudent, pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, pkPeriod));
+                double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
+                out.print(new activitiesByStudentsControl().InsertActivitiesByStudent(pkStudent, pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, valueOptanied, pkPeriod));
             }
             if(request.getParameter("update")!=null){
                 int updateTypeEval=Integer.parseInt(request.getParameter("update"));

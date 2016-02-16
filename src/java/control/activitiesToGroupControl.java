@@ -36,7 +36,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
                     list.add(listActivitiesToGroup);
@@ -58,7 +58,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
@@ -87,7 +87,7 @@ public class activitiesToGroupControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
-                    listActivitiesToGroup.setPK_ACTIVITY(res.getInt("PK_ACTIVITY"));
+                    listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));

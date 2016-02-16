@@ -6,9 +6,17 @@
 package servletServices;
 
 import control.calificationControl;
+import control.conectionControl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -246,8 +254,6 @@ public class serviceCalification extends HttpServlet {
                     datos.put("dataStudentName", listStudents.get(i).getFL_NAME());
                     contentRows.add(datos); 
                 }
-                
-                
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataColums = new JSONObject();
                     dataColums.put("text", listColumns.get(i).getFL_TEXT());
@@ -283,6 +289,52 @@ public class serviceCalification extends HttpServlet {
                 }
                 columns.put("columns", contentColums);
                 bulding.add(columns);                
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("tableByAllActivities")!=null){
+                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationByActivitiesColums(fkCareer, fkGroup, fkMatter, fkPeriod);
+                JSONArray contentRowsCal=new calificationControl().SelectCalificationsByActivitiesRows(fkCareer, fkMatter, fkGroup, fkPeriod);
+                JSONArray contentColums = new JSONArray();
+                JSONArray contentDataFields = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rowsCal = new JSONObject();
+                JSONObject columns = new JSONObject();
+                JSONObject dataFields = new JSONObject();
+              
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataColums = new JSONObject();
+                    dataColums.put("text", "<div desc='"+listColumns.get(i).getFL_TEXT_EXTENDS()+"'>"+ listColumns.get(i).getFL_TEXT()+"</div>");
+                    dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
+                    dataColums.put("align", listColumns.get(i).getFL_ALIGN());
+                    dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_RENDERED()!=null){
+                        dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNGROUP()!=null){
+                        dataColums.put("columngroup", listColumns.get(i).getFL_COLUMNGROUP());
+                    }
+                    dataColums.put("width", listColumns.get(i).getFL_WIDHT());
+                    contentColums.add(dataColums); 
+                }
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject datadataFields = new JSONObject();
+                    datadataFields.put("name", listColumns.get(i).getFL_DATA_FIELD());
+                    datadataFields.put("type", "string");                    
+                    contentDataFields.add(datadataFields); 
+                }
+                rowsCal.put("rowsCal", contentRowsCal);
+                columns.put("columns", contentColums);
+                dataFields.put("dataFields", contentDataFields);
+                bulding.add(columns);
+                bulding.add(dataFields);
+                bulding.add(rowsCal);
+                response.setContentType("application/json"); 
                 out.print(bulding);
                 out.flush(); 
                 out.close();
@@ -326,7 +378,6 @@ public class serviceCalification extends HttpServlet {
             }
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -16,6 +16,8 @@ public class propetiesTableModel {
     String FL_WIDHT="";
     String FL_CELLSALING="";
     String FL_CELLSRENDERER="";
+    String FL_RENDERED="";
+    String FL_COLUMNGROUP="";
     String FL_ALIGN="";
 
     public String getFL_DATA_FIELD() {
@@ -64,6 +66,22 @@ public class propetiesTableModel {
 
     public void setFL_CELLSRENDERER(String FL_CELLSRENDERER) {
         this.FL_CELLSRENDERER = FL_CELLSRENDERER;
+    }
+
+    public String getFL_RENDERED() {
+        return FL_RENDERED;
+    }
+
+    public void setFL_RENDERED(String FL_RENDERED) {
+        this.FL_RENDERED = FL_RENDERED;
+    }
+
+    public String getFL_COLUMNGROUP() {
+        return FL_COLUMNGROUP;
+    }
+
+    public void setFL_COLUMNGROUP(String FL_COLUMNGROUP) {
+        this.FL_COLUMNGROUP = FL_COLUMNGROUP;
     }
 
     public String getFL_ALIGN() {
