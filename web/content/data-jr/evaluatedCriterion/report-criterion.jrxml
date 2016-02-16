@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" language="groovy" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="192"/>
 	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -973,7 +973,7 @@
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[F.E 06/01/2015]]></text>
+					<text><![CDATA[F.E 06/01/2016]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="418" y="293" width="165" height="20" uuid="33720482-185d-4012-b7f4-5bdb164af137"/>
