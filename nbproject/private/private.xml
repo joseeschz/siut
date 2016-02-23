@@ -2,6 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/alumnos/index.jsp</file>
             <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-generate/flange/students_evaluation/students_evaluation-flange/index.jsp</file>
@@ -9,5 +10,8 @@
             <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/admin/index.jsp</file>
             <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/servletServices/serviceCalification.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> develop
     </open-files>
 </project-private>

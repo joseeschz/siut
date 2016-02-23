@@ -81,6 +81,9 @@
                 var htmlPopover = $('<div><div>'+desc+'</div></div>');
                 htmlPopover.jqxPopover({offset: {left: 0, top:0}, width:150, isModal: true, arrowOffsetValue: 10, title: "Nombre", showCloseButton: true, selector: $(element.parent().parent()) });  
             };
+             var cellclass = function (row, columnfield, value) {
+                return 'grey';
+            };
             var dataAdapter = new $.jqx.dataAdapter(loadSource(), {
                 autoBind: true,
                 beforeSend:function (){
@@ -105,20 +108,71 @@
                     for(var i=0;i<newArr.length; i++){
                         if(newArr[i].rendered){
                             newArr[i].rendered = eval(newArr[i].rendered);
-                        }                        
+                        }  
+                        if(newArr[i].cellclassname){
+                            newArr[i].cellclassname = eval(newArr[i].cellclassname);
+                        }
                     }
                     columns=newArr;
                     $("#tableQualifications").jqxGrid('beginupdate', true);
                     $("#tableQualifications").jqxGrid({
                         width: 850,
                         height: 450,
-                        selectionMode: "singlerow",
+                        selectionMode: "multiplerowsextended",
                         localization: getLocalization("es"),
                         source: gridAdapter,
                         pageable: false,
                         editable: false,
                         filterable: false,
                         altRows: true,
+                        toolbarHeight: 35,
+                        showToolbar: true,
+                        renderToolbar: function(toolBar){
+                            var theme = "";
+                            var toTheme = function (className) {
+                                if (theme === "") return className;
+                                return className + " " + className + "-" + theme;
+                            };
+                            // appends buttons to the nameCareerAbreiated bar.
+                            var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+                            var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+                            var exportButton = $(buttonTemplate);
+                            container.append(exportButton);
+                            toolBar.append(container);
+                            exportButton.jqxButton({cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
+                            exportButton.find('div:first').addClass(toTheme('jqx-icon-export'));
+                            exportButton.jqxTooltip({ position: 'bottom', content: "Exportar a PDF"});
+                            exportButton.attr("id","exportButton");       
+                            exportButton.click(function (event) {
+                                itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+                                itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
+                                itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                                itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
+                                itemSubjectMatter=$('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+                                itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                                $.ajax({
+                                    url: "../content/data-jr/studentsEvaluation/index.jsp?sessionCalificationsByStudents",
+                                    data: {
+                                        "pt_level": itemLevel.value,
+                                        "pt_career": itemCareer.value,
+                                        "pt_group": itemGroup.value,
+                                        "pt_semester": itemSemester.value,
+                                        "pt_matter": itemSubjectMatter.value,
+                                        "pt_period": itemPeriod.value
+                                    },
+                                    type: 'POST',
+                                    beforeSend: function (xhr) {
+                                    },
+                                    success: function (data, textStatus, jqXHR) {
+                                        window.open("../content/data-jr/studentsEvaluation/");
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        alert("Error interno del servidor");                
+                                    }
+                                });
+                            });   
+
+                        },
                         ready: function(){
                             $("#tableQualifications").jqxGrid('focus');
 //                            var rows2 = dataExternal[1].rows;
@@ -160,6 +214,16 @@
         }
     });
 </script>
+<style>
+    .grey {
+        color: black\9;
+        background-color: #DADADA;
+    }
+    grey:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .grey:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+        color: black;
+        background-color: #DADADA;
+    }
+</style>
 <div style="float: left; margin-right: 5px;">
     Nivel de estudio<br>
     <div id='qualificationsLevelFilter'></div>

@@ -313,6 +313,12 @@ public class serviceCalification extends HttpServlet {
                     dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
                     dataColums.put("align", listColumns.get(i).getFL_ALIGN());
                     dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
+                        dataColums.put("cellclassname", listColumns.get(i).getFL_CELLSRENDERER());
+                    }
+                    if(listColumns.get(i).getFL_PINNED()!=null){
+                        dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
                     if(listColumns.get(i).getFL_RENDERED()!=null){
                         dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
                     }

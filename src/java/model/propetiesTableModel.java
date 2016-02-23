@@ -19,6 +19,7 @@ public class propetiesTableModel {
     String FL_RENDERED="";
     String FL_COLUMNGROUP="";
     String FL_ALIGN="";
+    String FL_PINNED="";
 
     public String getFL_DATA_FIELD() {
         return FL_DATA_FIELD;
@@ -90,5 +91,13 @@ public class propetiesTableModel {
 
     public void setFL_ALIGN(String FL_ALIGN) {
         this.FL_ALIGN = FL_ALIGN;
+    }
+
+    public String getFL_PINNED() {
+        return FL_PINNED;
+    }
+
+    public void setFL_PINNED(String FL_PINNED) {
+        this.FL_PINNED = FL_PINNED;
     }
 }

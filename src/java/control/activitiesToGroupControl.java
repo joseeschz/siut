@@ -348,7 +348,7 @@ public class activitiesToGroupControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES`('update', "+dataActivitiesToGroup.getPK_ACTIVITY()+", '"+dataActivitiesToGroup.getFL_NAME_ACTIVITY()+"', '"+dataActivitiesToGroup.getFL_DESCRIPTION()+"', '"+dataActivitiesToGroup.getFL_VALUE_ACTIVITY()+"', null, null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES`('update', "+dataActivitiesToGroup.getPK_ACTIVITY()+", '"+dataActivitiesToGroup.getFL_NAME_ACTIVITY()+"', '"+dataActivitiesToGroup.getFL_DESCRIPTION()+"', '"+dataActivitiesToGroup.getFL_VALUE_ACTIVITY()+"', "+dataActivitiesToGroup.getPK_WORK_PLANNING()+", null)")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

@@ -24,17 +24,10 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-            /*ArrayList<propetiesTableModel> listStudents=new calificationControl().SelectCalificationNowTutoringColumns(11, 82, 5);
-            for(int i=0;i<listStudents.size();i++){
-            System.out.println(listStudents.get(i).getFL_TEXT());
-            
-            }*/
-//        ArrayList<calificationModel> listStudents2=new calificationControl().SelectCalificationNow(61, 366, 9);
-//        for(int i=0;i<listStudents2.size();i++){
-//            System.out.println(listStudents2.get(i).getFL_NAME());
-//        }
-            
-            //System.out.println(new calificationControl().IsCloseWorkPlanningByGroupMatter(1, 366, 61, 9));
+        ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationByActivitiesColums(6, 13, 333, 13);
+           for(int i=0;i<listColumns.size();i++){
+                //System.out.println(listColumns.get(i).getFL_PINNED());
+            }
         System.out.println(new calificationControl().SelectCalificationsByActivitiesRows(6, 333, 13, 13));
     }
     public ArrayList<calificationModel> SelectCalificationNow(int  pkGroup, int pkMatter, int pkPeriod){
@@ -263,6 +256,7 @@ public class calificationControl {
                     allData.setFL_RENDERED(res.getString("FL_RENDERED"));
                     allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
+                    allData.setFL_PINNED(res.getString("FL_PINNED"));
                     list.add(allData);
                 }
                 res.close();

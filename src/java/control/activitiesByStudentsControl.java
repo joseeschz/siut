@@ -20,7 +20,7 @@ import model.activitiesByStudentsModel;
  * @author Carlos
  */
 public class activitiesByStudentsControl {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 //        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectActivitiesByStudents(6, 2, 13, 381,  13);
 //        for(int i=0;i<list.size();i++){
 //            if(!list.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
@@ -29,7 +29,9 @@ public class activitiesByStudentsControl {
 //            
 //        }
 //        System.out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, 0));
-
+        
+        
+        new activitiesByStudentsControl().SelectWorkPlanning();
     }
     static double getDecimal(int numeroDecimales,double decimal){
         decimal = decimal*(java.lang.Math.pow(10, numeroDecimales));
@@ -230,6 +232,43 @@ public class activitiesByStudentsControl {
             request=""+e.getMessage();
             e.getMessage();
         }   
+        return request;
+    }
+    public ArrayList<activitiesByStudentsModel> SelectWorkPlanning() throws InterruptedException{
+        ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT PK_WORK_PLANNING FROM tb_work_planning WHERE FL_DELETED=0"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    System.out.println(res.getInt("PK_WORK_PLANNING"));
+                    Thread.sleep(1000);
+                    new activitiesByStudentsControl().WorkPlanning(res.getInt("PK_WORK_PLANNING"));
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(activitiesByStudentsModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public String WorkPlanning(int pkWorkPlanning) throws InterruptedException{
+        String request = null;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT FN_NUM_ACTIVITIES("+pkWorkPlanning+") AS FL_RESULT"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    Thread.sleep(1000);
+                    System.out.println(res.getInt("FL_RESULT"));
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(activitiesByStudentsModel.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         return request;
     }
 }

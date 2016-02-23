@@ -10,7 +10,7 @@ if(session.getAttribute("logueado") == null){%>
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link title="SIUT" rel="icon" type="image/png" href="../content/pictures-system/favicon.png" />
             <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
-            <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>             
+            <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>
         </head>
         <body>
             <center>  
@@ -19,7 +19,7 @@ if(session.getAttribute("logueado") == null){%>
                         <div id="WindowLoad"></div>
                         <div id="loadingPicture"></div>
                     </div>
-                    <span id="loginText" style="font-size: 50px; margin-left: -136px;">LOGIN</span>
+                    <span id="loginText" style="font-size: 50px; margin-left: -15px;">LOGIN</span>
                     <div id="logo-lock" class="fade-down-logo" title="Login" style="opacity: 1;"></div> 
                     <span id="logoSiut">SIUT</span>
                     <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 22px; right: 30px; top: 100px">Error datos incorrectos</span>
@@ -48,13 +48,14 @@ if(session.getAttribute("logueado") == null){%>
                                 <div class="button-row">
                                     <input type="submit" id="buttonGetStarted" class="button" value="Ingresar" />
                                 </div>
-                            </form><!--/ form-->
+                            </form>
                             <div class="links">
                                 <a id="dataRemenber" title="Tu contraseña sera enviada a tu correo" class="no-underline" href="#">¿Olvidaste tus datos de acceso?</a>
                             </div>
-                        </section><!--/ seccion-->
+                        </section>
                     </div>
                 </div>
+                
             </center>  
         </body>
         <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
@@ -150,7 +151,7 @@ if(session.getAttribute("logueado") == null){%>
         <body data-bind="greenUtsem">
             <div>
                 <!-- Fixed column top-->
-                <div id="culumna-top">
+                <div id="culumna-top" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
                     <div id="content-clock">
                         <div id="clock-analogic">	
                             <div id="secA"></div>
@@ -178,15 +179,15 @@ if(session.getAttribute("logueado") == null){%>
                     </div>
                     <div id="helpSystem" style="width: 50px; position: fixed; text-align: center; font-size: 12px; cursor: help; right: 10px; top: 0px;">
                         <img src="../content/pictures-system/help2.png" width="24px" style="padding: 10px 0 0 0;"/>
-                        <a href="../content/pictures-system/videos/teachers/siut.html" target="blanck"><span>Ayuda</span></a>
+                        <a href="../content/pictures-system/videos/teachers/siut.html" target="blanck"><span style="color: #fff">Ayuda</span></a>
                     </div>
                     <div style="margin-left: 10px">
                         <span class="logoSiut">SIUT</span>
-                        <h2 style="float: right; margin-right: 300px; color: #fff; margin-top: 20px;">
+                        <h2 style="float: right; margin-right: 300px; color: #fff; margin-top: 10px;">
                             <span> Sistema Integral</span>
                             <b>
-                                <span style="text-shadow: 4px 6px 0px #34610A; font-style: italic; font-size: 40px;">
-                                    <span style="font-weight: 900; color: green">UT</span>sem
+                                <span style="text-shadow: 4px 6px 0px rgb(102, 102, 102); font-style: italic; font-size: 40px;">
+                                    <span style="font-weight: 900; color: rgb(0, 119, 10)">UT</span>sem
                                 </span>
                             </b>
                         </h2>
@@ -195,35 +196,32 @@ if(session.getAttribute("logueado") == null){%>
                                 <div class="btn-group navbar-right" style="">
                                     <img id="picturePerfil" style="cursor: pointer; float: left; margin-right: 15px; color: green; width: 25px; height: 25px;" src="../content/pictures-system/admin.png"/>
                                     <span style="float: left; height: 15px; border-left: 2px solid; width: 15px; margin-top: 8px;"></span>
-                                    <b style="font-size: 14px; float: left; margin-top: 5px; margin-right: 5px;"><%out.print(" "+session.getAttribute("logueado"));%></b>
-                                    <div  class="jqx-triangulo_inf"type="button" data-toggle="dropdown" aria-expanded="false">
-                                        <%--<span class="caret" style="cursor: pointer"></span>--%>
+                                    <b id="caret" style="font-size: 14px; float: left; margin-top: 5px; margin-right: 5px;"><%out.print(" "+session.getAttribute("logueado"));%></b>
+                                    <div class="jqx-triangulo_inf" type="button" data-toggle="dropdown" aria-expanded="false"></div>
+                                    <div id="popover">
+                                        <div> 
+                                            <div id='jqxMenuOptions'>
+                                                <ul style="display: none">
+                                                    <li id="userName"><span><%out.print(" "+session.getAttribute("userName"));%></span> </li>
+                                                    <li><span id="settingsAcount"><img src="../content/pictures-system/settings.acount.png"/> Configurar perfil</span></li>
+                                                    <li style="width: 180px"  type='separator'></li>
+                                                    <li style="width: 30px" id="close"><span>Salir</span></li>
+                                                    <li><a id="logOut" href="../login?statusLogin"><img src="../content/pictures-system/logOut.png"> Cerrar sesión</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br>
-                                    <ul class="dropdown-menu" role="menu" style="cursor: default">
-                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span>Usuario</span> </li>
-                                        <li style="color: #54925F; padding-left: 20px " class="dropdown-header"><span><%out.print(" "+session.getAttribute("userName"));%></span> </li>
-                                        <li style="cursor: pointer;"><a id="settingsAcount"><img src="../content/pictures-system/settings.acount.png"/> Configurar perfil</a></li>
-                                        
-                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span><%out.print(" "+session.getAttribute("userRolName"));%></span> </li>
-                                        <li role="presentation" class="divider"></li>
-                                        <li style="color: #54925F; padding-left: 10px" class="dropdown-header"><span>Salir</span></li>
-                                        <li style="cursor: pointer;"><a id="logOut" href="../login?statusLogin"><img src="../content/pictures-system/logOut.png"/> Cerrar sesión</a></li>
-                                    </ul>
                                 </div>
                             </div> 
-                        </span>
-                        <span style="margin-left: 30px; color: #fff; font-size: 12px; position: fixed; right: 172px; top: 65px;">
-
                         </span>
                     </div>
                 </div>
                 <!-- Fixed column left -->
-                <div id="culumna-left">
+                <div id="culumna-left" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
                     <div id="menu-despliegue" class="menu-despliegue-left"></div>
                 </div>
                 <!-- Fixed column bottom -->
-                <div id="culumna-bottom">
+                <div id="culumna-bottom" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
                     <span style="float: left; margin-left: 20px;">Sistema desarrollado por la Universidad Tecnológica del Sur del Estado de México.</span>
                     <span style="float: right; margin-right: 20px;">siut© copyright 2015.</span>
                     <span style="float: right; margin-right: 20px; display: none">Guardando...<img src="../content/pictures-system/712.GIF"/></span>
@@ -248,7 +246,7 @@ if(session.getAttribute("logueado") == null){%>
             <div id="load-page-external">
                 <div>Cargando modulos...</div>
                 <div id="loadExamPreview">
-                    <img src="../content/pictures-system/load.GIF" width="60" style="margin-right: 20px" />
+                    <img src="../content/pictures-system/loading.GIF" width="60" style="margin-right: 20px" />
                     Procesando scripts y páginas asíncronas etc...
                 </div>
             </div>

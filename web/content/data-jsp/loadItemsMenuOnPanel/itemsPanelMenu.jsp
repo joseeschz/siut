@@ -111,11 +111,11 @@ $(document).ready(function () {
         ArrayList<sectionModel> list=new sectionControl().SelectItem(Integer.parseInt(request.getParameter("pkParent")));
         for(int i=0;i<list.size();i++){
             %>
-            <h3 style="color: #586951; margin-bottom: 5px;">
+            <h3 style="color: rgb(72, 72, 72); margin-bottom: 5px;">
                 <%out.print(list.get(i).getFL_NAME_SECTION());%>
             </h3>
             <div style="margin-top: 20px; margin-right: 5px;">
-                <div class="alert alert-success alert-dismissible" role="alert">
+                <div style="background: rgb(210, 210, 210) none repeat scroll 0% 0%; height: 32px; padding: 6px; margin-bottom: 10px;" role="alert">
                     <div id="infoSystem"><%out.print(list.get(i).getFL_DESCRIPTION());%></div>
                 </div>
             </div>

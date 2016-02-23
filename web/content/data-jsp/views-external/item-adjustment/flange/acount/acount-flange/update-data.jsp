@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#buttonChange').jqxSwitchButton({ height: 15, width: 50,  checked: false, onLabel:'Si', offLabel:'No' });
-        $(".successButton").jqxButton({width: 70, template: "success" }).css({"margin-left":"270px"});
+        $(".successButton").jqxButton({width: 70 }).css({"margin-left":"270px"});
         $("#saveRegisterForm3").jqxButton({disabled:true});
         $("#fl_telephone_number").jqxMaskedInput({ mask: '(###)###-####', width: 150, height: 25  });
         $("#fl_password_old").jqxPasswordInput({ disabled:true, height: 27, width: '260px', showStrength: false, showStrengthPosition: "right" });
@@ -302,15 +302,15 @@
     }
     .indicator{
         font-weight: bolder;
-        color: rgb(119, 150, 112);
+        color: rgb(99, 99, 99);
         width: 140px; 
         text-align: right;
     }
 </style>
 <div class="" style="padding: 5px 5px 5px 20px;">
-    <div class="columTop">
+    <div class="columTop jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
         <img style="float: left" src="../content/pictures-system/aboutUser.png" width="45px"/>
-        <h3 style="color: #586951; margin-bottom: -5px; float: left">Datos de la cuenta</h3>
+        <h3 style="color: rgb(99, 99, 99); margin-bottom: -5px; float: left">Datos de la cuenta</h3>
     </div>
     <div class="columBody">
         <div id='jqxNavigationBar'>
