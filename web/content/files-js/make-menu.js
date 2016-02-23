@@ -14,6 +14,23 @@ $(document).ready(function () {
     var offset = $("#panel-principal").offset();
     var widthPanel= $("#panel-principal").width();
     var heightPanel=$("#panel-principal").height();
+    $("#popover").jqxPopover({
+        offset: {left: -50, top:0},
+        arrowOffsetValue: 50, 
+        title: "Usuario", 
+        width: '180px', 
+        showCloseButton: true, 
+        selector: $(".jqx-triangulo_inf") 
+    });
+    $("#popover").children(".jqx-popover-content").css("padding","0");
+    
+    $("#jqxMenuOptions").jqxMenu({
+        width: '180px', 
+        height: '130px'
+    });
+    $('#jqxMenuOptions').jqxMenu('disable', 'close', true);
+    $('#jqxMenuOptions').jqxMenu('disable', 'userName', true);
+    $("#jqxMenuOptions").children("ul").show();
     $("#load-page-external").jqxWindow({
         theme:"bootstrap",
         width: 370, 
