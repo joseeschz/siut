@@ -236,7 +236,7 @@
                             $("#windowBlock").fadeOut("slow");
                         },
                         success: function (data, textStatus, jqXHR) {
-                            console.log(datos);
+                            console.log(data);
                             $("#windowBlock").fadeOut("slow");
                         }
                     });
