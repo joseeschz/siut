@@ -178,12 +178,74 @@ public class serviceMail extends HttpServlet {
                         contentMail=contentMail+"<b>Nota: </b><b><span style='font-style: italic; color:red;'>En caso de no ser el responsable de este correo favor de eliminarlo y pasar por alto el contenido...!</span><br><br><br><br>";
                         contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
                         cuerpo.setContent(contentMail, "text/html");
-                        //Mandar archivo
-                        //MimeBodyPart anexo=new MimeBodyPart();
-                        //File archivo=new File("Rutaa");
-                        //FileDataSource fds=new FileDataSource(archivo);
-                        //anexo.setFileName(archivo.getName());
-                        //mp.addBodyPart(anexo);
+                        Multipart mp=new MimeMultipart();
+                        mp.addBodyPart(cuerpo);
+                        msg.setContent(mp);
+                        //Instrucciones para enviar email
+                        Transport t = session.getTransport();
+                        t.connect("smtp.gmail.com",auth.userName, auth.password);
+                        msg.saveChanges();
+                        t.sendMessage(msg, msg.getAllRecipients());
+                        t.close();
+                        message="Success";
+                    } catch (AddressException e) {
+                        //e.printStackTrace();
+                        message = "InvalidMail";
+                    } catch( MessagingException e){
+                        //e.printStackTrace();
+                        message = "FailConnectionNetwork";
+                    }
+                    out.print(message);
+                }if(request.getParameter("validateMail")!=null){
+                    String email = request.getParameter("userName");
+                    String name = request.getParameter("enrollment");
+                    String password = request.getParameter("password");
+                    
+                    String message;
+                    AuthControl auth =new AuthControl("sistema.integral.utsem@gmail.com", "siut_admin");
+                    //Inicializamos las propiedades del envio del mail
+                    Properties prop=new Properties();
+                    prop.put("mail.transport.protocol", "smtp");
+                    prop.put("mail.smtp.host", "smtp.gmail.com");
+                    prop.put("mail.smtp.port", "465"); 
+                    prop.put("mail.smtp.user", auth.userName);
+                    prop.put("mail.smtp.password", auth.password);
+                    prop.put("mail.smtp.auth", "true");
+                    prop.put("mail.smtp.ssl.enable", "true");
+                    prop.put("mail.smtp.starttls.enable", "true"); 
+                    //Inicializamos la clase de autentificacion
+                    //Creamos sesion
+                    Session session = Session.getInstance(prop, auth);
+                    String contentMail="";
+                    Message msg=new MimeMessage(session);
+                    String liga;
+                    String userNameSecurity = "userName";
+                    String emailSecuruty = "mail";
+                    String passwordSecuruty = "password";
+                    
+                    aes sec = new aes();
+                    sec.addKey("2015");   
+                    try {
+                        liga = userNameSecurity+"="+name+"&&"+emailSecuruty+"="+email+"&&"+passwordSecuruty+"="+password;
+                        InternetAddress[] emails = new InternetAddress[1];
+                        emails[0] = new InternetAddress(email);
+                        msg.setRecipients(Message.RecipientType.TO, emails);
+                        InternetAddress from=new InternetAddress(auth.userName);
+                        msg.setFrom(from);
+                        msg.setSubject("Universidad Tecnológica del Sur del Estado de México teda la bienvenida");
+                        MimeBodyPart cuerpo=new MimeBodyPart();
+                        contentMail=contentMail+"<span style='font-style: italic; font-size: 40px;'><span style='color:green'>UT</span><span>sem</span></span><br>";
+                        contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
+                        contentMail=contentMail+"<b>Hola: "+name+"</b><br>";
+                        contentMail=contentMail+"<b><span style='font-style: italic;'>La Universidad Tecnológica del Sur del Estado de México te da la bienvenida al sistema de calificaciones por que recuerda su compromiso es la excelencia educativa.</span></b><br><br>";
+                        
+                        contentMail=contentMail+"<b>Usuario</b>: <b>"+name+"<br>";
+                        contentMail=contentMail+"<b>Contraseña</b>: <b>"+password+"<br><br>";
+                        contentMail=contentMail+"<b>Para iniciar sesión en el Sistema de calificaciones es necesario activar tu cuenta para ello<a href='http://148.223.215.19/?ac="+sec.encriptar(liga)+"'> click aquí.</a></b><br><br>";
+                        contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+email+"</span></span><br><br><br>";
+                        contentMail=contentMail+"<b>Nota: </b><b><span style='font-style: italic; color:red;'>En caso de no ser el responsable de este correo favor de eliminarlo y pasar por alto el contenido...!</span><br><br><br><br>";
+                        contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
+                        cuerpo.setContent(contentMail, "text/html");
                         Multipart mp=new MimeMultipart();
                         mp.addBodyPart(cuerpo);
                         msg.setContent(mp);

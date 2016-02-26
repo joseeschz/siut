@@ -51,6 +51,33 @@
                                 <input type="submit" id="sendButton" class="button" value="Ingresar" />
                             </div>
                         </form><!--/ form-->
+                        <form id="formLoginValidate" style="display: none"  method="post" role="form">
+                            <div id="tmm-form-wizard" class="form-login substrate">
+                                <input type="hidden" name="statusLogin" value="in"/>
+                                <div class="label-row">
+                                    <label for="env">Matrícula</label>
+                                </div>
+                                <div class="input-row">
+                                    <input disabled="" title="Matrícula" name="enrollment" type="text" id="enrollment" autofocus="" placeholder="UTSXXS-00XXXX">
+                                </div>
+                                <br><br>
+                                <div class="label-row">
+                                    <label for="email">Correo</label>
+                                </div>
+                                <div class="input-row">
+                                    <input disabled="" title="Correo electrónico" class="email" type="text" required="" id="email" autofocus="" name="email" placeholder="Correo electrónico">
+                                        <input title="Ingresa tu contraseña para poder ingresar" class="password" type="hidden" required="" id="passwordHidden" autofocus="" name="password" placeholder="Contraseña">
+                                </div>
+                                <div>
+                                    <label id="error"></label>
+                                </div>
+                            </div>
+                            <br>
+                                <div class="">Valida tu correo, si no cuentas con un correo asociado a esta cuenta favor de asociarlo en el <a style="color: #fff" href="metadato/"> metadato.</a></div>
+                            <div class="button-row">
+                                <input type="submit" id="sendButtonValidate" class="button" value="Validar" />
+                            </div>
+                        </form><!--/ form-->
                         <div class="links">
                         </div>
                     </section><!--/ seccion-->
@@ -84,19 +111,19 @@
                     hintType: 'label',
                     animationDuration: 0,
                     rules: [
-                                {
-                                    input: "#nameUser", 
-                                    message: "Este campo es requerido!", 
-                                    action: 'keyup, blur', 
-                                    rule: "required"
-                                },
-                                {   
-                                    input: "#password", 
-                                    message: "La contraseña es necesaria!", 
-                                    action: 'keyup, blur', 
-                                    rule: 'required' 
-                                }
-                            ]
+                        {
+                            input: "#nameUser", 
+                            message: "Este campo es requerido!", 
+                            action: 'keyup, blur', 
+                            rule: "required"
+                        },
+                        {   
+                            input: "#password", 
+                            message: "La contraseña es necesaria!", 
+                            action: 'keyup, blur', 
+                            rule: 'required' 
+                        }
+                    ]
                 });
                 $("#sendButton").click(function (){
                     $('#formLogin').jqxValidator('validate');
@@ -111,7 +138,7 @@
                     $.ajax({
                         type: "POST",
                         url: "serviceStudent?selectLoginStudent",
-                        data:datos,
+                        data: datos,
                         beforeSend: function (xhr) {
                             $("#windowBlock").fadeIn("slow");
                         },
@@ -120,7 +147,9 @@
                             $("#windowBlock").fadeOut("slow");
                         },
                         success: function (data, textStatus, jqXHR) {
-                            if(data==="logeado"){
+                            if(data==="notMailActive"){
+                                ActivateMail(datos);
+                            }else if(data==="logeado"){
                                 setTimeout(function(){
                                     $("#windowBlock").fadeOut("slow");
                                     window.location = "alumnos/";
@@ -130,6 +159,85 @@
                                 $("#MessageError").fadeIn("slow");
                                 alert("Verifica tus datos");
                             }
+                        }
+                    });
+                });
+                function ActivateMail(datas){                    
+                    $.ajax({
+                        type: "POST",
+                        url: "activeMail?selectLoginStudent",
+                        data: datas,
+                        beforeSend: function (xhr) {
+                            $("#windowBlock").fadeIn("slow");
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert("Error interno del servidor");
+                            $("#windowBlock").fadeOut("slow");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            $("#windowBlock").fadeOut("slow");
+                            $("#enrollment").val($("#nameUser").val());
+                            $("#email").val(data);
+                            $("#passwordHidden").val($("#password").val());
+                            $("#formLogin").hide();
+                            $("#formLoginValidate").show();
+                            
+                        }
+                    });
+                }
+                $("#formLoginValidate").jqxValidator({
+                    hintType: 'label',
+                    animationDuration: 0,
+                    rules: [
+                        {
+                            input: "#enrollment", 
+                            message: "Este campo es requerido!", 
+                            action: 'keyup, blur', 
+                            rule: "required"
+                        },
+                        {   
+                            input: "#email", 
+                            message: "El correo es necesario!", 
+                            action: 'keyup, blur', 
+                            rule: 'required' 
+                        },
+                        {   
+                            input: "#email", 
+                            message: "El correo no tiene un formato valido!", 
+                            action: 'keyup, blur', 
+                            rule: 'email' 
+                        }
+                    ]
+                });
+                $("#sendButtonValidate").click(function (){
+                    $('#formLoginValidate').jqxValidator('validate');
+                    return false;
+                });
+                $('#formLoginValidate').submit(function (){
+                    $('#formLoginValidate').jqxValidator('validate');
+                });
+                $('#formLoginValidate').on('validationSuccess', function (event) {
+                    //en el evento submit del fomulario
+                    var datos = $("#formLoginValidate").serialize(); // los datos del 
+                    $.ajax({
+                        type: "POST",
+                        url: "serviceMail?validateMail",
+                        data: {
+                            "userName": $("#enrollment").val(),
+                            "email": $("#email").val(),
+                            "password" : $("#password").val(),
+                            "statusLogin":"in"
+                        },
+                        beforeSend: function (xhr) {
+                            $("#windowBlock").fadeIn("slow");
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert("Error interno del servidor");
+                            $("#windowBlock").fadeOut("slow");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            console.log(datos);
+                            $("#windowBlock").fadeOut("slow");
                         }
                     });
                 });

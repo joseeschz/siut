@@ -533,7 +533,7 @@ public class studentControl {
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_LOGIN`('studentStatusMailValidate','"+dataUser.getFL_ENROLLMENT()+"', '"+dataUser.getFL_PASSWORD()+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
-                    request=res.getString("FL_MAIL_VALIDATE");
+                    request=res.getString("FL_MAIL_STATUS_VALIDATE");
                 }
                 res.close();
                 ps.close();
