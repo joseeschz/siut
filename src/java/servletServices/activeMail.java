@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pagesServlets;
+package servletServices;
 
+import control.studentControl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.studentModel;
 
 /**
  *
@@ -33,17 +36,36 @@ public class activeMail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            response.sendRedirect("");
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet activeMail</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet activeMail at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            if(request.getParameter("selectLoginStudent")!=null){
+                String statusLogin = request.getParameter("statusLogin");
+                if(statusLogin.equals("in")){                    
+                    String enrollment = request.getParameter("enrollment");
+                    String password = request.getParameter("password");
+                    int pkStudent = 0;
+                    String name = "";
+                    String mail;
+                    studentModel dataUser=new studentModel();
+                    dataUser.setFL_ENROLLMENT(enrollment);
+                    dataUser.setFL_PASSWORD(password);
+                    ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser); 
+                    if(enrollment != null && password != null){
+                        if(list.size()==1){
+                            for (studentModel list1 : list) {
+                                pkStudent = list1.getPK_STUDENT();
+                                name = list1.getFL_NAME();
+                                mail = list1.getFL_MAIL();
+                                if(mail.equals("")){
+                                    out.print("Sin correo");
+                                }else{
+                                    out.print(mail);
+                                }
+                            }    
+                        }else{
+                            out.print("notExit");                            
+                        }
+                    }
+                }
+            }
         }
         
     }
