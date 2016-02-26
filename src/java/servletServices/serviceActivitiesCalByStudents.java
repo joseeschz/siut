@@ -9,6 +9,7 @@ import control.activitiesByStudentsControl;
 import control.activitiesToGroupControl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,12 +50,11 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
                     int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    ArrayList<activitiesToGroupModel> listActivityValMax=new activitiesToGroupControl().SelectActivityToGroup(pkActivity);
                     ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudents(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
-                    settings.put("__ActivityByStudent","ActivityByStudent");                    
+                    settings.put("__ActivityByStudent","ActivityByStudent");    
                     for(int i=0;i<listActivity.size();i++){                        
                         JSONObject data = new JSONObject();
                         data.put("id", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
@@ -68,20 +68,16 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                             data.put("dataValueObtaniedEquivalent", "");
                             data.put("dataAcomulatedNow", "");
                         }else{
-                            double equivalent =  (Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED())*10/listActivityValMax.get(0).getFL_VALUE_ACTIVITY());
+                            
+                            String equivalent =  (listActivity.get(i).getFL_VALUE_OBTANIED_EQUIVALENT());
+                            
                             double obtanied = Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED());                            
                             if(String.format( "%.1f", obtanied).equals("0.0")){
                                 data.put("dataValueObtanied", 0);
                             }else{
                                 data.put("dataValueObtanied", obtanied);
                             }
-                            if(String.format( "%.1f", equivalent).equals("10.0")){
-                                data.put("dataValueObtaniedEquivalent","10");
-                            }else if(String.format( "%.1f", equivalent).equals("0.0")){
-                                data.put("dataValueObtaniedEquivalent",0);
-                            }else{
-                                data.put("dataValueObtaniedEquivalent",String.format( "%.1f", equivalent));
-                            }                            
+                            data.put("dataValueObtaniedEquivalent",equivalent);                           
                             data.put("dataAcomulatedNow", listActivity.get(i).getFL_ACUMULATED_NOW());
                         }    
                         content.add(data);                         
@@ -215,12 +211,13 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 int pkScale = Integer.parseInt(request.getParameter("pkScale"));
                 int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                 int pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
-                ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectListActivitiesByStudents(pkStudent, pkMatter, pkScale, 0);
+                ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectListActivitiesByStudent(pkStudent, pkMatter, pkScale, 0);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 settings.put("ActivityByStudentByMatter","ActivityByStudentByMatter");
-                for(int i=0;i<listActivity.size();i++){
+                
+                for(int i=0;i<listActivity.size();i++){                    
                     JSONObject data = new JSONObject();
                     data.put("id", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
                     data.put("dataProgresivNumber", i+1);
@@ -229,9 +226,21 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataNameActivity", listActivity.get(i).getFL_NAME_ACTIVITY());
                     data.put("dataPkAvtivityByStudent", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
-                    data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
                     data.put("dataValueActivity", listActivity.get(i).getFL_VALUE_ACTIVITY());
-                    content.add(data); 
+                    data.put("dataMaxValueScale", listActivity.get(i).getFL_MAX_VALUE());
+                    if(listActivity.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
+                        data.put("dataValueObtanied", "");
+                        data.put("dataValueObtaniedEquivalent", "");
+                    }else{
+                        String equivalent =  (listActivity.get(i).getFL_VALUE_OBTANIED_EQUIVALENT());
+                        data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
+                        if(equivalent.equals("10.0")){
+                            data.put("dataValueObtaniedEquivalent","10");
+                        }else{
+                            data.put("dataValueObtaniedEquivalent",equivalent);
+                        }                            
+                    }                      
+                    content.add(data);                    
                 }
                 settings.put("items", content);
                 principal.add(settings);
@@ -258,13 +267,15 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                 int pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
                 double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
-                out.print(new activitiesByStudentsControl().InsertActivitiesByStudent(pkStudent, pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, valueOptanied, pkPeriod));
+                double valueOptaniedEquivalent = Double.parseDouble(request.getParameter("valueOptaniedEquivalent"));
+                out.print(new activitiesByStudentsControl().InsertActivitiesByStudent(pkStudent, pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, valueOptanied, valueOptaniedEquivalent, pkPeriod));
             }
             if(request.getParameter("update")!=null){
                 int updateTypeEval=Integer.parseInt(request.getParameter("update"));
                 int pkActivityByStudent = Integer.parseInt(request.getParameter("pkActivityByStudent"));
                 double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
-                out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(updateTypeEval, pkActivityByStudent, valueOptanied));
+                double valueOptaniedEquivalent = Double.parseDouble(request.getParameter("valueOptaniedEquivalent"));
+                out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(updateTypeEval, pkActivityByStudent, valueOptanied, valueOptaniedEquivalent));
             }
         }
     }

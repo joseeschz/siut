@@ -341,21 +341,26 @@ public class serviceStudent extends HttpServlet {
                     studentModel dataUser=new studentModel();
                     dataUser.setFL_ENROLLMENT(enrollment);
                     dataUser.setFL_PASSWORD(password);
-                    ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser);
-                    for(int i=0;i<list.size();i++){
-                        pkStudent = list.get(i).getPK_STUDENT();
-                        name = list.get(i).getFL_NAME();
-                        enrollment = list.get(i).getFL_ENROLLMENT();
-                        mail = list.get(i).getFL_MAIL();
-                    }
+                    ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser);                    
                     if(enrollment != null && password != null){
                         if(list.size()==1){
-                            session.setAttribute("pkStudent", pkStudent);
-                            session.setAttribute("enrollmentStudent", enrollment);
-                            session.setAttribute("mailStudent", mail);
-                            session.setAttribute("passwordStudent", password);
-                            session.setAttribute("logueadoStudent", name);
-                            out.print("logeado");                   
+                            String statusMailActive=new studentControl().SelectUserLoginMail(dataUser);  
+                            if(statusMailActive.equals("0")){
+                                out.print("notMailActive");
+                            }else if(statusMailActive.equals("1")){
+                                for (studentModel list1 : list) {
+                                    pkStudent = list1.getPK_STUDENT();
+                                    name = list1.getFL_NAME();
+                                    enrollment = list1.getFL_ENROLLMENT();
+                                    mail = list1.getFL_MAIL();
+                                }
+                                session.setAttribute("pkStudent", pkStudent);
+                                session.setAttribute("enrollmentStudent", enrollment);
+                                session.setAttribute("mailStudent", mail);
+                                session.setAttribute("passwordStudent", password);
+                                session.setAttribute("logueadoStudent", name);
+                                out.print("logeado");
+                            }                                               
                         }else{
                             out.print("notExit");
                             session.removeAttribute("pkStudent");

@@ -21,17 +21,17 @@ import model.activitiesByStudentsModel;
  */
 public class activitiesByStudentsControl {
     public static void main(String[] args) throws InterruptedException {
-//        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectActivitiesByStudents(6, 2, 13, 381,  13);
-//        for(int i=0;i<list.size();i++){
-//            if(!list.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
-//                //System.out.println(Double.parseDouble(list.get(i).getFL_VALUE_OBTANIED()));
-//            }
-//            
-//        }
+        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectListActivitiesByStudent(3064, 327, 3, 13);
+        for(int i=0;i<list.size();i++){
+            if(!list.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
+                System.out.println(Double.parseDouble(list.get(i).getFL_VALUE_OBTANIED()));
+            }
+            
+        }
 //        System.out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, 0));
         
         
-        new activitiesByStudentsControl().SelectWorkPlanning();
+        //new activitiesByStudentsControl().SelectWorkPlanning();
     }
     static double getDecimal(int numeroDecimales,double decimal){
         decimal = decimal*(java.lang.Math.pow(10, numeroDecimales));
@@ -43,16 +43,19 @@ public class activitiesByStudentsControl {
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
-                while(res!=null&&res.next()){
+                while(res!=null&&res.next()){                    
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
+                    
                     listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
                     listActivitiesByStudents.setFL_REALIZED(res.getInt("FL_REALIZED"));
                     listActivitiesByStudents.setFK_STUDENT(res.getInt("PK_STUDENT"));
                     listActivitiesByStudents.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     listActivitiesByStudents.setFL_NAME_STUDENT(res.getString("FL_NAME_STUDENT"));
                     listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_EQUIVALENT(res.getString("FL_VALUE_OBTANIED_EQUIVALENT"));
                     listActivitiesByStudents.setFL_ACUMULATED_NOW(res.getString("FL_ACUMULATED_NOW"));
                     list.add(listActivitiesByStudents);
+                    
                 }
                 res.close();
                 ps.close();
@@ -165,16 +168,19 @@ public class activitiesByStudentsControl {
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatterByStudent', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
-                    activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
-                    listActivitiesByStudents.setFK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
-                    listActivitiesByStudents.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
-                    listActivitiesByStudents.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
-                    listActivitiesByStudents.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
-                    listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
-                    listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
-                    listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
-                    listActivitiesByStudents.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));  
-                    list.add(listActivitiesByStudents);
+                    if(res.getString("FL_VALUE_OBTANIED")!=null){
+                        activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
+                        listActivitiesByStudents.setFK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
+                        listActivitiesByStudents.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
+                        listActivitiesByStudents.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
+                        listActivitiesByStudents.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
+                        listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
+                        listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
+                        listActivitiesByStudents.setFL_VALUE_OBTANIED_EQUIVALENT(res.getString("FL_VALUE_OBTANIED_EQUIVALENT"));
+                        listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                        listActivitiesByStudents.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));  
+                        list.add(listActivitiesByStudents);
+                    }
                 }
                 res.close();
                 ps.close();
@@ -186,11 +192,11 @@ public class activitiesByStudentsControl {
         }
         return list;
     }
-    public String InsertActivitiesByStudent(int pkStudent, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, double valueOptanied, int pkPeriod){
+    public String InsertActivitiesByStudent(int pkStudent, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, double valueOptanied, double valueOptaniedEquivalent, int pkPeriod){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insertByStudent', "+pkStudent+", "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+valueOptanied+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insertByStudent', "+pkStudent+", "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+valueOptanied+", '"+valueOptaniedEquivalent+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -206,7 +212,7 @@ public class activitiesByStudentsControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", null, null)")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -218,11 +224,11 @@ public class activitiesByStudentsControl {
         }   
         return request;
     }
-    public String UpdateActivitiesByStudents(int updateType, int pkActivityByStudent, double valueOptanied ){
+    public String UpdateActivitiesByStudents(int updateType, int pkActivityByStudent, double valueOptanied , double valueOptaniedEquivalent){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('update"+updateType+"', "+pkActivityByStudent+", null, null, null, null, null, null, '"+valueOptanied+"')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('update"+updateType+"', "+pkActivityByStudent+", null, null, null, null, null, null, '"+valueOptanied+"', '"+valueOptaniedEquivalent+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

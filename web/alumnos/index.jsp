@@ -27,7 +27,7 @@
                     </button>
                     <span id="logoSiut">SIUT</span>
                     <ul class="nav navbar-left top-nav">
-                        <li class="dropdown" style="margin-left: 100px;">
+<!--                        <li class="dropdown" style="margin-left: 100px;">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
                             <ul class="dropdown-menu message-dropdown">
                                 <li class="message-preview">
@@ -95,11 +95,11 @@
                                     <a href="#">Ver todo</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
                         <li class="dropdown" id="optionsUser">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <%out.print(session.getAttribute("logueadoStudent"));%> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>
+<!--                                <li>
                                     <a href="#"><i class="fa fa-fw fa-user"></i> Perfil</a>
                                 </li>
                                 <li>
@@ -107,6 +107,9 @@
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-fw fa-gear"></i> Ajustes</a>
+                                </li>-->
+                                <li>
+                                    <i class="fa fa-fw fa-gear disabled"></i> <%out.print(session.getAttribute("enrollmentStudent"));%>
                                 </li>
                                 <li class="divider"></li>
                                 <li>
@@ -137,14 +140,17 @@
                                         <span class="loadingLinks"></span>Por materias
                                     </a>
                                 </li>
-                                <li>
+<!--                                <li>
                                     <a data-toggle="collapse" data-target=".navbar-ex1-collapse" href="#" myhref="qualifications-history">
                                         <span class="loadingLinks"></span>Historial acádemico
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li>
+                            <a href="../serviceStudent?selectLoginStudent&statusLogin"><i class="fa fa-fw fa-power-off"></i> Cerrar sesión</a>
+                        </li>
+<!--                        <li>
                             <a data-toggle="collapse" data-target=".navbar-ex1-collapse" href="#" myhref="horary"><i class="fa fa-fw fa-table"></i> Horario</a>
                         </li>
                         <li>
@@ -166,7 +172,7 @@
                         </li>
                         <li>
                             <a data-toggle="collapse" data-target=".navbar-ex1-collapse" href="" myhref="email"><i class="fa fa-fw fa-empire"></i> Correo</a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </nav>
@@ -180,7 +186,6 @@
                 <div id="load-data"></div>
             </div>
         </div>
-        
         <!-- /#wrapper -->
         <!-- jQuery -->
         <script src="js/jquery.js"></script>

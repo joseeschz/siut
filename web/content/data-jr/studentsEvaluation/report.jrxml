@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="8d09f675-7c27-4f5d-a1a2-410d1b19cc35">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="42" bottomMargin="42" isSummaryWithPageHeaderAndFooter="true" uuid="8d09f675-7c27-4f5d-a1a2-410d1b19cc35">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -203,7 +203,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="82" height="20" uuid="8c455acd-6342-4591-b8ac-d0377a33c92a"/>
+					<reportElement x="0" y="0" width="100" height="20" uuid="8c455acd-6342-4591-b8ac-d0377a33c92a"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
@@ -211,7 +211,7 @@
 					<text><![CDATA[ASIGNATURA:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="82" y="1" width="668" height="19" uuid="4b518d6e-ec85-4f82-8854-9c83b3a63f69"/>
+					<reportElement x="100" y="1" width="650" height="19" uuid="4b518d6e-ec85-4f82-8854-9c83b3a63f69"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
@@ -227,7 +227,7 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="100" height="20" uuid="42a57cef-315e-45cd-940c-c0b3721bcf4f"/>
+					<reportElement x="0" y="0" width="114" height="20" uuid="42a57cef-315e-45cd-940c-c0b3721bcf4f"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
@@ -235,7 +235,7 @@
 					<text><![CDATA[CUATRIMESTRE:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="100" y="0" width="160" height="19" uuid="34692454-29bf-4e8d-8a3e-a70b86573c29"/>
+					<reportElement x="114" y="0" width="146" height="19" uuid="34692454-29bf-4e8d-8a3e-a70b86573c29"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
@@ -315,14 +315,14 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField>
-					<reportElement x="64" y="1" width="686" height="19" uuid="14a4258c-9116-4992-85bd-572b79e86185"/>
+					<reportElement x="82" y="1" width="668" height="19" uuid="14a4258c-9116-4992-85bd-572b79e86185"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="64" height="20" uuid="57a02982-c2a3-4cc0-9105-a7e40288b70c"/>
+					<reportElement x="0" y="0" width="82" height="20" uuid="57a02982-c2a3-4cc0-9105-a7e40288b70c"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
@@ -333,9 +333,9 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="360">
+		<band height="316">
 			<componentElement>
-				<reportElement key="table 1" style="table 1" x="2" y="0" width="750" height="360" uuid="c7404b7b-f782-4d56-becc-06307d34bd12"/>
+				<reportElement key="table 1" style="table 1" x="2" y="0" width="750" height="316" uuid="c7404b7b-f782-4d56-becc-06307d34bd12"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Dataset2" uuid="16469b38-d7fd-4cf1-952a-5b08725631f4">
 						<datasetParameter name="pt_level_1">
@@ -369,9 +369,14 @@
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell style="table 1_TD" height="15" rowSpan="1">
-							<textField>
+							<textField isStretchWithOverflow="true">
 								<reportElement style="style1" x="0" y="0" width="90" height="15" uuid="1cbb1d2f-c5d3-475a-a243-f759da431261"/>
-								<box leftPadding="5" rightPadding="5"/>
+								<box leftPadding="5" rightPadding="5">
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Calibri" size="10"/>
 								</textElement>
@@ -392,7 +397,12 @@
 						<jr:detailCell style="table 1_TD" height="15" rowSpan="1">
 							<textField isStretchWithOverflow="true">
 								<reportElement style="style1" x="0" y="0" width="306" height="15" uuid="86016c91-7202-40f7-96ca-c29e75053c16"/>
-								<box leftPadding="5" rightPadding="5"/>
+								<box leftPadding="5" rightPadding="5">
+									<topPen lineWidth="0.0"/>
+									<leftPen lineWidth="0.0"/>
+									<bottomPen lineWidth="0.0"/>
+									<rightPen lineWidth="0.0"/>
+								</box>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Calibri" size="10"/>
 								</textElement>
@@ -415,7 +425,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[FO-DIC-61/07]]></text>
+				<text><![CDATA[FO-DIC-61]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="0" width="163" height="20" uuid="dc4f1372-fd0b-45ef-ac4a-bf87d308343b"/>
@@ -469,7 +479,7 @@
 							<textElement verticalAlignment="Middle">
 								<font fontName="Calibri" size="8" isBold="true"/>
 							</textElement>
-							<text><![CDATA[#]]></text>
+							<text><![CDATA[No.]]></text>
 						</staticText>
 						<staticText>
 							<reportElement style="Crosstab Data Text" x="15" y="0" width="76" height="24" uuid="2b531e2a-290d-442b-879e-18121862f54e"/>
@@ -661,7 +671,7 @@
 							<textElement>
 								<font fontName="Calibri" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA[( $V{FL_VALUE_OBTANIEDMeasure}.equals( 10.0 ) ? "10" : ""+$V{FL_VALUE_OBTANIEDMeasure} )]]></textFieldExpression>
+							<textFieldExpression><![CDATA[( $V{FL_VALUE_OBTANIEDMeasure}.equals( 10.0 ) ? "10" : ""+$V{FL_VALUE_OBTANIEDMeasure}.floatValue() )]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
