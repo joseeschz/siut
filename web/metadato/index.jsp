@@ -198,7 +198,7 @@
                         $.ajax({
                             type: "POST",
                             async: true,
-                            url: "../serviceStudent?selectLoginStudent=in",
+                            url: "../serviceStudent?selectLoginStudent=in&&typeLogin=metadata",
                             data:datos,
                             beforeSend: function (xhr) {
                                 $("#windowBlock").fadeIn("slow");
@@ -208,7 +208,7 @@
                                 $("#windowBlock").fadeOut("slow");
                             },
                             success: function (data, textStatus, jqXHR) {
-                                if(data==="logeado" || data==="notMailActive"){
+                                if(data==="logeado"){
                                     setTimeout(function(){
                                         $("#windowBlock").fadeOut("slow");
                                         window.location = "/metadato/";
