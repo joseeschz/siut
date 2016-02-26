@@ -19,7 +19,7 @@ if(session.getAttribute("logueado") == null){%>
                         <div id="WindowLoad"></div>
                         <div id="loadingPicture"></div>
                     </div>
-                    <span id="loginText" style="font-size: 50px; margin-left: -15px;">LOGIN</span>
+                    <span id="loginText" style="font-size: 50px; margin-left: -140px;">LOGIN</span>
                     <div id="logo-lock" class="fade-down-logo" title="Login" style="opacity: 1;"></div> 
                     <span id="logoSiut">SIUT</span>
                     <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 22px; right: 30px; top: 100px">Error datos incorrectos</span>

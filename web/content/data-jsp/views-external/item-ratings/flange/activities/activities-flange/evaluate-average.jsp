@@ -376,7 +376,8 @@
                 var data = {
                     "update":"1",
                     "pkActivityByStudent": row.id, 
-                    "valueOptanied": parseFloat(dataValueObtaniedNew)
+                    "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
+                    "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1)
                 };
                 if(row.dataEnrollment===row.id){
                     itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
@@ -388,7 +389,8 @@
                     data = {
                         "insertByStudent":"",
                         "pkStudent": row.dataPkStudent, 
-                        "valueOptanied": parseFloat(dataValueObtaniedNew),
+                        "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
+                        "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1),
                         "pkCareer": itemCareer.value,
                         "pkSemester": itemSemester.value,
                         "pkGroup": itemGroup.value,
@@ -400,7 +402,8 @@
                     data = {
                         "update":"1",
                         "pkActivityByStudent": row.id, 
-                        "valueOptanied": parseFloat(dataValueObtaniedNew)
+                        "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
+                        "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1)
                     };
                 }
                 $.ajax({
@@ -466,14 +469,20 @@
                     var totalEquivalent="N/A";
                     for(var ia=0; ia<ordersSource.items.length; ia++){
                         anyActivity=anyActivity+1;
-                        totalPercent=totalPercent+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale);
+                        
                         //totalEquivalent=totalEquivalent+ordersSource.items[ia].dataValueObtaniedEquivalent;
-                        trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+ordersSource.items[ia].dataValueObtaniedEquivalent+'</td></tr>');
-                        trOnTbody.appendTo(tbody); 
-                        subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
-                        subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
+                        if(ordersSource.items[ia].dataNameActivity==="Subtotal"){
+                            totalPercent=totalPercent+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale);
+                            tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th><th align="center">'+totalPercent+'%</th><th align="center" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
+                        }else{
+                            var dataValueObtaniedEquivalent = parseFloat(ordersSource.items[ia].dataValueObtaniedEquivalent).toFixed(1);
+                            trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
+                            trOnTbody.appendTo(tbody); 
+                            subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
+                            subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
+                        }
                     }                    
-                    var equivalent=(subtotalScaleObtanied*10/subtotalScale).toFixed(1);
+                    var equivalent=(subtotalScaleObtanied*10/subtotalScale).toFixed(2);
                     if(isNaN(subtotalScale)){
                         subtotalScale=0;
                     }
@@ -486,7 +495,7 @@
                     if(isNaN(equivalent)){
                         equivalent=0;
                     }
-                    tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center">'+subtotalScale+'</th><th align="center">'+totalPercent+'%</th><th align="center">'+subtotalScaleObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
+                    
                     if(anyActivity===0){
                         trOnTbody=$('<tr><td colspan="5">Este saber no cuenta con actividades evaluadas</td></tr>');
                         trOnTbody.appendTo(tbody); 

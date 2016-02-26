@@ -528,6 +528,24 @@ public class studentControl {
         }
         return list;
     }
+    public String SelectUserLoginMail(studentModel dataUser){
+        String request="";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_LOGIN`('studentStatusMailValidate','"+dataUser.getFL_ENROLLMENT()+"', '"+dataUser.getFL_PASSWORD()+"')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    request=res.getString("FL_MAIL_VALIDATE");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return request;
+        } catch (SQLException ex) {
+            request="fail "+ex;
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return request;
+    }
     public ArrayList<studentModel> SelectRememberPassword(studentModel dataUser){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
