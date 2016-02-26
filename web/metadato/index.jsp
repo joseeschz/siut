@@ -140,43 +140,43 @@
                         hintType: 'label',
                         animationDuration: 0,
                         rules: [
-                                    {
-                                        input: "#nameUser", 
-                                        message: "Este campo es requerido!", 
-                                        action: 'keyup, blur', 
-                                        rule: "required"
-                                    },
-                                    {   
-                                        input: "#password", 
-                                        message: "La contraseña es necesaria!", 
-                                        action: 'keyup, blur', 
-                                        rule: 'required' 
-                                    }
-                                ]
+                            {
+                                input: "#nameUser", 
+                                message: "Este campo es requerido!", 
+                                action: 'keyup, blur', 
+                                rule: "required"
+                            },
+                            {   
+                                input: "#password", 
+                                message: "La contraseña es necesaria!", 
+                                action: 'keyup, blur', 
+                                rule: 'required' 
+                            }
+                        ]
                     });
                     $("#formLoginRemember").jqxValidator({
                         hintType: 'label',
                         animationDuration: 0,
                         rules: [
-                                    {
-                                        input: "#enrollment", 
-                                        message: "Este campo es requerido!", 
-                                        action: 'keyup, blur', 
-                                        rule: "required"
-                                    },
-                                    {   
-                                        input: "#mail", 
-                                        message: "El correo es necesario!", 
-                                        action: 'keyup, blur', 
-                                        rule: 'required' 
-                                    },
-                                    {   
-                                        input: "#mail", 
-                                        message: "El correo parece ser incorrecto", 
-                                        action: 'keyup, blur', 
-                                        rule: 'email' 
-                                    }
-                                ]
+                            {
+                                input: "#enrollment", 
+                                message: "Este campo es requerido!", 
+                                action: 'keyup, blur', 
+                                rule: "required"
+                            },
+                            {   
+                                input: "#mail", 
+                                message: "El correo es necesario!", 
+                                action: 'keyup, blur', 
+                                rule: 'required' 
+                            },
+                            {   
+                                input: "#mail", 
+                                message: "El correo parece ser incorrecto", 
+                                action: 'keyup, blur', 
+                                rule: 'email' 
+                            }
+                        ]
                     });
                     $("#buttonGetStarted").click(function (){
                         $('#formLogin').jqxValidator('validate');
@@ -208,7 +208,7 @@
                                 $("#windowBlock").fadeOut("slow");
                             },
                             success: function (data, textStatus, jqXHR) {
-                                if(data==="logeado"){
+                                if(data==="logeado" || data==="notMailActive"){
                                     setTimeout(function(){
                                         $("#windowBlock").fadeOut("slow");
                                         window.location = "/metadato/";
