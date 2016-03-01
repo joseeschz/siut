@@ -662,7 +662,7 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
             { name: 'dataPkScaleEvalution' },
             { name: 'dataNameScale' }
         ],
-        url: "http://10.10.10.23/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
+        url: "../serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
         async: false
     };
     var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);

@@ -24,8 +24,18 @@
             window.location.hash="";
             window.location.hash=""; //chrome
             window.onhashchange=function(){window.location.hash="";};
-            if(eval(localStorage.getItem("session"))){
-                window.location="index.html";
+            if(typeof (Storage) !=="undefined"){
+                if(eval(localStorage.getItem("rememberMe"))){
+                    if(eval(localStorage.getItem("session"))){
+                        window.location="index.html";                        
+                    }
+                }else{
+                    if(eval(sessionStorage.getItem("session"))){
+                        window.location="index.html";                        
+                    }
+                }                                 
+            }else{
+                alert("No es soportado el localStorage");
             }
         </script>
     </head>
@@ -214,7 +224,7 @@
                     //en el evento submit del fomulario
                     var data = $("#formLogin").serialize(); // los datos del 
                     $.ajax({
-                        async: false,
+                        async: true,
                         crossDomain: true,
                         type: "POST",
                         url: "http://148.223.215.19/serviceStudent?selectLoginStudent",
@@ -240,14 +250,25 @@
                         }else if(data.statusLogin==="logeado"){
                             setTimeout(function(){
                                 $("#windowBlock").fadeOut("slow");
-                                localStorage.setItem("session",true);
-                                localStorage.setItem("pkStudent",data.pkStudent);
-                                localStorage.setItem("enrollmentStudent",data.enrollmentStudent);
-                                localStorage.setItem("mailStudent",data.mailStudent);
-                                localStorage.setItem("logueadoStudentCal",data.logueadoStudentCal);
-                                localStorage.setItem("nameSmall",data.nameSmall);
-                                localStorage.setItem("careerStudent",data.careerStudent);
-                                localStorage.setItem("genderStudent",data.genderStudent);
+                                if(eval(localStorage.getItem("rememberMe"))){
+                                    localStorage.setItem("session",true);
+                                    localStorage.setItem("pkStudent",data.pkStudent);
+                                    localStorage.setItem("enrollmentStudent",data.enrollmentStudent);
+                                    localStorage.setItem("mailStudent",data.mailStudent);
+                                    localStorage.setItem("logueadoStudentCal",data.logueadoStudentCal);
+                                    localStorage.setItem("nameSmall",data.nameSmall);
+                                    localStorage.setItem("careerStudent",data.careerStudent);
+                                    localStorage.setItem("genderStudent",data.genderStudent);
+                                }else{
+                                    sessionStorage.setItem("session",true);
+                                    sessionStorage.setItem("pkStudent",data.pkStudent);
+                                    sessionStorage.setItem("enrollmentStudent",data.enrollmentStudent);
+                                    sessionStorage.setItem("mailStudent",data.mailStudent);
+                                    sessionStorage.setItem("logueadoStudentCal",data.logueadoStudentCal);
+                                    sessionStorage.setItem("nameSmall",data.nameSmall);
+                                    sessionStorage.setItem("careerStudent",data.careerStudent);
+                                    sessionStorage.setItem("genderStudent",data.genderStudent);
+                                }
                                 window.location="index.html";
                             }, 2000);
                         }else if(data.statusLogin==="notExit"){
@@ -333,6 +354,12 @@
                     $("#formLogin").parent().show();
                     $("#formLoginValidate").parent().hide();
                 });
+                if(eval(localStorage.getItem("rememberMe"))){
+                    $('#rememberMe').iCheck('check');
+                    $("#enrollment").val(localStorage.getItem("enrollmentStudent"));
+                }else{
+                    $('#rememberMe').iCheck('uncheck');
+                }                
                 $('#rememberMe').on("ifChecked", function (){
                    localStorage.setItem("rememberMe",true);
                 });
