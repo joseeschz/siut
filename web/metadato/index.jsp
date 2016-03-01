@@ -275,7 +275,7 @@
                 <title>Inicio</title>
                 <link rel="stylesheet" href="../content/files-css/main-system.css" type="text/css"/>
                 <link href="../content/files-css/smart_wizard_verticalt.css" rel="stylesheet" type="text/css"/>
-                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>jqwidgets/styles/jqx.base.css" /> 
+                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" /> 
                 <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
             </head>
             <body data-bind="greenUtsem">
