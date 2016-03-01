@@ -1181,11 +1181,11 @@
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
             <script type="text/javascript" src="../content/files-js/js-wizard/jquery.smartWizard.js"></script>
             <script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>    
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>scripts/get-theme.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxcore.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/globalization/globalize.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/globalization/globalize.cultures.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqx-all.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
             <script type="text/javascript" src="../content/files-js/make-combo.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-list.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-input.js"  charset="UTF-8"></script>
