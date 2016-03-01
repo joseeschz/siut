@@ -5,6 +5,7 @@
  */
 package servletServices;
 
+import control.aes;
 import control.mailControl;
 import control.studentControl;
 import java.io.IOException;
@@ -330,6 +331,27 @@ public class serviceStudent extends HttpServlet {
                     out.close();
                 }                
             }
+            if(request.getParameter("descryptUrl")!=null){
+                if(request.getParameter("ac")!=null){
+                    String ac = request.getParameter("ac").replace(" ", "+");
+                    aes sec = new aes();
+                    sec.addKey("2015"); 
+                    JSONObject data = new JSONObject();   
+                    ac = sec.desencriptar(ac);
+                    if(ac.contains("userName") && ac.contains("mail") && ac.contains("password") && ac.contains("pkStudent")){
+                        int pt_pkStudent;
+                        String pt_mail;
+                        String[] acSplit=ac.split("&&");
+                        pt_pkStudent = Integer.parseInt(acSplit[3].split("=")[1]);
+                        pt_mail = acSplit[1].split("=")[1];
+                        data.put("status", new studentControl().StudentActivateAcount(pt_pkStudent, "FL_MAIL_VALIDATE", pt_mail));
+                    }else{
+                        data.put("status", "linkBroken");
+                    }
+                    response.setContentType("application/json"); 
+                    out.print(data);
+                }
+            }
             if(request.getParameter("selectLoginStudent")!=null){
                 String statusLogin = request.getParameter("statusLogin");
                 if(statusLogin.equals("in")){
@@ -337,51 +359,78 @@ public class serviceStudent extends HttpServlet {
                     String password = request.getParameter("password");
                     int pkStudent = 0;
                     String name = "";
+                    String nameSmall ="";
                     String mail = "";
+                    String career ="";
+                    String gender = "";
                     studentModel dataUser=new studentModel();
                     dataUser.setFL_ENROLLMENT(enrollment);
                     dataUser.setFL_PASSWORD(password);
+                    JSONObject data = new JSONObject();
                     ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser);                    
                     if(enrollment != null && password != null){
                         if(list.size()==1){
-                            if(request.getParameter("typeLogin")!=null&&request.getParameter("typeLogin").equals("metadata")){
-                                for (studentModel list1 : list) {
-                                    pkStudent = list1.getPK_STUDENT();
-                                    name = list1.getFL_NAME();
-                                    enrollment = list1.getFL_ENROLLMENT();
-                                    mail = list1.getFL_MAIL();
-                                }
+                            for (studentModel list1 : list) {
+                                pkStudent = list1.getPK_STUDENT();
+                                name = list1.getFL_NAME();
+                                nameSmall = list1.getFL_NAME_FATHER();
+                                enrollment = list1.getFL_ENROLLMENT();
+                                mail = list1.getFL_MAIL();
+                                career = list1.getFL_NAME_ABBREVIATED();
+                                gender = list1.getFL_GENDER();
+                            }
+                            if(request.getParameter("typeLogin")!=null&&request.getParameter("typeLogin").equals("metadata")){                                
                                 session.setAttribute("pkStudent", pkStudent);
                                 session.setAttribute("enrollmentStudent", enrollment);
                                 session.setAttribute("mailStudent", mail);
                                 session.setAttribute("passwordStudent", password);
                                 session.setAttribute("logueadoStudent", name);
-                                out.print("logeado");
-                            }else{
+                                session.setAttribute("careerStudent", career);
+                                data.put("statusLogin", "logeado");
+                            }else{  
                                 String statusMailActive=new studentControl().SelectUserLoginMail(dataUser);  
                                 if(statusMailActive.equals("0")){
-                                    out.print("notMailActive");
+                                    data.put("statusLogin", "notMailActive");
+                                    data.put("pkStudent", pkStudent);
+                                    data.put("enrollmentStudent", enrollment);
+                                    data.put("mailStudent", mail);
+                                    data.put("passwordStudent", password);
+                                    data.put("logueadoStudentCal", name);  
+                                    data.put("careerStudent", career);
+                                    data.put("nameSmall", nameSmall);
+                                    data.put("genderStudent", gender);
+                                    session.setAttribute("careerStudent", career);
                                 }else if(statusMailActive.equals("1")){
-                                    for (studentModel list1 : list) {
-                                        pkStudent = list1.getPK_STUDENT();
-                                        name = list1.getFL_NAME();
-                                        enrollment = list1.getFL_ENROLLMENT();
-                                        mail = list1.getFL_MAIL();
-                                    }
+                                    data.put("statusLogin", "logeado");
+                                    data.put("pkStudent", pkStudent);
+                                    data.put("enrollmentStudent", enrollment);
+                                    data.put("mailStudent", mail);
+                                    data.put("passwordStudent", password);
+                                    data.put("logueadoStudentCal", name);   
+                                    data.put("careerStudent", career);
+                                    data.put("nameSmall", nameSmall);
+                                    data.put("genderStudent", gender);
                                     session.setAttribute("pkStudent", pkStudent);
                                     session.setAttribute("enrollmentStudent", enrollment);
                                     session.setAttribute("mailStudent", mail);
                                     session.setAttribute("passwordStudent", password);
-                                    session.setAttribute("logueadoStudent", name);
-                                    out.print("logeado");
-                                }      
+                                    session.setAttribute("logueadoStudentCal", name);
+                                    session.setAttribute("careerStudent", career);
+                                    session.setAttribute("careerStudent", career);
+                                }                                     
                             }
                         }else{
-                            out.print("notExit");
+                            data.put("statusLogin", "notExit");
                             session.removeAttribute("pkStudent");
                             session.removeAttribute("logueadoStudent");
                         }
                     }
+                    response.setHeader("Access-Control-Allow-Origin", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                    response.setHeader("Access-Control-Max-Age", "3600");
+                    response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                    response.setContentType("application/json"); 
+                    out.print(data);
                 }else if(statusLogin.equals("out")){
                     session.removeAttribute("pkStudent");
                     session.removeAttribute("logueadoStudent");

@@ -506,6 +506,22 @@ public class studentControl {
         } 
         return request;
     }
+    public String StudentActivateAcount(int pk_student, String field_name, String field_value){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_STUDENT`('update', '"+pk_student+"', '"+field_name+"', '"+field_value+"')")) {
+                ps.executeUpdate();
+                request="Success";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
     public ArrayList<studentModel> SelectUserLogin(studentModel dataUser){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
@@ -516,6 +532,9 @@ public class studentControl {
                     userLogin.setFL_NAME(res.getString("FL_NAME"));
                     userLogin.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     userLogin.setFL_MAIL(res.getString("FL_MAIL"));
+                    userLogin.setFL_GENDER(res.getString("FL_GENDER"));
+                    userLogin.setFL_NAME_ABBREVIATED(res.getString("FL_DESCRIPTION"));
+                    userLogin.setFL_NAME_FATHER(res.getString("FL_NAME_SMALL"));
                     list.add(userLogin);
                 }
                 res.close();

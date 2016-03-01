@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.studentModel;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -197,11 +198,14 @@ public class serviceMail extends HttpServlet {
                     }
                     out.print(message);
                 }if(request.getParameter("validateMail")!=null){
-                    String email = request.getParameter("userName");
-                    String name = request.getParameter("enrollment");
-                    String password = request.getParameter("password");
-                    
+                    String pkStudent = request.getParameter("pkStudent");
+                    String email = request.getParameter("email");
+                    String enrollment = request.getParameter("enrollment");
+                    String userName = request.getParameter("userName");
+                    String password = request.getParameter("password");                    
                     String message;
+                    JSONObject data = new JSONObject();
+                    
                     AuthControl auth =new AuthControl("sistema.integral.utsem@gmail.com", "siut_admin");
                     //Inicializamos las propiedades del envio del mail
                     Properties prop=new Properties();
@@ -219,6 +223,7 @@ public class serviceMail extends HttpServlet {
                     String contentMail="";
                     Message msg=new MimeMessage(session);
                     String liga;
+                    String pkStudentSecurity = "pkStudent";
                     String userNameSecurity = "userName";
                     String emailSecuruty = "mail";
                     String passwordSecuruty = "password";
@@ -226,7 +231,7 @@ public class serviceMail extends HttpServlet {
                     aes sec = new aes();
                     sec.addKey("2015");   
                     try {
-                        liga = userNameSecurity+"="+name+"&&"+emailSecuruty+"="+email+"&&"+passwordSecuruty+"="+password;
+                        liga = userNameSecurity+"="+enrollment+"&&"+emailSecuruty+"="+email+"&&"+passwordSecuruty+"="+password+"&&"+pkStudentSecurity+"="+pkStudent;
                         InternetAddress[] emails = new InternetAddress[1];
                         emails[0] = new InternetAddress(email);
                         msg.setRecipients(Message.RecipientType.TO, emails);
@@ -235,13 +240,13 @@ public class serviceMail extends HttpServlet {
                         msg.setSubject("Universidad Tecnológica del Sur del Estado de México teda la bienvenida");
                         MimeBodyPart cuerpo=new MimeBodyPart();
                         contentMail=contentMail+"<span style='font-style: italic; font-size: 40px;'><span style='color:green'>UT</span><span>sem</span></span><br>";
-                        contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
-                        contentMail=contentMail+"<b>Hola: "+name+"</b><br>";
                         contentMail=contentMail+"<b><span style='font-style: italic;'>La Universidad Tecnológica del Sur del Estado de México te da la bienvenida al sistema de calificaciones por que recuerda su compromiso es la excelencia educativa.</span></b><br><br>";
-                        
-                        contentMail=contentMail+"<b>Usuario</b>: <b>"+name+"<br>";
-                        contentMail=contentMail+"<b>Contraseña</b>: <b>"+password+"<br><br>";
-                        contentMail=contentMail+"<b>Para iniciar sesión en el Sistema de calificaciones es necesario activar tu cuenta para ello<a href='http://148.223.215.19/?ac="+sec.encriptar(liga)+"'> click aquí.</a></b><br><br>";
+                        contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
+                        contentMail=contentMail+"<b>Área:</b><span style='font-style: italic;'> Departamento de Sistemas</span><br><br>";
+                        contentMail=contentMail+"<b>Hola: "+userName+"</b><br>";
+                        contentMail=contentMail+"<b>Usuario</b>: <b>"+enrollment+"<br><br>";
+                        contentMail=contentMail+"<b style='font-size: 22px;'>Instrucciones</b><br>";
+                        contentMail=contentMail+"<b>Para iniciar sesión en el Sistema de calificaciones es necesario activar tu cuenta para ello<a href='http://148.223.215.19/alumnos/login.html?ac="+sec.encriptar(liga)+"'> click aquí.</a></b><br><br>";
                         contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+email+"</span></span><br><br><br>";
                         contentMail=contentMail+"<b>Nota: </b><b><span style='font-style: italic; color:red;'>En caso de no ser el responsable de este correo favor de eliminarlo y pasar por alto el contenido...!</span><br><br><br><br>";
                         contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
@@ -263,7 +268,13 @@ public class serviceMail extends HttpServlet {
                         //e.printStackTrace();
                         message = "FailConnectionNetwork";
                     }
-                    out.print(message);
+                    response.setHeader("Access-Control-Allow-Origin", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                    response.setHeader("Access-Control-Max-Age", "3600");
+                    response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                    response.setContentType("application/json"); 
+                    data.put("statusSendMail", message);
+                    out.print(data);
                 }else{
                     String mail = request.getParameter("mail");
                     String name = request.getParameter("name");

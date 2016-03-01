@@ -105,6 +105,11 @@ public class serviceScaleEvaluation extends HttpServlet {
                         content.add(data); 
                     }
                 }
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
                 settings.put("__ENTITIES", content);
                 principal.add(settings);
                 out.print(principal);

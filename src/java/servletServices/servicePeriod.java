@@ -59,6 +59,10 @@ public class servicePeriod extends HttpServlet {
                     }
                     settings.put("__ENTITIES", content);
                     principal.add(settings);
+                    response.setHeader("Access-Control-Allow-Origin", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                    response.setHeader("Access-Control-Max-Age", "3600");
+                    response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
                     response.setContentType("application/json"); 
                     out.print(principal);
                     out.flush(); 
@@ -147,6 +151,11 @@ public class servicePeriod extends HttpServlet {
                     out.close();
                 }
                 if(request.getParameter("view").equals("activePeriodYear")){
+                    response.setHeader("Access-Control-Allow-Origin", "*");
+                    response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                    response.setHeader("Access-Control-Max-Age", "3600");
+                    response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                    response.setContentType("application/json"); 
                     out.print(new periodControl().SelectPeriodActive("activePeriodYear"));
                 }
             }

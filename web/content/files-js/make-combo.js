@@ -657,11 +657,12 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
         datatype: "json",
         root: "__ENTITIES",
         id: "id",
+        crossDomain: true,
         datafields: [
             { name: 'dataPkScaleEvalution' },
             { name: 'dataNameScale' }
         ],
-        url: "../../serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
+        url: "http://10.10.10.23/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
         async: false
     };
     var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
