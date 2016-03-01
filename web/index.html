@@ -9,15 +9,17 @@
             window.onhashchange=function(){window.location.hash="";};
             if(typeof (Storage) !=="undefined"){
                 if(eval(localStorage.getItem("rememberMe"))){
-                    
-                }else{
                     if(!eval(localStorage.getItem("session"))){
-                        window.location="alumnos/login.html";                        
+                        window.location="login.html";                        
+                    }
+                }else{
+                    if(!eval(sessionStorage.getItem("session"))){
+                        window.location="login.html";                        
                     }
                 }                                 
             }else{
                 alert("No es soportado el localStorage");
-            }    
+            }     
         </script>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="alumnos/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
@@ -297,29 +299,45 @@
         <script type="text/javascript" src="alumnos/res-me/js/make-list.js"  charset="UTF-8"></script>
         <script>
             $(document).ready(function (){
-                if(typeof (Storage) !=="undefined"){
+                if(typeof (Storage) !=="undefined"){                    
                     if(eval(localStorage.getItem("rememberMe"))){
-
-                    }else{
                         if(eval(localStorage.getItem("session"))){
                             if(localStorage.getItem("genderStudent")==="Hombre"){
-                                $(".image-gender").attr("src", "alumnos/dist/img/avatar5.png"); 
+                                $(".image-gender").attr("src", "dist/img/avatar5.png"); 
                             }else{
-                                $(".image-gender").attr("src", "alumnos/dist/img/avatar2.png"); 
+                                $(".image-gender").attr("src", "dist/img/avatar2.png"); 
                             }
                             $(".nameStudent").text(localStorage.getItem("logueadoStudentCal"));
                             $(".nameSmallStudent").text(localStorage.getItem("nameSmall"));
                             $(".career").text(localStorage.getItem("careerStudent"));
-                            $(".enrollment").text(localStorage.getItem("enrollmentStudent"));
-                        }  
-                    }
-
+                            $(".enrollment").text(localStorage.getItem("enrollmentStudent"));                       
+                        }
+                    }else{
+                        if(eval(sessionStorage.getItem("session"))){
+                            if(eval(sessionStorage.getItem("session"))){
+                                if(sessionStorage.getItem("genderStudent")==="Hombre"){
+                                    $(".image-gender").attr("src", "dist/img/avatar5.png"); 
+                                }else{
+                                    $(".image-gender").attr("src", "dist/img/avatar2.png"); 
+                                }
+                                $(".nameStudent").text(sessionStorage.getItem("logueadoStudentCal"));
+                                $(".nameSmallStudent").text(sessionStorage.getItem("nameSmall"));
+                                $(".career").text(sessionStorage.getItem("careerStudent"));
+                                $(".enrollment").text(sessionStorage.getItem("enrollmentStudent"));                       
+                            }                      
+                        }
+                    }  
                 }else{
                     alert("No es soportado el localStorage");
-                }            
+                }                  
                 $("#signOut").click(function (){
-                    localStorage.setItem("session",false);
-                    window.location="alumnos/login.html";
+                    if(eval(localStorage.getItem("rememberMe"))){
+                        localStorage.setItem("session",false);
+                        window.location="login.html";
+                    }else{
+                        sessionStorage.setItem("session",false);
+                        window.location="login.html";
+                    } 
                 });
                 var itemClickedId;
                 var itemClickedIdOld;
