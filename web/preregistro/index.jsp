@@ -1,6 +1,7 @@
 <%@page import="control.candidateControl"%>
 <%@page import="control.aes"%>
 <%
+    String vertion = "jqwidgets-ver4.0.0";
     if(session.getAttribute("logueadoCandidate") == null){
         if(request.getParameter("ac") != null){
             aes sec = new aes();
@@ -36,11 +37,11 @@
                                     <meta charset="UTF-8"/>
                                     <meta name="viewport" content="width=device-width, initial-scale=1">
                                     <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
-                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
-                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.greenUtsem.css" />
+                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
+                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.greenUtsem.css" />
                                     <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-                                    <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-                                    <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script> 
+                                    <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+                                    <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxwindow.js"></script> 
                                     <script type="text/javascript">
                                         $(document).ready(function (){
                                             $("#mainDemoContainer").height($(document).height()-130);
@@ -79,11 +80,11 @@
                                     <meta charset="UTF-8"/>
                                     <meta name="viewport" content="width=device-width, initial-scale=1">
                                     <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
-                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
-                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.greenUtsem.css" />
+                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
+                                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.greenUtsem.css" />
                                     <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-                                    <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-                                    <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script> 
+                                    <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+                                    <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxwindow.js"></script> 
                                     <script type="text/javascript">
                                         $(document).ready(function (){
                                             $("#mainDemoContainer").height($(document).height()-130);
@@ -123,11 +124,11 @@
                                 <meta charset="UTF-8"/>
                                 <meta name="viewport" content="width=device-width, initial-scale=1">
                                 <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
-                                <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
-                                <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.greenUtsem.css" />
+                                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
+                                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.greenUtsem.css" />
                                 <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-                                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-                                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script> 
+                                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+                                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxwindow.js"></script> 
                                 <script type="text/javascript">
                                     $(document).ready(function (){
                                         $("#mainDemoContainer").height($(document).height()-130);
@@ -170,8 +171,8 @@
                     <meta charset="UTF-8"/>
                     <meta name="viewport" content="width=device-width, initial-scale=1">
                     <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
-                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
-                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.greenUtsem.css" />
+                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
+                    <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.greenUtsem.css" />
                     <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>     
                 </head>
                 <body>
@@ -285,14 +286,14 @@
                     </center>  
                 </body>
                 <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/localization.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxpasswordinput.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script>
-                <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxbuttons.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxpasswordinput.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxtooltip.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxinput.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxvalidator.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxwindow.js"></script>
+                <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxbuttons.js"></script>
                 <script type="text/javascript">
                     $(document).ready(function (){
                         window.location.hash="";
@@ -610,7 +611,7 @@
             <title>Inicio</title>
             <link rel="stylesheet" href="../content/files-css/main-system.css" type="text/css"/>
             <link href="../content/files-css/smart_wizard_verticalt.css" rel="stylesheet" type="text/css"/>
-            <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" /> 
+            <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" /> 
             <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
         </head>
         <body data-bind="greenUtsem">
@@ -1390,11 +1391,11 @@
         <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
         <script type="text/javascript" src="../content/files-js/js-wizard/jquery.smartWizard.js"></script>
         <script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>    
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/scripts/get-theme.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.js"></script> 
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.cultures.js"></script> 
-        <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqx-all.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
+        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
         <script type="text/javascript" src="../content/files-js/make-combo.js"  charset="UTF-8"></script>
         <script type="text/javascript" src="../content/files-js/make-list.js"  charset="UTF-8"></script>
         <script type="text/javascript" src="../content/files-js/make-input.js"  charset="UTF-8"></script>
