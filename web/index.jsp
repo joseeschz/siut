@@ -1,4 +1,5 @@
 <%
+    String vertion = "jqwidgets-ver4.0.0";
     if(session.getAttribute("logueadoStudentCal") == null){%>
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -86,14 +87,14 @@
             </div>  
         </body>
         <script type="text/javascript" src="content/files-jq/jquery-2.0.2.min.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/localization.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxpasswordinput.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
-        <script type="text/javascript" src="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxpasswordinput.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxtooltip.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxinput.js"></script>
+        <script type="text/javascript" src="content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxvalidator.js"></script>
         <script type="text/javascript" src="content/files-jq/jquery-migrate-1.3.0.min.js"></script>
-        <link type="text/css" rel="Stylesheet" href="content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.theme-utsem.css" />
+        <link type="text/css" rel="Stylesheet" href="content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.theme-utsem.css" />
         <script type="text/javascript">
             $(document).ready(function (){
 //                jQuery.each( jQuery.browser, function( i, val ) {
