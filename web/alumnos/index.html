@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>        
+        <meta charset="UTF-8">
+        <title>AdminSIUT</title>
+        <script>
+            window.location.hash="";
+            window.location.hash=""; //chrome
+            window.onhashchange=function(){window.location.hash="";};
+            if(typeof (Storage) !=="undefined"){
+                if(eval(localStorage.getItem("rememberMe"))){
+                    
+                }else{
+                    if(!eval(localStorage.getItem("session"))){
+                        window.location="login.html";                        
+                    }
+                }                                 
+            }else{
+                alert("No es soportado el localStorage");
+            }    
+        </script>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+        <link href="dist/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="dist/css/ionicons.min.css" rel="stylesheet" type="text/css" />       
+        <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="dist/css/skins/skin-black.min.css" rel="stylesheet" type="text/css" />
+        <link href="plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+        <link href="res-me/css/main.css" rel="stylesheet" type="text/css" /> 
+        <link href="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
+        <style>
+            #logoSiut{
+                transform: scale(0.7,0.7);
+                right: -15px;
+                top: -3px;
+            }
+            body{
+                
+            }
+        </style>
+    </head>
+    <body class="skin-black fixed">
+        <div class="wrapper">
+
+          <header class="main-header">
+            <!-- Logo -->            
+            <a href="#" class="logo"><span id="logoSiut" style="position: relative">SIUT</span></a>               
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+              <!-- Sidebar toggle button-->
+              <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+              </a>
+              <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                   
+                  <!-- Notifications: style can be found in dropdown.less -->
+                  <li class="dropdown notifications-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bell-o"></i>
+                      <span class="label label-warning">5</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li class="header">Notificaciones recientes</li>
+                      <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                          <li>
+                            <a href="#">
+                              La carrera de TIC´S realizará un evento tecnológico el día 12 de mayo del precente año
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              La universidad firma un nuevo convenio con la empresa Oracle
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              Los alumnos de administración realizarán una visita a la empresa Bimbo
+                            </a>
+                          </li>
+
+                          <li>
+                            <a href="#">
+                              El equipo de futbol femenino trae con sigo la victoria
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              Todos los maestro de tiempo completo lograron terminar su curso de calidad del servicio
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li class="footer"><a href="#">Ver todas</a></li>
+                    </ul>
+                  </li>
+                  <!-- Tasks: style can be found in dropdown.less -->
+                  <li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-flag-o"></i>
+                      <span class="label label-danger">6</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li class="header">Tienes 6 materias</li>
+                      <li>
+                        <!-- inner menu: contains the actual data -->
+                        <ul class="menu">
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Base de datos
+                                <small class="pull-right">20%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">20% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Redes de área local
+                                <small class="pull-right">40%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">40% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Integradora
+                                <small class="pull-right">60%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">60% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Programación
+                                <small class="pull-right">80%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">80% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Ingenieria del sofware
+                                <small class="pull-right">70%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-light-blue" style="width: 70%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">70% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                          <li><!-- Task item -->
+                            <a href="#">
+                              <h3>
+                                Aplicaciones moviles
+                                <small class="pull-right">20%</small>
+                              </h3>
+                              <div class="progress xs">
+                                <div class="progress-bar progress-bar-warning" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="sr-only">20% Complete</span>
+                                </div>
+                              </div>
+                            </a>
+                          </li><!-- end task item -->
+                        </ul>
+                      </li>
+                      <li class="footer">
+                        <a href="#">Ver los progresos</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- User Account: style can be found in dropdown.less -->
+                  <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <img src="" class="user-image image-gender" alt="User Image"/>
+                      <span class="hidden-xs nameStudent"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <!-- User image -->
+                      <li class="user-header">
+                        <img src="" class="img-circle image-gender" alt="User Image" />
+                        <p>
+                            <span class="nameSmallStudent"></span>- Alumno de <span class="career"></span>
+                            <small class="enrollment"></small>
+                        </p>
+                      </li>
+                      <!-- Menu Body -->
+                      <!-- Menu Footer-->
+                      <li class="user-footer">
+                        <div class="pull-left">
+                          <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                        </div>
+                        <div class="pull-right">
+                            <a id="signOut" href="#" class="btn btn-default btn-flat">Cerrar sesión</a>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </header>
+          <!-- Left side column. contains the logo and sidebar -->
+          <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+              <!-- Sidebar user panel -->
+              <div class="user-panel">
+                <div class="pull-left image">
+                  <img src="" class="img-circle image-gender" alt="User Image" />
+                </div>
+                <div class="pull-left info">
+                    <p class="nameSmallStudent"></p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Alumno</a>
+                </div>
+              </div>
+              
+              <!-- sidebar menu: : style can be found in sidebar.less -->
+              <ul class="sidebar-menu">
+                <li class="header">NAVEGACIÓN PRINCIPAL</li>
+                <li class="active treeview">
+                  <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Calificaciones</span> <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                    <ul class="treeview-menu">
+                        <li data-href="qualifications-activities">
+                            <a href="#"><i class="fa fa-circle-o"></i> Por actividades</a>
+                        </li>
+                        <li data-href="qualifications-matters">
+                            <a href="#"><i class="fa fa-circle-o"></i> Por materias</a>
+                        </li>
+                    </ul>
+                </li>
+              </ul>
+            </section>
+            <!-- /.sidebar -->
+          </aside>
+
+          <!-- Content Wrapper. Contains page content -->
+          <div class="content-wrapper">
+            
+          </div><!-- /.content-wrapper -->
+          <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+              <b>Versión</b> 2.0
+            </div>
+            <strong>Copyright &copy; 2015-2016 </strong> Todos los derechos reservados.
+          </footer>
+        </div><!-- ./wrapper -->
+
+        <!-- jQuery 2.1.3 -->
+        <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+        
+        <!-- jQuery UI 1.11.2 -->
+        <script src="dist/js/jquery-ui.min.js" type="text/javascript"></script>
+        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+        <script>
+          $.widget.bridge('uibutton', $.ui.button);
+        </script>
+        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
+        <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="dist/js/app.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/localization.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdata.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdropdownlist.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.js"></script> 
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.cultures.js"></script> 
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/scripts/get-theme.js"></script>
+        <script type="text/javascript" src="res-me/js/make-combo.js"  charset="UTF-8"></script>
+        <script type="text/javascript" src="res-me/js/make-list.js"  charset="UTF-8"></script>
+        <script>
+            $(document).ready(function (){
+                if(typeof (Storage) !=="undefined"){
+                    if(eval(localStorage.getItem("rememberMe"))){
+
+                    }else{
+                        if(eval(localStorage.getItem("session"))){
+                            if(localStorage.getItem("genderStudent")==="Hombre"){
+                                $(".image-gender").attr("src", "dist/img/avatar5.png"); 
+                            }else{
+                                $(".image-gender").attr("src", "dist/img/avatar2.png"); 
+                            }
+                            $(".nameStudent").text(localStorage.getItem("logueadoStudentCal"));
+                            $(".nameSmallStudent").text(localStorage.getItem("nameSmall"));
+                            $(".career").text(localStorage.getItem("careerStudent"));
+                            $(".enrollment").text(localStorage.getItem("enrollmentStudent"));
+                        }  
+                    }
+
+                }else{
+                    alert("No es soportado el localStorage");
+                }            
+                $("#signOut").click(function (){
+                    localStorage.setItem("session",false);
+                    window.location="login.html";
+                });
+                var itemClickedId;
+                var itemClickedIdOld;
+                var dirCookie = localStorage.getItem("dirApp");
+                if(dirCookie!==null){
+                    $(".content-wrapper").load("pages/"+dirCookie+".html");
+                }else{
+                    $(".content-wrapper").load("pages/principal.html"); 
+                }
+                $("li").click(function (){
+                    if($(this).attr("data-href")){
+                        $(".treeview-menu li").removeClass("active");
+                        $(this).addClass("active");
+                        var myhref=$(this).attr("data-href");
+                        itemClickedIdOld=localStorage.getItem("dirApp");
+                        itemClickedId=myhref;
+                        if(itemClickedIdOld!==itemClickedId){
+                            localStorage.setItem("dirApp",myhref);
+                            $.ajax({
+                                async: false,
+                                type: 'GET',
+                                url: "pages/"+$(this).attr("data-href")+".html",
+                                beforeSend: function (xhr) {     
+                                },                            
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("Error interno del servidor");
+                                },
+                                success: function (data, textStatus, jqXHR) {
+                                    $(".sidebar-toggle").click();
+                                    $(".content-wrapper").html(data);
+                                }
+                            });
+                        }
+                    }
+                });
+                $(".logo").click(function (){
+                    var myhref="principal";
+                    itemClickedIdOld=localStorage.getItem("dirApp");
+                    itemClickedId=myhref;
+                    if(itemClickedIdOld!==itemClickedId){
+                        localStorage.setItem("dirApp",myhref);
+                        $.ajax({
+                            async: false,
+                            type: 'GET',
+                            url: "pages/"+myhref+".html",
+                            beforeSend: function (xhr) {     
+                            },                            
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                $(".content-wrapper").html(data);
+                                $(".sidebar-toggle").click();
+                                $(".sidebar-toggle").click();
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+      </body>
+</html>

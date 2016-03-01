@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.studentModel;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -50,16 +51,20 @@ public class activeMail extends HttpServlet {
                     ArrayList<studentModel> list=new studentControl().SelectUserLogin(dataUser); 
                     if(enrollment != null && password != null){
                         if(list.size()==1){
+                            JSONObject datos = new JSONObject();
                             for (studentModel list1 : list) {
                                 pkStudent = list1.getPK_STUDENT();
                                 name = list1.getFL_NAME();
                                 mail = list1.getFL_MAIL();
                                 if(mail.equals("")){
-                                    out.print("Sin correo");
+                                    datos.put("name", name);
+                                    datos.put("mail", "Sin correo");
                                 }else{
-                                    out.print(mail);
+                                    datos.put("name", name);
+                                    datos.put("mail", mail);                                    
                                 }
                             }    
+                            out.print(datos);
                         }else{
                             out.print("notExit");                            
                         }

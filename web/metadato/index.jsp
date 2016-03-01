@@ -1,4 +1,5 @@
 <%
+    String vertion = "jqwidgets-ver4.0.0";
     if(session.getAttribute("logueadoStudent") == null){%>
         <!DOCTYPE html>
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,10 +9,10 @@
                 <meta charset="UTF-8"/>
                 <meta name="viewport" content="width=device-width, initial-scale=1">
                     <link title="SIUT" rel="icon" type="image/png" href="../../content/pictures-system/favicon.png" />
-                <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" />
+                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" />
                 <link rel="stylesheet" href="../content/files-css/main-login.css" type="text/css"/>  
                 <!--<link rel="stylesheet" href="../content/files-css/main-login-new-register.css" type="text/css"/>-->     
-                <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.theme-utsem.css" />
+                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.theme-utsem.css" />
             </head>
             <body>
                 <center>  
@@ -104,14 +105,14 @@
                 </div>
             </body>
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/localization.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxpasswordinput.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxtooltip.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxinput.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxvalidator.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxwindow.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxbuttons.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/localization.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxcore.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxpasswordinput.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxtooltip.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxinput.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxvalidator.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxwindow.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxbuttons.js"></script>
             <script type="text/javascript">
                 $(document).ready(function (){
                     $("#jqxwindow").jqxWindow({
@@ -197,6 +198,7 @@
                         var datos = $("#formLogin").serialize(); // los datos del 
                         $.ajax({
                             type: "POST",
+                            dataType: 'json',
                             async: true,
                             url: "../serviceStudent?selectLoginStudent=in&&typeLogin=metadata",
                             data:datos,
@@ -208,12 +210,12 @@
                                 $("#windowBlock").fadeOut("slow");
                             },
                             success: function (data, textStatus, jqXHR) {
-                                if(data==="logeado"){
+                                if(data.statusLogin==="logeado"){
                                     setTimeout(function(){
                                         $("#windowBlock").fadeOut("slow");
                                         window.location = "/metadato/";
                                     }, 2000);
-                                }else if(data==="notExit"){
+                                }else if(data.statusLogin==="notExit"){
                                     $("#windowBlock").fadeOut("slow");
                                     $("#MessageError").fadeIn("slow");
                                 }
@@ -273,7 +275,7 @@
                 <title>Inicio</title>
                 <link rel="stylesheet" href="../content/files-css/main-system.css" type="text/css"/>
                 <link href="../content/files-css/smart_wizard_verticalt.css" rel="stylesheet" type="text/css"/>
-                <link type="text/css" rel="Stylesheet" href="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/styles/jqx.base.css" /> 
+                <link type="text/css" rel="Stylesheet" href="../content/files-jq/<%out.print(vertion);%>jqwidgets/styles/jqx.base.css" /> 
                 <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
             </head>
             <body data-bind="greenUtsem">
@@ -1179,11 +1181,11 @@
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
             <script type="text/javascript" src="../content/files-js/js-wizard/jquery.smartWizard.js"></script>
             <script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>    
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/scripts/get-theme.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqxcore.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/globalization/globalize.cultures.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/jqwidgets-ver3.8.2/jqwidgets/jqx-all.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>scripts/get-theme.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxcore.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/globalization/globalize.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/globalization/globalize.cultures.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqx-all.js"></script>
             <script type="text/javascript" src="../content/files-js/make-combo.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-list.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-input.js"  charset="UTF-8"></script>

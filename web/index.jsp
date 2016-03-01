@@ -1,5 +1,5 @@
 <%
-    if(session.getAttribute("logueadoStudent") == null){%>
+    if(session.getAttribute("logueadoStudentCal") == null){%>
     <!DOCTYPE html>
     <html xmlns="http://www.w3.org/1999/xhtml">
         <head>
@@ -66,7 +66,8 @@
                                 </div>
                                 <div class="input-row">
                                     <input disabled="" title="Correo electrónico" class="email" type="text" required="" id="email" autofocus="" name="email" placeholder="Correo electrónico">
-                                        <input title="Ingresa tu contraseña para poder ingresar" class="password" type="hidden" required="" id="passwordHidden" autofocus="" name="password" placeholder="Contraseña">
+                                    <input class="password" type="hidden" id="passwordHidden" autofocus="" name="password" placeholder="Contraseña">
+                                    <input type="hidden" id="userName" name="userName">
                                 </div>
                                 <div>
                                     <label id="error"></label>
@@ -147,14 +148,14 @@
                             $("#windowBlock").fadeOut("slow");
                         },
                         success: function (data, textStatus, jqXHR) {
-                            if(data==="notMailActive"){
+                            if(data.statusLogin==="notMailActive"){
                                 ActivateMail(datos);
-                            }else if(data==="logeado"){
+                            }else if(data.statusLogin==="logeado"){
                                 setTimeout(function(){
                                     $("#windowBlock").fadeOut("slow");
                                     window.location = "alumnos/";
                                 }, 2000);
-                            }else if(data==="notExit"){
+                            }else if(data.statusLogin==="notExit"){
                                 $("#windowBlock").fadeOut("slow");
                                 $("#MessageError").fadeIn("slow");
                                 alert("Verifica tus datos");
@@ -167,6 +168,7 @@
                         type: "POST",
                         url: "activeMail?selectLoginStudent",
                         data: datas,
+                        dataType: 'json',
                         beforeSend: function (xhr) {
                             $("#windowBlock").fadeIn("slow");
                         },
@@ -177,7 +179,8 @@
                         success: function (data, textStatus, jqXHR) {
                             $("#windowBlock").fadeOut("slow");
                             $("#enrollment").val($("#nameUser").val());
-                            $("#email").val(data);
+                            $("#email").val(data.mail);
+                            $("#userName").val(data.name);
                             $("#passwordHidden").val($("#password").val());
                             $("#formLogin").hide();
                             $("#formLoginValidate").show();
@@ -223,7 +226,8 @@
                         type: "POST",
                         url: "serviceMail?validateMail",
                         data: {
-                            "userName": $("#enrollment").val(),
+                            "enrollment": $("#enrollment").val(),
+                            "userName": $("#userName").val(),
                             "email": $("#email").val(),
                             "password" : $("#password").val(),
                             "statusLogin":"in"

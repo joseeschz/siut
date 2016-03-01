@@ -70,13 +70,15 @@ public class serviceSubjectMatter extends HttpServlet {
                         listSubjectMatters=new subjectMattersControl().SelectSubjectMatters(pkCareer, pkSemester, pkGroup, pkStudyPlan, pkPeriod);
                     }
                 }else if(request.getParameter("view").equals("comboMattersByStudent")){
+                    int pkStudent = 0;
                     if(session.getAttribute("pkStudent")!=null){
-                        int pkStudent = 0;
-                        if(session.getAttribute("pkStudent")!=null){
-                            pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
-                        }
-                        listSubjectMatters=new subjectMattersControl().SelectListSubjectMattersByStudents(pkStudent);
+                        pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
+                        
                     }
+                    if(request.getParameter("pkStudent")!=null){
+                        pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
+                    }
+                    listSubjectMatters=new subjectMattersControl().SelectListSubjectMattersByStudents(pkStudent);
                 }
                 else if(request.getParameter("view").equals("comboWithoutGroup")){
                     pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
@@ -109,7 +111,11 @@ public class serviceSubjectMatter extends HttpServlet {
                 }
                 settings.put("__ENTITIES", content);
                 principal.add(settings);
-                response.setContentType("application/json"); 
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
                 out.print(principal);
                 out.flush(); 
                 out.close();

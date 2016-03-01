@@ -6,10 +6,8 @@
 package servletServices;
 
 import control.activitiesByStudentsControl;
-import control.activitiesToGroupControl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.activitiesByStudentsModel;
-import model.activitiesToGroupModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -210,7 +207,14 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
             if(request.getParameter("listActivities")!=null){
                 int pkScale = Integer.parseInt(request.getParameter("pkScale"));
                 int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
-                int pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
+                int pkStudent = 0;
+                if(session.getAttribute("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
+
+                }
+                if(request.getParameter("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
+                }
                 ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectListActivitiesByStudent(pkStudent, pkMatter, pkScale, 0);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
@@ -244,7 +248,11 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 }
                 settings.put("items", content);
                 principal.add(settings);
-                response.setContentType("application/json"); 
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
                 out.print(settings);
                 out.flush(); 
                 out.close();

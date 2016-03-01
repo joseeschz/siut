@@ -346,7 +346,14 @@ public class serviceCalification extends HttpServlet {
                 out.close();
             }
             if(request.getParameter("tableCalMattersStudent")!=null){
-                int pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());                
+                int pkStudent = 0;
+                if(session.getAttribute("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
+
+                }
+                if(request.getParameter("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
+                }        
                 ArrayList<calificationModel> listColumns=new calificationControl().SelectCalificationNowStudent(pkStudent);
                 JSONArray contentRows = new JSONArray();
                 JSONArray bulding = new JSONArray();
@@ -358,7 +365,12 @@ public class serviceCalification extends HttpServlet {
                     contentRows.add(dataRows); 
                 }
                 rows.put("rows", contentRows);
-                bulding.add(rows);                
+                bulding.add(rows);            
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
                 out.print(bulding);
                 out.flush(); 
                 out.close();
