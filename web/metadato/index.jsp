@@ -105,14 +105,14 @@
                 </div>
             </body>
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/localization.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxcore.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxpasswordinput.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxtooltip.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxinput.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxvalidator.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxwindow.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>jqwidgets/jqxbuttons.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxpasswordinput.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxtooltip.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxinput.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxvalidator.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxwindow.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxbuttons.js"></script>
             <script type="text/javascript">
                 $(document).ready(function (){
                     $("#jqxwindow").jqxWindow({
