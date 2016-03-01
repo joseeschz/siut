@@ -9,12 +9,10 @@
             window.onhashchange=function(){window.location.hash="";};
             if(typeof (Storage) !=="undefined"){
                 if(eval(localStorage.getItem("rememberMe"))){
-                    if(!eval(localStorage.getItem("session"))){
-                        window.location="login.html";                        
-                    }
+                    
                 }else{
-                    if(!eval(sessionStorage.getItem("session"))){
-                        window.location="login.html";                        
+                    if(!eval(localStorage.getItem("session"))){
+                        window.location="alumnos/login.html";                        
                     }
                 }                                 
             }else{
@@ -22,14 +20,14 @@
             }    
         </script>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
-        <link href="dist/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-        <link href="dist/css/ionicons.min.css" rel="stylesheet" type="text/css" />       
-        <link href="dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-        <link href="dist/css/skins/skin-black.min.css" rel="stylesheet" type="text/css" />
-        <link href="plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-        <link href="res-me/css/main.css" rel="stylesheet" type="text/css" /> 
-        <link href="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
+        <link href="alumnos/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
+        <link href="alumnos/dist/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="alumnos/dist/css/ionicons.min.css" rel="stylesheet" type="text/css" />       
+        <link href="alumnos/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="alumnos/dist/css/skins/skin-black.min.css" rel="stylesheet" type="text/css" />
+        <link href="alumnos/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+        <link href="alumnos/res-me/css/main.css" rel="stylesheet" type="text/css" /> 
+        <link href="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
         <style>
             #logoSiut{
                 transform: scale(0.7,0.7);
@@ -274,79 +272,62 @@
         </div><!-- ./wrapper -->
 
         <!-- jQuery 2.1.3 -->
-        <script src="plugins/jQuery/jQuery-2.1.3.min.js"></script>
+        <script src="alumnos/plugins/jQuery/jQuery-2.1.3.min.js"></script>
         
         <!-- jQuery UI 1.11.2 -->
-        <script src="dist/js/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="alumnos/dist/js/jquery-ui.min.js" type="text/javascript"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
           $.widget.bridge('uibutton', $.ui.button);
         </script>
-        <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
-        <script src="plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-        <script src="dist/js/app.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxcore.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/localization.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdata.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxbuttons.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxscrollbar.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxlistbox.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdropdownlist.js"></script>
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.js"></script> 
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.cultures.js"></script> 
-        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/scripts/get-theme.js"></script>
-        <script type="text/javascript" src="res-me/js/make-combo.js"  charset="UTF-8"></script>
-        <script type="text/javascript" src="res-me/js/make-list.js"  charset="UTF-8"></script>
+        <script src="alumnos/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>    
+        <script src="alumnos/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+        <script src="alumnos/dist/js/app.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxcore.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/localization.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdata.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxbuttons.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxscrollbar.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdropdownlist.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.js"></script> 
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.cultures.js"></script> 
+        <script type="text/javascript" src="alumnos/res-me/jqwidgets/jqwidgets-ver4.0.0/scripts/get-theme.js"></script>
+        <script type="text/javascript" src="alumnos/res-me/js/make-combo.js"  charset="UTF-8"></script>
+        <script type="text/javascript" src="alumnos/res-me/js/make-list.js"  charset="UTF-8"></script>
         <script>
             $(document).ready(function (){
-                if(typeof (Storage) !=="undefined"){                    
+                if(typeof (Storage) !=="undefined"){
                     if(eval(localStorage.getItem("rememberMe"))){
+
+                    }else{
                         if(eval(localStorage.getItem("session"))){
                             if(localStorage.getItem("genderStudent")==="Hombre"){
-                                $(".image-gender").attr("src", "dist/img/avatar5.png"); 
+                                $(".image-gender").attr("src", "alumnos/dist/img/avatar5.png"); 
                             }else{
-                                $(".image-gender").attr("src", "dist/img/avatar2.png"); 
+                                $(".image-gender").attr("src", "alumnos/dist/img/avatar2.png"); 
                             }
                             $(".nameStudent").text(localStorage.getItem("logueadoStudentCal"));
                             $(".nameSmallStudent").text(localStorage.getItem("nameSmall"));
                             $(".career").text(localStorage.getItem("careerStudent"));
-                            $(".enrollment").text(localStorage.getItem("enrollmentStudent"));                       
-                        }
-                    }else{
-                        if(eval(sessionStorage.getItem("session"))){
-                            if(eval(sessionStorage.getItem("session"))){
-                                if(sessionStorage.getItem("genderStudent")==="Hombre"){
-                                    $(".image-gender").attr("src", "dist/img/avatar5.png"); 
-                                }else{
-                                    $(".image-gender").attr("src", "dist/img/avatar2.png"); 
-                                }
-                                $(".nameStudent").text(sessionStorage.getItem("logueadoStudentCal"));
-                                $(".nameSmallStudent").text(sessionStorage.getItem("nameSmall"));
-                                $(".career").text(sessionStorage.getItem("careerStudent"));
-                                $(".enrollment").text(sessionStorage.getItem("enrollmentStudent"));                       
-                            }                      
-                        }
-                    }  
+                            $(".enrollment").text(localStorage.getItem("enrollmentStudent"));
+                        }  
+                    }
+
                 }else{
                     alert("No es soportado el localStorage");
                 }            
                 $("#signOut").click(function (){
-                    if(eval(localStorage.getItem("rememberMe"))){
-                        localStorage.setItem("session",false);
-                        window.location="login.html";
-                    }else{
-                        sessionStorage.setItem("session",false);
-                        window.location="login.html";
-                    }     
-                    
+                    localStorage.setItem("session",false);
+                    window.location="alumnos/login.html";
                 });
                 var itemClickedId;
                 var itemClickedIdOld;
                 var dirCookie = localStorage.getItem("dirApp");
                 if(dirCookie!==null){
-                    $(".content-wrapper").load("pages/"+dirCookie+".html");
+                    $(".content-wrapper").load("alumnos/pages/"+dirCookie+".html");
                 }else{
-                    $(".content-wrapper").load("pages/principal.html"); 
+                    $(".content-wrapper").load("alumnos/pages/principal.html"); 
                 }
                 $("li").click(function (){
                     if($(this).attr("data-href")){
@@ -360,7 +341,7 @@
                             $.ajax({
                                 async: false,
                                 type: 'GET',
-                                url: "pages/"+$(this).attr("data-href")+".html",
+                                url: "alumnos/pages/"+$(this).attr("data-href")+".html",
                                 beforeSend: function (xhr) {     
                                 },                            
                                 error: function (jqXHR, textStatus, errorThrown) {
@@ -383,7 +364,7 @@
                         $.ajax({
                             async: false,
                             type: 'GET',
-                            url: "pages/"+myhref+".html",
+                            url: "alumnos/pages/"+myhref+".html",
                             beforeSend: function (xhr) {     
                             },                            
                             error: function (jqXHR, textStatus, errorThrown) {
