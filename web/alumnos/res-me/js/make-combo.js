@@ -388,7 +388,7 @@ function createDropDownPeriodActive(filtrable, selector){
     $.ajax({
         //Send the paramethers to servelt
         type: "GET",
-        url: "http://148.223.215.19/servicePeriod?view=activePeriodYear",
+        url: "http://10.10.10.23/servicePeriod?view=activePeriodYear",
         data:{},
         async: false,
         beforeSend: function (xhr) {
@@ -410,7 +410,7 @@ function createDropDownPeriodActive(filtrable, selector){
             { name: 'dataPkPeriod' },
             { name: 'dataNamePeriod' }
         ],
-        url: "http://148.223.215.19/servicePeriod?view="+filtrable+"",
+        url: "http://10.10.10.23/servicePeriod?view="+filtrable+"",
         async: false
     };
     var dataAdapterPeriod = new $.jqx.dataAdapter(sourceCareer);
@@ -661,7 +661,7 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
             { name: 'dataPkScaleEvalution' },
             { name: 'dataNameScale' }
         ],
-        url: "http://148.223.215.19/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
+        url: "http://10.10.10.23/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
         async: false
     };
     var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
@@ -1247,7 +1247,7 @@ function createDropDownSubjectMatterByStudent(selector, update){
             data: {
                 "pkStudent": localStorage.getItem("pkStudent")
             },
-            url: 'http://148.223.215.19/serviceSubjectMatter?view=comboMattersByStudent&pkSemester=0'
+            url: 'http://10.10.10.23/serviceSubjectMatter?view=comboMattersByStudent&pkSemester=0'
         };
     var dataAdapter = new $.jqx.dataAdapter(ordersSource);
     if(update){
