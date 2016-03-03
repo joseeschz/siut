@@ -42,6 +42,7 @@
         </style>
     </head>
     <body class="skin-black fixed">
+        <div id="jqxLoader"></div>
         <div class="wrapper">
 
           <header class="main-header">
@@ -291,6 +292,7 @@
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxbuttons.js"></script>
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxscrollbar.js"></script>
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxlistbox.js"></script>
+        <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxloader.js"></script>
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/jqxdropdownlist.js"></script>
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.js"></script> 
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.cultures.js"></script> 
@@ -298,6 +300,7 @@
         <script type="text/javascript" src="res-me/js/make-combo.js"  charset="UTF-8"></script>
         <script>
             $(document).ready(function (){
+                $('#jqxLoader').jqxLoader({ theme: 'energyblue', width: 200, height: 150, isModal: true });
                 if(typeof (Storage) !=="undefined"){                    
                     if(eval(localStorage.getItem("rememberMe"))){
                         if(eval(localStorage.getItem("session"))){
@@ -355,17 +358,19 @@
                         itemClickedId=myhref;
                         if(itemClickedIdOld!==itemClickedId){
                             localStorage.setItem("dirApp",myhref);
+                            $(".sidebar-toggle").click();
                             $.ajax({
                                 async: false,
                                 type: 'GET',
                                 url: "pages/"+$(this).attr("data-href")+".html",
                                 beforeSend: function (xhr) {     
+                                    $('#jqxLoader').jqxLoader('open');
                                 },                            
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     alert("Error interno del servidor");
                                 },
                                 success: function (data, textStatus, jqXHR) {
-                                    $(".sidebar-toggle").click();
+                                    $('#jqxLoader').jqxLoader('close');
                                     $(".content-wrapper").html(data);
                                 }
                             });
@@ -378,19 +383,21 @@
                     itemClickedId=myhref;
                     if(itemClickedIdOld!==itemClickedId){
                         localStorage.setItem("dirApp",myhref);
+                        $(".sidebar-toggle").click();
+                        $(".sidebar-toggle").click();
                         $.ajax({
                             async: false,
                             type: 'GET',
                             url: "pages/"+myhref+".html",
-                            beforeSend: function (xhr) {     
+                            beforeSend: function (xhr) {  
+                                $('#jqxLoader').jqxLoader('open');
                             },                            
                             error: function (jqXHR, textStatus, errorThrown) {
                                 alert("Error interno del servidor");
                             },
                             success: function (data, textStatus, jqXHR) {
+                                $('#jqxLoader').jqxLoader('close');
                                 $(".content-wrapper").html(data);
-                                $(".sidebar-toggle").click();
-                                $(".sidebar-toggle").click();
                             }
                         });
                     }
