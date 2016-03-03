@@ -126,10 +126,9 @@
             createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",null, false);
             createLitsBoxPeriodByTeacher(null, null, null, null, "#valorateActivitiesPeriodHistoryFilter");
         }
-        
+        var varMaxValScale=0;
         function maxValScale(){  
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
-            var maxValScale=0;
             if(itemScaleEvaluation!==undefined){
                 $.ajax({
                     //Send the paramethers to servelt
@@ -148,12 +147,19 @@
                         alert("Error interno del servidor");
                     },
                     success: function (data, textStatus, jqXHR) {
-                        maxValScale = data[0].dataMaxValue;
-                        $("#valMaxScale").text(maxValScale+" = 100%");
+                        varMaxValScale = data[0].dataMaxValue;
+                        //$('#value_activity_slider').children().remove();
+                        $('#value_activity_slider').jqxSlider({
+                            max: varMaxValScale
+                        });
+                        $('#value_activity_input').jqxNumberInput({
+                            max: varMaxValScale
+                        });
+                        $("#valMaxScale").text(varMaxValScale+" = 100%");
                     }
                 });
             }
-            return maxValScale;
+            return varMaxValScale;
         }         
         function existWorkPlanning(){
             var exist=false;
@@ -163,7 +169,7 @@
             itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
             //alert();
-            if(itemSemester!==undefined){
+            if(itemScaleEvaluation!==undefined){
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",
@@ -207,8 +213,7 @@
                                 $(".jqx-icon-plus").parent().hide();
                                 $(".jqx-icon-lock").parent().hide();
                                 $(".jqx-icon-delete").parent().hide();
-                                $(".jqx-icon-edit").parent().hide();
-                                
+                                $(".jqx-icon-edit").parent().hide();                                
                                 $("#tableRegisterActivities").jqxGrid({selectionMode: "none",enableHover: false});
                             }else{
                                 $("#addWorkPlannin").fadeIn("slow");
@@ -350,7 +355,7 @@
                     //This is if exits an error with the server internal can do server off, or page not found
                     alert("Error interno del servidor");
                 },
-                success: function (data, textStatus, jqXHR) {
+                success: function (data, textStatus, jqXHR) {  
                     if(data.dataResult>=0.01){
                         max_value=data.dataResult;
                         status=true;
@@ -606,16 +611,35 @@
                             $("#pictureAddActivities").attr("src","../content/pictures-system/add-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
                             var val_max_scale = 0;                            
-                            val_max_scale = Math.round((max_value*100/maxValScale()));
-                            $('#value_activity').on('change', function (event) {
+                            val_max_scale = max_value;
+                            $('#value_activity_slider').off('change');
+                            $('#value_activity_input').off('change');
+                            $('#value_activity_slider').on('change', function (event) {
                                 var value = event.args.value;
+                                $("#value_activity_input").val(value);
                                 if(value==0){
-                                    $("#value_activity").val(1);
+                                    $("#value_activity_slider").val(0.01);
+                                    $("#value_activity_input").val(0.01);
                                 }else if(value>=val_max_scale){
-                                    $("#value_activity").val(val_max_scale);
-                                }     
+                                    $("#value_activity_slider").val(val_max_scale);                                    
+                                } 
+                                
+                                $("#value_activity_percent").text();
                             });
-                            $("#value_activity").val(val_max_scale);
+                            $('#value_activity_input').on('change', function (event) {
+                                var value = event.args.value;
+                                $("#value_activity_slider").val(value);
+                                if(value==0){
+                                    $("#value_activity_input").val(0.01);
+                                    $("#value_activity_slider").val(0.01);
+                                }else if(value>=val_max_scale){
+                                    $("#value_activity_input").val(val_max_scale);
+                                } 
+                                
+                            });
+                            $(".value_activity").each(function (){
+                                $(this).val(val_max_scale);
+                            });
                             $("#jqxWindowAddActivities").jqxWindow('open');
                         }
                     });
@@ -630,19 +654,35 @@
                             $("#pkActivity").val(rowId);
                             $("#pictureAddActivities").attr("src","../content/pictures-system/update-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
-                            $('#value_activity').jqxSlider('focus'); 
-                            var max_value_temp = (parseFloat((rowData.dataValueActivityPercent).replace("%",""))+(max_value*100/maxValScale()));
-                            $('#value_activity').on('change', function (event) {
-                                var value = event.args.value;     
-                                //console.log(max_value_temp);
+                            var max_value_temp = (parseFloat((rowData.dataValueActivity))+(max_value));
+                            $('#value_activity_slider').off('change');
+                            $('#value_activity_input').off('change');
+                            $('#value_activity_slider').on('change', function (event) {
+                                var value = event.args.value;
+                                $("#value_activity_input").val(value);
                                 if(value==0){
-                                    $("#value_activity").val(1);
+                                    $("#value_activity_slider").val(0.01);
+                                    $("#value_activity_input").val(0.01);
                                 }else if(value>=max_value_temp){
-                                    $("#value_activity").val(max_value_temp);
-                                }     
+                                    $("#value_activity_slider").val(max_value_temp);                                    
+                                } 
+                                
                             });
-                            $("#name_activity").val(rowData.dataNameActivity);
-                            $("#value_activity").val((rowData.dataValueActivityPercent).replace("%",""));
+                            $('#value_activity_input').on('change', function (event) {
+                                var value = event.args.value;
+                                $("#value_activity_slider").val(value);
+                                if(value==0){
+                                    $("#value_activity_input").val(0.01);
+                                    $("#value_activity_slider").val(0.01);
+                                }else if(value>=max_value_temp){
+                                    $("#value_activity_input").val(max_value_temp);
+                                } 
+                                
+                            });
+                            $(".value_activity").each(function (){
+                                $(this).val((rowData.dataValueActivity));
+                            });
+                            $("#name_activity").val(rowData.dataNameActivity);                            
                             $("#activity_description").val(rowData.dataDescriptionActivity);
                             $("#name_activity").removeClass("error");
                             $("#activity_description").removeClass("error");
@@ -748,7 +788,7 @@
         $('#jqxWindowAddActivities').on('close', function (event) { 
             $("#name_activity").val("");
             $("#activity_description").val("");
-            $('#value_activity').off('change');
+            $('#value_activity_slider').off('change');
         }); 
         function loadTableRegisterActivitiesHistory(dataAdapter){
             $("#tableRegisterActivitiesHistory").jqxDataTable({
@@ -963,7 +1003,7 @@
             }else{
                 url = "../serviceActivities?update&&pkActivity="+$("#pkActivity").val();
             }
-            if(($("#name_activity").val()!=="")&&($("#value_activity").val()>=0.01)){
+            if(($("#name_activity").val()!=="")&&($("#value_activity_slider").val()>=0.01)){
                 $("#name_activity").removeClass("error");
                 $.ajax({
                     //Send the paramethers to servelt
@@ -974,7 +1014,7 @@
                         "pkWorkPlanning": $("#pkWorkPlannig").val(), 
                         "pkScaleEvaluation": itemScaleEvaluation.value,
                         "nameActivity": $("#name_activity").val(),
-                        "valueActivity": convertionInverseToFix($("#value_activity").val()),
+                        "valueActivity": convertionInverseToFix($("#value_activity_slider").val()),
                         "descriptionActivity": $("#activity_description").val()
                     },
                     beforeSend: function (xhr) {
@@ -996,30 +1036,38 @@
                 }
             }
         });
-        $('#value_activity').jqxSlider({
+                
+        $("#name_activity").jqxInput({theme: theme, placeHolder: "Nombre de la actividad", height: 28, width: 200, minLength: 1});
+        $('#value_activity_slider').jqxSlider({
             theme:"",
             width:"450px",
             height:"10px",
             mode:'fixed',
-            max: 100,
             tooltip: true,
             tooltipPosition: "far",
-            step:1,
-            ticksFrequency: 10,
+            step: 0.01,
+            ticksFrequency: 1,
             showTickLabels: true,
             ticksPosition:'bottom',
             tickLabelFormatFunction: function (value) {
-                return value+"%";
+                return (parseFloat(value).toFixed(2));
             },
             tooltipFormatFunction: function(value){
-                return value+"%";
+                return (parseFloat(value).toFixed(2));
             }
-        });        
-        $("#name_activity").jqxInput({theme: theme, placeHolder: "Nombre de la actividad", height: 28, width: 200, minLength: 1});
-        $("#value_activity, #name_activity").css("display","inline-flex");
+        }); 
+        $("#value_activity_input").jqxNumberInput({ 
+            width: '60px', 
+            height: '25px', 
+            inputMode: 'simple', 
+            spinButtons: true,
+            digits:1,
+            min:0
+        });
+        $("#value_activity_slider, #name_activity").css("display","inline-flex");
         $('#jqxWindowAddActivities').jqxWindow({
             theme: theme,
-            height: 350,
+            height: 400,
             width: 500,
             animationType: 'slide',
             resizable: false,
@@ -1164,11 +1212,15 @@
                     <input type="text" id="name_activity" name="name_activity"/>
                 </div>
                 <br>
-                <div class="form-group col-xs-5 input-prepend" style="width: 200px">
-                    <label class="label-row" for="value_activity">Valor</label><br> 
-                    <div id="value_activity" name="value_activity"></div>
+                <div class="form-group col-xs-5 input-prepend">
+                    <label class="label-row" for="value_activity_slider">Valor</label><br> 
+                    <div class="value_activity" id="value_activity_input" name="value_activity_input"></div><br>
+                    <div class="value_activity" id="value_activity_slider" name="value_activity_slider"></div>
                 </div>
                 <img id="pictureAddActivities" src="../content/pictures-system/add-activity.png" style="position: absolute; right: 30px; top: 10px;"/>
+                <div class="form-group col-xs-12 input-prepend">
+                    <label class="label-row" for="value_activity_percent">Porcentaje: <span id="value_activity_percent">100%</span></label>   
+                </div>
                 <div class="form-group col-xs-12 input-prepend">
                     <label class="label-row" for="activity_description">Descripción</label><br>
                     <textarea id="activity_description" style="resize: none; width: 450px" class="form-control" rows="2"></textarea>
