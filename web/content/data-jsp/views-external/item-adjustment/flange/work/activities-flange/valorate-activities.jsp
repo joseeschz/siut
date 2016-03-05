@@ -389,7 +389,7 @@
                         container.append(deleteButton);
                         container.append(exportButton);
 
-                        container.append(infoButton);
+                        //container.append(infoButton);
                         container.append(showButton);
                         container.append(settingsButton);
                     
@@ -640,28 +640,23 @@
                     });
                     
                     addButton.click(function (event) {
-                        if (!addButton.jqxButton('disabled')) { 
-                            
+                        if (!addButton.jqxButton('disabled')) {                             
                             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
                             disponibilityValueByWorkPlanning();
-                            var table = $("#contentTRegisterActivities");
                             $("#name_activity").val("");
                             $("#activity_description").val("");
                             $("#titleAddActivities").text("Nuevo");
                             $("#okAdd").val("Agregar");
                             $("#pictureAddActivities").attr("src","../content/pictures-system/add-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
-                            //maxValScale();
                             var val_max_scale = 0;                            
                             val_max_scale = max_value_disponibility;
                             var val_max_scale_percent = parseFloat(parseFloat((val_max_scale*100/varMaxValScale))).toFixed(2);
                             if(val_max_scale_percent==="100.00"){
                                 val_max_scale_percent=100;
                             }
-                            console.log(varMaxValScale);
                             if($("#typeInput").is(":checked")){
-                                $('#value_activity').jqxNumberInput('destroy');
-                                $("#contentNumberInput").html("<div id='value_activity'></div>");
+                                $("#contentNumberInput").html('<div class="value_activity" id="value_activity" name="value_activity"></div>');
                                 $("#value_activity").jqxNumberInput({ 
                                     width: '60px', 
                                     height: '25px', 
@@ -669,61 +664,86 @@
                                     spinButtons: true,
                                     digits:1,
                                     min:0.01,
-                                    max: varMaxValScale
+                                    max: val_max_scale
                                 });
                                 $('#value_activity').off('change');
                                 $('#value_activity').on('change', function (event) {                                
                                     if(event.args){
-                                        var value = event.args.value;
-                                        if(value==0){
-                                            $("#value_activity").val(0.01);
-                                        }else if(value>=val_max_scale){
-                                            $("#value_activity").val(val_max_scale);
-                                        } 
+                                        var value = event.args.value; 
                                         val_max_scale_percent = parseFloat(parseFloat((value*100/varMaxValScale))).toFixed(2);
                                         if(val_max_scale_percent==="100.00"){
                                             val_max_scale_percent=100;
                                         }
                                         $("#value_activity_percent").text(val_max_scale_percent+"%");
+                                        $("#value_activity_label").text(value);
                                     }
                                 });
                                 $("#value_activity").val(val_max_scale);
                             }else{
-                            //        $('#value_activity_slider').jqxSlider({
-                            //            theme:"",
-                            //            width:"450px",
-                            //            height:"10px",
-                            //            mode:'fixed',
-                            //            tooltip: true,
-                            //            tooltipPosition: "far",
-                            //            step: 0.01,
-                            //            ticksFrequency: 1,
-                            //            showTickLabels: true,
-                            //            ticksPosition:'bottom',
-                            //            tickLabelFormatFunction: function (value) {
-                            //                return (parseFloat(value).toFixed(2));
-                            //            },
-                            //            tooltipFormatFunction: function(value){
-                            //                return (parseFloat(value).toFixed(2));
-                            //            }
-                            //        }); 
+                                var ticksFrequency = 0;
+                                $("#contentNumberInput").html('<div class="value_activity" id="value_activity" name="value_activity"></div>');
+                                if(varMaxValScale<=1){
+                                    ticksFrequency=0.1;
+                                }else{
+                                    ticksFrequency=0.5;
+                                }
+                                $('#value_activity').jqxSlider({
+                                    theme:"",
+                                    width:"450px",
+                                    height:"10px",
+                                    mode:'fixed',
+                                    tooltip: true,
+                                    tooltipPosition: "far",
+                                    step: 0.01,
+                                    ticksFrequency: ticksFrequency,
+                                    max: varMaxValScale,
+                                    showTickLabels: true,
+                                    ticksPosition:'bottom',
+                                    tickLabelFormatFunction: function (value) {
+                                        var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                        if(splitFunction[1]==="00"){
+                                            return splitFunction[0];
+                                        }else{
+                                            return (parseFloat(value).toFixed(2));
+                                        }
+                                    },
+                                    tooltipFormatFunction: function(value){
+                                        var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                        if(splitFunction[1]==="00"){
+                                            return splitFunction[0];
+                                        }else{
+                                            return (parseFloat(value).toFixed(2));
+                                        }
+                                    }
+                                }); 
+                                $('#value_activity').off('slide');
+                                $('#value_activity').on('slide', function (event) {
+                                    var value = event.args.value;                                    
+                                    value = parseFloat(value).toFixed(2);
+                                    if(value==0.00){
+                                        $("#value_activity").val(0.01);
+                                        value=0.01; 
+                                    }else if(value>=val_max_scale){
+                                        $("#value_activity").val(val_max_scale);  
+                                        value=val_max_scale; 
+                                    }
+                                    var splitFunction = (""+value).split(".");
+                                    if(splitFunction[1]==="00"){
+                                        value = splitFunction[0];
+                                    }else{
+                                        value = (parseFloat(value).toFixed(2));
+                                    } 
+                                    val_max_scale_percent = parseFloat(parseFloat((value*100/varMaxValScale))).toFixed(2);
+                                    if(val_max_scale_percent==="100.00"){
+                                        val_max_scale_percent=100;
+                                    }
+                                    $("#value_activity_percent").text(val_max_scale_percent+"%"); 
+                                    $("#value_activity_label").text(value);
+                                });
+                                $("#value_activity").val(val_max_scale);                                
                             }
-//                            $('#value_activity_slider').off('change');
-                            
-//                            $('#value_activity_slider').on('change', function (event) {
-//                                var value = event.args.value;
-//                                $("#value_activity").val(value);
-//                                if(value==0){
-//                                    $("#value_activity_slider").val(0.01);
-//                                    $("#value_activity").val(0.01);
-//                                }else if(value>=val_max_scale){
-//                                    $("#value_activity_slider").val(val_max_scale);                                    
-//                                } 
-//                                val_max_scale_percent = Math.round((value*100/varMaxValScale));
-//                                $("#value_activity_percent").text(val_max_scale_percent+"%");
-//                            });
-                            
                             $("#value_activity_percent").text(val_max_scale_percent+"%");
+                            $("#value_activity_label").text(val_max_scale);
                             $("#jqxWindowAddActivities").jqxWindow('open');
                         }
                     });
@@ -737,18 +757,108 @@
                             $("#pkActivity").val(rowId);
                             $("#pictureAddActivities").attr("src","../content/pictures-system/update-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
+                            var value_current = parseFloat(rowData.dataValueActivity);
                             var max_value_disponibility_temp = (parseFloat(rowData.dataValueActivity)+max_value_disponibility);
                             var val_max_scale_percent = parseFloat((parseFloat(rowData.dataValueActivity)*100/varMaxValScale)).toFixed(2);
                             if(val_max_scale_percent==="100.00"){
                                 val_max_scale_percent=100;
                             }
-                            console.log(max_value_disponibility_temp);
-                            $('#value_activity').jqxNumberInput({
-                                max: max_value_disponibility_temp
-                            });
+                            
+                            if($("#typeInput").is(":checked")){
+                                $("#contentNumberInput").html('<div class="value_activity" id="value_activity" name="value_activity"></div>');
+                                $("#value_activity").jqxNumberInput({ 
+                                    width: '60px', 
+                                    height: '25px', 
+                                    inputMode: 'simple', 
+                                    spinButtons: true,
+                                    digits:1,
+                                    min:0.01,
+                                    max: max_value_disponibility_temp
+                                });
+                                $('#value_activity').off('change');
+                                $('#value_activity').on('change', function (event) {                                
+                                    if(event.args){
+                                        var value = event.args.value; 
+                                        val_max_scale_percent = parseFloat(parseFloat((value*100/varMaxValScale))).toFixed(2);
+                                        if(val_max_scale_percent==="100.00"){
+                                            val_max_scale_percent=100;
+                                        }
+                                        $("#value_activity_percent").text(val_max_scale_percent+"%");
+                                        $("#value_activity_label").text(value);
+                                    }
+                                });
+                                $("#value_activity").val(value_current);
+                            }else{
+                                var ticksFrequency = 0;
+                                $("#contentNumberInput").html('<div class="value_activity" id="value_activity" name="value_activity"></div>');
+                                if(varMaxValScale<=1){
+                                    ticksFrequency=0.1;
+                                }else{
+                                    ticksFrequency=0.5;
+                                }
+                                $('#value_activity').jqxSlider({
+                                    theme:"",
+                                    width:"450px",
+                                    height:"10px",
+                                    mode:'fixed',
+                                    tooltip: true,
+                                    tooltipPosition: "far",
+                                    step: 0.01,
+                                    ticksFrequency: ticksFrequency,
+                                    max: varMaxValScale,
+                                    showTickLabels: true,
+                                    ticksPosition:'bottom',
+                                    tickLabelFormatFunction: function (value) {
+                                        var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                        if(splitFunction[1]==="00"){
+                                            return splitFunction[0];
+                                        }else{
+                                            return (parseFloat(value).toFixed(2));
+                                        }
+                                    },
+                                    tooltipFormatFunction: function(value){
+                                        var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                        if(splitFunction[1]==="00"){
+                                            return splitFunction[0];
+                                        }else{
+                                            return (parseFloat(value).toFixed(2));
+                                        }
+                                    }
+                                }); 
+                                $('#value_activity').off('slide');
+                                $('#value_activity').on('slide', function (event) {
+                                    var value = event.args.value;                                    
+                                    value = parseFloat(value).toFixed(2);
+                                    if(value==0.00){
+                                        $("#value_activity").val(0.01);
+                                        value=0.01; 
+                                    }else if(value>=max_value_disponibility_temp){
+                                        $("#value_activity").val(max_value_disponibility_temp);  
+                                        value=max_value_disponibility_temp; 
+                                    }
+                                    var splitFunction = (""+value).split(".");
+                                    if(splitFunction[1]==="00"){
+                                        value = splitFunction[0];
+                                    }else{
+                                        value = (parseFloat(value).toFixed(2));
+                                    } 
+                                    val_max_scale_percent = parseFloat(parseFloat((value*100/varMaxValScale))).toFixed(2);
+                                    if(val_max_scale_percent==="100.00"){
+                                        val_max_scale_percent=100;
+                                    }
+                                    $("#value_activity_percent").text(val_max_scale_percent+"%"); 
+                                    $("#value_activity_label").text(value);
+                                });
+                                $("#value_activity").val(value_current);                                
+                            }
+                            
+//                            console.log(max_value_disponibility_temp);
+//                            $('#value_activity').jqxNumberInput({
+//                                max: max_value_disponibility_temp
+//                            });
                             
 //                            $('#value_activity_slider').off('slide');
-                            $('#value_activity').off('change');
+//                            $('#value_activity').off('change');
 //                            $('#value_activity_slider').on('slide', function (event) {
 //                                var value = parseFloat(event.args.value);
 //                                console.log(value)
@@ -761,21 +871,17 @@
 //                                }                                 
 //                            });
                             
-                            $('#value_activity').on('change', function (event) {
-                                var value = parseFloat(event.args.value);
-                                val_max_scale_percent = parseFloat((value*100/varMaxValScale)).toFixed(2);
-                                if(val_max_scale_percent==="100.00"){
-                                    val_max_scale_percent=100;
-                                }
-                                $("#value_activity_percent").text(val_max_scale_percent+"%");
-                                
-                            });
-                            $(".value_activity").each(function (){
-                                
-                            });
-                            console.log(parseFloat(rowData.dataValueActivity))
+//                            $('#value_activity').on('change', function (event) {
+//                                var value = parseFloat(event.args.value);
+//                                val_max_scale_percent = parseFloat((value*100/varMaxValScale)).toFixed(2);
+//                                if(val_max_scale_percent==="100.00"){
+//                                    val_max_scale_percent=100;
+//                                }
+//                                $("#value_activity_percent").text(val_max_scale_percent+"%");
+//                            });
                             $("#value_activity").val(parseFloat(rowData.dataValueActivity));
                             $("#value_activity_percent").text(val_max_scale_percent+"%");
+                            $("#value_activity_label").text(rowData.dataValueActivity);
                             $("#name_activity").val(rowData.dataNameActivity);                            
                             $("#activity_description").val(rowData.dataDescriptionActivity);
                             $("#name_activity").removeClass("error");
@@ -1286,10 +1392,15 @@
                     <label class="label-row" for="value_activity">Valor</label><br> 
                     <div id="contentNumberInput">
                         <div class="value_activity" id="value_activity" name="value_activity"></div>
-                    </div><br>
+                    </div>
                 </div>
                 <img id="pictureAddActivities" src="../content/pictures-system/add-activity.png" style="position: absolute; right: 30px; top: 10px;"/>
-                <br><br>
+                <br>
+                <br>
+                <div class="form-group col-xs-12 input-prepend">
+                    <label class="label-row" for="value_activity_label">Valor: <span id="value_activity_label"></span></label>   
+                </div>
+                <br>
                 <div class="form-group col-xs-12 input-prepend">
                     <label class="label-row" for="value_activity_percent">Porcentaje: <span id="value_activity_percent"></span></label>   
                 </div>
