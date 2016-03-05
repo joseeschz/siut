@@ -3072,6 +3072,13 @@ of the horizontal scrollbar.*/
     background-position: center;
     background-size: 18px;
 }
+.jqx-icon-settings
+{
+    background-image: url('images/icon-settings.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 18px;
+}
 .jqx-icon-show-lock
 {
     background-image: url('images/icon-show-lock.png');

@@ -82,13 +82,13 @@ public class serviceActivities extends HttpServlet {
                     data.put("id", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
+                    data.put("dataNumActivity", listActivity.get(i).getFL_NUM());
                     data.put("dataNameActivity", listActivity.get(i).getFL_NAME_ACTIVITY());
                     data.put("dataDescriptionActivity", listActivity.get(i).getFL_DESCRIPTION());
                     data.put("dataCreationDate", listActivity.get(i).getFL_CREATION_DATE());
                     data.put("dataLastDateUpdate", listActivity.get(i).getFL_LAST_DATE_UPDATE());
-                    double roundOff = (double) Math.round(listActivity.get(i).getFL_VALUE_ACTIVITY() * 100) / 100;
-                    data.put("dataValueActivity", roundOff);
-                    data.put("dataValueActivityPercent", Math.round((listActivity.get(i).getFL_VALUE_ACTIVITY()*100/listActivity.get(i).getFL_MAX_VALUE())) +"%");
+                    data.put("dataValueActivity", listActivity.get(i).getFL_VALUE_ACTIVITY());
+                    data.put("dataValueActivityPercent",listActivity.get(i).getFL_VALUE_ACTIVITY_PERCENT());
                     data.put("dataPkScaleEvaluation", listActivity.get(i).getPK_SCALE_EVALUATION());
                     data.put("dataNameScale", listActivity.get(i).getFL_NAME_SCALE());
                     data.put("dataMaxValue", listActivity.get(i).getFL_MAX_VALUE());

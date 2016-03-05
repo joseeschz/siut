@@ -59,9 +59,11 @@ public class activitiesToGroupControl {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
+                    listActivitiesToGroup.setFL_NUM(res.getString("FL_NUM"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                    listActivitiesToGroup.setFL_VALUE_ACTIVITY_PERCENT(res.getString("FL_VALUE_ACTIVITY_PERCENT"));
                     listActivitiesToGroup.setFL_CREATION_DATE(res.getString("FL_CREATION_DATE"));
                     listActivitiesToGroup.setFL_LAST_DATE_UPDATE(res.getString("FL_LAST_UPDATE_DATE"));
                     listActivitiesToGroup.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));

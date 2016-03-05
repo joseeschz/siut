@@ -63,8 +63,6 @@
                         pkSemester = itemSemester.value;
                     }
                     createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, pkSemester, null, "#valorateActivitiesSubjectMatterFilter", true);
-                    var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-                    $("#tableRegisterActivities").jqxGrid({source: dataAdapter});
                 }
             });
             
@@ -113,8 +111,6 @@
                     }
                 }
             });  
-            var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-            loadTableRegisterActivities(dataAdapter);
             existWorkPlanning();
         }else{
             $("#addWorkPlannin").hide();
@@ -146,21 +142,15 @@
                         //This is if exits an error with the server internal can do server off, or page not found
                         alert("Error interno del servidor");
                     },
-                    success: function (data, textStatus, jqXHR) {
-                        varMaxValScale = data[0].dataMaxValue;
-                        //$('#value_activity_slider').children().remove();
-                        $('#value_activity_slider').jqxSlider({
-                            max: varMaxValScale
-                        });
-                        $('#value_activity_input').jqxNumberInput({
-                            max: varMaxValScale
-                        });
+                    success: function (data, textStatus, jqXHR) {                        
+                        varMaxValScale = parseFloat(data[0].dataMaxValue);
                         $("#valMaxScale").text(varMaxValScale+" = 100%");
                     }
                 });
             }
             return varMaxValScale;
-        }         
+        }     
+        maxValScale();
         function existWorkPlanning(){
             var exist=false;
             itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
@@ -170,6 +160,7 @@
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
             //alert();
             if(itemScaleEvaluation!==undefined){
+                maxValScale();
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",
@@ -201,38 +192,7 @@
                             $("#indications").text(indications);
                             $(".calendarInput").val(printDate);
                             var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-                            loadTableRegisterActivities(dataAdapter);
-                            if(data.dataRealized==="1"){
-                                //$("#block-activities").show();
-                                $(".jqx-icon-unlock").parent().show();
-                                if(data.dataRealizedBlock==="3"){
-                                    $(".jqx-icon-export").parent().show();
-                                }else{
-                                    $(".jqx-icon-export").parent().hide();
-                                }     
-                                $(".jqx-icon-plus").parent().hide();
-                                $(".jqx-icon-lock").parent().hide();
-                                $(".jqx-icon-delete").parent().hide();
-                                $(".jqx-icon-edit").parent().hide();                                
-                                $("#tableRegisterActivities").jqxGrid({selectionMode: "none",enableHover: false});
-                            }else{
-                                $("#addWorkPlannin").fadeIn("slow");
-                                $("#tableRegisterActivities").jqxGrid({selectionMode: "singleRow",enableHover: true});
-                                $(".jqx-icon-unlock").parent().hide();
-                                $(".jqx-icon-export").parent().hide();
-                                //$("#block-activities").hide();
-                                if(disponibilityValueByWorkPlanning()){
-                                    $(".jqx-icon-plus").parent().show();
-                                    $(".jqx-icon-lock").parent().hide();
-                                    //$("#block-activities").hide();
-                                }else{
-                                    $(".jqx-icon-plus").parent().hide();
-                                    $(".jqx-icon-lock").parent().show();
-                                    //$("#block-activities").hide();
-                                }
-                                $(".jqx-icon-delete").parent().show();
-                                $(".jqx-icon-edit").parent().show();
-                            }
+                            loadTableRegisterActivities(dataAdapter, data);                            
                             exist=true;
                         }else{
                             $("#addWorkPlannin").parent().fadeIn("slow");
@@ -242,7 +202,6 @@
                         }
                     }
                 });
-                maxValScale();
             }
             return exist;
         }
@@ -274,12 +233,10 @@
                         $("#contentTRegisterActivities").fadeIn();
                         $("#addWorkPlannin").hide();
                         $("#pkWorkPlannig").val(data.dataPkWorkPlanning);
-                        var dataAdapter = new $.jqx.dataAdapter(loadSource("today"));
-                        loadTableRegisterActivities(dataAdapter);
+                        existWorkPlanning();
                     }
                 }
             });
-            existWorkPlanning();
         });
         function loadSource(type){
             if(type==="history"){
@@ -299,9 +256,10 @@
                 pkMatter=null;
             }
             var ordersSource ={
-                dataFields: [
-                    { name: 'id', type:'int'},
+                datafields: [
+                    { name: 'dataPkActivity', type:'int'},
                     { name: 'dataProgresivNumber', type:'int'},
+                    { name: 'dataNumActivity', type: 'string' },
                     { name: 'dataNameActivity', type: 'string' },
                     { name: 'dataDescriptionActivity', type: 'string' },
                     { name: 'dataCreationDate', type: 'string' },
@@ -325,17 +283,11 @@
                         "fk_study_level": itemLevel.value, 
                         "fk_subject_matter": pkMatter, 
                         "fk_scale_evaluation": itemScaleEvaluation.value
-                },
-                addRow: function (rowID, rowData, position, commit) {   
-                },
-                updateRow: function (rowID, rowData, commit) {
-                },
-                deleteRow: function (rowID, commit) {  
                 }
             };
             return ordersSource;
         }
-        var max_value=0;
+        var max_value_disponibility=0;
         function disponibilityValueByWorkPlanning(){
             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
             var status;
@@ -357,109 +309,193 @@
                 },
                 success: function (data, textStatus, jqXHR) {  
                     if(data.dataResult>=0.01){
-                        max_value=data.dataResult;
+                        max_value_disponibility=parseFloat(data.dataResult);
                         status=true;
                     }else{
-                        max_value=0;
+                        max_value_disponibility=0;
                         status=false;
                     }
                 }
             });
             return status;
         }
-            
+        var container = $("<div class='container' style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+        var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+        var addButton = $(buttonTemplate);
+        var editButton = $(buttonTemplate);
+        var deleteButton = $(buttonTemplate);
+        var lockButton = $(buttonTemplate);
+        var unlockButton = $(buttonTemplate);
+        var settingsButton = $(buttonTemplate);
+        var showButton = $(buttonTemplate);
+        var exportButton = $(buttonTemplate);
+        var infoButton = $(buttonTemplate);
+        var rowIndexUnselect = null;
+        var rowIndex = null;
+        var rowId = null;
+        var rowData = null;
         //Tiene un evento que se almacena conforme cambias de pagina por lo que hace cargas por cada ves que hay un click anidado
-        var addButton;
-        function loadTableRegisterActivities(dataAdapter){
+        function loadTableRegisterActivities(dataAdapter, metadata){
+            
             $("#tableRegisterActivities").jqxGrid({
                 width: 590,
                 height:350,
-                selectionMode: "singleRow",
+                selectionmode: "singlerow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: true,
                 editable: false,
                 filterable: false,
-                showToolbar: true,
-                showStatusbar: true,
-                altRows: false,
-                autoRowHeight: true,
-                pagerButtonsCount: 5,
-                toolbarHeight: 35,
-                statusBarHeight: 45,
-                renderToolbar: function(toolBar){
+                showtoolbar: true,
+                showstatusbar: true,
+                altrows: false,
+                autorowheight: true,
+                pagerbuttonscount: 5,
+                toolbarheight: 35,
+                statusbarheight: 45,
+                rendertoolbar: function(toolBar){
+                    addButton.off("click");
+                    editButton.off("click");
+                    deleteButton.off("click");
+                    lockButton.off("click");
+                    unlockButton.off("click");
+//                    settingsButton.off("click");
+                    showButton.off("click");
+                    exportButton.off("click");
+                    infoButton.off("click");
+                    $("#tableRegisterActivities").jqxGrid('clearselection');
+                    $("#tableRegisterActivities").off('rowselect');
+                    $("#tableRegisterActivities").off('rowunselect');
                     var themeRenderToolbar = "";
                     var toTheme = function (className) {
                         if (themeRenderToolbar === "") return className;
                         return className + " " + className + "-" + themeRenderToolbar;
                     };
                     // appends buttons to the status bar.
-                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-                    addButton = $(buttonTemplate);
-                    var editButton = $(buttonTemplate);
-                    var deleteButton = $(buttonTemplate);
-                    var lockButton = $(buttonTemplate);
-                    var unlockButton = $(buttonTemplate);
-                    var showButton = $(buttonTemplate);
-                    var exportButton = $(buttonTemplate);
-                    var infoButton = $(buttonTemplate);
-//                    editButton.hide();
-//                    deleteButton.hide();
-//                    lockButton.hide();
-//                    unlockButton.hide();
-//                    exportButton.hide();
-                    container.append(addButton);
-                    container.append(lockButton);
-                    container.append(unlockButton);
-                    container.append(editButton);
-                    container.append(deleteButton);
-                    container.append(exportButton);
-                    
-                    container.append(infoButton);
-                    container.append(showButton);   
                     
                     
-                    var rowIndex = null;
-                    var rowId = null;
-                    var rowData = null;
-                    toolBar.append(container);
-                   
-                    addButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
-                    addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
-                    addButton.jqxTooltip({ position: 'bottom', content: "Agregar"});
                     
-                    unlockButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
-                    unlockButton.find('div:first').addClass(toTheme('jqx-icon-unlock'));
-                    unlockButton.jqxTooltip({ position: 'bottom', content: "Abrir actividades"});
+                    if($(".container").length==0){
+                        addButton.hide();
+                        editButton.hide();
+                        deleteButton.hide();
+                        lockButton.hide();
+                        unlockButton.hide();
+                        exportButton.hide();
+                        container.append(addButton);
+                        container.append(lockButton);
+                        container.append(unlockButton);
+                        container.append(editButton);
+                        container.append(deleteButton);
+                        container.append(exportButton);
+
+                        container.append(infoButton);
+                        container.append(showButton);
+                        container.append(settingsButton);
                     
-                    lockButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
-                    lockButton.find('div:first').addClass(toTheme('jqx-icon-lock'));
-                    lockButton.jqxTooltip({ position: 'bottom', content: "Cerrar actividades"});
+                        toolBar.append(container);
+                        
+                        addButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
+                        addButton.find('div:first').addClass(toTheme('jqx-icon-plus'));
+                        addButton.jqxTooltip({ position: 'bottom', content: "Agregar"});
+
+                        unlockButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
+                        unlockButton.find('div:first').addClass(toTheme('jqx-icon-unlock'));
+                        unlockButton.jqxTooltip({ position: 'bottom', content: "Abrir actividades"});
+
+                        lockButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
+                        lockButton.find('div:first').addClass(toTheme('jqx-icon-lock'));
+                        lockButton.jqxTooltip({ position: 'bottom', content: "Cerrar actividades"});
+
+                        editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: true,  height: 25, width: 25 });
+                        editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
+                        editButton.jqxTooltip({ position: 'bottom', content: "Editar"});
+
+                        deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: true,  height: 25, width: 25 });
+                        deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
+                        deleteButton.jqxTooltip({ position: 'bottom', content: "Eliminar"});
+
+                        exportButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
+                        exportButton.find('div:first').addClass(toTheme('jqx-icon-export'));
+                        exportButton.jqxTooltip({ position: 'bottom', content: "Exportar a pdf"});
+                        exportButton.attr("id","exportButton");
+
+                        infoButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 25 });
+                        infoButton.find('div:first').addClass(toTheme('jqx-icon-info'));
+                        infoButton.css({"float":"right","cursor":"pointer"});
+                        infoButton.jqxTooltip({ position: 'bottom', content: "Información"});
+
+                        showButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 25 });
+                        showButton.find('div:first').addClass(toTheme('jqx-icon-show'));
+                        showButton.css({"float":"right","cursor":"pointer"});
+                        showButton.jqxTooltip({ position: 'bottom', content: "Agregar observaciones"});
+                        showButton.attr("id","showButton");   
+                        
+                        settingsButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 25 });
+                        settingsButton.find('div:first').addClass(toTheme('jqx-icon-settings'));
+                        settingsButton.css({"float":"right","cursor":"pointer"});
+                        settingsButton.jqxTooltip({ position: 'bottom', content: "Ajustes"});
+                        settingsButton.attr("id","settingsButton");
+                        $("#popoverSettings").jqxPopover({
+                            offset: {left: -50, top:0}, 
+                            arrowOffsetValue: 50, 
+                            title: "Ajustes", 
+                            showCloseButton: true,
+                            selector: settingsButton,
+                            width: 150
+                        });
+                        if(typeof (Storage) !=="undefined"){
+                            if(localStorage.getItem("wayInput")==="typeInput"){                                
+                                $("#typeInput").prop("checked", true);
+                            }else{
+                                $("#typeSlider").prop("checked", true);
+                            }
+                        }else{
+                            $("#wayInput").prop("checked", true);
+                        }
+                        $("[name=wayInput]").off("change");
+                        $("[name=wayInput]").change(function (){
+                            if($(this).attr("id")==="typeInput"){
+                                localStorage.setItem("wayInput", "typeInput"); 
+                            }else{
+                                localStorage.setItem("wayInput", "typeSlider");
+                            }
+                            $("#popoverSettings").jqxPopover('close');
+                        });
+                    }else{
+                        addButton.jqxButton({ disabled: false });
+                        deleteButton.jqxButton({ disabled: true });
+                        editButton.jqxButton({ disabled: true });
+                    }
+                    if(metadata.dataRealized==="1"){
+                        unlockButton.show();
+                        if(metadata.dataRealizedBlock==="3"){
+                            exportButton.show();
+                        }else{
+                            exportButton.hide();
+                        }  
+                        addButton.hide();
+                        lockButton.hide();
+                        deleteButton.hide();     
+                        editButton.hide();
+                        $("#tableRegisterActivities").jqxGrid({selectionMode: "none",enableHover: false});
+                    }else{
+                        $("#addWorkPlannin").fadeIn("slow");
+                        $("#tableRegisterActivities").jqxGrid({enableHover: true});
+                        unlockButton.hide();
+                        exportButton.hide();
+                        if(disponibilityValueByWorkPlanning()){
+                            addButton.show();
+                            lockButton.hide();
+                            
+                        }else{
+                            addButton.hide();
+                            lockButton.show();
+                        }
+                        deleteButton.show();
+                        editButton.show();
+                    }
                     
-                    editButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    editButton.find('div:first').addClass(toTheme('jqx-icon-edit'));
-                    editButton.jqxTooltip({ position: 'bottom', content: "Editar"});
-                    
-                    deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
-                    deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
-                    deleteButton.jqxTooltip({ position: 'bottom', content: "Eliminar"});
-                    
-                    exportButton.jqxButton({cursor: "pointer", enableDefault: false,  height: 25, width: 25 });
-                    exportButton.find('div:first').addClass(toTheme('jqx-icon-export'));
-                    exportButton.jqxTooltip({ position: 'bottom', content: "Exportar a pdf"});
-                    exportButton.attr("id","exportButton");
-                    
-                    infoButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
-                    infoButton.find('div:first').addClass(toTheme('jqx-icon-info'));
-                    infoButton.css({"float":"right","cursor":"pointer"});
-                    infoButton.jqxTooltip({ position: 'bottom', content: "Información"});
-                    
-                    showButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
-                    showButton.find('div:first').addClass(toTheme('jqx-icon-show'));
-                    showButton.css({"float":"right","cursor":"pointer"});
-                    showButton.jqxTooltip({ position: 'bottom', content: "Agregar observaciones"});
-                    showButton.attr("id","showButton");                    
                     var updateButtons = function (action) {
                         switch (action) {
                             case "Select":
@@ -467,26 +503,30 @@
                                 deleteButton.jqxButton({ disabled: false });
                                 editButton.jqxButton({ disabled: false });
                                 //updateButton.jqxButton({ disabled: true });
-                                break;
+                            break;
                             case "Unselect":
-                                addButton.jqxButton({ disabled: false });
-                                deleteButton.jqxButton({ disabled: true });
-                                editButton.jqxButton({ disabled: true });
-                                //updateButton.jqxButton({ disabled: true });
-                                break;
+                                if(rowIndex==rowIndexUnselect){
+                                    addButton.jqxButton({ disabled: false });
+                                    deleteButton.jqxButton({ disabled: true });
+                                    editButton.jqxButton({ disabled: true });
+                                    //updateButton.jqxButton({ disabled: true });
+                                }
+                            break;
                         }
-                    };
+                    }; 
+                    $("#tableRegisterActivities").on('rowunselect', function (event) {
+                        rowIndexUnselect=event.args.rowindex;
+                        updateButtons('Unselect');
+                    }); 
                     $("#tableRegisterActivities").on('rowselect', function (event) {
                         var args = event.args;
-                        rowIndex = args.index;
-                        rowId=args.row;
-                        rowId=rowId.id;
+                        rowIndex = args.rowindex;   
                         rowData=args.row;
+                        rowId=rowData.dataPkActivity;
                         updateButtons('Select');
                     });
-                    $("#tableRegisterActivities").on('rowunselect', function (event) {
-                        updateButtons('Unselect');
-                    });                    
+                    
+                                       
                     lockButton.click(function () {
                         if (!lockButton.jqxButton('disabled')){
                             updateButtons('lockButton');
@@ -544,7 +584,7 @@
                         }
                     });
                     
-                    unlockButton.click(function () {
+                    unlockButton.click(function () {                        
                         if (!lockButton.jqxButton('disabled')){
                             updateButtons('unlockButton');
                             $.ajax({
@@ -601,6 +641,7 @@
                     
                     addButton.click(function (event) {
                         if (!addButton.jqxButton('disabled')) { 
+                            
                             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
                             disponibilityValueByWorkPlanning();
                             var table = $("#contentTRegisterActivities");
@@ -610,43 +651,85 @@
                             $("#okAdd").val("Agregar");
                             $("#pictureAddActivities").attr("src","../content/pictures-system/add-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
+                            //maxValScale();
                             var val_max_scale = 0;                            
-                            val_max_scale = max_value;
-                            $('#value_activity_slider').off('change');
-                            $('#value_activity_input').off('change');
-                            $('#value_activity_slider').on('change', function (event) {
-                                var value = event.args.value;
-                                $("#value_activity_input").val(value);
-                                if(value==0){
-                                    $("#value_activity_slider").val(0.01);
-                                    $("#value_activity_input").val(0.01);
-                                }else if(value>=val_max_scale){
-                                    $("#value_activity_slider").val(val_max_scale);                                    
-                                } 
-                                
-                                $("#value_activity_percent").text();
-                            });
-                            $('#value_activity_input').on('change', function (event) {
-                                var value = event.args.value;
-                                $("#value_activity_slider").val(value);
-                                if(value==0){
-                                    $("#value_activity_input").val(0.01);
-                                    $("#value_activity_slider").val(0.01);
-                                }else if(value>=val_max_scale){
-                                    $("#value_activity_input").val(val_max_scale);
-                                } 
-                                
-                            });
-                            $(".value_activity").each(function (){
-                                $(this).val(val_max_scale);
-                            });
+                            val_max_scale = max_value_disponibility;
+                            var val_max_scale_percent = parseFloat(parseFloat((val_max_scale*100/varMaxValScale))).toFixed(2);
+                            if(val_max_scale_percent==="100.00"){
+                                val_max_scale_percent=100;
+                            }
+                            console.log(varMaxValScale);
+                            if($("#typeInput").is(":checked")){
+                                $('#value_activity').jqxNumberInput('destroy');
+                                $("#contentNumberInput").html("<div id='value_activity'></div>");
+                                $("#value_activity").jqxNumberInput({ 
+                                    width: '60px', 
+                                    height: '25px', 
+                                    inputMode: 'simple', 
+                                    spinButtons: true,
+                                    digits:1,
+                                    min:0.01,
+                                    max: varMaxValScale
+                                });
+                                $('#value_activity').off('change');
+                                $('#value_activity').on('change', function (event) {                                
+                                    if(event.args){
+                                        var value = event.args.value;
+                                        if(value==0){
+                                            $("#value_activity").val(0.01);
+                                        }else if(value>=val_max_scale){
+                                            $("#value_activity").val(val_max_scale);
+                                        } 
+                                        val_max_scale_percent = parseFloat(parseFloat((value*100/varMaxValScale))).toFixed(2);
+                                        if(val_max_scale_percent==="100.00"){
+                                            val_max_scale_percent=100;
+                                        }
+                                        $("#value_activity_percent").text(val_max_scale_percent+"%");
+                                    }
+                                });
+                                $("#value_activity").val(val_max_scale);
+                            }else{
+                            //        $('#value_activity_slider').jqxSlider({
+                            //            theme:"",
+                            //            width:"450px",
+                            //            height:"10px",
+                            //            mode:'fixed',
+                            //            tooltip: true,
+                            //            tooltipPosition: "far",
+                            //            step: 0.01,
+                            //            ticksFrequency: 1,
+                            //            showTickLabels: true,
+                            //            ticksPosition:'bottom',
+                            //            tickLabelFormatFunction: function (value) {
+                            //                return (parseFloat(value).toFixed(2));
+                            //            },
+                            //            tooltipFormatFunction: function(value){
+                            //                return (parseFloat(value).toFixed(2));
+                            //            }
+                            //        }); 
+                            }
+//                            $('#value_activity_slider').off('change');
+                            
+//                            $('#value_activity_slider').on('change', function (event) {
+//                                var value = event.args.value;
+//                                $("#value_activity").val(value);
+//                                if(value==0){
+//                                    $("#value_activity_slider").val(0.01);
+//                                    $("#value_activity").val(0.01);
+//                                }else if(value>=val_max_scale){
+//                                    $("#value_activity_slider").val(val_max_scale);                                    
+//                                } 
+//                                val_max_scale_percent = Math.round((value*100/varMaxValScale));
+//                                $("#value_activity_percent").text(val_max_scale_percent+"%");
+//                            });
+                            
+                            $("#value_activity_percent").text(val_max_scale_percent+"%");
                             $("#jqxWindowAddActivities").jqxWindow('open');
                         }
                     });
                     
                     editButton.click(function () {
                         if (!editButton.jqxButton('disabled')) {
-                            updateButtons('edit');
                             itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
                             disponibilityValueByWorkPlanning();
                             $("#titleAddActivities").text("Actualizar");
@@ -654,34 +737,45 @@
                             $("#pkActivity").val(rowId);
                             $("#pictureAddActivities").attr("src","../content/pictures-system/update-activity.png");
                             $('#jqxWindowAddActivities').jqxWindow({position: 'center'});
-                            var max_value_temp = (parseFloat((rowData.dataValueActivity))+(max_value));
-                            $('#value_activity_slider').off('change');
-                            $('#value_activity_input').off('change');
-                            $('#value_activity_slider').on('change', function (event) {
-                                var value = event.args.value;
-                                $("#value_activity_input").val(value);
-                                if(value==0){
-                                    $("#value_activity_slider").val(0.01);
-                                    $("#value_activity_input").val(0.01);
-                                }else if(value>=max_value_temp){
-                                    $("#value_activity_slider").val(max_value_temp);                                    
-                                } 
-                                
+                            var max_value_disponibility_temp = (parseFloat(rowData.dataValueActivity)+max_value_disponibility);
+                            var val_max_scale_percent = parseFloat((parseFloat(rowData.dataValueActivity)*100/varMaxValScale)).toFixed(2);
+                            if(val_max_scale_percent==="100.00"){
+                                val_max_scale_percent=100;
+                            }
+                            console.log(max_value_disponibility_temp);
+                            $('#value_activity').jqxNumberInput({
+                                max: max_value_disponibility_temp
                             });
-                            $('#value_activity_input').on('change', function (event) {
-                                var value = event.args.value;
-                                $("#value_activity_slider").val(value);
-                                if(value==0){
-                                    $("#value_activity_input").val(0.01);
-                                    $("#value_activity_slider").val(0.01);
-                                }else if(value>=max_value_temp){
-                                    $("#value_activity_input").val(max_value_temp);
-                                } 
+                            
+//                            $('#value_activity_slider').off('slide');
+                            $('#value_activity').off('change');
+//                            $('#value_activity_slider').on('slide', function (event) {
+//                                var value = parseFloat(event.args.value);
+//                                console.log(value)
+//                                $("#value_activity").val(value);
+//                                if(value==0){
+//                                    $("#value_activity_slider").val(0.01);
+//                                    $("#value_activity").val(0.01);
+//                                }else if(value>=max_value_disponibility_temp){
+//                                    $("#value_activity_slider").val(max_value_disponibility_temp);  
+//                                }                                 
+//                            });
+                            
+                            $('#value_activity').on('change', function (event) {
+                                var value = parseFloat(event.args.value);
+                                val_max_scale_percent = parseFloat((value*100/varMaxValScale)).toFixed(2);
+                                if(val_max_scale_percent==="100.00"){
+                                    val_max_scale_percent=100;
+                                }
+                                $("#value_activity_percent").text(val_max_scale_percent+"%");
                                 
                             });
                             $(".value_activity").each(function (){
-                                $(this).val((rowData.dataValueActivity));
+                                
                             });
+                            console.log(parseFloat(rowData.dataValueActivity))
+                            $("#value_activity").val(parseFloat(rowData.dataValueActivity));
+                            $("#value_activity_percent").text(val_max_scale_percent+"%");
                             $("#name_activity").val(rowData.dataNameActivity);                            
                             $("#activity_description").val(rowData.dataDescriptionActivity);
                             $("#name_activity").removeClass("error");
@@ -692,17 +786,19 @@
                     
                     deleteButton.click(function () {
                         if (!deleteButton.jqxButton('disabled')){
-                            updateButtons('delete');
                             $("#messageWarning").text("¡Estas seguro de borrar este registro!");
                             $("#iconWarning").removeClass("warning").addClass("trash");
                             $("#jqxWindowWarningActivities").jqxWindow('open');
-                            $("#okWarning").click(function (){
+                            $("#okWarning").off("click");
+                            $("#okWarning").on("click",function (){
                                 $.ajax({
                                     //Send the paramethers to servelt
                                     type: "POST",
                                     async: false,
                                     url: "../serviceActivities?delete",
-                                    data:{'pkActivitiesToWork':rowId},
+                                    data:{
+                                        'pkActivitiesToWork': rowId
+                                    },
                                     beforeSend: function (xhr) {
                                     },
                                     error: function (jqXHR, textStatus, errorThrown) {
@@ -710,7 +806,6 @@
                                         alert("Error interno del servidor");
                                     },
                                     success: function (data, textStatus, jqXHR) {
-                                        $("#okWarning").unbind("click"); 
                                         $("#jqxWindowWarningActivities").jqxWindow('close');
                                         existWorkPlanning();
                                     }
@@ -762,7 +857,7 @@
                     });
                     
                 },
-                renderStatusBar: function (statusbar) {
+                renderstatusbar: function (statusbar) {
                     // appends buttons to the status bar.
                     var container = $("<div style='overflow: hidden; position: relative; margin: 5px;'></div>");
                     
@@ -775,217 +870,218 @@
                     
                 },
                 columns: [
-                    { text: 'NP', filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Actividad', dataField: 'dataNameActivity', width: 150 },
-                    { text: 'Descripción', dataField: 'dataDescriptionActivity', width: 295 },
-                    { text: 'Val.#', dataField: 'dataValueActivity', width: 50 },
-                    { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
+                    { text: 'No.', filterable: false, editable: false, dataField: 'dataNumActivity', width: 40 },
+                    { text: 'Actividad', datafield : 'dataNameActivity', width: 150 },
+                    { text: 'Descripción', datafield : 'dataDescriptionActivity', width: 280 },
+                    { text: 'Val.#', datafield : 'dataValueActivity', width: 50 },
+                    { text: 'Val.%', datafield : 'dataValueActivityPercent', width: 50 }
                 ]
             }); 
-            $("#tableRegisterActivities").jqxGrid('unselectRow', 0);
-            $("#tableRegisterActivities").jqxGrid('clearSelection');
+            
         }
         $('#jqxWindowAddActivities').on('close', function (event) { 
             $("#name_activity").val("");
             $("#activity_description").val("");
-            $('#value_activity_slider').off('change');
+//            $('#value_activity_slider').off('change');
         }); 
         function loadTableRegisterActivitiesHistory(dataAdapter){
-            $("#tableRegisterActivitiesHistory").jqxDataTable({
-                width: 585,
-                height:350,
-                selectionMode: "multipleRows",
-                enableHover: false,
-                localization: getLocalization("es"),
-                source: dataAdapter,
-                pageable: true,
-                editable: false,
-                filterable: false,
-                showToolbar: true,
-                altRows: true,
-                pagerButtonsCount: 10,
-                toolbarHeight: 35,
-                renderToolbar: function(toolBar){
-                    var theme = "";
-                    var toTheme = function (className) {
-                        if (theme === "") return className;
-                        return className + " " + className + "-" + theme;
-                    };
-                    // appends buttons to the status bar.
-                    itemPeriod = $('#valorateActivitiesPeriodHistoryFilter').jqxListBox('getSelectedItem');
-                    var period = itemPeriod.label;
-                    
-                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-                    var textTitle = $("<div style='position: relative; width: 20px; float: left; color: white; padding: 6px; font-weight: bold;' id='period'></div>");
-                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-                    var importItem = $(buttonTemplate);
-                    var importAll = $(buttonTemplate);
-                    var infoButton = $(buttonTemplate);
-          
-                    container.append(infoButton);
-                    container.append(importItem);
-                    container.append(importAll);
-                    container.append(textTitle);
-                    toolBar.append(container);
-                    
-                    infoButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
-                    infoButton.find('div:first').addClass(toTheme('jqx-icon-help'));
-                    infoButton.css({"float":"right","cursor":"pointer"});
-                    infoButton.jqxTooltip({ position: 'bottom', content: "Ayuda"});
-                    
-                    importItem.jqxButton({ cursor: "pointer", disabled: true,  height: 20, width: 25 });
-                    importItem.find('div:first').addClass(toTheme('jqx-icon-import-item'));
-                    importItem.css({"float":"right","cursor":"pointer"});
-                    importItem.jqxTooltip({ position: 'bottom', content: "Importar selección"});
-                    
-                    
-                    importAll.jqxButton({ cursor: "pointer", disabled: false,  height: 20, width: 25 });
-                    importAll.find('div:first').addClass(toTheme('jqx-icon-import-all'));
-                    importAll.css({"float":"right","cursor":"pointer"});
-                    importAll.jqxTooltip({ position: 'bottom', content: "Importar todo"});
-                                       
-                    
-                    $("#period").text("PERIODO: "+period);
-                    var updateButtons = function (action) {
-                        switch (action) {
-                            case "Select":
-                                importItem.jqxButton({disabled: false});
-                                break;
-                            case "Unselect":
-                                importItem.jqxButton({disabled: true});
-                                break;
-                        }
-                    };
-                    var rowIndex = null;
-                    var rowId = null;
-                    var rowData = null;
-                    $("#tableRegisterActivitiesHistory").on('rowSelect', function (event) {
-                        var args = event.args;
-                        rowIndex = args.index;
-                        rowId=args.row;
-                        rowId=rowId.id;
-                        rowData=args.row;
-                        updateButtons('Select');
-                    });
-                    $("#tableRegisterActivitiesHistory").on('rowUnselect', function (event) {
-                        updateButtons('Unselect');
-                    });
-                    $("#tableRegisterActivitiesHistory").on('rowEndEdit', function (event) {
-                        updateButtons('End Edit');
-                    });
-                    $("#tableRegisterActivitiesHistory").on('rowBeginEdit', function (event) {
-                        updateButtons('Edit');
-                    });
-                    infoButton.click(function () {
-                        if (!infoButton.jqxButton('disabled')){
-                            //$(".alert").removeClass("alert-success").addClass("alert-warning");
-                            //$(".alert").hide();
-                            $(".alert").fadeIn("slow");
-                            indicationsImpor = "La tabla de titulo periodo contiene los\n\
-                                                grupos de actividades que \n\
-                                                ya  fueron planeadas en periodos pasados. Puedes \n\
-                                                importar todo el grupo de actividades o bien solo alguna \n\
-                                                de ellas, pero debes de considerar que al importar al grupo \n\
-                                                a las nuevas actividades el progreso será remplazado y no podrá ser recuperado.";
-                            $("#indicationsx").text(indicationsImpor);
-                            updateButtons('infoButton');
-                        }
-                    });
-                    
-                    importItem.click(function (){
-                        var dataExternal;
-                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
-                        for (var i = 0; i < selection.length; i++) {
-                            // get a selected row.
-                            var rowData = selection[i];
-                            $("#tableRegisterActivitiesHistory").jqxDataTable('unselectRow', rowData.index);
-                            $.ajax({
-                                //Send the paramethers to servelt
-                                type: "POST",
-                                async: false,
-                                url: "../serviceActivities?insertImported",
-                                data:{
-                                    "pkWorkPlanning": $("#pkWorkPlannig").val(), 
-                                    "pkActivity": rowData.id
-                                },
-                                beforeSend: function (xhr) {
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    //This is if exits an error with the server internal can do server off, or page not found
-                                    alert("Error interno del servidor");
-                                },
-                                success: function (data, textStatus, jqXHR) {
-                                    dataExternal = data;
-                                    if(data==="fail"){
-                                        $("#titleOk").text("Denegado");
-                                        $("#pictureOk").removeClass("ok").addClass("fail");
-                                        $("#messageOk").text("No debes de pasar del valor establecido por cada saber.");
-                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-                                        $("#jqxWindowOk").jqxWindow('open');
-                                    }else if(data==="blocked"){
-                                        $("#titleOk").text("Denegado");
-                                        $("#pictureOk").removeClass("ok").addClass("fail");
-                                        $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
-                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-                                        $("#jqxWindowOk").jqxWindow('open');
-                                    }
-                                }
-                            });
-                        } 
-                        if(dataExternal!=="fail"&&dataExternal!=="blocked"){
-                           existWorkPlanning();  
-                        }
-                    });
-                    importAll.click(function (){
-                        $("#tableRegisterActivitiesHistory").jqxDataTable('selectRow', 0);
-                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
-                        for (var i = 0; i < selection.length; i++) {
-                            // get a selected row.
-                            var rowData = selection[i];
-                        }
-                        $.ajax({
-                            //Send the paramethers to servelt
-                            type: "POST",
-                            async: false,
-                            url: "../serviceActivities?insertImportedAll",
-                            data:{
-                                "pkWorkPlanningNew": $("#pkWorkPlannig").val(), 
-                                "pkWorkPlanningOld": rowData.dataPkWorkPlanning
-                            },
-                            beforeSend: function (xhr) {
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                //This is if exits an error with the server internal can do server off, or page not found
-                                alert("Error interno del servidor");
-                            },
-                            success: function (data, textStatus, jqXHR) {
-                                if(data==="blocked"){
-                                    $("#titleOk").text("Denegado");
-                                    $("#pictureOk").removeClass("ok").addClass("fail");
-                                    $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
-                                    $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-                                    $("#jqxWindowOk").jqxWindow('open');
-                                }else{
-                                    existWorkPlanning();   
-                                }
-                            }
-                        });
-                        $("#tableRegisterActivitiesHistory").jqxDataTable('clearSelection');
-                    });
-                },
-                ready: function(){
-                    
-                },
-                columns: [
-                    { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Actividad', dataField: 'dataNameActivity', width: 180 },
-                    { text: 'Descripción', dataField: 'dataDescriptionActivity' },
-                    { text: 'Val.#', dataField: 'dataValueActivity', width: 50 },
-                    { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
-                ]
-            }); 
-            $("#tableRegisterActivities").jqxGrid('unselectRow', 0);
-            $("#tableRegisterActivities").jqxGrid('clearSelection');
+//            $("#tableRegisterActivitiesHistory").off('rowSelect');
+//            $("#tableRegisterActivitiesHistory").off('rowUnselect');
+//            $("#tableRegisterActivitiesHistory").jqxDataTable({
+//                width: 585,
+//                height:350,
+//                selectionMode: "multipleRows",
+//                enableHover: false,
+//                localization: getLocalization("es"),
+//                source: dataAdapter,
+//                pageable: true,
+//                editable: false,
+//                filterable: false,
+//                showToolbar: true,
+//                altRows: true,
+//                pagerButtonsCount: 10,
+//                toolbarHeight: 35,
+//                renderToolbar: function(toolBar){
+//                    var theme = "";
+//                    var toTheme = function (className) {
+//                        if (theme === "") return className;
+//                        return className + " " + className + "-" + theme;
+//                    };
+//                    // appends buttons to the status bar.
+//                    itemPeriod = $('#valorateActivitiesPeriodHistoryFilter').jqxListBox('getSelectedItem');
+//                    var period = itemPeriod.label;
+//                    
+//                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+//                    var textTitle = $("<div style='position: relative; width: 20px; float: left; color: white; padding: 6px; font-weight: bold;' id='period'></div>");
+//                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+//                    var importItem = $(buttonTemplate);
+//                    var importAll = $(buttonTemplate);
+//                    var infoButton = $(buttonTemplate);
+//          
+//                    container.append(infoButton);
+//                    container.append(importItem);
+//                    container.append(importAll);
+//                    container.append(textTitle);
+//                    toolBar.append(container);
+//                    
+//                    infoButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
+//                    infoButton.find('div:first').addClass(toTheme('jqx-icon-help'));
+//                    infoButton.css({"float":"right","cursor":"pointer"});
+//                    infoButton.jqxTooltip({ position: 'bottom', content: "Ayuda"});
+//                    
+//                    importItem.jqxButton({ cursor: "pointer", disabled: true,  height: 20, width: 25 });
+//                    importItem.find('div:first').addClass(toTheme('jqx-icon-import-item'));
+//                    importItem.css({"float":"right","cursor":"pointer"});
+//                    importItem.jqxTooltip({ position: 'bottom', content: "Importar selección"});
+//                    
+//                    
+//                    importAll.jqxButton({ cursor: "pointer", disabled: false,  height: 20, width: 25 });
+//                    importAll.find('div:first').addClass(toTheme('jqx-icon-import-all'));
+//                    importAll.css({"float":"right","cursor":"pointer"});
+//                    importAll.jqxTooltip({ position: 'bottom', content: "Importar todo"});
+//                                       
+//                    
+//                    $("#period").text("PERIODO: "+period);
+//                    var updateButtons = function (action) {
+//                        switch (action) {
+//                            case "Select":
+//                                importItem.jqxButton({disabled: false});
+//                                break;
+//                            case "Unselect":
+//                                importItem.jqxButton({disabled: true});
+//                                break;
+//                        }
+//                    };
+//                    var rowIndex = null;
+//                    var rowId = null;
+//                    var rowData = null;
+//                    $("#tableRegisterActivitiesHistory").on('rowSelect', function (event) {
+//                        var args = event.args;
+//                        rowIndex = args.index;
+//                        rowId=args.row;
+//                        rowId=rowId.id;
+//                        rowData=args.row;
+//                        updateButtons('Select');
+//                    });
+//                    $("#tableRegisterActivitiesHistory").on('rowUnselect', function (event) {
+//                        updateButtons('Unselect');
+//                    });
+//                    $("#tableRegisterActivitiesHistory").on('rowEndEdit', function (event) {
+//                        updateButtons('End Edit');
+//                    });
+//                    $("#tableRegisterActivitiesHistory").on('rowBeginEdit', function (event) {
+//                        updateButtons('Edit');
+//                    });
+//                    infoButton.click(function () {
+//                        if (!infoButton.jqxButton('disabled')){
+//                            //$(".alert").removeClass("alert-success").addClass("alert-warning");
+//                            //$(".alert").hide();
+//                            $(".alert").fadeIn("slow");
+//                            indicationsImpor = "La tabla de titulo periodo contiene los\n\
+//                                                grupos de actividades que \n\
+//                                                ya  fueron planeadas en periodos pasados. Puedes \n\
+//                                                importar todo el grupo de actividades o bien solo alguna \n\
+//                                                de ellas, pero debes de considerar que al importar al grupo \n\
+//                                                a las nuevas actividades el progreso será remplazado y no podrá ser recuperado.";
+//                            $("#indicationsx").text(indicationsImpor);
+//                            updateButtons('infoButton');
+//                        }
+//                    });
+//                    
+//                    importItem.click(function (){
+//                        var dataExternal;
+//                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
+//                        for (var i = 0; i < selection.length; i++) {
+//                            // get a selected row.
+//                            var rowData = selection[i];
+//                            $("#tableRegisterActivitiesHistory").jqxDataTable('unselectRow', rowData.index);
+//                            $.ajax({
+//                                //Send the paramethers to servelt
+//                                type: "POST",
+//                                async: false,
+//                                url: "../serviceActivities?insertImported",
+//                                data:{
+//                                    "pkWorkPlanning": $("#pkWorkPlannig").val(), 
+//                                    "pkActivity": rowData.id
+//                                },
+//                                beforeSend: function (xhr) {
+//                                },
+//                                error: function (jqXHR, textStatus, errorThrown) {
+//                                    //This is if exits an error with the server internal can do server off, or page not found
+//                                    alert("Error interno del servidor");
+//                                },
+//                                success: function (data, textStatus, jqXHR) {
+//                                    dataExternal = data;
+//                                    if(data==="fail"){
+//                                        $("#titleOk").text("Denegado");
+//                                        $("#pictureOk").removeClass("ok").addClass("fail");
+//                                        $("#messageOk").text("No debes de pasar del valor establecido por cada saber.");
+//                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
+//                                        $("#jqxWindowOk").jqxWindow('open');
+//                                    }else if(data==="blocked"){
+//                                        $("#titleOk").text("Denegado");
+//                                        $("#pictureOk").removeClass("ok").addClass("fail");
+//                                        $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
+//                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
+//                                        $("#jqxWindowOk").jqxWindow('open');
+//                                    }
+//                                }
+//                            });
+//                        } 
+//                        if(dataExternal!=="fail"&&dataExternal!=="blocked"){
+//                           existWorkPlanning();  
+//                        }
+//                    });
+//                    importAll.click(function (){
+//                        $("#tableRegisterActivitiesHistory").jqxDataTable('selectRow', 0);
+//                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
+//                        for (var i = 0; i < selection.length; i++) {
+//                            // get a selected row.
+//                            var rowData = selection[i];
+//                        }
+//                        $.ajax({
+//                            //Send the paramethers to servelt
+//                            type: "POST",
+//                            async: false,
+//                            url: "../serviceActivities?insertImportedAll",
+//                            data:{
+//                                "pkWorkPlanningNew": $("#pkWorkPlannig").val(), 
+//                                "pkWorkPlanningOld": rowData.dataPkWorkPlanning
+//                            },
+//                            beforeSend: function (xhr) {
+//                            },
+//                            error: function (jqXHR, textStatus, errorThrown) {
+//                                //This is if exits an error with the server internal can do server off, or page not found
+//                                alert("Error interno del servidor");
+//                            },
+//                            success: function (data, textStatus, jqXHR) {
+//                                if(data==="blocked"){
+//                                    $("#titleOk").text("Denegado");
+//                                    $("#pictureOk").removeClass("ok").addClass("fail");
+//                                    $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
+//                                    $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
+//                                    $("#jqxWindowOk").jqxWindow('open');
+//                                }else{
+//                                    existWorkPlanning();   
+//                                }
+//                            }
+//                        });
+//                        $("#tableRegisterActivitiesHistory").jqxDataTable('clearSelection');
+//                    });
+//                },
+//                ready: function(){
+//                    
+//                },
+//                columns: [
+//                    { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
+//                    { text: 'Actividad', dataField: 'dataNameActivity', width: 180 },
+//                    { text: 'Descripción', dataField: 'dataDescriptionActivity' },
+//                    { text: 'Val.#', dataField: 'dataValueActivity', width: 50 },
+//                    { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
+//                ]
+//            }); 
+//            $("#tableRegisterActivitiesHistory").jqxGrid('unselectRow', 0);
+//            $("#tableRegisterActivitiesHistory").jqxGrid('clearSelection');
         }
         
         $("#ok").click(function (){ 
@@ -1003,7 +1099,7 @@
             }else{
                 url = "../serviceActivities?update&&pkActivity="+$("#pkActivity").val();
             }
-            if(($("#name_activity").val()!=="")&&($("#value_activity_slider").val()>=0.01)){
+            if(($("#name_activity").val()!=="")&&($("#value_activity").val()>=0.01)){
                 $("#name_activity").removeClass("error");
                 $.ajax({
                     //Send the paramethers to servelt
@@ -1014,7 +1110,7 @@
                         "pkWorkPlanning": $("#pkWorkPlannig").val(), 
                         "pkScaleEvaluation": itemScaleEvaluation.value,
                         "nameActivity": $("#name_activity").val(),
-                        "valueActivity": convertionInverseToFix($("#value_activity_slider").val()),
+                        "valueActivity": parseFloat($("#value_activity").val()).toFixed(2),
                         "descriptionActivity": $("#activity_description").val()
                     },
                     beforeSend: function (xhr) {
@@ -1038,33 +1134,7 @@
         });
                 
         $("#name_activity").jqxInput({theme: theme, placeHolder: "Nombre de la actividad", height: 28, width: 200, minLength: 1});
-        $('#value_activity_slider').jqxSlider({
-            theme:"",
-            width:"450px",
-            height:"10px",
-            mode:'fixed',
-            tooltip: true,
-            tooltipPosition: "far",
-            step: 0.01,
-            ticksFrequency: 1,
-            showTickLabels: true,
-            ticksPosition:'bottom',
-            tickLabelFormatFunction: function (value) {
-                return (parseFloat(value).toFixed(2));
-            },
-            tooltipFormatFunction: function(value){
-                return (parseFloat(value).toFixed(2));
-            }
-        }); 
-        $("#value_activity_input").jqxNumberInput({ 
-            width: '60px', 
-            height: '25px', 
-            inputMode: 'simple', 
-            spinButtons: true,
-            digits:1,
-            min:0
-        });
-        $("#value_activity_slider, #name_activity").css("display","inline-flex");
+        $("#value_activity, #name_activity").css("display","inline-flex");
         $('#jqxWindowAddActivities').jqxWindow({
             theme: theme,
             height: 400,
@@ -1195,7 +1265,7 @@
             }
         });
         function convertionInverseToFix(value){
-            //console.log(value+"--"+max_value);
+            //console.log(value+"--"+max_value_disponibility);
             return (((value/10)*maxValScale())/10).toFixed(2);
         }
     });
@@ -1213,13 +1283,15 @@
                 </div>
                 <br>
                 <div class="form-group col-xs-5 input-prepend">
-                    <label class="label-row" for="value_activity_slider">Valor</label><br> 
-                    <div class="value_activity" id="value_activity_input" name="value_activity_input"></div><br>
-                    <div class="value_activity" id="value_activity_slider" name="value_activity_slider"></div>
+                    <label class="label-row" for="value_activity">Valor</label><br> 
+                    <div id="contentNumberInput">
+                        <div class="value_activity" id="value_activity" name="value_activity"></div>
+                    </div><br>
                 </div>
                 <img id="pictureAddActivities" src="../content/pictures-system/add-activity.png" style="position: absolute; right: 30px; top: 10px;"/>
+                <br><br>
                 <div class="form-group col-xs-12 input-prepend">
-                    <label class="label-row" for="value_activity_percent">Porcentaje: <span id="value_activity_percent">100%</span></label>   
+                    <label class="label-row" for="value_activity_percent">Porcentaje: <span id="value_activity_percent"></span></label>   
                 </div>
                 <div class="form-group col-xs-12 input-prepend">
                     <label class="label-row" for="activity_description">Descripción</label><br>
@@ -1231,6 +1303,21 @@
             <input type="button" id="okAdd" value="Agregar" style="margin-right: 10px" />
             <input type="button" id="cancelAdd" value="Cancelar" />
         </div>
+    </div>
+</div>
+
+<div id="popoverSettings">
+    <div style="color: olive;">
+        <label style="font-size: 14px; font-weight: bold">Tipo de entrada</label>
+        <br>
+        <label style="font-size: 12px">            
+            <input id="typeInput" type="radio" name="wayInput"/>
+            Caja númerica
+        </label>
+        <label style="font-size: 12px">           
+            <input id="typeSlider" type="radio" name="wayInput" />
+            Deslizador
+        </label>
     </div>
 </div>
 <div id='jqxWindowAddObservations' style="display: none">
@@ -1307,6 +1394,7 @@
         <div id="tableRegisterActivities"></div>
     </div>
 </div>
+<div id="jqxgrid"></div>
 <div style="width: 450px; margin-right: 5px; display: none">
     <div class="alert alert-success alert-dismissible" role="alert">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -1,6 +1,6 @@
 ﻿function getDemoTheme() {
     var theme = $("body").attr("data-bind");
-    var version="jqwidgets-ver4.0.0";
+    var version="jqwidgets-ver3.8.2";
     if (theme == null) {
         theme = '';
     }

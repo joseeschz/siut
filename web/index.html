@@ -10,11 +10,11 @@
             if(typeof (Storage) !=="undefined"){
                 if(eval(localStorage.getItem("rememberMe"))){
                     if(!eval(localStorage.getItem("session"))){
-                        window.location="login.html";                        
+                        window.location="alumnos/login.html";                        
                     }
                 }else{
                     if(!eval(sessionStorage.getItem("session"))){
-                        window.location="login.html";                        
+                        window.location="alumnos/login.html";                        
                     }
                 }                                 
             }else{
@@ -332,10 +332,10 @@
                 $("#signOut").click(function (){
                     if(eval(localStorage.getItem("rememberMe"))){
                         localStorage.setItem("session",false);
-                        window.location="login.html";
+                        window.location="alumnos/login.html";
                     }else{
                         sessionStorage.setItem("session",false);
-                        window.location="login.html";
+                        window.location="alumnos/login.html";
                     } 
                 });
                 var itemClickedId;
