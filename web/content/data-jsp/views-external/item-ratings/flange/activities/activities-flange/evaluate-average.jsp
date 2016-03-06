@@ -125,12 +125,12 @@
             createDropDownActivities("#calTeacherActivitiesFilter", [], false);
         }
         $("#popoverOptionDeleteEvaluated").jqxPopover({
-            offset: {left: -50, top:0}, 
-            arrowOffsetValue: 50, 
+            offset: {left: 0, top:0}, 
+            arrowOffsetValue: 0, 
             title: "Eliminar actividad!", 
             showCloseButton: true,
             selector: $("#deleteEvaluatedActivityPopover"),
-            width: 180
+            width: 250
         });
         $("#popoverOptionEvaluate").jqxPopover({
             offset: {left: -50, top:0}, 
@@ -162,7 +162,7 @@
             $('#tableRegisterCalActivities').jqxGrid('clearselection'); 
         });
         $("#evaluateActivity").click(function (){
-           var valItemCareer=0;
+            var valItemCareer=0;
             var valItemSemester=0;
             var valItemPeriod=0;
             var valItemGroup=0;
@@ -218,6 +218,49 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#popoverOptionEvaluate").jqxPopover("close");
+                    maxValActivity();
+                    loadTable();
+                }
+            }); 
+        });
+        $("#deleteActivity").click(function (){
+            var valItemPeriod=0;
+            var valItemGroup=0;
+            var valItemActivity=0;
+            itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+            itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            if(itemPeriod!==undefined){
+                valItemPeriod=itemPeriod.value;
+            }
+            if(itemGroup!==undefined){
+                valItemGroup=itemGroup.value;
+            }
+            if(itemActivity!==undefined){
+                valItemActivity=itemActivity.value;
+                $('#tableRegisterCalActivities').fadeIn("slow");
+            }else{
+                $('#tableRegisterCalActivities').hide();
+            }
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: true,
+                url: "../serviceActivitiesCalByStudents",
+                data:{
+                    "delete":"",
+                    "pkGroup": valItemGroup, 
+                    "pkActivity": valItemActivity, 
+                    "pkPeriod": valItemPeriod
+                },
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $("#popoverOptionDeleteEvaluated").jqxPopover("close");
                     maxValActivity();
                     loadTable();
                 }
@@ -464,7 +507,7 @@
                             inputMode: 'simple', 
                             spinButtons: true,
                             digits:1,
-                            min:0.01,
+                            min:0,
                             max: value_max
                         });
                         $('.dataValueObtaniedInput'+rows[i].id).hide();
@@ -987,7 +1030,8 @@
         evaluateActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
         deleteEvaluatedActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
         evaluateActivity.jqxButton({"height": 30, "width": 60, cursor: "pointer"});
-        deleteActivity.jqxButton({"height": 30, "width": 60, cursor: "pointer"});
+        deleteActivity.jqxButton({ cursor: "pointer", height: 20, width: 20 });
+        deleteActivity.jqxTooltip({ position: 'bottom', content: "Eliminar"});
         
         
         $("#tableRegisterCalActivities").on('contextmenu', function () {
@@ -1115,9 +1159,11 @@
 </div>
 <div id="popoverOptionDeleteEvaluated">
     <div style="color: olive;">
-        <label style="font-size: 14px; font-weight: bold">Eliminar actividad</label>
+        <label style="font-size: 12px;">Al borrar la evaluación de esta actividad se perdera la calificación de todo el grupo seleccionado.</label>
         <br>
-        <center><button id="deleteActivity">Eliminar</button></center>
+        <center><div id="deleteActivity" style="height: 28px; margin-left: 7px;">
+            <div class="jqx-icon-delete" style="height: 20px; width: 20px;"></div>
+            </div></center>
     </div>
 </div>
 <br><br><br>

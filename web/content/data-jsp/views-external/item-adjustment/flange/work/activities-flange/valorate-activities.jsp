@@ -8,6 +8,86 @@
     }
 </style>
 <script>
+(function ($) {
+    $.fn.extend({
+    // With every keystroke capitalize first letter of ALL words in the text
+    upperFirstAll: function() {
+        $(this).keyup(function(event) {
+            var box = event.target;
+            var txt = $(this).val();
+            var start = box.selectionStart;
+            var end = box.selectionEnd;
+
+            $(this).val(txt.toLowerCase().replace(/^(.)|(\s|\-)(.)/g,
+            function(c) {
+                return c.toUpperCase();
+            }));
+            box.setSelectionRange(start, end);
+        });
+        $(this).focusout(function(event) {
+            var box = event.target;
+            var txt = $(this).val();
+            var start = box.selectionStart;
+            var end = box.selectionEnd;
+
+            $(this).val(txt.toLowerCase().replace(/^(.)|(\s|\-)(.)/g,
+            function(c) {
+                return c.toUpperCase();
+            }));
+            box.setSelectionRange(start, end);
+        });
+        return this;
+    },
+
+    // With every keystroke capitalize first letter of the FIRST word in the text
+    upperFirst: function() {
+        $(this).keyup(function(event) {
+            var box = event.target;
+            var txt = $(this).val();
+            var start = box.selectionStart;
+            var end = box.selectionEnd;
+
+            $(this).val(txt.toLowerCase().replace(/^(.)/g,
+            function(c) {
+                return c.toUpperCase();
+            }));
+            box.setSelectionRange(start, end);
+        });
+        return this;
+    },
+
+    // Converts with every keystroke the hole text to lowercase
+    lowerCase: function() {
+        $(this).keyup(function(event) {
+            var box = event.target;
+            var txt = $(this).val();
+            var start = box.selectionStart;
+            var end = box.selectionEnd;
+
+            $(this).val(txt.toLowerCase());
+            box.setSelectionRange(start, end);
+        });
+        return this;
+    },
+
+    // Converts with every keystroke the hole text to uppercase
+    upperCase: function() {
+        $(this).keyup(function(event) {
+            var box = event.target;
+            var txt = $(this).val();
+            var start = box.selectionStart;
+            var end = box.selectionEnd;
+
+            $(this).val(txt.toUpperCase());
+            box.setSelectionRange(start, end);
+        });
+        return this;
+    }
+
+    });
+}(jQuery));
+</script>
+<script>
     $(document).ready(function () {
         var indications = "";
         var observations = "";
@@ -1240,6 +1320,7 @@
         });
                 
         $("#name_activity").jqxInput({theme: theme, placeHolder: "Nombre de la actividad", height: 28, width: 200, minLength: 1});
+        
         $("#value_activity, #name_activity").css("display","inline-flex");
         $('#jqxWindowAddActivities').jqxWindow({
             theme: theme,
@@ -1370,6 +1451,8 @@
                 $(this).addClass("error");
             }
         });
+        $("#name_activity").upperFirstAll();
+        $("#activity_description").upperFirstAll();      
         function convertionInverseToFix(value){
             //console.log(value+"--"+max_value_disponibility);
             return (((value/10)*maxValScale())/10).toFixed(2);
@@ -1385,7 +1468,7 @@
                 <div class="form-group col-xs-5 input-prepend">
                     <label class="label-row" for="name_activity">Actividad</label><br>
                     <span style="height: 20px" class="add-on"><i class="icon-certificate"></i></span> 
-                    <input type="text" id="name_activity" name="name_activity"/>
+                    <input type="text"  id="name_activity" name="name_activity"/>
                 </div>
                 <br>
                 <div class="form-group col-xs-5 input-prepend">

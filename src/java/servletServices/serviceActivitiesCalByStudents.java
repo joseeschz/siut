@@ -286,6 +286,12 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 double valueOptaniedEquivalent = Double.parseDouble(request.getParameter("valueOptaniedEquivalent"));
                 out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(updateTypeEval, pkActivityByStudent, valueOptanied, valueOptaniedEquivalent));
             }
+            if(request.getParameter("delete")!=null){
+                int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
+                int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                out.print(new activitiesByStudentsControl().DeleteActivitiesByStudents(pkGroup, pkActivity, pkPeriod));
+            }
         }
     }
 

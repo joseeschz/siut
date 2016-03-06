@@ -240,6 +240,22 @@ public class activitiesByStudentsControl {
         }   
         return request;
     }
+    public String DeleteActivitiesByStudents(int pkGroup, int pkActivity, int pkPeriod){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('delete', null, null, null, "+pkGroup+", null, "+pkPeriod+", "+pkActivity+", null, null)")) {
+                ps.executeUpdate();
+                request="Datos Borrados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
     public ArrayList<activitiesByStudentsModel> SelectWorkPlanning() throws InterruptedException{
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {

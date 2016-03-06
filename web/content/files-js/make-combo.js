@@ -692,7 +692,8 @@ function createDropDownActivities(selector, filterable, update){
         id: "id",
         datafields: [
             { name: 'dataPkActivity' },
-            { name: 'dataNameActivity' }
+            { name: 'dataNameActivity' },
+            { name: 'dataDescriptActivity'}
         ],
         url: "../serviceActivities?view",
         data:{
@@ -705,6 +706,7 @@ function createDropDownActivities(selector, filterable, update){
         },
         async: false
     };
+    var data = null;
     var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
     if(update){
         $(selector).jqxDropDownList('clearSelection');
@@ -718,9 +720,16 @@ function createDropDownActivities(selector, filterable, update){
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
             source: dataAdapterCareer, 
-            displayMember: "dataNameActivity", 
+            displayMember: "dataDescriptActivity", 
             valueMember: "dataPkActivity",
             width: 150
+//            renderer: function (index, label, value) {
+//                var datarecord = data[index];
+//                var imgurl = '../../images/' + label.toLowerCase() + '.png';
+//                var img = '<img height="50" width="45" src="' + imgurl + '"/>';
+//                var table = '<table style="min-width: 150px;"><tr><td style="width: 55px;" rowspan="2">' + img + '</td><td>' + datarecord.firstname + " " + datarecord.lastname + '</td></tr><tr><td>' + datarecord.title + '</td></tr></table>';
+//                return "";
+//            }
         }).css("display","inline-block");
     }
 }

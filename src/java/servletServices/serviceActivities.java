@@ -83,6 +83,7 @@ public class serviceActivities extends HttpServlet {
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataNumActivity", listActivity.get(i).getFL_NUM());
+                    data.put("dataDescriptActivity", (listActivity.get(i).getFL_NUM()+" | "+ listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase());
                     data.put("dataNameActivity", listActivity.get(i).getFL_NAME_ACTIVITY());
                     data.put("dataDescriptionActivity", listActivity.get(i).getFL_DESCRIPTION());
                     data.put("dataCreationDate", listActivity.get(i).getFL_CREATION_DATE());
