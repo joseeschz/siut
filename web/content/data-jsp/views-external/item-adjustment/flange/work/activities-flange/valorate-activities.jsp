@@ -1419,7 +1419,7 @@
 
 <div id="popoverSettings">
     <div style="color: olive;">
-        <label style="font-size: 14px; font-weight: bold">Tipo de entrada</label>
+        <label style="font-size: 12px; font-weight: bold">Tipo de entrada</label>
         <br>
         <label style="font-size: 12px">            
             <input id="typeInput" type="radio" name="wayInput"/>

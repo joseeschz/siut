@@ -3065,6 +3065,12 @@ of the horizontal scrollbar.*/
     background-repeat: no-repeat;
     background-position: center;
 }
+.jqx-icon-action
+{
+    background-image: url('images/icon-action.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .jqx-icon-show
 {
     background-image: url('images/icon-show.png');

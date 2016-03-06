@@ -208,11 +208,11 @@ public class activitiesByStudentsControl {
         }   
         return request;
     }
-    public String InsertActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
+    public String InsertActivitiesByStudents(int pt_value, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", null, null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+pt_value+", null)")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();

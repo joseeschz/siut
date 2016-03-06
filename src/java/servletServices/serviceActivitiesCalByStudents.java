@@ -258,13 +258,14 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                 out.close();
             }
             if(request.getParameter("insert")!=null){
+                int wayScaleEvaluation=Integer.parseInt(request.getParameter("wayScaleEvaluation"));
                 int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                 int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                 int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
                 int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                 int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                 int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                out.print(new activitiesByStudentsControl().InsertActivitiesByStudents(pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, pkPeriod));
+                out.print(new activitiesByStudentsControl().InsertActivitiesByStudents(wayScaleEvaluation, pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, pkPeriod));
             }
             if(request.getParameter("insertByStudent")!=null){
                 int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
