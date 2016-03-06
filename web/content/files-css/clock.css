@@ -20,7 +20,7 @@ and open the template in the editor.
     height: 100px;
     width: 100px;
     float: left;
-    top: -8px;
+    top: 0px;
 }
 #secA, #minA, #hourA {
     position: absolute;

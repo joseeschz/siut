@@ -12,9 +12,10 @@ package model;
 public class activitiesToGroupModel extends workPlanningModel{
     String PK_ACTIVITY="";
     String FL_NUM="";
+    String FL_EVALUATED="";
     String FL_NAME_ACTIVITY="";
     double FL_VALUE_ACTIVITY=0; 
-    String FL_VALUE_ACTIVITY_PERCENT=""; 
+    String FL_VALUE_ACTIVITY_PERCENT="";
 
     public String getPK_ACTIVITY() {
         return PK_ACTIVITY;
@@ -30,6 +31,14 @@ public class activitiesToGroupModel extends workPlanningModel{
 
     public void setFL_NUM(String FL_NUM) {
         this.FL_NUM = FL_NUM;
+    }
+
+    public String getFL_EVALUATED() {
+        return FL_EVALUATED;
+    }
+
+    public void setFL_EVALUATED(String FL_EVALUATED) {
+        this.FL_EVALUATED = FL_EVALUATED;
     }
 
     public String getFL_NAME_ACTIVITY() {

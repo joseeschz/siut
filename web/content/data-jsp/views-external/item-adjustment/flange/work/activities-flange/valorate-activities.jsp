@@ -932,33 +932,6 @@
                                 $("#value_activity").val(value_current);                                
                             }
                             
-//                            console.log(max_value_disponibility_temp);
-//                            $('#value_activity').jqxNumberInput({
-//                                max: max_value_disponibility_temp
-//                            });
-                            
-//                            $('#value_activity_slider').off('slide');
-//                            $('#value_activity').off('change');
-//                            $('#value_activity_slider').on('slide', function (event) {
-//                                var value = parseFloat(event.args.value);
-//                                console.log(value)
-//                                $("#value_activity").val(value);
-//                                if(value==0){
-//                                    $("#value_activity_slider").val(0.01);
-//                                    $("#value_activity").val(0.01);
-//                                }else if(value>=max_value_disponibility_temp){
-//                                    $("#value_activity_slider").val(max_value_disponibility_temp);  
-//                                }                                 
-//                            });
-                            
-//                            $('#value_activity').on('change', function (event) {
-//                                var value = parseFloat(event.args.value);
-//                                val_max_scale_percent = parseFloat((value*100/varMaxValScale)).toFixed(2);
-//                                if(val_max_scale_percent==="100.00"){
-//                                    val_max_scale_percent=100;
-//                                }
-//                                $("#value_activity_percent").text(val_max_scale_percent+"%");
-//                            });
                             $("#value_activity").val(parseFloat(rowData.dataValueActivity));
                             $("#value_activity_percent").text(val_max_scale_percent+"%");
                             $("#value_activity_label").text(rowData.dataValueActivity);
@@ -1058,9 +1031,9 @@
                 columns: [
                     { text: 'No.', filterable: false, editable: false, dataField: 'dataNumActivity', width: 40 },
                     { text: 'Actividad', datafield : 'dataNameActivity', width: 150 },
-                    { text: 'Descripción', datafield : 'dataDescriptionActivity', width: 280 },
-                    { text: 'Val.#', datafield : 'dataValueActivity', width: 50 },
-                    { text: 'Val.%', datafield : 'dataValueActivityPercent', width: 50 }
+                    { text: 'Descripción', datafield : 'dataDescriptionActivity', width: 250 },
+                    { text: 'Val.#', datafield : 'dataValueActivity', width: 60 },
+                    { text: 'Val.%', datafield : 'dataValueActivityPercent', width: 70 }
                 ]
             }); 
             

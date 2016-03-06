@@ -98,23 +98,17 @@
                 }
             });
             $("#calTeacherScaleEvaluationFilter").on('change',function (event){
-                itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
-                if(itemScaleEvaluation!==undefined){
-                    initDropDownActivities(true);
-                }else{
-                    createDropDownActivities("#calTeacherActivitiesFilter", [], true);
-                    $('#tableRegisterCalActivities').jqxGrid("clear");
+                if(event.args){
+                    itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
+                    if(itemScaleEvaluation!==undefined){
+                        initDropDownActivities(true);
+                    }else{
+                        createDropDownActivities("#calTeacherActivitiesFilter", [], true);
+                        $('#tableRegisterCalActivities').jqxGrid("clear");
+                    }
                 }
             });
-            $("#calTeacherActivitiesFilter").on('change',function (event){
-                if(itemActivity!==undefined){
-                    $('#tableRegisterCalActivities').fadeIn("slow");
-                    maxValActivity();
-                    loadTable();
-                }else{
-                    $('#tableRegisterCalActivities').hide();
-                }
-            });
+            
         }else{
             createDropDownCareerByTeacher(null ,"#registerCalFlangeCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#registerCalFlangePeriodFilter");
@@ -125,8 +119,8 @@
             createDropDownActivities("#calTeacherActivitiesFilter", [], false);
         }
         $("#popoverOptionDeleteEvaluated").jqxPopover({
-            offset: {left: 0, top:0}, 
-            arrowOffsetValue: 0, 
+            offset: {left: -80, top:0}, 
+            arrowOffsetValue: 80, 
             title: "Eliminar actividad!", 
             showCloseButton: true,
             selector: $("#deleteEvaluatedActivityPopover"),
@@ -218,8 +212,7 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#popoverOptionEvaluate").jqxPopover("close");
-                    maxValActivity();
-                    loadTable();
+                    initDropDownActivities(true);
                 }
             }); 
         });
@@ -260,9 +253,8 @@
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
+                    initDropDownActivities(true);
                     $("#popoverOptionDeleteEvaluated").jqxPopover("close");
-                    maxValActivity();
-                    loadTable();
                 }
             }); 
         });
@@ -669,7 +661,7 @@
                             tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th><th align="center">'+totalPercent+'%</th><th align="center" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
                         }else{
                             var dataValueObtaniedEquivalent = parseFloat(ordersSource.items[ia].dataValueObtaniedEquivalent).toFixed(1);
-                            trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
+                            trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+parseFloat((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale).toFixed(2)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
                             trOnTbody.appendTo(tbody); 
                             subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
                             subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
@@ -909,6 +901,8 @@
             if(itemSubjectMatter!==undefined){
                 valItemSubjectMatter=itemSubjectMatter.value;
             }
+            $("#calTeacherActivitiesFilter").off("change");
+            
             if(itemScaleEvaluation!==undefined){
                 exitWorkPlanning();
                 valItemScaleEvaluation=itemScaleEvaluation.value;
@@ -921,7 +915,20 @@
                 createDropDownActivities("#calTeacherActivitiesFilter", filtrableActivities, update);
                 itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem'); 
                 maxValActivity();
-            }            
+                loadTable();
+            }  
+            $("#calTeacherActivitiesFilter").on('change',function (event){
+                if(event.args){
+                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                    if(itemActivity!==undefined){
+                        $('#tableRegisterCalActivities').fadeIn("slow");
+                        maxValActivity();
+                        loadTable();
+                    }else{
+                        $('#tableRegisterCalActivities').hide();
+                    }
+                }
+            });
         }
         function maxValScale(pkScale){  
             var maxValScale=0;

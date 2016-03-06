@@ -151,7 +151,7 @@ if(session.getAttribute("logueado") == null){%>
         <body data-bind="greenUtsem">
             <div>
                 <!-- Fixed column top-->
-                <div id="culumna-top" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
+                <div id="culumna-top" class="">
                     <div id="content-clock">
                         <div id="clock-analogic">	
                             <div id="secA"></div>
@@ -217,13 +217,13 @@ if(session.getAttribute("logueado") == null){%>
                     </div>
                 </div>
                 <!-- Fixed column left -->
-                <div id="culumna-left" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
+                <div id="culumna-left" class="">
                     <div id="menu-despliegue" class="menu-despliegue-left"></div>
                 </div>
                 <!-- Fixed column bottom -->
-                <div id="culumna-bottom" class="jqx-tabs-headerWrapper jqx-tabs-header jqx-tabs-header-greenUtsem jqx-widget-header jqx-widget-header-greenUtsem jqx-rc-t jqx-rc-t-greenUtsem">
+                <div id="culumna-bottom" class="">
                     <span style="float: left; margin-left: 20px;">Sistema desarrollado por la Universidad Tecnológica del Sur del Estado de México.</span>
-                    <span style="float: right; margin-right: 20px;">siut© copyright 2015.</span>
+                    <span style="float: right; margin-right: 20px;">siut© copyright 2015. Versión 1.0.0.1</span>
                     <span style="float: right; margin-right: 20px; display: none">Guardando...<img src="../content/pictures-system/712.GIF"/></span>
                 </div> 
                 <div id="panel-principal">
@@ -246,7 +246,7 @@ if(session.getAttribute("logueado") == null){%>
             <div id="load-page-external">
                 <div>Cargando modulos...</div>
                 <div id="loadExamPreview">
-                    <img src="../content/pictures-system/loading.GIF" width="60" style="margin-right: 20px" />
+                    <img src="../content/pictures-system/load.GIF" width="60" style="margin-right: 20px" />
                     Procesando scripts y páginas asíncronas etc...
                 </div>
             </div>

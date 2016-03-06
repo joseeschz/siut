@@ -21,7 +21,7 @@ import model.activitiesToGroupModel;
  */
 public class activitiesToGroupControl {
     public static void main(String[] args) {
-        ArrayList<activitiesToGroupModel> list=new activitiesToGroupControl().SelectActivitiesToGroup(0, 12, 64, 1, 325, 1);
+        ArrayList<activitiesToGroupModel> list=new activitiesToGroupControl().SelectActivitiesToGroup(0, 12, 64, 1, 325, 6, 1);
         String[] result = new activitiesToGroupControl().SelectWorkPlanning(28, 1, 329, 1, 13);
         System.out.println(result[6]);
         for(int i=0;i<list.size();i++){
@@ -32,7 +32,7 @@ public class activitiesToGroupControl {
     public ArrayList<activitiesToGroupModel> SelectActivitiesByScale(int fk_period, int fk_study_level, int fk_subject_matter, int fk_scale_evaluation){
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_ACTIVITIES`('byScale', null, "+fk_period+", null, "+fk_study_level+", "+fk_subject_matter+", "+fk_scale_evaluation+")";
+            String procedure="CALL `GET_ACTIVITIES`('byScale', null, "+fk_period+", null, "+fk_study_level+", "+fk_subject_matter+", null, "+fk_scale_evaluation+")";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
@@ -51,16 +51,17 @@ public class activitiesToGroupControl {
         }
         return list;
     }
-    public ArrayList<activitiesToGroupModel> SelectActivitiesToGroup(int fk_work_planning, int fk_period, int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_scale_evaluation){
+    public ArrayList<activitiesToGroupModel> SelectActivitiesToGroup(int fk_work_planning, int fk_period, int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_group, int fk_scale_evaluation){
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_ACTIVITIES`('byScale', "+fk_work_planning+", "+fk_period+", "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_scale_evaluation+")";
+            String procedure="CALL `GET_ACTIVITIES`('byScale', "+fk_work_planning+", "+fk_period+", "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_group+", "+fk_scale_evaluation+")";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NUM(res.getString("FL_NUM"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
+                    listActivitiesToGroup.setFL_EVALUATED(res.getString("FL_EVALUATED"));
                     listActivitiesToGroup.setFL_DESCRIPTION(res.getString("FL_DESCRIPTION"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY_PERCENT(res.getString("FL_VALUE_ACTIVITY_PERCENT"));

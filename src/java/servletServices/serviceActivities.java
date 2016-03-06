@@ -72,18 +72,32 @@ public class serviceActivities extends HttpServlet {
                 int fk_study_level = Integer.parseInt(request.getParameter("fk_study_level"));
                 int fk_subject_matter = Integer.parseInt(request.getParameter("fk_subject_matter"));
                 int fk_scale_evaluation = Integer.parseInt(request.getParameter("fk_scale_evaluation"));
-                ArrayList<activitiesToGroupModel> listActivity=new activitiesToGroupControl().SelectActivitiesToGroup(pkWorkPlanning, fk_period, fk_teacher, fk_study_level, fk_subject_matter, fk_scale_evaluation);
+                int fk_group=0;
+                if(request.getParameter("fk_group")!=null){
+                    fk_group=Integer.parseInt(request.getParameter("fk_group"));
+                }
+                ArrayList<activitiesToGroupModel> listActivity=new activitiesToGroupControl().SelectActivitiesToGroup(pkWorkPlanning, fk_period, fk_teacher, fk_study_level, fk_subject_matter, fk_group, fk_scale_evaluation);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 settings.put("__ActivityToWorkModel","ActivityToWork");
                 for(int i=0;i<listActivity.size();i++){
                     JSONObject data = new JSONObject();
+                    String imgurl;
+                    if(listActivity.get(i).getFL_EVALUATED().equals("0")){
+                        imgurl="../content/pictures-system/check-circle-outline-blank.png";
+                    }else{
+                        imgurl="../content/pictures-system/checkround.png";
+                    }
+
+                    String img = "<img class='img"+i+"' height='15' width='15' src='"+imgurl+"'/>";
+                    String rowHTML = listActivity.get(i).getFL_NUM()+" "+img+" "+ (listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase();
                     data.put("id", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataNumActivity", listActivity.get(i).getFL_NUM());
-                    data.put("dataDescriptActivity", (listActivity.get(i).getFL_NUM()+" | "+ listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase());
+                    data.put("dataEvaluatedActivityByGroup", listActivity.get(i).getFL_EVALUATED());
+                    data.put("dataDescriptActivity", rowHTML);
                     data.put("dataNameActivity", listActivity.get(i).getFL_NAME_ACTIVITY());
                     data.put("dataDescriptionActivity", listActivity.get(i).getFL_DESCRIPTION());
                     data.put("dataCreationDate", listActivity.get(i).getFL_CREATION_DATE());

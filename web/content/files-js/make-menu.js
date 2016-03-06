@@ -25,9 +25,10 @@ $(document).ready(function () {
     $("#popover").children(".jqx-popover-content").css("padding","0");
     
     $("#jqxMenuOptions").jqxMenu({
-        width: '180px', 
-        height: '130px'
-    });
+        width: '178px', 
+        height: '130px',
+        theme:""
+    }).css("background","white");;
     $('#jqxMenuOptions').jqxMenu('disable', 'close', true);
     $('#jqxMenuOptions').jqxMenu('disable', 'userName', true);
     $("#jqxMenuOptions").children("ul").show();

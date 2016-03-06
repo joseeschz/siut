@@ -693,7 +693,8 @@ function createDropDownActivities(selector, filterable, update){
         datafields: [
             { name: 'dataPkActivity' },
             { name: 'dataNameActivity' },
-            { name: 'dataDescriptActivity'}
+            { name: 'dataDescriptActivity'},
+            { name: 'dataEvaluatedActivityByGroup'}
         ],
         url: "../serviceActivities?view",
         data:{
@@ -707,10 +708,19 @@ function createDropDownActivities(selector, filterable, update){
         async: false
     };
     var data = null;
-    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
+    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer, {
+        beforeLoadComplete: function (records) {
+            data = null;
+            data = records;
+            return records;
+        }
+    });
     if(update){
         $(selector).jqxDropDownList('clearSelection');
-        $(selector).jqxDropDownList({source: dataAdapterCareer, selectedIndex: 0});
+        $(selector).jqxDropDownList({
+            selectedIndex: 0,
+            source: dataAdapterCareer
+        });
     }else{
         $(selector).jqxDropDownList({
             theme: theme,
@@ -722,14 +732,7 @@ function createDropDownActivities(selector, filterable, update){
             source: dataAdapterCareer, 
             displayMember: "dataDescriptActivity", 
             valueMember: "dataPkActivity",
-            width: 150
-//            renderer: function (index, label, value) {
-//                var datarecord = data[index];
-//                var imgurl = '../../images/' + label.toLowerCase() + '.png';
-//                var img = '<img height="50" width="45" src="' + imgurl + '"/>';
-//                var table = '<table style="min-width: 150px;"><tr><td style="width: 55px;" rowspan="2">' + img + '</td><td>' + datarecord.firstname + " " + datarecord.lastname + '</td></tr><tr><td>' + datarecord.title + '</td></tr></table>';
-//                return "";
-//            }
+            width: 250
         }).css("display","inline-block");
     }
 }
