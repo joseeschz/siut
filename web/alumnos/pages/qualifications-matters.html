@@ -68,7 +68,7 @@ $(document).ready(function () {
             async: false,
             url: "http://10.10.10.23/serviceCalification?tableCalMattersStudent",
             data: {
-                "pkStudent" : localStorage.getItem("pkStudent")
+                "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
             },
             beforeSend: function (xhr) {
             },
