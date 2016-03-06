@@ -88,9 +88,14 @@
 		<field name="FL_NAME" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="FL_VALUE_OBTANIED" class="java.lang.Double">
+		<field name="FL_VALUE_OBTANIED" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
+		<field name="FL_VALUE_OBTANIED_FLOAT" class="java.lang.Double"/>
+		<field name="FL_SUBTOTAL_BE" class="java.lang.String"/>
+		<field name="FL_SUBTOTAL_KNOW" class="java.lang.String"/>
+		<field name="FL_SUBTOTAL_DO" class="java.lang.String"/>
+		<field name="FL_AVG" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="Dataset2" uuid="7331399f-6246-40a9-b2f5-e5695acfb8b7">
 		<parameter name="pt_level_1" class="java.lang.Integer">
@@ -630,11 +635,20 @@
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="FL_VALUE_OBTANIEDMeasure" class="java.lang.Double" calculation="Sum">
-					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED}]]></measureExpression>
+				<measure name="FL_VALUE_OBTANIEDMeasure" class="java.lang.Float" calculation="Sum">
+					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED_FLOAT}]]></measureExpression>
 				</measure>
 				<measure name="FL_ENROLLMENT" class="java.lang.String">
 					<measureExpression><![CDATA[$F{FL_ENROLLMENT}]]></measureExpression>
+				</measure>
+				<measure name="FL_AVG" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_AVG}]]></measureExpression>
+				</measure>
+				<measure name="FL_SUBTOTAL_BE" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_BE}]]></measureExpression>
+				</measure>
+				<measure name="FL_VALUE_OBTANIED" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED}]]></measureExpression>
 				</measure>
 				<crosstabCell width="25" height="15">
 					<cellContents>
@@ -646,7 +660,7 @@
 							<textElement>
 								<font fontName="Calibri" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIED}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
@@ -671,7 +685,7 @@
 							<textElement>
 								<font fontName="Calibri" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA[( $V{FL_VALUE_OBTANIEDMeasure}.equals( 10.0 ) ? "10" : ""+$V{FL_VALUE_OBTANIEDMeasure}.floatValue() )]]></textFieldExpression>
+							<textFieldExpression><![CDATA[($V{FL_AVG_FL_NAME_ALL}.equals( 10.0 ) ? "10" : ""+$V{FL_AVG_FL_NAME_ALL})]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
@@ -696,7 +710,7 @@
 							<textElement>
 								<font fontName="Calibri" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}.floatValue()]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>

@@ -115,7 +115,7 @@ $(document).ready(function () {
                 <%out.print(list.get(i).getFL_NAME_SECTION());%>
             </h3>
             <div style="margin-top: 20px; margin-right: 5px;">
-                <div style="background: rgb(210, 210, 210) none repeat scroll 0% 0%; height: 32px; padding: 6px; margin-bottom: 10px;" role="alert">
+                <div style="background: rgb(166, 222, 125) none repeat scroll 0% 0%; height: 32px; padding: 6px; margin-bottom: 10px;" role="alert">
                     <div id="infoSystem"><%out.print(list.get(i).getFL_DESCRIPTION());%></div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" language="groovy" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="192"/>
+	<property name="ireport.y" value="0"/>
 	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -522,7 +522,7 @@
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:columnGroup width="158" uuid="7b6725e3-4e89-4a43-8b00-ff89eb61b712">
+					<jr:columnGroup width="157" uuid="7b6725e3-4e89-4a43-8b00-ff89eb61b712">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -531,21 +531,21 @@
 								<rightPen lineWidth="0.0"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="158" height="19" uuid="9aa2d512-a802-4157-8ed4-1a94b2e87e75"/>
+								<reportElement x="0" y="0" width="157" height="19" uuid="9aa2d512-a802-4157-8ed4-1a94b2e87e75"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Ser]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="116" uuid="dcbdee19-eb98-45fb-8cfc-70c5e077d189">
+						<jr:column width="107" uuid="dcbdee19-eb98-45fb-8cfc-70c5e077d189">
 							<jr:columnHeader height="27" rowSpan="2">
 								<box>
 									<leftPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="116" height="27" uuid="2155a1c5-5ac3-4e59-837a-878519755b9f"/>
+									<reportElement x="0" y="0" width="107" height="27" uuid="2155a1c5-5ac3-4e59-837a-878519755b9f"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font fontName="Arial" size="12" isBold="true"/>
 									</textElement>
@@ -560,7 +560,7 @@
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="116" height="15" uuid="f8c4f3c1-2994-4f71-8709-4cefc64009fd"/>
+									<reportElement x="0" y="0" width="107" height="15" uuid="f8c4f3c1-2994-4f71-8709-4cefc64009fd"/>
 									<box topPadding="2" leftPadding="2" rightPadding="2"/>
 									<textElement>
 										<font fontName="Arial" size="8"/>
@@ -569,10 +569,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="8c34a484-2d3f-4026-99c4-bc68b5d439e8">
+						<jr:columnGroup width="50" uuid="8c34a484-2d3f-4026-99c4-bc68b5d439e8">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="e18ad8e5-a50e-4abf-8322-d2fb5cf7ab8f"/>
+									<reportElement x="0" y="0" width="50" height="15" uuid="e18ad8e5-a50e-4abf-8322-d2fb5cf7ab8f"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 									</box>
@@ -582,10 +582,10 @@
 									<text><![CDATA[Valor]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:column width="17" uuid="d7a0ef96-cfee-4e6c-be40-64e7b0e62fe4">
+							<jr:column width="20" uuid="d7a0ef96-cfee-4e6c-be40-64e7b0e62fe4">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="17" height="12" uuid="0e69df90-15c0-4565-ab04-4a281b06830d"/>
+										<reportElement x="0" y="0" width="20" height="12" uuid="0e69df90-15c0-4565-ab04-4a281b06830d"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -598,7 +598,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="17" height="15" uuid="780710f8-2e9a-47a6-9141-be0f8689f1f9"/>
+										<reportElement x="0" y="0" width="20" height="15" uuid="780710f8-2e9a-47a6-9141-be0f8689f1f9"/>
 										<box topPadding="0" leftPadding="2" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -610,10 +610,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="25" uuid="bbc6575b-2f6c-4a66-966c-79259ad70d03">
+							<jr:column width="30" uuid="bbc6575b-2f6c-4a66-966c-79259ad70d03">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="25" height="12" uuid="f90825a5-bec0-4106-acaa-73f85c6d08a3"/>
+										<reportElement x="0" y="0" width="30" height="12" uuid="f90825a5-bec0-4106-acaa-73f85c6d08a3"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 										</box>
@@ -625,7 +625,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="25" height="15" uuid="f934e257-266f-4222-afc3-12ea2e107b5b"/>
+										<reportElement x="0" y="0" width="30" height="15" uuid="f934e257-266f-4222-afc3-12ea2e107b5b"/>
 										<box topPadding="0" leftPadding="1" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -639,7 +639,7 @@
 							</jr:column>
 						</jr:columnGroup>
 					</jr:columnGroup>
-					<jr:columnGroup width="187" uuid="f26e6c12-2ed0-4aa8-8749-3d7ffdd9bf19">
+					<jr:columnGroup width="180" uuid="f26e6c12-2ed0-4aa8-8749-3d7ffdd9bf19">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -648,14 +648,14 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="187" height="19" uuid="4230e0f3-d23a-4bce-889e-7a92ca723426"/>
+								<reportElement x="0" y="0" width="180" height="19" uuid="4230e0f3-d23a-4bce-889e-7a92ca723426"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
 								<text><![CDATA[Saber]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="145" uuid="ac714599-a0e2-4a64-bd88-8b5f9d08d103">
+						<jr:column width="130" uuid="ac714599-a0e2-4a64-bd88-8b5f9d08d103">
 							<jr:columnHeader height="27" rowSpan="2">
 								<box>
 									<topPen lineWidth="0.0"/>
@@ -664,7 +664,7 @@
 									<rightPen lineWidth="0.0"/>
 								</box>
 								<staticText>
-									<reportElement x="0" y="0" width="145" height="27" uuid="be25b989-56bc-4a14-8967-0c3387aedd51"/>
+									<reportElement x="0" y="0" width="130" height="27" uuid="be25b989-56bc-4a14-8967-0c3387aedd51"/>
 									<box>
 										<rightPen lineWidth="0.5"/>
 									</box>
@@ -682,7 +682,7 @@
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField isStretchWithOverflow="true">
-									<reportElement x="0" y="0" width="145" height="15" uuid="79544a91-6d75-4842-b7af-dab421a2e3e6"/>
+									<reportElement x="0" y="0" width="130" height="15" uuid="79544a91-6d75-4842-b7af-dab421a2e3e6"/>
 									<box topPadding="2" leftPadding="2" rightPadding="2"/>
 									<textElement verticalAlignment="Middle">
 										<font fontName="Arial" size="8"/>
@@ -691,10 +691,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="35d5fe4a-d8ba-4eca-a044-2cfa75a086bf">
+						<jr:columnGroup width="50" uuid="35d5fe4a-d8ba-4eca-a044-2cfa75a086bf">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="08f653f4-d05f-457d-be54-39e1adc0bf57"/>
+									<reportElement x="0" y="0" width="50" height="15" uuid="08f653f4-d05f-457d-be54-39e1adc0bf57"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 										<rightPen lineWidth="0.5"/>
@@ -705,10 +705,10 @@
 									<text><![CDATA[Valor]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:column width="17" uuid="aa7bc0e1-5ceb-4635-910f-0d262b977294">
+							<jr:column width="20" uuid="aa7bc0e1-5ceb-4635-910f-0d262b977294">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="17" height="12" uuid="02fc3581-4eff-47d7-8c39-26565dd1c46a"/>
+										<reportElement x="0" y="0" width="20" height="12" uuid="02fc3581-4eff-47d7-8c39-26565dd1c46a"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -721,7 +721,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="17" height="15" uuid="77ca7307-063a-4cef-a339-53a59b459c75"/>
+										<reportElement x="0" y="0" width="20" height="15" uuid="77ca7307-063a-4cef-a339-53a59b459c75"/>
 										<box topPadding="0" leftPadding="2" rightPadding="0">
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -733,10 +733,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="25" uuid="5933f7bd-02b2-4f2e-a6f1-39626213c816">
+							<jr:column width="30" uuid="5933f7bd-02b2-4f2e-a6f1-39626213c816">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="25" height="12" uuid="2be5eff3-b3c1-4758-8b9f-b201c9f1451f"/>
+										<reportElement x="0" y="0" width="30" height="12" uuid="2be5eff3-b3c1-4758-8b9f-b201c9f1451f"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -749,7 +749,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="25" height="15" uuid="5036c42b-47c7-46c4-bbac-0414f46b9714"/>
+										<reportElement x="0" y="0" width="30" height="15" uuid="5036c42b-47c7-46c4-bbac-0414f46b9714"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -763,7 +763,7 @@
 							</jr:column>
 						</jr:columnGroup>
 					</jr:columnGroup>
-					<jr:columnGroup width="237" uuid="9c251983-d961-41f4-a15e-d369a7624e89">
+					<jr:columnGroup width="245" uuid="9c251983-d961-41f4-a15e-d369a7624e89">
 						<jr:columnHeader height="19" rowSpan="1">
 							<box>
 								<topPen lineWidth="0.5"/>
@@ -772,7 +772,7 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<staticText>
-								<reportElement x="0" y="0" width="237" height="19" uuid="c6f00477-fa3a-48b8-83cc-6253644f6f6f"/>
+								<reportElement x="0" y="0" width="245" height="19" uuid="c6f00477-fa3a-48b8-83cc-6253644f6f6f"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Arial" size="12" isBold="true"/>
 								</textElement>
@@ -815,10 +815,10 @@
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:columnGroup width="42" uuid="d1cbd825-e7d4-4a87-a47b-ac4e82acd6e8">
+						<jr:columnGroup width="50" uuid="d1cbd825-e7d4-4a87-a47b-ac4e82acd6e8">
 							<jr:columnHeader height="15" rowSpan="1">
 								<staticText>
-									<reportElement x="0" y="0" width="42" height="15" uuid="de9a92a4-98ae-4e1f-9b8b-6ab03f41e8c1"/>
+									<reportElement x="0" y="0" width="50" height="15" uuid="de9a92a4-98ae-4e1f-9b8b-6ab03f41e8c1"/>
 									<box>
 										<bottomPen lineWidth="0.5"/>
 										<rightPen lineWidth="0.5"/>
@@ -857,10 +857,10 @@
 									</textField>
 								</jr:detailCell>
 							</jr:column>
-							<jr:column width="22" uuid="15526ba0-a7db-4f0d-8589-57bc86fbafbb">
+							<jr:column width="30" uuid="15526ba0-a7db-4f0d-8589-57bc86fbafbb">
 								<jr:columnHeader height="12" rowSpan="1">
 									<staticText>
-										<reportElement x="0" y="0" width="22" height="12" uuid="cbcf7ae4-2d5b-4622-9795-697d29cbaf3e"/>
+										<reportElement x="0" y="0" width="30" height="12" uuid="cbcf7ae4-2d5b-4622-9795-697d29cbaf3e"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>
@@ -873,7 +873,7 @@
 								</jr:columnHeader>
 								<jr:detailCell height="15" rowSpan="1">
 									<textField>
-										<reportElement x="0" y="0" width="22" height="15" uuid="455b89ab-7f3e-4b6c-adc2-c0e16f385c6e"/>
+										<reportElement x="0" y="0" width="30" height="15" uuid="455b89ab-7f3e-4b6c-adc2-c0e16f385c6e"/>
 										<box>
 											<bottomPen lineWidth="0.5"/>
 											<rightPen lineWidth="0.5"/>

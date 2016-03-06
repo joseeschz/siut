@@ -40,7 +40,7 @@ if(session.getAttribute("logueado") != null){%>
             }else{
                 tabActive=0;
             }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#qualificationsTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-average.jsp");
 //            $("#regulaTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-regula.jsp");
 //            $("#globlalTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-global.jsp");

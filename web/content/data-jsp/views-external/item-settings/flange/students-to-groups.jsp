@@ -18,7 +18,7 @@ if(session.getAttribute("logueado") != null){%>
             }else{
                 tabActive=0;
             }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#studentToGroupTab").load("../content/data-jsp/views-external/item-settings/flange/student-to-groups-flange/student-to-group-flange.jsp");
             $("#studentToGroupConsultTab").load("../content/data-jsp/views-external/item-settings/flange/student-to-groups-flange/student-to-group-consult-flange.jsp");
         });

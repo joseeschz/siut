@@ -115,24 +115,24 @@ html, body{
    top: 22px;
 }
 #culumna-top,#culumna-bottom{
-/*    color: #fff;
-    background: #b4e391;  Old browsers 
-    background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 50%, #b4e391 100%);  FF3.6+ 
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391));  Chrome,Safari4+ 
-    background: -webkit-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  Chrome10+,Safari5.1+ 
-    background: -o-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  Opera 11.10+ 
-    background: -ms-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  IE10+ 
-    background: linear-gradient(to bottom,  #b4e391 0%,#61c419 50%,#b4e391 100%);  W3C 
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 );  IE6-9 
+    color: #fff;
+    background: #b4e391;  //Old browsers 
+    background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 50%, #b4e391 100%);  //FF3.6+ 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391)); // Chrome,Safari4+ 
+    background: -webkit-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  //Chrome10+,Safari5.1+ 
+    background: -o-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  //Opera 11.10+ 
+    background: -ms-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%);  //IE10+ 
+    background: linear-gradient(to bottom,  #b4e391 0%,#61c419 50%,#b4e391 100%);  //W3C 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 );  //IE6-9 
     background-image: -moz-linear-gradient(to bottom, #61C419, #B4E391);
-    background-image: linear-gradient(to bottom, #61C419, #B4E391);*/
+    background-image: linear-gradient(to bottom, #61C419, #B4E391);
 }
 #culumna-left {
-/*    background-image: -moz-linear-gradient(to top, #61C419, #B4E391);
-    background-image: linear-gradient(to top, #61C419, #B4E391);*/
+    background-image: -moz-linear-gradient(to top, #61C419, #B4E391);
+    background-image: linear-gradient(to top, #61C419, #B4E391);
 }
 #culumna-top{
-    height: 97px;
+    height: 100px;
     top: 0px;
     position: fixed;
     width: 100%;
@@ -202,7 +202,7 @@ html, body{
 }
 #ContentPanel{
     overflow: hidden;
-    background-image: url(../pictures-system/tapiz-grey.png);
+    background-image: url(../pictures-system/tapiz.png);
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: 100% 400px;

@@ -40,7 +40,7 @@ if(session.getAttribute("logueado") != null){%>
             }else{
                 tabActive=0;
             }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#entityTab").load("../content/data-jsp/views-external/item-catalogs/flange/location-flange/entity.jsp");
             $("#municipalityTab").load("../content/data-jsp/views-external/item-catalogs/flange/location-flange/municipality.jsp");
             $("#localityTab").load("../content/data-jsp/views-external/item-catalogs/flange/location-flange/locality.jsp");

@@ -41,13 +41,13 @@
                <div class="panel-heading">
                    <h3 style="" class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Panel de Actividades</h3>
                </div>
-                <div style="float: right; margin-bottom: 5px; display: block">
+                <div style="float: right; margin-bottom: 5px; display: none">
                     <div id='qualificationsScaleEvaluationFilter'></div>
                 </div>
                 <div class="panel-body"> 
                     <div class="tablesActivities1 table-responsive"></div>
                 </div>
-                <div id="footDetails">
+                <div id="footDetails" style="display:none;">
                     <div class="text-right">
                          <a href="#">Ver todas las actividades <i class="fa fa-arrow-circle-right"></i></a>
                     </div>
@@ -91,6 +91,10 @@
         if(itemSubjectMatters!==undefined){
             createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, false);
             itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getItems'); 
+            if(itemsScaleEvaluation.length==0){
+                $(".tablesActivities1").html("El profesor no a cerrado ningún bloque de los saberes de evaluación");
+                $("#footDetails").hide();
+            }
         }else{
             createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", null, false);
         }
@@ -98,7 +102,14 @@
         $('#qualificationsListSubjectMatters').on('change',function (event){  
             itemSubjectMatters=$('#qualificationsListSubjectMatters').jqxDropDownList('getSelectedItem');
             if(itemSubjectMatters!==undefined){
-                createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, true);   
+                createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, true); 
+                itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getSelectedItem'); 
+                if(itemsScaleEvaluation!==undefined){
+                    if(itemsScaleEvaluation===null){
+                        $(".tablesActivities1").html("El profesor no a cerrado ningún bloque de los saberes de evaluación");
+                        $("#footDetails").hide();
+                    }
+                }
             }else{
                 createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", null, false);
             }
@@ -106,7 +117,7 @@
         $('#qualificationsScaleEvaluationFilter').on('change',function (event){  
             if(event.args){
                 loadActivities();
-            }                   
+            }                  
         });
         loadActivities();    
         function loadSourceActivities(scaleEvaluation){
@@ -123,7 +134,7 @@
                 async: false,
                 url: "http://148.223.215.19/serviceActivitiesCalByStudents?listActivities",
                 data: {
-                    "pkStudent" : localStorage.getItem("pkStudent"),
+                    "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent"),
                     "pkMatter": valItemSubjectMatter, 
                     "pkScale": scaleEvaluation
                 },
@@ -147,7 +158,7 @@
                     $(".panel-default").html("No disponible para esta materia");
                 }else{
                     $(".panel-default").fadeIn();
-                    if(itemsScaleEvaluation!==undefined){
+                    if(itemsScaleEvaluation!==undefined && itemsScaleEvaluation.length>0){
                         var table="";
                         var thead="";
                         var tbody="";
@@ -176,7 +187,7 @@
                                     tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th><th align="center">'+totalPercent+'%</th><th align="center" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
                                 }else{
                                     var dataValueObtaniedEquivalent = parseFloat(ordersSource.items[ia].dataValueObtaniedEquivalent).toFixed(1);
-                                    trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
+                                    trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+parseFloat((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale).toFixed(2)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
                                     trOnTbody.appendTo(tbody); 
                                     subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
                                     subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
@@ -226,6 +237,7 @@
                             totalValueActivityNow=totalValueActivityNow+parseFloat($(this).text());
                         });
                         $("#totalValueActivityNow").text((totalValueActivityNow).toFixed(2)+" -> 10"); 
+                    }else{
                     }
                 }
             }

@@ -72,7 +72,7 @@ public class scaleEvaluationControl {
     public ArrayList<scaleEvaluationModel> SelectValueScaleEvaluationByLevelBloqued(int pkScale){
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_ACTIVITIES`('valueByScale', null, null, null, null, null, '"+pkScale+"')";
+            String procedure="CALL `GET_ACTIVITIES`('valueByScale', null, null, null, null, null, null, '"+pkScale+"')";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();

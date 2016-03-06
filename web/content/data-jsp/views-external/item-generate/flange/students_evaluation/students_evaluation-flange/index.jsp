@@ -27,6 +27,9 @@
             });
             $('#qualificationsCareerFilter').on('change',function (event){           
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
+                itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+                itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value,  itemLevel.value,"#qualificationsSemesterFilter", true);  
             });
             $("#qualificationsSemesterFilter").on('change',function (){
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
@@ -93,8 +96,10 @@
                     $("#tableQualifications").jqxGrid('hideloadelement');
                 },
                 downloadComplete: function (data) {
+                    
                     //dataExternal=data;
                     var columns = data[0].columns;
+                    console.log(data[0].columns);
                     var dataFields = data[1].dataFields;
                     var rows = data[2].rowsCal;
                     var gridAdapter = new $.jqx.dataAdapter({
@@ -102,6 +107,7 @@
                         id: 'dataProgresivNumber',
                         localdata: rows
                     });
+                    
                     var arr = columns;
                     var str = JSON.stringify(arr);
                     var newArr = JSON.parse(str);
@@ -114,6 +120,7 @@
                         }
                     }
                     columns=newArr;
+                    
                     $("#tableQualifications").jqxGrid('beginupdate', true);
                     $("#tableQualifications").jqxGrid({
                         width: 850,
@@ -175,25 +182,6 @@
                         },
                         ready: function(){
                             $("#tableQualifications").jqxGrid('focus');
-//                            var rows2 = dataExternal[1].rows;
-//                            var rowsCal2 = dataExternal[2].rowsCal;
-//                            if(rows2.length===0){
-//                                $("#tableQualificationsDescription").hide();
-//                                $("#tableQualifications").hide();
-//                            }else{
-//                                loadTableDescription();
-//                                $("#tableQualificationsDescription").fadeIn("slow");
-//                                $("#tableQualifications").fadeIn("slow");
-//                                for(var i1=0; i1<rows2.length; i1++){
-//                                    var dataRow = $('#tableQualifications').jqxGrid('getrowdata', i1);
-//                                    for(var i2=0; i2<rowsCal2.length; i2++){
-//                                        if(dataRow.dataFkStudent===rowsCal2[i2].dataFkStudent){
-//                                            $("#tableQualifications").jqxGrid('setcellvalue', i1, rowsCal2[i2].dataNameMatter, rowsCal2[i2].dataCalMatters);
-//                                        }
-//                                    }
-//                                } 
-//                            }
-                            
                         },
                         columngroups: [
                             { text: 'Ser',  name: 'content_be', cellsalign: 'center', align: 'center' },
@@ -204,9 +192,23 @@
                             { text: 'Actividades', parentgroup: 'content_do', name: 'do', cellsalign: 'center', align: 'center'}
                         ],
                         columns: columns,
+//                        [
+//                            { text: '#',  disabled: true, filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
+//                            { text: 'Matrícula',disabled: true, align: 'center', dataField: 'dataEnrollment', editable: false, width: 150 },
+//                            { text: 'Alumno',disabled: true, align: 'center', dataField: 'dataStudentName', editable: false},
+//                            { text: 'A1', columngroup: 'be', dataField: 'dataQalificationActivity485', cellsalign: 'center', align: 'center', width: 60 },
+//                            { text: 'Subtotal', columngroup: 'content_be', dataField: 'dataCalificationBe', cellsalign: 'center', align: 'center', width: 60 },
+//                            { text: 'S/A', columngroup: 'know', dataField: 'dataQalificationActivity48', cellsalign: 'center', align: 'center', width: 60 },
+//                            { text: 'Subtotal',columngroup: 'content_know', cellsalign: 'center', align: 'center', dataField: 'dataCalificationKnow', width: 60},
+//                            { text: 'A1', columngroup: 'do', dataField: 'dataQalificationActivity4', cellsalign: 'center', align: 'center', width: 60 },
+//                            { text: 'Subtotal', columngroup: 'content_do', cellsalign: 'center', align: 'center', dataField: 'dataCalificationDo', width: 60},
+//                            { text: 'Total', cellsalign: 'center', align: 'center', dataField: 'dataAvg', width: 80}
+//                        ],
                         columnsresize: false
                     });
                     $("#tableQualifications").jqxGrid('endupdate');
+                    
+                    $('#tableQualifications').jqxGrid('render');
                 }
             });    
             

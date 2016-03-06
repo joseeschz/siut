@@ -26,7 +26,10 @@
                 createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value,  itemLevel.value,"#qualificationsSemesterFilter", true);   
             });
             $('#qualificationsCareerFilter').on('change',function (event){           
+                itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
+                itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+                createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value,  itemLevel.value,"#qualificationsSemesterFilter",true);
             });
             $("#qualificationsSemesterFilter").on('change',function (){
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');

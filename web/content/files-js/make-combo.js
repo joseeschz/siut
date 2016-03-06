@@ -692,7 +692,9 @@ function createDropDownActivities(selector, filterable, update){
         id: "id",
         datafields: [
             { name: 'dataPkActivity' },
-            { name: 'dataNameActivity' }
+            { name: 'dataNameActivity' },
+            { name: 'dataDescriptActivity'},
+            { name: 'dataEvaluatedActivityByGroup'}
         ],
         url: "../serviceActivities?view",
         data:{
@@ -705,10 +707,20 @@ function createDropDownActivities(selector, filterable, update){
         },
         async: false
     };
-    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
+    var data = null;
+    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer, {
+        beforeLoadComplete: function (records) {
+            data = null;
+            data = records;
+            return records;
+        }
+    });
     if(update){
         $(selector).jqxDropDownList('clearSelection');
-        $(selector).jqxDropDownList({source: dataAdapterCareer, selectedIndex: 0});
+        $(selector).jqxDropDownList({
+            selectedIndex: 0,
+            source: dataAdapterCareer
+        });
     }else{
         $(selector).jqxDropDownList({
             theme: theme,
@@ -718,9 +730,9 @@ function createDropDownActivities(selector, filterable, update){
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
             source: dataAdapterCareer, 
-            displayMember: "dataNameActivity", 
+            displayMember: "dataDescriptActivity", 
             valueMember: "dataPkActivity",
-            width: 150
+            width: 250
         }).css("display","inline-block");
     }
 }

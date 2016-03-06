@@ -208,11 +208,11 @@ public class activitiesByStudentsControl {
         }   
         return request;
     }
-    public String InsertActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
+    public String InsertActivitiesByStudents(int pt_value, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", null, null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+pt_value+", null)")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -231,6 +231,22 @@ public class activitiesByStudentsControl {
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('update"+updateType+"', "+pkActivityByStudent+", null, null, null, null, null, null, '"+valueOptanied+"', '"+valueOptaniedEquivalent+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String DeleteActivitiesByStudents(int pkGroup, int pkActivity, int pkPeriod){
+        String request;
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('delete', null, null, null, "+pkGroup+", null, "+pkPeriod+", "+pkActivity+", null, null)")) {
+                ps.executeUpdate();
+                request="Datos Borrados";
                 ps.close();
                 conn.close();
             }

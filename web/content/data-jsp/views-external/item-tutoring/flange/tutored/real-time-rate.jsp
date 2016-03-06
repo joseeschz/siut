@@ -19,7 +19,7 @@ if(session.getAttribute("logueado") != null){%>
                 tabActive=0;
             }
             
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#consultRealTimeRateTab").load("../content/data-jsp/views-external/item-tutoring/flange/tutored/real-time-rate-flange/consult-real-time-rate.jsp");
         });
     </script>

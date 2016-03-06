@@ -72,23 +72,38 @@ public class serviceActivities extends HttpServlet {
                 int fk_study_level = Integer.parseInt(request.getParameter("fk_study_level"));
                 int fk_subject_matter = Integer.parseInt(request.getParameter("fk_subject_matter"));
                 int fk_scale_evaluation = Integer.parseInt(request.getParameter("fk_scale_evaluation"));
-                ArrayList<activitiesToGroupModel> listActivity=new activitiesToGroupControl().SelectActivitiesToGroup(pkWorkPlanning, fk_period, fk_teacher, fk_study_level, fk_subject_matter, fk_scale_evaluation);
+                int fk_group=0;
+                if(request.getParameter("fk_group")!=null){
+                    fk_group=Integer.parseInt(request.getParameter("fk_group"));
+                }
+                ArrayList<activitiesToGroupModel> listActivity=new activitiesToGroupControl().SelectActivitiesToGroup(pkWorkPlanning, fk_period, fk_teacher, fk_study_level, fk_subject_matter, fk_group, fk_scale_evaluation);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 settings.put("__ActivityToWorkModel","ActivityToWork");
                 for(int i=0;i<listActivity.size();i++){
                     JSONObject data = new JSONObject();
+                    String imgurl;
+                    if(listActivity.get(i).getFL_EVALUATED().equals("0")){
+                        imgurl="../content/pictures-system/check-circle-outline-blank.png";
+                    }else{
+                        imgurl="../content/pictures-system/checkround.png";
+                    }
+
+                    String img = "<img class='img"+i+"' height='15' width='15' src='"+imgurl+"'/>";
+                    String rowHTML = listActivity.get(i).getFL_NUM()+" "+img+" "+ (listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase();
                     data.put("id", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
+                    data.put("dataNumActivity", listActivity.get(i).getFL_NUM());
+                    data.put("dataEvaluatedActivityByGroup", listActivity.get(i).getFL_EVALUATED());
+                    data.put("dataDescriptActivity", rowHTML);
                     data.put("dataNameActivity", listActivity.get(i).getFL_NAME_ACTIVITY());
                     data.put("dataDescriptionActivity", listActivity.get(i).getFL_DESCRIPTION());
                     data.put("dataCreationDate", listActivity.get(i).getFL_CREATION_DATE());
                     data.put("dataLastDateUpdate", listActivity.get(i).getFL_LAST_DATE_UPDATE());
-                    double roundOff = (double) Math.round(listActivity.get(i).getFL_VALUE_ACTIVITY() * 100) / 100;
-                    data.put("dataValueActivity", roundOff);
-                    data.put("dataValueActivityPercent", Math.round((listActivity.get(i).getFL_VALUE_ACTIVITY()*100/listActivity.get(i).getFL_MAX_VALUE())) +"%");
+                    data.put("dataValueActivity", listActivity.get(i).getFL_VALUE_ACTIVITY());
+                    data.put("dataValueActivityPercent",listActivity.get(i).getFL_VALUE_ACTIVITY_PERCENT());
                     data.put("dataPkScaleEvaluation", listActivity.get(i).getPK_SCALE_EVALUATION());
                     data.put("dataNameScale", listActivity.get(i).getFL_NAME_SCALE());
                     data.put("dataMaxValue", listActivity.get(i).getFL_MAX_VALUE());

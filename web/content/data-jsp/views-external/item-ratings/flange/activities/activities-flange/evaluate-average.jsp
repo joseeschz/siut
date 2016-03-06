@@ -92,29 +92,23 @@
                     $("#register").hide();
                     createDropDownActivities("#calTeacherActivitiesFilter", [], true);
                     $('#tableRegisterCalActivities').jqxGrid("clear");
-                    $("#evaluateActivity").parent().fadeOut("slow");
+                    $("#evaluateActivityPopover").parent().fadeOut("slow");
                 }else{
                     $("#register").show();
                 }
             });
             $("#calTeacherScaleEvaluationFilter").on('change',function (event){
-                itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
-                if(itemScaleEvaluation!==undefined){
-                    initDropDownActivities(true);
-                }else{
-                    createDropDownActivities("#calTeacherActivitiesFilter", [], true);
-                    $('#tableRegisterCalActivities').jqxGrid("clear");
+                if(event.args){
+                    itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
+                    if(itemScaleEvaluation!==undefined){
+                        initDropDownActivities(true);
+                    }else{
+                        createDropDownActivities("#calTeacherActivitiesFilter", [], true);
+                        $('#tableRegisterCalActivities').jqxGrid("clear");
+                    }
                 }
             });
-            $("#calTeacherActivitiesFilter").on('change',function (event){
-                if(itemActivity!==undefined){
-                    $('#tableRegisterCalActivities').fadeIn("slow");
-                    maxValActivity();
-                    loadTable();
-                }else{
-                    $('#tableRegisterCalActivities').hide();
-                }
-            });
+            
         }else{
             createDropDownCareerByTeacher(null ,"#registerCalFlangeCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#registerCalFlangePeriodFilter");
@@ -124,6 +118,43 @@
             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
             createDropDownActivities("#calTeacherActivitiesFilter", [], false);
         }
+        $("#popoverOptionDeleteEvaluated").jqxPopover({
+            offset: {left: -80, top:0}, 
+            arrowOffsetValue: 80, 
+            title: "Eliminar actividad!", 
+            showCloseButton: true,
+            selector: $("#deleteEvaluatedActivityPopover"),
+            width: 250
+        });
+        $("#popoverOptionEvaluate").jqxPopover({
+            offset: {left: -50, top:0}, 
+            arrowOffsetValue: 50, 
+            title: "Evaluar actividad", 
+            showCloseButton: true,
+            selector: $("#evaluateActivityPopover"),
+            width: 180
+        });
+        if(typeof (Storage) !=="undefined"){
+            if(localStorage.getItem("wayScaleEvaluation")==="typeMin"){                                
+                $("#typeMin").prop("checked", true);
+            }else{
+                $("#typeMax").prop("checked", true);
+            }
+        }else{
+            $("#wayScaleEvaluation").prop("checked", true);
+        }
+        $("[name=wayScaleEvaluation]").off("change");
+        $("[name=wayScaleEvaluation]").change(function (){
+            if($(this).attr("id")==="typeMin"){
+                localStorage.setItem("wayScaleEvaluation", "typeMin"); 
+            }else{
+                localStorage.setItem("wayScaleEvaluation", "typeMax");
+            }
+        });
+        $("#deleteEvaluatedActivityPopover").click(function(){
+            $("#captureCal").fadeOut();
+            $('#tableRegisterCalActivities').jqxGrid('clearselection'); 
+        });
         $("#evaluateActivity").click(function (){
             var valItemCareer=0;
             var valItemSemester=0;
@@ -165,6 +196,7 @@
                 url: "../serviceActivitiesCalByStudents",
                 data:{
                     "insert":"",
+                    "wayScaleEvaluation": $("[name=wayScaleEvaluation]:checked").val(),
                     "pkCareer": valItemCareer, 
                     "pkSemester": valItemSemester, 
                     "pkGroup": valItemGroup, 
@@ -179,10 +211,52 @@
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    maxValActivity();
-                    loadTable();
+                    $("#popoverOptionEvaluate").jqxPopover("close");
+                    initDropDownActivities(true);
                 }
-            });
+            }); 
+        });
+        $("#deleteActivity").click(function (){
+            var valItemPeriod=0;
+            var valItemGroup=0;
+            var valItemActivity=0;
+            itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+            itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            if(itemPeriod!==undefined){
+                valItemPeriod=itemPeriod.value;
+            }
+            if(itemGroup!==undefined){
+                valItemGroup=itemGroup.value;
+            }
+            if(itemActivity!==undefined){
+                valItemActivity=itemActivity.value;
+                $('#tableRegisterCalActivities').fadeIn("slow");
+            }else{
+                $('#tableRegisterCalActivities').hide();
+            }
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: true,
+                url: "../serviceActivitiesCalByStudents",
+                data:{
+                    "delete":"",
+                    "pkGroup": valItemGroup, 
+                    "pkActivity": valItemActivity, 
+                    "pkPeriod": valItemPeriod
+                },
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {
+                    initDropDownActivities(true);
+                    $("#popoverOptionDeleteEvaluated").jqxPopover("close");
+                }
+            }); 
         });
         function isClosedWorkPlanning(){
             itemSubjectMatter= $('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
@@ -290,6 +364,45 @@
             showArrow: false,
             toggleMode: "none"
         });
+        var buttonTemplate = "<div style='float: left; padding: 3px; margin: -6px 0px -6px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+        var settingsButton=$(buttonTemplate);        
+        settingsButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 23, width: 23 });
+        settingsButton.find('div:first').addClass('jqx-icon-settings');
+        settingsButton.css({"float":"right","cursor":"pointer"});
+        settingsButton.jqxTooltip({ position: 'bottom', content: "Ajustes"});
+        $("#settingsButton").append(settingsButton);       
+        $("#popoverSettings").jqxPopover({
+            offset: {left: -65, top:0}, 
+            arrowOffsetValue: 65, 
+            title: "Ajustes", 
+            showCloseButton: true,
+            selector: settingsButton,
+            width: 150,
+            position: "top"
+        });
+        if(typeof (Storage) !=="undefined"){
+            if(localStorage.getItem("wayInputEval")==="typeInput"){                                
+                $("#typeInput").prop("checked", true);
+            }else{
+                $("#typeSlider").prop("checked", true);
+            }
+        }else{
+            $("#wayInputEval").prop("checked", true);
+        }
+        $("[name=wayInputEval]").off("change");
+        $("[name=wayInputEval]").change(function (){
+            if($(this).attr("id")==="typeInput"){
+                localStorage.setItem("wayInputEval", "typeInput"); 
+            }else{
+                localStorage.setItem("wayInputEval", "typeSlider");
+            }
+            if(localStorage.getItem("wayInputEval")==="typeInput"){                                
+                createWidget(rowExternal, "input"); 
+            }else{
+                createWidget(rowExternal, "slider"); 
+            }
+            $("#popoverSettings").jqxPopover('close');
+        });
         function loadEventRowclick(){
             var varIsClosed = isClosedWorkPlanning();
             if(varIsClosed!=1){
@@ -309,30 +422,12 @@
                     // row data.
                     var args = event.args;
                     var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
-                    $(".slider").hide();
-                    if($('#dataValueObtanied'+row.id).length==0){
-                        var htmlControl=$('<div class="slider" id="dataValueObtanied'+row.id+'" style="float: left;"></div>');
-                        $("#contentDataValueObtanied").append(htmlControl);
-                        $('#dataValueObtanied'+row.id).jqxSlider({
-                            theme:"",
-                            width:"200px",
-                            height:"10px",
-                            mode:'fixed',
-                            tooltip: true,
-                            tooltipPosition: "far",
-                            step:0.1,
-                            ticksFrequency: 1,
-                            showTickLabels: true,
-                            ticksPosition:'bottom'
-                        });   
-                        $('#dataValueObtanied'+row.id).jqxSlider({ 
-                            tooltipFormatFunction: function(value){
-                                return (parseFloat(value).toFixed(1));
-                            }
-                        });  
-                        evaluateActivityByRow(row);
-                    }else{          
-                        evaluateActivityByRow(row);
+                    $("#captureCal").fadeIn();
+                    rowExternal = row;
+                    if(localStorage.getItem("wayInputEval")==="typeInput"){                                
+                        createWidget(row, "input"); 
+                    }else{
+                        createWidget(row, "slider"); 
                     }
                 });
             }else{
@@ -340,44 +435,145 @@
             }
             return varIsClosed;
         }
-        function evaluateActivityByRow(row){
-            $('#dataValueObtanied'+row.id).show();
+        function createWidget(row, type){
+            if(type==="slider"){
+                $(".typeInput").hide();
+                $(".typeSlider").hide();
+                if($('.dataValueObtaniedSlider'+row.id).length==0){
+                    var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');
+                    for(var i=0; i<rows.length; i++){
+                        var htmlControl=$('<div class="typeSlider dataValueObtaniedSlider'+rows[i].id+'" style="float: left;"></div>');
+                        $("#contentDataValueObtanied").append(htmlControl);
+                        var ticksFrequency = 0;
+                        if(value_max<=1){
+                            ticksFrequency=0.1;
+                        }else{
+                            ticksFrequency=0.5;
+                        }
+                        $('.dataValueObtaniedSlider'+rows[i].id).jqxSlider({
+                            theme:"",
+                            width:"250px",
+                            height:"10px",
+                            mode:'fixed',
+                            tooltip: true,
+                            tooltipPosition: "far",
+                            step:0.01,
+                            max:value_max,
+                            ticksFrequency: ticksFrequency,
+                            showTickLabels: true,
+                            ticksPosition:'bottom',
+                            tickLabelFormatFunction: function (value) {
+                                var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                if(splitFunction[1]==="00"){
+                                    return splitFunction[0];
+                                }else{
+                                    return (parseFloat(value).toFixed(2));
+                                }
+                            },
+                            tooltipFormatFunction: function(value){
+                                var splitFunction = (parseFloat(value).toFixed(2)).split(".");
+                                if(splitFunction[1]==="00"){
+                                    return splitFunction[0];
+                                }else{
+                                    return (parseFloat(value).toFixed(2));
+                                }
+                            }
+                        }); 
+                        $('.dataValueObtaniedSlider'+rows[i].id).hide();
+                    }                
+                    evaluateActivityByRow(row, "slider");
+                }else{  
+                    evaluateActivityByRow(row, "slider");
+                }
+            }else{
+                $(".typeInput").hide();
+                $(".typeSlider").hide();
+                if($('.dataValueObtaniedInput'+row.id).length==0){
+                    var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');
+                    for(var i=0; i<rows.length; i++){
+                        var htmlControl=$('<div class="typeInput dataValueObtaniedInput'+rows[i].id+'" style="float: left;"></div>');
+                        $("#contentDataValueObtanied").append(htmlControl);
+                        $('.dataValueObtaniedInput'+rows[i].id).jqxNumberInput({ 
+                            width: '60px', 
+                            height: '25px', 
+                            inputMode: 'simple', 
+                            spinButtons: true,
+                            digits:1,
+                            min:0,
+                            max: value_max
+                        });
+                        $('.dataValueObtaniedInput'+rows[i].id).hide();
+                    }                
+                    evaluateActivityByRow(row, "input");
+                }else{  
+                    evaluateActivityByRow(row, "input");
+                }
+            }
+        }
+        function evaluateActivityByRow(row, type){
+            var classSelective;
+            var typeEvent;
+            if(type==="slider"){
+                classSelective="dataValueObtaniedSlider";
+                typeEvent="slide";
+            }else{
+                classSelective="dataValueObtaniedInput";
+                typeEvent="change";
+            }
+            $('.'+classSelective+row.id).show();
             var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataValueObtanied");
             var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataAcomulatedNow"); 
             if(anyActivityEvaluated()>=1){                        
                 if(row.dataEnrollment===row.id){    
                     $("#dataEnrollment").text(row.dataEnrollment);
-                    $("#dataNameStudent").text(row.dataNameStudent);    
-                    $("#evaluateActivity").parent().hide();
+                    $("#dataNameStudent").text(row.dataNameStudent);  
+                    $("#dataValueObtanied").text(row.dataValueObtanied);
+                    $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
+                    $("#evaluateActivityPopover").parent().hide();
+                    $("#deleteEvaluatedActivityPopover").parent().show();
                     $("#captureCal").show();
                 }else{ 
                     $("#dataEnrollment").text(row.dataEnrollment);
                     $("#dataNameStudent").text(row.dataNameStudent);
-                    $('#dataValueObtanied'+row.id).val(parseFloat(row.dataValueObtaniedEquivalent));    
-                    $("#evaluateActivity").parent().hide();
+                    $("#dataValueObtanied").text(row.dataValueObtanied);
+                    $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
+                    $('.'+classSelective+row.id).val(parseFloat(row.dataValueObtanied));    
+                    $("#evaluateActivityPopover").parent().hide();
+                    $("#deleteEvaluatedActivityPopover").parent().show();
                     $("#captureCal").show();
                 }
             }else{
                 $("#dataEnrollment").text(row.dataEnrollment);
-                $("#dataNameStudent").text(row.dataNameStudent);                                      
-                $("#evaluateActivity").parent().show();
+                $("#dataNameStudent").text(row.dataNameStudent);  
+                $("#dataValueObtanied").text(row.dataValueObtanied);
+                $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
+                $("#evaluateActivityPopover").parent().show();
+                $("#deleteEvaluatedActivityPopover").parent().hide();
                 $("#captureCal").hide();                        
             }
-            
             dataAcomulatedNow=parseFloat(dataAcomulatedNow);
-            $('#dataValueObtanied'+row.id).off("change");
-            $('#dataValueObtanied'+row.id).on("change", function (){   
-                var dataValueObtaniedNew=parseFloat(convertionInverseToFix($('#dataValueObtanied'+row.id).val()));
-                var total=((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow);
+            $('.'+classSelective+row.id).off(typeEvent);
+            $('.'+classSelective+row.id).on(typeEvent, function (event){   
+                var value = event.args.value;                                    
+                value = parseFloat(value).toFixed(2);
+                var dataValueObtaniedNew=value;
+                var equivalent =parseFloat(dataValueObtaniedNew*10/value_max).toFixed(2);
+                var total=parseFloat((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow).toFixed(2);
+                
+                if(equivalent==="10.00"){
+                    equivalent=10;
+                }
+                if(equivalent==="0.00"){
+                    equivalent=0;
+                }
                 if(isNaN(total)){
                     total=value_max;
                 }
-                console.log(row);
                 var data = {
                     "update":"1",
                     "pkActivityByStudent": row.id, 
-                    "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
-                    "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1)
+                    "valueOptanied": dataValueObtaniedNew,
+                    "valueOptaniedEquivalent": equivalent
                 };
                 if(row.dataEnrollment===row.id){
                     itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
@@ -389,8 +585,8 @@
                     data = {
                         "insertByStudent":"",
                         "pkStudent": row.dataPkStudent, 
-                        "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
-                        "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1),
+                        "valueOptanied": dataValueObtaniedNew,
+                        "valueOptaniedEquivalent": equivalent,
                         "pkCareer": itemCareer.value,
                         "pkSemester": itemSemester.value,
                         "pkGroup": itemGroup.value,
@@ -402,8 +598,8 @@
                     data = {
                         "update":"1",
                         "pkActivityByStudent": row.id, 
-                        "valueOptanied": parseFloat(dataValueObtaniedNew).toFixed(2),
-                        "valueOptaniedEquivalent": parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1)
+                        "valueOptanied": dataValueObtaniedNew,
+                        "valueOptaniedEquivalent": equivalent
                     };
                 }
                 $.ajax({
@@ -419,26 +615,15 @@
                         alert("Error interno del servidor");
                     },
                     success: function (data, textStatus, jqXHR) {  
-                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataAcomulatedNow", (parseFloat(total).toFixed(2)));
-                        if(parseFloat(dataValueObtaniedNew).toFixed(2)==="0.00"){
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataAcomulatedNow", total);
+                        if(dataValueObtaniedNew==="0.00"){
                             $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", 0);
                         }else{
-                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", parseFloat(dataValueObtaniedNew).toFixed(2));
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", dataValueObtaniedNew);
                         }
-                        
-                        var equivalent=0;
-                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="10.0"){
-                            equivalent=10;
-                        }else{
-                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
-                        }
-                        if((parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1))==="0.0"){
-                            equivalent=0;
-                        }else{
-                            equivalent = (parseFloat($('#dataValueObtanied'+row.id).val()).toFixed(1));
-                        }
-                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtaniedEquivalent", parseFloat(equivalent));
-
+                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtaniedEquivalent", equivalent);
+                        $("#dataValueObtanied").text(dataValueObtaniedNew);
+                        $("#dataValueObtaniedScale").text(equivalent);
                     }
                 });
             });
@@ -476,7 +661,7 @@
                             tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th><th align="center">'+totalPercent+'%</th><th align="center" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
                         }else{
                             var dataValueObtaniedEquivalent = parseFloat(ordersSource.items[ia].dataValueObtaniedEquivalent).toFixed(1);
-                            trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
+                            trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+parseFloat((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale).toFixed(2)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
                             trOnTbody.appendTo(tbody); 
                             subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
                             subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
@@ -716,6 +901,8 @@
             if(itemSubjectMatter!==undefined){
                 valItemSubjectMatter=itemSubjectMatter.value;
             }
+            $("#calTeacherActivitiesFilter").off("change");
+            
             if(itemScaleEvaluation!==undefined){
                 exitWorkPlanning();
                 valItemScaleEvaluation=itemScaleEvaluation.value;
@@ -728,7 +915,20 @@
                 createDropDownActivities("#calTeacherActivitiesFilter", filtrableActivities, update);
                 itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem'); 
                 maxValActivity();
-            }            
+                loadTable();
+            }  
+            $("#calTeacherActivitiesFilter").on('change',function (event){
+                if(event.args){
+                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                    if(itemActivity!==undefined){
+                        $('#tableRegisterCalActivities').fadeIn("slow");
+                        maxValActivity();
+                        loadTable();
+                    }else{
+                        $('#tableRegisterCalActivities').hide();
+                    }
+                }
+            });
         }
         function maxValScale(pkScale){  
             var maxValScale=0;
@@ -750,7 +950,7 @@
                         alert("Error interno del servidor");
                     },
                     success: function (data, textStatus, jqXHR) {
-                        maxValScale = data[0].dataMaxValue;
+                        maxValScale = parseFloat(data[0].dataMaxValue);
                         $("#valMaxScale").text(maxValScale+" = 100%");
                     }
                 });
@@ -776,7 +976,7 @@
                         alert("Error interno del servidor");
                     },
                     success: function (data, textStatus, jqXHR) {
-                        value_max=data[0].dataValueActivity;
+                        value_max=parseFloat(data[0].dataValueActivity);
                         $('#tableRegisterCalActivities').show();
                     }
                 });
@@ -830,15 +1030,17 @@
                 $('#tableRegisterCalActivities').jqxGrid('scrolloffset', 400, 0);
             }
         });
+        var evaluateActivityPopover = $("#evaluateActivityPopover");
+        var deleteEvaluatedActivityPopover = $("#deleteEvaluatedActivityPopover");
         var evaluateActivity = $("#evaluateActivity");
-        evaluateActivity.jqxTooltip({ position: 'bottom', content: "Evaluar actividad"});
-        evaluateActivity.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
-        function convertionToFix(value){
-            return value*10/value_max;
-        }
-        function convertionInverseToFix(value){
-            return value/10*value_max;
-        }
+        var deleteActivity = $("#deleteActivity");
+        evaluateActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
+        deleteEvaluatedActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
+        evaluateActivity.jqxButton({"height": 30, "width": 60, cursor: "pointer"});
+        deleteActivity.jqxButton({ cursor: "pointer", height: 20, width: 20 });
+        deleteActivity.jqxTooltip({ position: 'bottom', content: "Eliminar"});
+        
+        
         $("#tableRegisterCalActivities").on('contextmenu', function () {
             return false;
         });
@@ -883,6 +1085,9 @@
     }
     .not-approved{
         background-color: rgb(225, 139, 139) !important;
+    }
+    .jqx-slider-tickscontainer{
+        color: rgb(84, 146, 95) !important;
     }
 </style>
 <div id="slider"></div>
@@ -932,8 +1137,40 @@
 </div>
 <div style="float: left; margin-right: 5px; text-align: center; display: none;">
     Acción<br>
-    <div id="evaluateActivity" style="height: 28px; margin-left: 7px;">
-        <div class="jqx-icon-list" style="height: 20px; width: 20px;"></div>
+    <div id="evaluateActivityPopover" style="height: 28px; margin-left: 7px;">
+        <div class="jqx-icon-action" style="height: 20px; width: 20px;"></div>
+    </div>
+</div>
+<div style="float: left; margin-right: 5px; text-align: center; display: none;">
+    Acción<br>
+    <div id="deleteEvaluatedActivityPopover" style="height: 28px; margin-left: 7px;">
+        <div class="jqx-icon-action" style="height: 20px; width: 20px;"></div>
+    </div>
+</div>
+<div id="popoverOptionEvaluate">
+    <div style="color: olive;">
+        <label style="font-size: 14px; font-weight: bold">Evaluar actividad</label>
+        <br>
+        <label style="font-size: 12px">            
+            <input id="typeMin" value="0" type="radio" name="wayScaleEvaluation"/>
+            Mínimo
+        </label>
+        <br>
+        <label style="font-size: 12px">           
+            <input id="typeMax" value="1" type="radio" name="wayScaleEvaluation" />
+            Máximo
+        </label>
+        <br>
+        <center><button id="evaluateActivity">Evaluar</button></center>
+    </div>
+</div>
+<div id="popoverOptionDeleteEvaluated">
+    <div style="color: olive;">
+        <label style="font-size: 12px;">Al borrar la evaluación de esta actividad se perdera la calificación de todo el grupo seleccionado.</label>
+        <br>
+        <center><div id="deleteActivity" style="height: 28px; margin-left: 7px;">
+            <div class="jqx-icon-delete" style="height: 20px; width: 20px;"></div>
+            </div></center>
     </div>
 </div>
 <br><br><br>
@@ -942,19 +1179,48 @@
 </div>
 <div id="captureCal" style="float: left; margin-right: 5px;">
     <div id="register">
-        <div>Calificación</div>
+        <div style="width: 100%">
+            <b>Calificación</b>
+            <div id="settingsButton" style="float: right;"></div>
+            <div id="popoverSettings">
+                <div style="color: olive;">
+                    <label style="font-size: 12px; font-weight: bold">Tipo de entrada</label>
+                    <br>
+                    <label style="font-size: 12px">            
+                        <input id="typeInput" type="radio" name="wayInputEval"/>
+                        Caja númerica
+                    </label>
+                    <label style="font-size: 12px">           
+                        <input id="typeSlider" type="radio" name="wayInputEval" />
+                        Deslizador
+                    </label>
+                </div>
+            </div>
+        </div>
         <div id="testForm">
-            <table class="register-table" style="width: 400px">
+            <table class="register-table" style="width: 400px; color: rgb(84, 146, 95) !important;">
                 <tr style="height: 20px">
-                    <td style="width: 50px">Matrícula:</td>
+                    <td style="width: 78px">Matrícula:</td>
                     <td id="dataEnrollment"></td>
                 </tr>
                 <tr style="height: 50px">
-                    <td style="width: 50px">Alumno:</td>
+                    <td style="width: 78px">Alumno:</td>
                     <td id="dataNameStudent"></td>
                 </tr>
                 <tr style="height: 40px">
-                    <td style="width: 50px">Calificación:</td>
+                    <td style="width: 78px">Obtenido:</td>
+                    <td>
+                        <div id="dataValueObtanied"></div>                        
+                    </td>
+                </tr>
+                <tr style="height: 40px">
+                    <td style="width: 78px">Escala 0-10:</td>
+                    <td>
+                        <div id="dataValueObtaniedScale"></div>                        
+                    </td>
+                </tr>
+                <tr style="height: 40px">
+                    <td style="width: 78px">Valor:</td>
                     <td>
                         <div id="contentDataValueObtanied"></div>                        
                     </td>
