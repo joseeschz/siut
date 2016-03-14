@@ -382,6 +382,27 @@ public class calificationControl {
         }
         return list;
     }
+    public ArrayList<calificationModel> SelectCalificationMattersStudent(int pkStudent){
+        ArrayList<calificationModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('sumjectMatersPercentEvalautedAndCurrentValue', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    allData.setFL_TOTAL_EVALUATED(res.getString("FL_TOTAL_EVALUATED"));
+                    allData.setFL_TOTAL_OBTAINED(res.getString("FL_TOTAL_OBTAINED"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<calificationModel> SelectCalificationHistoryStudent(int pkStudent, int pkPerdiod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {

@@ -375,6 +375,38 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            if(request.getParameter("calMattersStudentChart")!=null){
+                int pkStudent = 0;
+                if(session.getAttribute("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
+
+                }
+                if(request.getParameter("pkStudent")!=null){
+                    pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
+                }        
+                ArrayList<calificationModel> listColumns=new calificationControl().SelectCalificationMattersStudent(pkStudent);
+                JSONArray contentRows = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rows = new JSONObject();
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataRows = new JSONObject();
+                    dataRows.put("Materias", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
+                    dataRows.put("MateriasAbre", "M"+(i+1));
+                    dataRows.put("Evaluado", Double.parseDouble(listColumns.get(i).getFL_TOTAL_EVALUATED()));
+                    dataRows.put("Obtenido", Double.parseDouble(listColumns.get(i).getFL_TOTAL_OBTAINED()));
+                    contentRows.add(dataRows); 
+                }
+                rows.put("rows", contentRows);
+                bulding.add(rows);            
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("tableCalMattersStudentHistory")!=null){
                 int pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString()); 
                 int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod")); 
