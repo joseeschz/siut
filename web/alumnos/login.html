@@ -48,7 +48,7 @@
                     <form method="post" id="formLogin">
                         <input type="hidden" name="statusLogin" value="in"/>
                         <div class="form-group has-feedback">
-                            <input id="userName" name="userName" type="text" class="form-control" placeholder="Usuario"/>
+                            <input id="enrollment" name="userName" type="text" class="form-control" placeholder="Usuario"/>
                             <span class="glyphicon glyphicon-user form-control-feedback" style="margin-right: 8px; top: 0px"></span>
                         </div>
                         <div class="form-group has-feedback">
@@ -84,7 +84,7 @@
                         <input type="hidden" name="statusLogin" value="in"/>
                         <div class="form-group has-feedback">
                             <input id="userNameActive" readonly="" name="userNameActive" type="text" class="form-control" placeholder="Matrícula"/>
-                            <span class="glyphicon glyphicon-envelope form-control-feedback" style="margin-right: 8px; top: 0px"></span>
+                            <span class="glyphicon glyphicon-user form-control-feedback" style="margin-right: 8px; top: 0px"></span>
                         </div>
                         <div class="form-group has-feedback">
                             <input id="passwordActive" name="passwordActive" type="hidden" class="form-control"/>
@@ -103,7 +103,7 @@
                 </div>
                 <div style="padding: 20px; display: none">
                     <p class=""><b style="font-size: 14px">Muy bien hecho, ahora revisa tu cuenta de correo electrónico en ella encontraras un nuevo correo para activar tu cuenta y sigue las instrucciones.</b></p>
-                    <form id="formStatusSendMail">
+                    <form id="formStatusSendMail" action="/">
                         <div class="row">
                             <div class="col-xs-10" style="text-align: center">
                                 <button id="sendButtonStatusSendMail" type="submit" class="btn btn-block  btn-github" style="margin-left: 30px;">Entiendo</button> 
@@ -164,7 +164,7 @@
                         success: function (data, textStatus, jqXHR) {   
                             $("#formStatusAcountActivate").parent().show();
                             if(data.status==="Success"){
-                                $(".msgBoxStatus").html('<b style="font-size: 18px">Muy bien, al parecer tu cuenta fue activada exitosamente, ahora podrás iniciar sesión con normalidad</b>');
+                                $(".msgBoxStatus").html('<b style="font-size: 18px">Muy bien, tu cuenta fue activada exitosamente, ahora podrás iniciar sesión con normalidad</b>');
                                 $("#sendButtonStatus").text("Siguiente");
                             }else if(data.status==="linkBroken"){
                                 $(".msgBoxStatus").html('<b style="font-size: 18px">El link parece estar dañado :/</b>');
@@ -188,7 +188,7 @@
                     animationDuration: 0,
                     rules: [
                         {
-                            input: "#userName", 
+                            input: "#enrollment", 
                             message: "Este campo es requerido!", 
                             action: 'keyup, blur', 
                             rule: "required"
@@ -318,7 +318,7 @@
                         url: "http://148.223.215.19/serviceMail?validateMail",
                         data: {
                             "pkStudent" : $("#pkStudent").val(),
-                            "userName": $("#userNameActive").val(),
+                            "enrollment": $("#userNameActive").val(),
                             "userName": $("#userName").val(),
                             "email": $("#emailActive").val(),
                             "password" : $("#password").val()
