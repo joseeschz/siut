@@ -1,0 +1,226 @@
+<!-- Content Header (Page header) -->
+<section class="content-header"  style="padding: 0px">            
+    <h1>
+      Principal
+      <small>Grafica de calificaciones comparativa</small>
+    </h1>
+    <div style="display: none">
+        <div id="qualificationsPeriod"></div>
+    </div>
+    <br>
+    <div style="text-align: right">
+        <b id="periodLabel"></b>
+    </div> 
+    <br>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Reporte</a></li>
+      <li class="active">Gráfica comparativa</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-lg-12" style="padding: 0px; height: 500px">
+            <div id='jqxChart' style="width: 100%; height: 100%"></div>
+        </div>
+    </div>
+    
+</section><!-- /.content -->    
+<script>
+    $(document).ready(function () {
+        var itemPeriod=0;
+        createDropDownPeriodActive("comboActiveYear","#qualificationsPeriod");
+        itemPeriod=$('#qualificationsPeriod').jqxDropDownList('getSelectedItem');
+        if(itemPeriod!==undefined){
+            $("#periodLabel").text(itemPeriod.label);
+        }else{
+            $("#periodLabel").text("SIN DEFINIR");
+        }
+        function truncar(texto,limite){
+            if(texto.length>limite){ 
+                limite--;
+                last = texto.substr(limite-1,1);
+                while(last!=' ' && limite > 0){
+                    limite--;
+                    last = texto.substr(limite-1,1);
+                }
+                last = texto.substr(limite-2,1);
+                if(last == ',' || last == ';'  || last == ':'){
+                     texto = texto.substr(0,limite-2) + '...';
+                } else if(last == '.' || last == '?' || last == '!'){
+                     texto = texto.substr(0,limite-1);
+                } else {
+                     texto = texto.substr(0,limite-1) + '...';
+                }
+            }
+            return texto;
+        }
+        var source = {
+            datatype: "json",
+            datafields: [
+                { name: 'Materias'},
+                { name: 'MateriasAbre'},
+                { name: 'Evaluado'},
+                { name: 'Obtenido'},
+                { name: 'Estado'}
+            ],
+            root:"rows",
+            data:{
+                "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
+            },
+            url: 'http://10.10.10.23/serviceCalification?calMattersStudentChart'
+        };
+        var data = null;
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            async: false,
+            autoBind: true,
+            beforeLoadComplete: function (records) {
+                data=records;
+                return records;
+            }
+        });
+        var toolTipCustomFormatFn = function (value, itemIndex, serie, group, categoryValue, categoryAxis) {
+            var toolTip;
+            if(serie.dataField==="Evaluado"){
+                toolTip = '<div style="text-align:left"><b>' + data[itemIndex].Materias +
+                '</b><br />Total Evaluado: ' + data[itemIndex].Evaluado+'%';
+            }else{
+                toolTip = '<div style="text-align:left"><b>' + data[itemIndex].Materias +
+                '</b><br />Total Obtenido: ' + data[itemIndex].Obtenido +'%';
+            }
+            return toolTip;
+        };
+        var settings = {
+          title: "Reporte",
+          description: "Grafica descriptiva de progreso",
+          padding: {
+            left: 5,
+            top: 5,
+            right: 5,
+            bottom: 5
+          },
+          titlePadding: {
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 10
+          },
+          toolTipShowDelay: 0,
+          source: dataAdapter,
+          enableAnimations: true,
+          categoryAxis: {
+            dataField: 'MateriasAbre',
+            description: 'Materias',
+            showGridLines: true,
+            showTickMarks: true
+          },
+          seriesGroups: [{
+            type: 'column',
+            valueAxis: {
+              description: 'Escala',
+              //logarithmicScale: true,
+              minValue: 0,
+              maxValue: 100,
+              unitInterval: 5,
+              displayValueAxis: false,
+              formatSettings: {
+                decimalPlaces: 0
+              },
+              formatFunction:function (val){
+                return val+"%";  
+              },
+
+              toolTipFormatFunction : toolTipCustomFormatFn,
+              horizontalTextAlignment: 'right'
+            },
+            xAxis:{
+                dataField: 'MateriasAbre',
+                flip: false,
+                unitInterval: 1,
+
+                gridLines: { 
+                    visible: true,
+                    step: 1,
+                    color: '#9FA09D'
+                },
+                labels :{
+                    step: 1,
+                    visible : true
+                }
+            },
+            click: myEventHandler,
+            series: [
+                {
+                    dataField: 'Evaluado',
+                    displayText: 'Total evaluado'
+                }, 
+                {
+                    dataField: 'Obtenido',
+                    displayText: 'Total obtenido'
+                }
+            ]
+          }]
+        };
+        
+        $('#jqxChart').jqxChart(settings);
+        $('#jqxChart').jqxChart('addColorScheme', 'myScheme', ['#727371', '#00A65A', 'red', '#71588F', '#4198AF']);
+        $('#jqxChart').jqxChart('colorScheme', 'myScheme');
+        function myEventHandler(e) {
+            var chartInstance = $('#jqxChart').jqxChart('getInstance');
+            var indexItem;
+            for(var i=0; i<e.seriesGroup.series.length; i++){
+                   if(e.serie.dataField===e.seriesGroup.series[i].dataField){
+                           indexItem=i;
+                   }
+            }
+            chartInstance.showToolTip(
+                0,    /* first seriesGroup */
+                indexItem,    /* second serie */
+                e.elementIndex,    /* fifth item */
+                0, /* 1s show delay, optional parameter */
+                5000000  /* 5s hide delay, optional parameter */
+            );
+        }
+        $("text").click(function (){
+            var text = $(this).text();
+            var chartInstance = $('#jqxChart').jqxChart('getInstance');
+            var i=0;
+            $("text").each(function (){
+                if($(this).text().contains("M")){
+                    i++;
+                    if($(this).text()===text){
+                        chartInstance.showToolTip(
+                            0,    /* first seriesGroup */
+                            1,    /* second serie */
+                            i-1,    /* fifth item */
+                            0, /* 1s show delay, optional parameter */
+                            100000  /* 5s hide delay, optional parameter */
+                        );
+                    }
+                }
+            });
+           
+        });
+        function loadSourceActivities(scaleEvaluation){
+            var ordersSource=[];
+            $.ajax({
+                crossDomain: true,
+                type:"POST",
+                dataType: "json",
+                async: false,
+                url: "http://10.10.10.23/serviceActivitiesCalByStudents?listActivities",
+                data: {
+                    "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
+                },
+                success: function (data, textStatus, jqXHR) {
+                    ordersSource=data;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno en el servidor");
+                }
+            });
+            return ordersSource;
+        }     
+    });
+</script>

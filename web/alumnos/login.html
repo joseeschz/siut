@@ -48,8 +48,8 @@
                     <form method="post" id="formLogin">
                         <input type="hidden" name="statusLogin" value="in"/>
                         <div class="form-group has-feedback">
-                            <input id="enrollment" name="enrollment" type="text" class="form-control" placeholder="Matrícula"/>
-                            <span class="glyphicon glyphicon-envelope form-control-feedback" style="margin-right: 8px; top: 0px"></span>
+                            <input id="userName" name="userName" type="text" class="form-control" placeholder="Usuario"/>
+                            <span class="glyphicon glyphicon-user form-control-feedback" style="margin-right: 8px; top: 0px"></span>
                         </div>
                         <div class="form-group has-feedback">
                             <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña"/>
@@ -83,7 +83,7 @@
                         <br>
                         <input type="hidden" name="statusLogin" value="in"/>
                         <div class="form-group has-feedback">
-                            <input id="enrollmentActive" readonly="" name="enrollmentActive" type="text" class="form-control" placeholder="Matrícula"/>
+                            <input id="userNameActive" readonly="" name="userNameActive" type="text" class="form-control" placeholder="Matrícula"/>
                             <span class="glyphicon glyphicon-envelope form-control-feedback" style="margin-right: 8px; top: 0px"></span>
                         </div>
                         <div class="form-group has-feedback">
@@ -188,7 +188,7 @@
                     animationDuration: 0,
                     rules: [
                         {
-                            input: "#enrollment", 
+                            input: "#userName", 
                             message: "Este campo es requerido!", 
                             action: 'keyup, blur', 
                             rule: "required"
@@ -229,7 +229,7 @@
                     }).success(function(data){
                         if(data.statusLogin==="notMailActive"){
                             $("#windowBlock").fadeOut("slow");
-                            $("#enrollmentActive").val(data.enrollmentStudent);
+                            $("#userNameActive").val(data.userNameStudent);
                             $("#emailActive").val(data.mailStudent);
                             $("#userName").val(data.logueadoStudentCal);
                             $("#pkStudent").val(data.pkStudent);
@@ -240,18 +240,20 @@
                             setTimeout(function(){
                                 $("#windowBlock").fadeOut("slow");
                                 if(eval(localStorage.getItem("rememberMe"))){
+                                    sessionStorage.clear();
                                     localStorage.setItem("session",true);
                                     localStorage.setItem("pkStudent",data.pkStudent);
-                                    localStorage.setItem("enrollmentStudent",data.enrollmentStudent);
+                                    localStorage.setItem("userNameStudent",data.userNameStudent);
                                     localStorage.setItem("mailStudent",data.mailStudent);
                                     localStorage.setItem("logueadoStudentCal",data.logueadoStudentCal);
                                     localStorage.setItem("nameSmall",data.nameSmall);
                                     localStorage.setItem("careerStudent",data.careerStudent);
                                     localStorage.setItem("genderStudent",data.genderStudent);
                                 }else{
+                                    localStorage.clear();
                                     sessionStorage.setItem("session",true);
                                     sessionStorage.setItem("pkStudent",data.pkStudent);
-                                    sessionStorage.setItem("enrollmentStudent",data.enrollmentStudent);
+                                    sessionStorage.setItem("userNameStudent",data.userNameStudent);
                                     sessionStorage.setItem("mailStudent",data.mailStudent);
                                     sessionStorage.setItem("logueadoStudentCal",data.logueadoStudentCal);
                                     sessionStorage.setItem("nameSmall",data.nameSmall);
@@ -278,7 +280,7 @@
                     animationDuration: 0,
                     rules: [
                         {
-                            input: "#enrollmentActive", 
+                            input: "#userNameActive", 
                             message: "Este campo es requerido!", 
                             action: 'keyup, blur', 
                             rule: "required"
@@ -316,7 +318,7 @@
                         url: "http://148.223.215.19/serviceMail?validateMail",
                         data: {
                             "pkStudent" : $("#pkStudent").val(),
-                            "enrollment": $("#enrollmentActive").val(),
+                            "userName": $("#userNameActive").val(),
                             "userName": $("#userName").val(),
                             "email": $("#emailActive").val(),
                             "password" : $("#password").val()
@@ -345,7 +347,7 @@
                 });
                 if(eval(localStorage.getItem("rememberMe"))){
                     $('#rememberMe').iCheck('check');
-                    $("#enrollment").val(localStorage.getItem("enrollmentStudent"));
+                    $("#userName").val(localStorage.getItem("userNameStudent"));
                 }else{
                     $('#rememberMe').iCheck('uncheck');
                 }                

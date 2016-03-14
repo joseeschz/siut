@@ -355,7 +355,7 @@ public class serviceStudent extends HttpServlet {
             if(request.getParameter("selectLoginStudent")!=null){
                 String statusLogin = request.getParameter("statusLogin");
                 if(statusLogin.equals("in")){
-                    String enrollment = request.getParameter("enrollment");
+                    String enrollment = request.getParameter("userName");
                     String password = request.getParameter("password");
                     int pkStudent = 0;
                     String name = "";
@@ -392,7 +392,7 @@ public class serviceStudent extends HttpServlet {
                                 if(statusMailActive.equals("0")){
                                     data.put("statusLogin", "notMailActive");
                                     data.put("pkStudent", pkStudent);
-                                    data.put("enrollmentStudent", enrollment);
+                                    data.put("userNameStudent", enrollment);
                                     data.put("mailStudent", mail);
                                     data.put("passwordStudent", password);
                                     data.put("logueadoStudentCal", name);  
@@ -403,7 +403,7 @@ public class serviceStudent extends HttpServlet {
                                 }else if(statusMailActive.equals("1")){
                                     data.put("statusLogin", "logeado");
                                     data.put("pkStudent", pkStudent);
-                                    data.put("enrollmentStudent", enrollment);
+                                    data.put("userNameStudent", enrollment);
                                     data.put("mailStudent", mail);
                                     data.put("passwordStudent", password);
                                     data.put("logueadoStudentCal", name);   
@@ -411,7 +411,7 @@ public class serviceStudent extends HttpServlet {
                                     data.put("nameSmall", nameSmall);
                                     data.put("genderStudent", gender);
                                     session.setAttribute("pkStudent", pkStudent);
-                                    session.setAttribute("enrollmentStudent", enrollment);
+                                    session.setAttribute("userNameStudent", enrollment);
                                     session.setAttribute("mailStudent", mail);
                                     session.setAttribute("passwordStudent", password);
                                     session.setAttribute("logueadoStudentCal", name);

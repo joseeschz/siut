@@ -1245,7 +1245,7 @@ function createDropDownSubjectMatterByStudent(selector, update){
             id: 'id',
             async: false,
             data: {
-                "pkStudent": localStorage.getItem("pkStudent")
+                "pkStudent": localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
             },
             url: 'http://148.223.215.19/serviceSubjectMatter?view=comboMattersByStudent&pkSemester=0'
         };
@@ -1256,15 +1256,18 @@ function createDropDownSubjectMatterByStudent(selector, update){
     }else{    
         // Create a jqxListBox
         $(selector).jqxDropDownList({ 
-            theme: "android",
+            theme: "mobile",
             selectedIndex: 0, 
-            autoDropDownHeight: true,
+            autoDropDownHeight: false,
+            dropDownHeight:200,
+            itemHeight:35,
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
             source: dataAdapter, 
             displayMember: "dataNameSubjectMatter", 
             valueMember: "dataPkSubjectMatter",
-            width: "95%"
+            width: "100%",
+            height: 35
         });
         $(selector).on('select', function (event) {
             if (event.args) {

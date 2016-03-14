@@ -24,6 +24,8 @@ public class calificationModel extends subjectMattersModel{
     String FL_CALIFICATION_KNOW="";
     String FL_CALIFICATION_DO="";
     String FL_AVG="";
+    String FL_TOTAL_EVALUATED="";
+    String FL_TOTAL_OBTAINED="";
     String FL_LETTER="";
     String FL_SUBJECT_MATTERS_CALIFICATIONS="";
     String FL_NAME_DESCRIPTION_INTEGRADORAS="";
@@ -139,6 +141,22 @@ public class calificationModel extends subjectMattersModel{
 
     public void setFL_AVG(String FL_AVG) {
         this.FL_AVG = FL_AVG;
+    }
+
+    public String getFL_TOTAL_EVALUATED() {
+        return FL_TOTAL_EVALUATED;
+    }
+
+    public void setFL_TOTAL_EVALUATED(String FL_TOTAL_EVALUATED) {
+        this.FL_TOTAL_EVALUATED = FL_TOTAL_EVALUATED;
+    }
+
+    public String getFL_TOTAL_OBTAINED() {
+        return FL_TOTAL_OBTAINED;
+    }
+
+    public void setFL_TOTAL_OBTAINED(String FL_TOTAL_OBTAINED) {
+        this.FL_TOTAL_OBTAINED = FL_TOTAL_OBTAINED;
     }
 
     public String getFL_LETTER() {
