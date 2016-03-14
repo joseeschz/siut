@@ -1473,7 +1473,7 @@
     </div>
 </div>
 
-<div id="popoverSettings">
+<div id="popoverSettings" style="display: none">
     <div style="color: olive;">
         <label style="font-size: 12px; font-weight: bold">Tipo de entrada</label>
         <br>
@@ -1481,6 +1481,7 @@
             <input id="typeInput" type="radio" name="wayInput"/>
             Caja númerica
         </label>
+        <br>
         <label style="font-size: 12px">           
             <input id="typeSlider" type="radio" name="wayInput" />
             Deslizador

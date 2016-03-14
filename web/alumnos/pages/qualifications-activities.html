@@ -59,12 +59,14 @@
                                 <tr>
                                     <th class="center">Calificación</th>
                                     <th class="center">De</th>
+                                    <th class="center">Torno a</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <th class="center" id="subtotalValueObtaniedNow"></th>
                                     <th class="center" id="totalValueActivityNow"></th>
+                                    <th class="center"> 10</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -237,7 +239,7 @@
                         $(".subtotalValueActivity").each(function (){
                             totalValueActivityNow=totalValueActivityNow+parseFloat($(this).text());
                         });
-                        $("#totalValueActivityNow").text((totalValueActivityNow).toFixed(2)+" -> 10"); 
+                        $("#totalValueActivityNow").text((totalValueActivityNow).toFixed(2)+""); 
                     }else{
                     }
                 }

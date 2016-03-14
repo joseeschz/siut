@@ -1,5 +1,5 @@
 <!-- Content Header (Page header) -->
-<section class="content-header"  style="padding: 0px">            
+<section class="content-header"  style="padding: 0px">   
     <h1>
       Principal
       <small>Grafica de calificaciones comparativa</small>
@@ -14,7 +14,7 @@
     <br>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Reporte</a></li>
-      <li class="active">Gráfica comparativa</li>
+      <li class="active">Grafica comparativa</li>
     </ol>
 </section>
 
@@ -25,8 +25,8 @@
             <div id='jqxChart' style="width: 100%; height: 100%"></div>
         </div>
     </div>
-    
 </section><!-- /.content -->    
+
 <script>
     $(document).ready(function () {
         var itemPeriod=0;
@@ -51,7 +51,26 @@
                 } else if(last == '.' || last == '?' || last == '!'){
                      texto = texto.substr(0,limite-1);
                 } else {
-                     texto = texto.substr(0,limite-1) + '...';
+                     texto = texto.substr(0,3) + '...';
+                }
+            }
+            return texto = texto.substr(0,3) + '...';
+        }
+        function truncate(texto,limite){
+            if(texto.length>limite){ 
+                limite--;
+                last = texto.substr(limite-1,1);
+                while(last!=' ' && limite > 0){
+                    limite--;
+                    last = texto.substr(limite-1,1);
+                }
+                last = texto.substr(limite-2,1);
+                if(last == ',' || last == ';'  || last == ':'){
+                     texto = texto.substr(0,limite-2) + '...';
+                } else if(last == '.' || last == '?' || last == '!'){
+                     texto = texto.substr(0,limite-1);
+                } else {
+                     texto = texto.substr(0,6) + '...';
                 }
             }
             return texto;
@@ -118,8 +137,7 @@
           seriesGroups: [{
             type: 'column',
             valueAxis: {
-              description: 'Escala',
-              //logarithmicScale: true,
+//              description: 'Escala',
               minValue: 0,
               maxValue: 100,
               unitInterval: 5,
@@ -130,12 +148,11 @@
               formatFunction:function (val){
                 return val+"%";  
               },
-
               toolTipFormatFunction : toolTipCustomFormatFn,
               horizontalTextAlignment: 'right'
             },
             xAxis:{
-                dataField: 'MateriasAbre',
+                dataField: 'Materias',
                 flip: false,
                 unitInterval: 1,
 
@@ -144,9 +161,16 @@
                     step: 1,
                     color: '#9FA09D'
                 },
+                formatFunction:function (val){
+                    return truncar(val,10);  
+                },
                 labels :{
                     step: 1,
-                    visible : true
+                    visible : true,
+                    labels:{
+                        class: "cortar",
+                        textRotationPoint : 'lefttop'
+                    }
                 }
             },
             click: myEventHandler,
@@ -187,7 +211,7 @@
             var chartInstance = $('#jqxChart').jqxChart('getInstance');
             var i=0;
             $("text").each(function (){
-                if($(this).text().contains("M")){
+                if($(this).text().contains("...")){
                     i++;
                     if($(this).text()===text){
                         chartInstance.showToolTip(

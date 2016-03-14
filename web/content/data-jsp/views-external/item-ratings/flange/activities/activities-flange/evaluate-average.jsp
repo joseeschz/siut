@@ -1182,7 +1182,7 @@
         <div style="width: 100%">
             <b>Calificación</b>
             <div id="settingsButton" style="float: right;"></div>
-            <div id="popoverSettings">
+            <div id="popoverSettings" style="">
                 <div style="color: olive;">
                     <label style="font-size: 12px; font-weight: bold">Tipo de entrada</label>
                     <br>
@@ -1190,6 +1190,7 @@
                         <input id="typeInput" type="radio" name="wayInputEval"/>
                         Caja númerica
                     </label>
+                    <br>
                     <label style="font-size: 12px">           
                         <input id="typeSlider" type="radio" name="wayInputEval" />
                         Deslizador
