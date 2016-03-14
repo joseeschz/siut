@@ -43,6 +43,11 @@
             body{
                 
             }
+            .cortar{
+                text-overflow:ellipsis;
+                white-space:nowrap; 
+                overflow:hidden; 
+            }
         </style>
     </head>
     <body class="skin-black fixed">
@@ -107,95 +112,16 @@
                   <li class="dropdown tasks-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-flag-o"></i>
-                      <span class="label label-danger">6</span>
+                      <span class="label totalMaters label-danger"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <li class="header">Tienes 6 materias</li>
+                        <li class="header">Tienes <span class="totalMaters"> </span> materias</li>
                       <li>
                         <!-- inner menu: contains the actual data -->
-                        <ul class="menu">
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Base de datos
-                                <small class="pull-right">20%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">20% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Redes de área local
-                                <small class="pull-right">40%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">40% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Integradora
-                                <small class="pull-right">60%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">60% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Programación
-                                <small class="pull-right">80%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">80% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Ingenieria del sofware
-                                <small class="pull-right">70%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-light-blue" style="width: 70%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">70% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                          <li><!-- Task item -->
-                            <a href="#">
-                              <h3>
-                                Aplicaciones moviles
-                                <small class="pull-right">20%</small>
-                              </h3>
-                              <div class="progress xs">
-                                <div class="progress-bar progress-bar-warning" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">20% Complete</span>
-                                </div>
-                              </div>
-                            </a>
-                          </li><!-- end task item -->
-                        </ul>
+                        <ul class="menu subjectMatters"></ul>
                       </li>
                       <li class="footer">
-                          <a data-href="qualifications-report" href="#">Por actividades</a>
+                          <a data-href='qualifications-report' href='#' class='small-box-footer'>Ir a detalles<i class='fa fa-arrow-circle-right'></i></a>
                       </li>
                     </ul>
                   </li>
@@ -261,6 +187,7 @@
                         </li>
                     </ul>
                 </li>
+                <li data-href="about"><a href="#"><i class="fa fa-book"></i> Acerca de...</a></li>
               </ul>
             </section>
             <!-- /.sidebar -->
@@ -304,7 +231,60 @@
         <script type="text/javascript" src="res-me/jqwidgets/jqwidgets-ver4.0.0/scripts/get-theme.js"></script>
         <script type="text/javascript" src="res-me/js/make-combo.js"  charset="UTF-8"></script>
         <script>
+            var data = null;
             $(document).ready(function (){
+                var itemClickedId;
+                var itemClickedIdOld;
+                var dirCookie = localStorage.getItem("dirApp");
+                
+                var source = {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'Materias'},
+                        { name: 'MateriasAbre'},
+                        { name: 'Evaluado'},
+                        { name: 'Obtenido'},
+                        { name: 'Estado'}
+                    ],
+                    root:"rows",
+                    data:{
+                        "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
+                    },
+                    url: 'http://10.10.10.23/serviceCalification?calMattersStudentChart'
+                };
+                var dataAdapter = new $.jqx.dataAdapter(source, {
+                    async: false,
+                    autoBind: true,
+                    beforeLoadComplete: function (records) {
+                        $(".totalMaters").text(records.length);
+                        data=records;
+                        var liMatters="";
+                        
+                        for(var i=0; i<records.length; i++){
+                            liMatters = liMatters+"\
+                            <li>\n\
+                                <a href='#'>\n\
+                                    <h3 class='cortar'>\n\
+                                        "+records[i].Materias+"\n\
+                                    </h3>\n\
+                                    <div style='height: 14px;' class='progress active'>\n\
+                                        <small class='pull-right'>"+records[i].Evaluado+"%</small>\n\
+                                        <div class='progress-bar progress-bar-success progress-bar-striped' style='width: "+records[i].Evaluado+"%' role='progressbar' aria-valuenow='"+records[i].Evaluado+"' aria-valuemin='0' aria-valuemax='100'>\n\
+                                            <span class='sr-only'>"+records[i].Evaluado+"% Complete</span>\n\
+                                        </div>\n\
+                                    </div>\n\
+                                </a>\n\
+                            </li>";
+                        }
+                        $(".subjectMatters").html(liMatters);
+                        return records;
+                    }
+                });
+                if(dirCookie!==null){
+                    $(".content-wrapper").load("pages/"+dirCookie+".html");
+                }else{
+                    $(".content-wrapper").load("pages/principal.html"); 
+                }
                 $('#jqxLoader').jqxLoader({ theme: 'energyblue', width: 200, height: 150, isModal: true });
                 if(typeof (Storage) !=="undefined"){                    
                     if(eval(localStorage.getItem("rememberMe"))){
@@ -346,15 +326,8 @@
                         window.location="login.html";
                     }  
                 });
-                var itemClickedId;
-                var itemClickedIdOld;
-                var dirCookie = localStorage.getItem("dirApp");
-                if(dirCookie!==null){
-                    $(".content-wrapper").load("pages/"+dirCookie+".html");
-                }else{
-                    $(".content-wrapper").load("pages/principal.html"); 
-                }
-                $("[data-href]").click(function (){
+                
+                $(document).on("click","[data-href]",function (){
                     if($(this).attr("data-href")){
                         $(".treeview-menu li").removeClass("active");
                         $(this).addClass("active");
@@ -363,7 +336,10 @@
                         itemClickedId=myhref;
                         if(itemClickedIdOld!==itemClickedId){
                             localStorage.setItem("dirApp",myhref);
-                            $(".sidebar-toggle").click();
+                            if($("body").hasClass("sidebar-open")){
+                                $("body").removeClass("sidebar-open");
+                                $("body").addClass("sidebar-close");
+                            }
                             $.ajax({
                                 async: false,
                                 type: 'GET',
@@ -388,8 +364,10 @@
                     itemClickedId=myhref;
                     if(itemClickedIdOld!==itemClickedId){
                         localStorage.setItem("dirApp",myhref);
-                        $(".sidebar-toggle").click();
-                        $(".sidebar-toggle").click();
+                        if($("body").hasClass("sidebar-open")){
+                            $("body").removeClass("sidebar-open");
+                            $("body").addClass("sidebar-close");
+                        }
                         $.ajax({
                             async: false,
                             type: 'GET',
