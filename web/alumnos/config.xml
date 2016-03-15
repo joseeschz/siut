@@ -1,7 +1,7 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.phonegap.siut" version="2.0.0">
-  <name>siut</name>
-  <description>Sistema integral utsem versión mobile</description>
-  <author href="https://www.facebook.com/charlik.1994" email="sistema.integral.utsem@gmail.com">Ing. Carlos Antonio Escobar Hernandez</author>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.apps.siut" version="2.0.0">
+  <name>Siut</name>
+  <description>Sistema Integral Utsem Versión Mobil</description>
+  <author href="https://www.facebook.com/charlik.1994" email="charlik.programmer@gmail.com">Ing. Carlos Antonio Escobar Hernandez</author>
   <content src="index.html"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
