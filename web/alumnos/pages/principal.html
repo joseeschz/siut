@@ -69,19 +69,22 @@
         var boxesMatters="";
         for(var i=0; i<data.length; i++){
             var color = "green";
+            var style = "";
             if(parseFloat(data[i].Evaluado)>99){
                 if((parseFloat(data[i].Obtenido)*10/parseFloat(data[i].Evaluado))<8){
                     color="red";
                 } 
+            }else if(parseFloat(data[i].Evaluado)==0){
+                color="gray"; 
+                style = "color: #FFF;background-color: #2C3B41;";
             }else{
                 if((parseFloat(data[i].Obtenido)*10/parseFloat(data[i].Evaluado))<8){
                     color="yellow";
                 } 
             }
-            
             boxesMatters = boxesMatters+"\
             <div class='col-lg-3 col-xs-6'>\n\
-                <div class='small-box bg-"+color+"-gradient'>\n\
+                <div class='small-box bg-"+color+"-gradient' style='"+style+"'>\n\
                     <div class='inner'>\n\
                         <h4>"+data[i].Obtenido+"% de "+data[i].Evaluado+"% </h4>\n\
                         <p class='cortar' style='width:80%'>"+data[i].Materias+"</p>\n\
