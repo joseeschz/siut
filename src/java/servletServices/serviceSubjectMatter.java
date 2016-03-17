@@ -100,6 +100,7 @@ public class serviceSubjectMatter extends HttpServlet {
                     JSONObject data = new JSONObject();
                     data.put("id", listSubjectMatters.get(i).getPK_SUBJECT_MATTER());
                     data.put("dataProgresivNumber", i+1);
+                    data.put("dataPkTeacher", listSubjectMatters.get(i).getPK_WORKER());
                     data.put("dataPkSubjectMatter", listSubjectMatters.get(i).getPK_SUBJECT_MATTER());
                     data.put("dataNameSubjectMatter", listSubjectMatters.get(i).getFL_NAME_SUBJECT_MATTER());
                     data.put("dataIntegradora", listSubjectMatters.get(i).getFL_INTEGRADORA());

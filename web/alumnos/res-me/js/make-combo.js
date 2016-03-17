@@ -1239,7 +1239,8 @@ function createDropDownSubjectMatterByStudent(selector, update){
             crossDomain: true,
             datafields: [
                 { name: 'dataNameSubjectMatter' },
-                { name: 'dataPkSubjectMatter' }
+                { name: 'dataPkSubjectMatter' },
+                { name: 'dataPkTeacher' }
             ],
             root: "__ENTITIES",
             id: 'id',
@@ -1253,6 +1254,12 @@ function createDropDownSubjectMatterByStudent(selector, update){
     if(update){
         $(selector).jqxDropDownList('clearSelection');
         $(selector).jqxDropDownList({source: dataAdapter,selectedIndex:0});
+        $(selector).off("select");
+        $(selector).on("select", function (){
+            if(navigator.vibrate) {
+                navigator.vibrate(20);
+            }
+        });
     }else{    
         // Create a jqxListBox
         $(selector).jqxDropDownList({ 
@@ -1275,6 +1282,12 @@ function createDropDownSubjectMatterByStudent(selector, update){
                 if (item) {
                     //alert();
                 }
+            }
+        });
+        $(selector).off("select");
+        $(selector).on("select", function (){
+            if(navigator.vibrate) {
+                navigator.vibrate(20);
             }
         });
     }

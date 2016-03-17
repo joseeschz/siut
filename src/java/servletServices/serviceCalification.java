@@ -361,7 +361,8 @@ public class serviceCalification extends HttpServlet {
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataRows = new JSONObject();
                     dataRows.put("dataNameSubjectMatter", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
-                    dataRows.put("dataAvg", listColumns.get(i).getFL_AVG());
+                    dataRows.put("dataObtained", listColumns.get(i).getFL_TOTAL_OBTAINED());
+                    dataRows.put("dataEvaluated", listColumns.get(i).getFL_TOTAL_EVALUATED());
                     contentRows.add(dataRows); 
                 }
                 rows.put("rows", contentRows);
@@ -390,6 +391,8 @@ public class serviceCalification extends HttpServlet {
                 JSONObject rows = new JSONObject();
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataRows = new JSONObject();
+                    dataRows.put("index", i);
+                    dataRows.put("Pk_matter", listColumns.get(i).getPK_SUBJECT_MATTER());
                     dataRows.put("Materias", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
                     dataRows.put("MateriasAbre", "M"+(i+1));
                     dataRows.put("Evaluado", Double.parseDouble(listColumns.get(i).getFL_TOTAL_EVALUATED()));

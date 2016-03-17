@@ -1,21 +1,19 @@
 <!-- Content Header (Page header) -->
 <section class="content-header"  style="padding: 0px">            
-    <h1>
-      Principal
-      <small>Calificaciones</small>
-    </h1>
     <div style="display: none">
         <div id="qualificationsPeriod"></div>
     </div>
+    <br>
     <br>
     <div style="text-align: right">
         <b id="periodLabel"></b>
     </div> 
     <br>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li class="active">Actividades</li>
+      <li><a href="#"><i class="fa fa-dashboard"></i> Calificaciones</a></li>
+      <li class="active">Por actividades</li>
     </ol>
+    
 </section>
 
 <!-- Main content -->
@@ -48,30 +46,6 @@
                 <div class="panel-body" style="padding: 0px"> 
                     <div class="tablesActivities1 table-responsive"></div>
                 </div>
-                <div id="footDetails" style="display:none;">
-                    <div class="text-right">
-                         <!--<a href="#">Ver todas las actividades <i class="fa fa-arrow-circle-right"></i></a>-->
-                    </div>
-                    <b id="name">TOTAL ACUMULADO</b>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="center">Calificación</th>
-                                    <th class="center">De</th>
-                                    <th class="center">Torno a</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="center" id="subtotalValueObtaniedNow"></th>
-                                    <th class="center" id="totalValueActivityNow"></th>
-                                    <th class="center"> 10</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>  
     </div>
@@ -96,12 +70,11 @@
             itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getItems'); 
             if(itemsScaleEvaluation.length==0){
                 $(".tablesActivities1").html("El profesor no a cerrado ningún bloque de los saberes de evaluación");
-                $("#footDetails").hide();
             }
         }else{
             createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", null, false);
         }
-
+        $("#qualificationsListSubjectMatters").jqxDropDownList('selectIndex', sessionStorage.getItem("indexSelectedMatter")||0); 
         $('#qualificationsListSubjectMatters').on('change',function (event){  
             itemSubjectMatters=$('#qualificationsListSubjectMatters').jqxDropDownList('getSelectedItem');
             if(itemSubjectMatters!==undefined){
@@ -110,7 +83,6 @@
                 if(itemsScaleEvaluation!==undefined){
                     if(itemsScaleEvaluation===null){
                         $(".tablesActivities1").html("El profesor no a cerrado ningún bloque de los saberes de evaluación");
-                        $("#footDetails").hide();
                     }
                 }
             }else{
@@ -170,8 +142,18 @@
                         valItemsScaleEvaluation=itemsScaleEvaluation;
                         $(".tablesActivities1").html("");      
                         for(var it=0; it<itemsScaleEvaluation.length; it++){
-                            table=$('<table class="table-bordered table-hover table-striped" border="1"></table>');
-                            thead=$('<thead><tr><th align="left" colspan="5">'+valItemsScaleEvaluation[it].label+'</th></tr><tr><th align="center" width="85%" rowspan="2">Actividad</th><th align="center" colspan="2">Valor</th><th align="center" colspan="2">Calificación</th></tr><tr><th align="center" title="Real">#</th><th align="center" title="Porcentaje">%</th><th align="center" title="Real">R</th><th align="center" title="Equivalente">E</th></tr></thead>');
+                            table=$('<table id="table'+it+'" width="100%" class="table-bordered table-hover table-striped" border="1"></table>');
+                            thead=$('\
+                            <thead>\n\
+                                <tr>\n\
+                                    <th colspan="3">'+valItemsScaleEvaluation[it].label+'</th>\n\
+                                </tr>\n\
+                                <tr>\n\
+                                    <th style="text-align: center;" width="60%">Actividad</th>\n\
+                                    <th style="text-align: center;">Obtenido</th>\n\
+                                    <th style="text-align: center;">De</th>\n\
+                                </tr>\n\
+                            </thead>');
                             tbody=$('<tbody></tbody>');
                             ordersSource=loadSourceActivities(valItemsScaleEvaluation[it].value);
                             var subtotalScale=0;
@@ -187,10 +169,22 @@
 
                                 if(ordersSource.items[ia].dataNameActivity==="Subtotal"){
                                     totalPercent=totalPercent+((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale);
-                                    tfoot=$('<tfoot><tr><th align="right">Subtotal</th><th align="center" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th><th align="center">'+totalPercent+'%</th><th align="center" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th><th align="center">'+totalEquivalent+'</th></tr></tfoot>');
+                                    tfoot=$('\
+                                    <tfoot>\n\
+                                        <tr>\n\
+                                            <th align="right">Subtotal</th>\n\
+                                            <th style="text-align: center;" class="subtotalValueObtanied">'+ordersSource.items[ia].dataValueObtanied+'</th>\n\
+                                            <th style="text-align: center;" class="subtotalValueActivity">'+ordersSource.items[ia].dataValueActivity+'</th>\n\
+                                        </tr>\n\
+                                    </tfoot>');
                                 }else{
                                     var dataValueObtaniedEquivalent = parseFloat(ordersSource.items[ia].dataValueObtaniedEquivalent).toFixed(1);
-                                    trOnTbody=$('<tr><td>'+ordersSource.items[ia].dataNameActivity+'</td><td align="center">'+ordersSource.items[ia].dataValueActivity+'</td><td align="center">'+parseFloat((ordersSource.items[ia].dataValueActivity*100)/ordersSource.items[ia].dataMaxValueScale).toFixed(2)+'%</td><td align="center">'+ordersSource.items[ia].dataValueObtanied+'</td><td align="center">'+dataValueObtaniedEquivalent+'</td></tr>');
+                                    trOnTbody=$('\
+                                    <tr>\n\
+                                        <td>'+ordersSource.items[ia].dataNameActivity+'</td>\n\
+                                        <td style="text-align: center;">'+ordersSource.items[ia].dataValueObtanied+'</td>\n\
+                                        <td style="text-align: center;">'+ordersSource.items[ia].dataValueActivity+'</td>\n\
+                                    </tr>');
                                     trOnTbody.appendTo(tbody); 
                                     subtotalScale=subtotalScale+parseFloat(ordersSource.items[ia].dataValueActivity);
                                     subtotalScaleObtanied=subtotalScaleObtanied+parseFloat(ordersSource.items[ia].dataValueObtanied);
@@ -208,37 +202,39 @@
                             }
                             if(isNaN(equivalent)){
                                 equivalent=0;
-                            }                                
+                            }     
+                            table.append(thead);
+                            table.append(tbody);
                             if(anyActivity===0){
-                                trOnTbody=$('<tr><td colspan="5">Este saber no cuenta con actividades evaluadas</td></tr>');
+                                trOnTbody=$('<tr><td colspan="3">Este saber no cuenta con actividades evaluadas</td></tr>');
                                 trOnTbody.appendTo(tbody); 
                             }else{
                                 table.append(tfoot);
                                 anyActivity=0;
                             }
-
-                            table.append(thead);
-                            table.append(tbody);
-
                             $(".tablesActivities1").append(table);
                             $(".tablesActivities1").append("<br>");
                         }
-
-                        if(existActivities>=1){
-                            $("#footDetails").fadeIn("slow");
-                            existActivities=0;
-                        }else{
-                            $("#footDetails").fadeOut("slow");
-                        }
                         var subtotalValueObtaniedNow=0;
+                        var totalValueActivityNow=0;
                         $(".subtotalValueObtanied").each(function (){
                             subtotalValueObtaniedNow=subtotalValueObtaniedNow+parseFloat($(this).text());
                         });
-                        $("#subtotalValueObtaniedNow").text((subtotalValueObtaniedNow)); 
-                        var totalValueActivityNow=0;
                         $(".subtotalValueActivity").each(function (){
                             totalValueActivityNow=totalValueActivityNow+parseFloat($(this).text());
                         });
+                        var total = $('\
+                            <tr>\n\
+                                <th style="text-align: center;">TOTAL ACUMULADO</th>\n\
+                                <th style="text-align: center;" colspan="2">DE</th>\n\
+                            </tr>\n\
+                            <tr>\n\
+                                <td style="text-align: center;" id="subtotalValueObtaniedNow"></td>\n\
+                                <td style="text-align: center;" colspan="2" id="totalValueActivityNow"></td>\n\
+                            </tr>\n\
+                        ');
+                        $("#table2").children("tfoot").append(total);
+                        $("#subtotalValueObtaniedNow").text((subtotalValueObtaniedNow).toFixed(2)+""); 
                         $("#totalValueActivityNow").text((totalValueActivityNow).toFixed(2)+""); 
                     }else{
                     }

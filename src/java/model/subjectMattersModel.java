@@ -9,7 +9,7 @@ package model;
  *
  * @author CARLOS
  */
-public class subjectMattersModel {
+public class subjectMattersModel extends workerModel{
     int PK_SUBJECT_MATTER = 0;
     String FL_NAME_SUBJECT_MATTER = "";
     String FL_INTEGRADORA = "";

@@ -19,7 +19,8 @@
                 }                                 
             }else{
                 alert("No es soportado el localStorage");
-            }    
+            }  
+            navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
         </script>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />    
@@ -106,13 +107,17 @@
                       <span class="label totalMaters label-danger"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">Tienes <span class="totalMaters"> </span> materias</li>
+                        <li class="header">
+                            Tienes <span class="totalMaters"> </span> materias
+                            <br>
+                            <span>Progreso evaluado por el profesor</span>
+                        </li>
                       <li>
                         <!-- inner menu: contains the actual data -->
                         <ul class="menu subjectMatters"></ul>
                       </li>
                       <li class="footer">
-                          <a data-href='qualifications-report' href='#' class='small-box-footer'>Ir a detalles<i class='fa fa-arrow-circle-right'></i></a>
+                          <a data-href='qualifications-report.html' href='#' class='small-box-footer'>Ir a detalles<i class='fa fa-arrow-circle-right'></i></a>
                       </li>
                     </ul>
                   </li>
@@ -129,6 +134,7 @@
                         <p>
                             <span class="nameSmallStudent"></span>- Alumno de <span class="career"></span>
                             <small class="enrollment"></small>
+                            <small>Grupo: <span class="group"></span></small>
                         </p>
                       </li>
                       <!-- Menu Body -->
@@ -170,15 +176,16 @@
                     <i class="fa fa-dashboard"></i> <span>Calificaciones</span> <i class="fa fa-angle-left pull-right"></i>
                   </a>
                     <ul class="treeview-menu">
-                        <li data-href="qualifications-activities">
+                        <li data-href="qualifications-activities.html">
                             <a href="#"><i class="fa fa-circle-o"></i> Por actividades</a>
                         </li>
-                        <li data-href="qualifications-matters">
+                        <li data-href="qualifications-matters.html">
                             <a href="#"><i class="fa fa-circle-o"></i> Por materias</a>
                         </li>
                     </ul>
                 </li>
-                <li data-href="about"><a href="#"><i class="fa fa-book"></i> Acerca de...</a></li>
+                <li data-href="qualifications-criterion.html"><a href="#"><i class="fa fa-arrow-up"></i>Criterios de evaluación</a></li>
+                <li data-href="about.html"><a href="#"><i class="fa fa-book"></i> Acerca de...</a></li>
               </ul>
             </section>
             <!-- /.sidebar -->
@@ -190,7 +197,7 @@
           </div><!-- /.content-wrapper -->
           <footer class="main-footer">
             <div class="pull-right hidden-xs">
-              <b>Versión</b> 2.0
+              <b>Versión</b> 2.0.01
             </div>
             <strong>Copyright &copy; 2015-2016 </strong> Todos los derechos reservados.
           </footer>
@@ -233,7 +240,8 @@
                         $(".nameStudent").text(localStorage.getItem("logueadoStudentCal"));
                         $(".nameSmallStudent").text(localStorage.getItem("nameSmall"));
                         $(".career").text(localStorage.getItem("careerStudent"));
-                        $(".enrollment").text(localStorage.getItem("userNameStudent"));                       
+                        $(".enrollment").text(localStorage.getItem("userNameStudent"));  
+                        $(".group").text(localStorage.getItem("nameGroup"));  
                     }
                 }else{
                     if(eval(sessionStorage.getItem("session"))){
@@ -246,7 +254,8 @@
                             $(".nameStudent").text(sessionStorage.getItem("logueadoStudentCal"));
                             $(".nameSmallStudent").text(sessionStorage.getItem("nameSmall"));
                             $(".career").text(sessionStorage.getItem("careerStudent"));
-                            $(".enrollment").text(sessionStorage.getItem("userNameStudent"));                       
+                            $(".enrollment").text(sessionStorage.getItem("userNameStudent"));    
+                             $(".group").text(sessionStorage.getItem("nameGroup"));  
                         }                      
                     }
                 }  
@@ -262,6 +271,8 @@
                 var source = {
                     datatype: "json",
                     datafields: [
+                        { name: 'index'},
+                        { name: 'Pk_matter'},
                         { name: 'Materias'},
                         { name: 'MateriasAbre'},
                         { name: 'Evaluado'},
@@ -281,7 +292,6 @@
                         $(".totalMaters").text(records.length);
                         data=records;
                         var liMatters="";
-                        
                         for(var i=0; i<records.length; i++){
                             liMatters = liMatters+"\
                             <li>\n\
@@ -289,9 +299,9 @@
                                     <h3 class='cortar'>\n\
                                         "+records[i].Materias+"\n\
                                     </h3>\n\
+                                    <small class='pull-right' style='color: #00A65A'>"+records[i].Evaluado+"%</small>\n\
                                     <div style='height: 14px;' class='progress active'>\n\
-                                        <small class='pull-right'>"+records[i].Evaluado+"%</small>\n\
-                                        <div class='progress-bar progress-bar-success progress-bar-striped' style='width: "+records[i].Evaluado+"%' role='progressbar' aria-valuenow='"+records[i].Evaluado+"' aria-valuemin='0' aria-valuemax='100'>\n\
+                                        <div class='progress-bar progress-bar-success progress-bar-default' style='width: "+records[i].Evaluado+"%' role='progressbar' aria-valuenow='"+records[i].Evaluado+"' aria-valuemin='0' aria-valuemax='100'>\n\
                                             <span class='sr-only'>"+records[i].Evaluado+"% Complete</span>\n\
                                         </div>\n\
                                     </div>\n\
@@ -303,11 +313,11 @@
                     }
                 });
                 if(dirCookie!==null){
-                    $(".content-wrapper").load("pages/"+dirCookie+".html");
+                    $(".content-wrapper").load("pages/"+dirCookie);
                 }else{
                     $(".content-wrapper").load("pages/principal.html"); 
                 }
-                $('#jqxLoader').jqxLoader({ theme: 'energyblue', width: 200, height: 150, isModal: true });
+                $('#jqxLoader').jqxLoader({text: "Cargando...", isModal: true });
                             
                 $("#signOut").click(function (){
                     if(eval(localStorage.getItem("rememberMe"))){
@@ -320,6 +330,11 @@
                 });
                 
                 $(document).on("click","[data-href]",function (){
+                    if($(this).attr("data-index")!=undefined){
+                        sessionStorage.setItem("indexSelectedMatter", $(this).attr("data-index"));
+                    }else{
+                        sessionStorage.removeItem("indexSelectedMatter");
+                    }
                     if($(this).attr("data-href")){
                         $(".treeview-menu li").removeClass("active");
                         $(this).addClass("active");
@@ -327,20 +342,25 @@
                         itemClickedIdOld=localStorage.getItem("dirApp");
                         itemClickedId=myhref;
                         if(itemClickedIdOld!==itemClickedId){
+                            if(navigator.vibrate) {
+                                navigator.vibrate(20);
+                            }
                             localStorage.setItem("dirApp",myhref);
                             if($("body").hasClass("sidebar-open")){
                                 $("body").removeClass("sidebar-open");
                                 $("body").addClass("sidebar-close");
                             }
                             $.ajax({
-                                async: false,
+                                async: true,
                                 type: 'GET',
-                                url: "pages/"+$(this).attr("data-href")+".html",
+                                url: "pages/"+$(this).attr("data-href"),
                                 beforeSend: function (xhr) {     
                                     $('#jqxLoader').jqxLoader('open');
+                                    $('#jqxLoader').css("left","0px","top","0px");
                                 },                            
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     alert("Error interno del servidor");
+                                    $('#jqxLoader').jqxLoader('close');
                                 },
                                 success: function (data, textStatus, jqXHR) {
                                     $('#jqxLoader').jqxLoader('close');
@@ -350,8 +370,13 @@
                         }
                     }
                 });
-                $(".logo").click(function (){
-                    var myhref="principal";
+                $(".sidebar-toggle, .dropdown-toggle, .btn, .close").click(function (){
+                    if(navigator.vibrate) {
+                        navigator.vibrate(20);
+                    }
+                });
+                $(".logo").click(function (){                    
+                    var myhref="principal.html";
                     itemClickedIdOld=localStorage.getItem("dirApp");
                     itemClickedId=myhref;
                     if(itemClickedIdOld!==itemClickedId){
@@ -360,15 +385,20 @@
                             $("body").removeClass("sidebar-open");
                             $("body").addClass("sidebar-close");
                         }
+                        if(navigator.vibrate) {
+                            navigator.vibrate(20);
+                        }
                         $.ajax({
-                            async: false,
+                            async: true,
                             type: 'GET',
-                            url: "pages/"+myhref+".html",
+                            url: "pages/"+myhref,
                             beforeSend: function (xhr) {  
                                 $('#jqxLoader').jqxLoader('open');
+                                $('#jqxLoader').css("left","0px","top","0px");
                             },                            
                             error: function (jqXHR, textStatus, errorThrown) {
                                 alert("Error interno del servidor");
+                                $('#jqxLoader').jqxLoader('close');
                             },
                             success: function (data, textStatus, jqXHR) {
                                 $('#jqxLoader').jqxLoader('close');

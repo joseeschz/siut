@@ -9,7 +9,7 @@ package model;
  *
  * @author CARLOS
  */
-public class careerModel {
+public class careerModel extends  groupModel{
     int PK_CAREER = 0;
     String FL_NAME_CAREER = "";
     String FL_NAME_ABBREVIATED = "";

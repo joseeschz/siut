@@ -62,6 +62,7 @@ public class subjectMattersControl {
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
                     listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    listSubjectMatters.setPK_WORKER(res.getInt("PK_WORKER"));
                     list.add(listSubjectMatters);
                 }
                 res.close();
