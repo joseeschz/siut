@@ -1,22 +1,18 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>
-      Principal
-      <small>Control panel</small>
-    </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      <li class="active">Principal</li>
+      <li><a href="#"><i class="fa fa-home"></i> Inicio</a></li>
     </ol>
+    <br>
 </section>
 
 <!-- Main content -->
 <section class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="alert bg-gray-active alert-dismissable">
+            <div class="alert bg-gray-active alert-dismissable" style="background-color: #222D32 !important; color: #fff; ">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <i class="fa fa-info-circle"></i>  <strong>Esta aplicación esta en fase de pruebas y desarrollo reportar si encuentras algún error. </strong>SIUT herramienta de consulta de calificaciones, desarrollada por la Universidad Tecnológica del Sur del Estado de México.
+                <i class="fa fa-info-circle"></i> Esta aplicación esta en fase de pruebas y desarrollo reportar si encuentras algún error. SIUT herramienta de consulta de calificaciones, desarrollada por la Universidad Tecnológica del Sur del Estado de México.
             </div>
         </div>
     </div>
@@ -26,19 +22,74 @@
 </section><!-- /.content -->
 <script>
     $(document).ready(function (){
+        var source = {
+                    datatype: "json",
+            datafields: [
+                { name: 'index'},
+                { name: 'Pk_matter'},
+                { name: 'Materias'},
+                { name: 'MateriasAbre'},
+                { name: 'Evaluado'},
+                { name: 'Obtenido'},
+                { name: 'Estado'}
+            ],
+            root:"rows",
+            data:{
+                "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
+            },
+            url: 'http://10.10.10.23/serviceCalification?calMattersStudentChart'
+        };
+        var dataAdapter = new $.jqx.dataAdapter(source, {
+            async: false,
+            autoBind: true,
+            beforeLoadComplete: function (records) {
+                $(".totalMaters").text(records.length);
+                data=records;
+                var liMatters="";
+                for(var i=0; i<records.length; i++){
+                    liMatters = liMatters+"\
+                    <li>\n\
+                        <a href='#'>\n\
+                            <h3 class='cortar'>\n\
+                                "+records[i].Materias+"\n\
+                            </h3>\n\
+                            <small class='pull-right' style='color: #00A65A'>"+records[i].Evaluado+"%</small>\n\
+                            <div style='height: 14px;' class='progress active'>\n\
+                                <div class='progress-bar progress-bar-success progress-bar-default' style='width: "+records[i].Evaluado+"%' role='progressbar' aria-valuenow='"+records[i].Evaluado+"' aria-valuemin='0' aria-valuemax='100'>\n\
+                                    <span class='sr-only'>"+records[i].Evaluado+"% Complete</span>\n\
+                                </div>\n\
+                            </div>\n\
+                        </a>\n\
+                    </li>";
+                }
+                $(".subjectMatters").html(liMatters);
+                return records;
+            }
+        });
         var boxesMatters="";
         for(var i=0; i<data.length; i++){
+            var color = "green";
+            if(parseFloat(data[i].Evaluado)>99){
+                if((parseFloat(data[i].Obtenido)*10/parseFloat(data[i].Evaluado))<8){
+                    color="red";
+                } 
+            }else{
+                if((parseFloat(data[i].Obtenido)*10/parseFloat(data[i].Evaluado))<8){
+                    color="yellow";
+                } 
+            }
+            
             boxesMatters = boxesMatters+"\
             <div class='col-lg-3 col-xs-6'>\n\
-                <div class='small-box bg-green-gradient'>\n\
+                <div class='small-box bg-"+color+"-gradient'>\n\
                     <div class='inner'>\n\
-                        <h3>"+data[i].Obtenido+"%</h3>\n\
+                        <h4>"+data[i].Obtenido+"% de "+data[i].Evaluado+"% </h4>\n\
                         <p class='cortar' style='width:80%'>"+data[i].Materias+"</p>\n\
                     </div>\n\
                     <div class='icon'>\n\
                         <i class='ion ion-stats-bars'></i>\n\
                     </div>\n\
-                    <a data-href='qualifications-activities' href='#' class='small-box-footer'>Ir a detalles<i class='fa fa-arrow-circle-right'></i></a>\n\
+                    <a data-href='qualifications-activities.html' data-index='"+data[i].index+"' href='#' class='small-box-footer'>Ir a detalles<i class='fa fa-arrow-circle-right'></i></a>\n\
                 </div> \n\
             </div>";
         }

@@ -201,6 +201,11 @@
                         }
                     ]
                 });
+                $(".btn-success").click(function (){
+                    if(navigator.vibrate) {
+                        navigator.vibrate(20);
+                    }
+                });
                 $("#sendButton").click(function (){
                     $('#formLogin').jqxValidator('validate');
                     return false;
@@ -249,6 +254,9 @@
                                     localStorage.setItem("nameSmall",data.nameSmall);
                                     localStorage.setItem("careerStudent",data.careerStudent);
                                     localStorage.setItem("genderStudent",data.genderStudent);
+                                    localStorage.setItem("nameGroup",data.nameGroup);
+                                    localStorage.setItem("pkGroup",data.pkGroup);
+                                    localStorage.setItem("fkLevel",data.fkLevel);
                                 }else{
                                     localStorage.clear();
                                     sessionStorage.setItem("session",true);
@@ -259,6 +267,9 @@
                                     sessionStorage.setItem("nameSmall",data.nameSmall);
                                     sessionStorage.setItem("careerStudent",data.careerStudent);
                                     sessionStorage.setItem("genderStudent",data.genderStudent);
+                                    sessionStorage.setItem("nameGroup",data.nameGroup);
+                                    sessionStorage.setItem("pkGroup",data.pkGroup);
+                                    sessionStorage.setItem("fkLevel",data.fkLevel);
                                 }
                                 window.location="index.html";
                             }, 2000);
@@ -352,10 +363,16 @@
                     $('#rememberMe').iCheck('uncheck');
                 }                
                 $('#rememberMe').on("ifChecked", function (){
-                   localStorage.setItem("rememberMe",true);
+                    localStorage.setItem("rememberMe",true);
+                    if(navigator.vibrate) {
+                        navigator.vibrate(20);
+                    }
                 });
                 $('#rememberMe').on("ifUnchecked", function (){
-                   localStorage.setItem("rememberMe",false);
+                    localStorage.setItem("rememberMe",false);
+                    if(navigator.vibrate) {
+                        navigator.vibrate(20);
+                    }
                 });
             });
         </script>

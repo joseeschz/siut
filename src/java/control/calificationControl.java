@@ -369,7 +369,8 @@ public class calificationControl {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
-                    allData.setFL_AVG(res.getString("FL_AVG"));
+                    allData.setFL_TOTAL_OBTAINED(res.getString("FL_AVG"));
+                    allData.setFL_TOTAL_EVALUATED(res.getString("FL_TOTAL_EVALUATED"));
                     list.add(allData);
                 }
                 res.close();
@@ -388,6 +389,7 @@ public class calificationControl {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('sumjectMatersPercentEvalautedAndCurrentValue', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
+                    allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
                     allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
                     allData.setFL_TOTAL_EVALUATED(res.getString("FL_TOTAL_EVALUATED"));
                     allData.setFL_TOTAL_OBTAINED(res.getString("FL_TOTAL_OBTAINED"));

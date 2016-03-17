@@ -363,6 +363,9 @@ public class serviceStudent extends HttpServlet {
                     String mail = "";
                     String career ="";
                     String gender = "";
+                    String nameGroup = "";
+                    int pkGroup = 0;
+                    int fkLevel = 0;
                     studentModel dataUser=new studentModel();
                     dataUser.setFL_ENROLLMENT(enrollment);
                     dataUser.setFL_PASSWORD(password);
@@ -378,6 +381,9 @@ public class serviceStudent extends HttpServlet {
                                 mail = list1.getFL_MAIL();
                                 career = list1.getFL_NAME_ABBREVIATED();
                                 gender = list1.getFL_GENDER();
+                                nameGroup = list1.getFL_NAME_GROUP();
+                                pkGroup = list1.getPK_GROUP();
+                                fkLevel = list1.getFK_LEVEL();
                             }
                             if(request.getParameter("typeLogin")!=null&&request.getParameter("typeLogin").equals("metadata")){                                
                                 session.setAttribute("pkStudent", pkStudent);
@@ -399,6 +405,9 @@ public class serviceStudent extends HttpServlet {
                                     data.put("careerStudent", career);
                                     data.put("nameSmall", nameSmall);
                                     data.put("genderStudent", gender);
+                                    data.put("nameGroup", nameGroup);
+                                    data.put("pkGroup", pkGroup);
+                                    data.put("fkLevel", fkLevel);
                                     session.setAttribute("careerStudent", career);
                                 }else if(statusMailActive.equals("1")){
                                     data.put("statusLogin", "logeado");
@@ -410,6 +419,9 @@ public class serviceStudent extends HttpServlet {
                                     data.put("careerStudent", career);
                                     data.put("nameSmall", nameSmall);
                                     data.put("genderStudent", gender);
+                                    data.put("nameGroup", nameGroup);
+                                    data.put("pkGroup", pkGroup);
+                                    data.put("fkLevel", fkLevel);
                                     session.setAttribute("pkStudent", pkStudent);
                                     session.setAttribute("userNameStudent", enrollment);
                                     session.setAttribute("mailStudent", mail);
@@ -417,12 +429,14 @@ public class serviceStudent extends HttpServlet {
                                     session.setAttribute("logueadoStudentCal", name);
                                     session.setAttribute("careerStudent", career);
                                     session.setAttribute("careerStudent", career);
+                                    session.setAttribute("nameGroup", nameGroup);
+                                    session.setAttribute("pkGroup", pkGroup);
+                                    session.setAttribute("fkLevel", pkGroup);
                                 }                                     
                             }
                         }else{
                             data.put("statusLogin", "notExit");
-                            session.removeAttribute("pkStudent");
-                            session.removeAttribute("logueadoStudent");
+                            session.invalidate();
                         }
                     }
                     response.setHeader("Access-Control-Allow-Origin", "*");

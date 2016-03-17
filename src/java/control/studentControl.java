@@ -535,6 +535,9 @@ public class studentControl {
                     userLogin.setFL_GENDER(res.getString("FL_GENDER"));
                     userLogin.setFL_NAME_ABBREVIATED(res.getString("FL_DESCRIPTION"));
                     userLogin.setFL_NAME_FATHER(res.getString("FL_NAME_SMALL"));
+                    userLogin.setPK_GROUP(res.getInt("PK_GROUP"));
+                    userLogin.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    userLogin.setFK_LEVEL(res.getInt("FK_LEVEL"));
                     list.add(userLogin);
                 }
                 res.close();

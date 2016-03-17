@@ -12,7 +12,6 @@ package model;
 public class groupModel {
     int PK_GROUP = 0;
     String FL_NAME_GROUP = "";
-    String FL_STATUS = "";
     int FK_SEMESTER = 0;
     int FK_CAREER = 0;
     int FK_GROUP = 0;
@@ -31,14 +30,6 @@ public class groupModel {
 
     public void setFL_NAME_GROUP(String FL_NAME_GROUP) {
         this.FL_NAME_GROUP = FL_NAME_GROUP;
-    }
-
-    public String getFL_STATUS() {
-        return FL_STATUS;
-    }
-
-    public void setFL_STATUS(String FL_STATUS) {
-        this.FL_STATUS = FL_STATUS;
     }
 
     public int getFK_SEMESTER() {

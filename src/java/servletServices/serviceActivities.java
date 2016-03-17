@@ -68,7 +68,12 @@ public class serviceActivities extends HttpServlet {
             if(request.getParameter("view")!=null){
                 int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                 int fk_period = Integer.parseInt(request.getParameter("fk_period"));
-                int fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                int fk_teacher;
+                if(session.getAttribute("pkUser")!=null){
+                    fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                }else{
+                    fk_teacher = Integer.parseInt(request.getParameter("fk_teacher"));
+                }
                 int fk_study_level = Integer.parseInt(request.getParameter("fk_study_level"));
                 int fk_subject_matter = Integer.parseInt(request.getParameter("fk_subject_matter"));
                 int fk_scale_evaluation = Integer.parseInt(request.getParameter("fk_scale_evaluation"));
@@ -112,6 +117,10 @@ public class serviceActivities extends HttpServlet {
                 }
                 settings.put("__ENTITIES", content);
                 principal.add(settings);
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
                 response.setContentType("application/json"); 
                 out.print(principal);
                 out.flush(); 
@@ -145,7 +154,14 @@ public class serviceActivities extends HttpServlet {
             }
             if(request.getParameter("exitWorkPlanning")!=null){
                 int fk_period = Integer.parseInt(request.getParameter("fk_period"));
-                int fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                int fk_teacher = 0;
+                if(session.getAttribute("pkUser")!= null){
+                    fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
+                }
+                if(request.getParameter("fk_teacher")!= null){
+                    fk_teacher = Integer.parseInt(request.getParameter("fk_teacher"));
+                }
+                
                 int fk_study_level = Integer.parseInt(request.getParameter("fk_study_level"));
                 int fk_subject_matter = Integer.parseInt(request.getParameter("fk_subject_matter"));
                 int fk_scale_evaluation = Integer.parseInt(request.getParameter("fk_scale_evaluation"));
@@ -158,6 +174,11 @@ public class serviceActivities extends HttpServlet {
                 data.put("dataRealizedBlock",result[4]);
                 data.put("dataObservations",result[5]);
                 data.put("dataPrintDate",result[6]);
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json"); 
                 out.print(data);
             }
             if(request.getParameter("disponibilityValueByWorkPlanning")!=null){

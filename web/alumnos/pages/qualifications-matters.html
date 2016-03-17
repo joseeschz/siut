@@ -1,20 +1,19 @@
 <!-- Content Header (Page header) -->
 <section class="content-header"  style="padding: 0px">   
-    <h1 class="page-header principal">
-        Calificaciones
-    </h1>
+    <br>
+    <br>
     <div style="display: none">
         <div id="qualificationsPeriod"></div>
     </div>
     <div style="text-align: right">
         <b id="periodLabel"></b>
-    </div>            
+    </div> 
+    
     <ol class="breadcrumb">
         <li>
-            <i class="fa fa-dashboard"></i><a class="qualifications" href="#">Principal</a>
+            <i class="fa fa-dashboard"></i><a class="qualifications" href="#">Calificaciones</a>
         </li>
-        <li class="active">
-            <i class="fa fa-bar-chart-o"></i> Calificaciones / Materias
+        <li class="active">Por materias
         </li>
     </ol>
 <!-- /.row -->
@@ -37,11 +36,12 @@
                </div>
                <div class="panel-body" style="padding: 0px">
                    <div class="table-responsive">
-                       <table class="table-bordered table-hover table-striped">
+                       <table width="100%" class="table-bordered table-hover table-striped">
                            <thead>
                                <tr>
-                                   <th style="width: 500px">Materias</th>
-                                   <th class="center">Calificación</th>
+                                   <th style="width: 70%">Materias</th>
+                                   <th style="text-align: center;">Calificación</th>
+                                   <th style="text-align: center;">De</th>
                                </tr>
                            </thead>
                            <tbody id="tbodyMatters"></tbody>
@@ -84,15 +84,27 @@ $(document).ready(function () {
                 var trTbody;
                 var tgTfoot;
                 if((data.rows.length-1)===0){
-                    trTbody= $("<tr><td class='center' colspan='3'>Sin materias por mostrar</td></tr>");
+                    trTbody= $("\
+                    <tr>\n\
+                        <td class='center' colspan='3'>Sin materias por mostrar</td>\n\
+                    </tr>");
                     tbodyMatters.append(trTbody);
                 }else{
                     for(var i=0; i<data.rows.length-1; i++){
-                        trTbody=$("<tr><td>"+(data.rows[i].dataNameSubjectMatter)+"</td>"+"<td class='center'>"+(data.rows[i].dataAvg)+"</td></tr>");
+                        trTbody=$("\
+                        <tr>\n\
+                            <td>"+(data.rows[i].dataNameSubjectMatter)+"</td>\n\
+                            <td style='text-align: center;'>"+(data.rows[i].dataObtained)+"</td>\n\
+                            <td style='text-align: center;'>"+(data.rows[i].dataEvaluated)+"</td>\n\
+                        </tr>");
                         tbodyMatters.append(trTbody);
                     }
                     var itemTotalIndice=data.rows.length-1;
-                    tgTfoot=$("<tr><th style='text-align: right;'>"+(data.rows[itemTotalIndice].dataNameSubjectMatter)+"</th>"+"<th class='center'>"+(data.rows[itemTotalIndice].dataAvg)+"</th></tr>");
+                    tgTfoot=$("\
+                    <tr>\n\
+                        <th style='text-align: right;'>"+(data.rows[itemTotalIndice].dataNameSubjectMatter)+"</th>\n\
+                        <th style='text-align: center;' colspan='2'>"+(data.rows[itemTotalIndice].dataObtained)+"</th>\n\
+                    </tr>");
                     tfootMatters.append(tgTfoot);                               
                 }                       
             }
