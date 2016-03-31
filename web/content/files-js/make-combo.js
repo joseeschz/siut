@@ -718,7 +718,7 @@ function createDropDownActivities(selector, filterable, update){
     if(update){
         $(selector).jqxDropDownList('clearSelection');
         $(selector).jqxDropDownList({
-            selectedIndex: 0,
+            selectedIndex: filterable[6] || 0,
             source: dataAdapterCareer
         });
     }else{

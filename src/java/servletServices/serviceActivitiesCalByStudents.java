@@ -62,17 +62,18 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                         data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());  
                         if(listActivity.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
                             data.put("dataValueObtanied", "");
+                            data.put("dataValueObtaniedNew", "");
                             data.put("dataValueObtaniedEquivalent", "");
                             data.put("dataAcomulatedNow", "");
                         }else{
-                            
                             String equivalent =  (listActivity.get(i).getFL_VALUE_OBTANIED_EQUIVALENT());
-                            
                             double obtanied = Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED());                            
                             if(String.format( "%.1f", obtanied).equals("0.0")){
                                 data.put("dataValueObtanied", 0);
+                                data.put("dataValueObtaniedNew", 0);
                             }else{
                                 data.put("dataValueObtanied", obtanied);
+                                data.put("dataValueObtaniedNew", obtanied);
                             }
                             data.put("dataValueObtaniedEquivalent",equivalent);                           
                             data.put("dataAcomulatedNow", listActivity.get(i).getFL_ACUMULATED_NOW());

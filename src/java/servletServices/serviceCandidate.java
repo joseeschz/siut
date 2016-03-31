@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.propetiesTableModel;
 import model.studentModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -40,6 +41,54 @@ public class serviceCandidate extends HttpServlet {
         HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("tableByAllColumsMetadata")!=null){  
+                ArrayList<propetiesTableModel> listColumns=new candidateControl().SelectReportColums();
+                JSONArray contentRowsCal=new candidateControl().SelectMetadataRows();
+                JSONArray contentColums = new JSONArray();
+                JSONArray contentDataFields = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rowsCal = new JSONObject();
+                JSONObject columns = new JSONObject();
+                JSONObject dataFields = new JSONObject();
+              
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataColums = new JSONObject();
+                    dataColums.put("text", listColumns.get(i).getFL_TEXT());
+                    dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
+                    dataColums.put("align", listColumns.get(i).getFL_ALIGN());
+                    dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
+                        dataColums.put("cellclassname", listColumns.get(i).getFL_CELLSRENDERER());
+                    }
+                    if(listColumns.get(i).getFL_PINNED()!=null){
+                        dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
+                    if(listColumns.get(i).getFL_RENDERED()!=null){
+                        dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNGROUP()!=null){
+                        dataColums.put("columngroup", listColumns.get(i).getFL_COLUMNGROUP());
+                    }
+                    dataColums.put("width", listColumns.get(i).getFL_WIDHT());
+                    contentColums.add(dataColums); 
+                }
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject datadataFields = new JSONObject();
+                    datadataFields.put("name", listColumns.get(i).getFL_DATA_FIELD());
+                    datadataFields.put("type", "string");                    
+                    contentDataFields.add(datadataFields); 
+                }
+                rowsCal.put("rowsCal", contentRowsCal);
+                columns.put("columns", contentColums);
+                dataFields.put("dataFields", contentDataFields);
+                bulding.add(columns);
+                bulding.add(dataFields);
+                bulding.add(rowsCal);
+                response.setContentType("application/json"); 
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("generateFolioUtsem")!=null){
                 String period = request.getParameter("period");
                 String type = request.getParameter("type");
