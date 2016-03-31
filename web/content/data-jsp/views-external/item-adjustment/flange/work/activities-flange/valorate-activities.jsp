@@ -633,7 +633,7 @@
                                 }
                             });
                             $("#jqxWindowWarningActivities").jqxWindow('open');
-                            $("#messageWarning").text("Recuerda... Una vez cerradas las actividades no podrán ser modificadas si es que alguna de ellas ya cuenta con algún registro de calificación.");
+                            $("#messageWarning").text("Recuerda... Una ves cerradas las actividades no podrán ser modificadas si es que alguna de ellas ya cuenta con algún registro de calificación.");
                             $("#iconWarning").removeClass("trash").addClass("warning");
                             $("#okWarning").click(function (){
                                 $("#okWarning").unbind("click"); 

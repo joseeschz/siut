@@ -12,7 +12,16 @@
         var filtrableActivities=[];
         var itemsScaleEvaluation=[];
         var rowExternal;
-        var btns = $("#btnLast, #btnNext, #btnPrev, #btnFirst");
+        var evaluateActivityPopover = $("#evaluateActivityPopover");
+        var deleteEvaluatedActivityPopover = $("#deleteEvaluatedActivityPopover");
+        var evaluateActivity = $("#evaluateActivity");
+        var deleteActivity = $("#deleteActivity");
+        evaluateActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
+        deleteEvaluatedActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
+        evaluateActivity.jqxButton({"height": 30, "width": 60, cursor: "pointer"});
+        deleteActivity.jqxButton({ cursor: "pointer", height: 20, width: 20 });
+        deleteActivity.jqxTooltip({ position: 'bottom', content: "Eliminar"});
+        
         createDropDownStudyLevelByTeacher("#registerCalFlangeLevelFilter",false);
         itemLevel = $('#registerCalFlangeLevelFilter').jqxDropDownList('getSelectedItem');
         if(itemLevel!==undefined && itemCareer!==undefined){
@@ -33,12 +42,9 @@
                         if(itemSubjectMatter!==undefined){
                             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, false);
                             itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
-                            if(itemScaleEvaluation!==undefined){                                
-                                //exitWorkPlanning();
-                                initDropDownActivities(false);
-                                loadTable();
+                            if(itemScaleEvaluation!==undefined){    
+                                initDropDownActivities(false, undefined);
                             }else{
-                                $("#register").hide();
                                 createDropDownActivities("#calTeacherActivitiesFilter", [], false);
                             }
                         }
@@ -89,19 +95,16 @@
                 createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, true);
                 itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
                 if(itemScaleEvaluation==undefined){
-                    $("#register").hide();
                     createDropDownActivities("#calTeacherActivitiesFilter", [], true);
                     $('#tableRegisterCalActivities').jqxGrid("clear");
                     $("#evaluateActivityPopover").parent().fadeOut("slow");
-                }else{
-                    $("#register").show();
                 }
             });
             $("#calTeacherScaleEvaluationFilter").on('change',function (event){
                 if(event.args){
                     itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
                     if(itemScaleEvaluation!==undefined){
-                        initDropDownActivities(true);
+                        initDropDownActivities(true, undefined);
                     }else{
                         createDropDownActivities("#calTeacherActivitiesFilter", [], true);
                         $('#tableRegisterCalActivities').jqxGrid("clear");
@@ -123,7 +126,7 @@
             arrowOffsetValue: 80, 
             title: "Eliminar actividad!", 
             showCloseButton: true,
-            selector: $("#deleteEvaluatedActivityPopover"),
+            selector: deleteEvaluatedActivityPopover,
             width: 250
         });
         $("#popoverOptionEvaluate").jqxPopover({
@@ -131,7 +134,7 @@
             arrowOffsetValue: 50, 
             title: "Evaluar actividad", 
             showCloseButton: true,
-            selector: $("#evaluateActivityPopover"),
+            selector: evaluateActivityPopover,
             width: 180
         });
         if(typeof (Storage) !=="undefined"){
@@ -152,7 +155,6 @@
             }
         });
         $("#deleteEvaluatedActivityPopover").click(function(){
-            $("#captureCal").fadeOut();
             $('#tableRegisterCalActivities').jqxGrid('clearselection'); 
         });
         $("#evaluateActivity").click(function (){
@@ -168,6 +170,7 @@
             itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
             itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
             itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            var indexActivity = itemActivity.index;
             if(itemCareer!==undefined){
                 valItemCareer=itemCareer.value;
             }
@@ -212,7 +215,7 @@
                 },
                 success: function (data, textStatus, jqXHR) {
                     $("#popoverOptionEvaluate").jqxPopover("close");
-                    initDropDownActivities(true);
+                    initDropDownActivities(true, indexActivity);
                 }
             }); 
         });
@@ -223,6 +226,7 @@
             itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
             itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
             itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+            var indexActivity = itemActivity.index;
             if(itemPeriod!==undefined){
                 valItemPeriod=itemPeriod.value;
             }
@@ -253,8 +257,8 @@
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    initDropDownActivities(true);
                     $("#popoverOptionDeleteEvaluated").jqxPopover("close");
+                    initDropDownActivities(true, indexActivity);
                 }
             }); 
         });
@@ -325,6 +329,7 @@
                     { name: 'dataNameStudent', type:'string'},
                     { name: 'dataApproved', type: 'string' },
                     { name: 'dataValueObtanied', type: 'double' },
+                    { name: 'dataValueObtaniedNew', type: 'double' },
                     { name: 'dataValueObtaniedEquivalent', type: 'double' },
                     { name: 'dataAcomulatedNow', type: 'double' }
                 ],
@@ -359,50 +364,7 @@
             });
             return ordersSource;
         }
-        $("#register").jqxExpander({ 
-            width: '340px',
-            showArrow: false,
-            toggleMode: "none"
-        });
-        var buttonTemplate = "<div style='float: left; padding: 3px; margin: -6px 0px -6px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-        var settingsButton=$(buttonTemplate);        
-        settingsButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 23, width: 23 });
-        settingsButton.find('div:first').addClass('jqx-icon-settings');
-        settingsButton.css({"float":"right","cursor":"pointer"});
-        settingsButton.jqxTooltip({ position: 'bottom', content: "Ajustes"});
-        $("#settingsButton").append(settingsButton);       
-        $("#popoverSettings").jqxPopover({
-            offset: {left: -65, top:0}, 
-            arrowOffsetValue: 65, 
-            title: "Ajustes", 
-            showCloseButton: true,
-            selector: settingsButton,
-            width: 150,
-            position: "top"
-        });
-        if(typeof (Storage) !=="undefined"){
-            if(localStorage.getItem("wayInputEval")==="typeInput"){                                
-                $("#typeInput").prop("checked", true);
-            }else{
-                $("#typeSlider").prop("checked", true);
-            }
-        }else{
-            $("#wayInputEval").prop("checked", true);
-        }
-        $("[name=wayInputEval]").off("change");
-        $("[name=wayInputEval]").change(function (){
-            if($(this).attr("id")==="typeInput"){
-                localStorage.setItem("wayInputEval", "typeInput"); 
-            }else{
-                localStorage.setItem("wayInputEval", "typeSlider");
-            }
-            if(localStorage.getItem("wayInputEval")==="typeInput"){                                
-                createWidget(rowExternal, "input"); 
-            }else{
-                createWidget(rowExternal, "slider"); 
-            }
-            $("#popoverSettings").jqxPopover('close');
-        });
+
         function loadEventRowclick(){
             var varIsClosed = isClosedWorkPlanning();
             if(varIsClosed!=1){
@@ -422,210 +384,80 @@
                     // row data.
                     var args = event.args;
                     var row = $('#tableRegisterCalActivities').jqxGrid('getrowdata', args.rowindex);//args.row;
-                    $("#captureCal").fadeIn();
                     rowExternal = row;
-                    if(localStorage.getItem("wayInputEval")==="typeInput"){                                
-                        createWidget(row, "input"); 
-                    }else{
-                        createWidget(row, "slider"); 
-                    }
                 });
             }else{
                 $('#tableRegisterCalActivities').off('rowclick');
             }
             return varIsClosed;
         }
-        function createWidget(row, type){
-            if(type==="slider"){
-                $(".typeInput").hide();
-                $(".typeSlider").hide();
-                if($('.dataValueObtaniedSlider'+row.id).length==0){
-                    var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');
-                    for(var i=0; i<rows.length; i++){
-                        var htmlControl=$('<div class="typeSlider dataValueObtaniedSlider'+rows[i].id+'" style="float: left;"></div>');
-                        $("#contentDataValueObtanied").append(htmlControl);
-                        var ticksFrequency = 0;
-                        if(value_max<=1){
-                            ticksFrequency=0.1;
-                        }else{
-                            ticksFrequency=0.5;
-                        }
-                        $('.dataValueObtaniedSlider'+rows[i].id).jqxSlider({
-                            theme:"",
-                            width:"250px",
-                            height:"10px",
-                            mode:'fixed',
-                            tooltip: true,
-                            tooltipPosition: "far",
-                            step:0.01,
-                            max:value_max,
-                            ticksFrequency: ticksFrequency,
-                            showTickLabels: true,
-                            ticksPosition:'bottom',
-                            tickLabelFormatFunction: function (value) {
-                                var splitFunction = (parseFloat(value).toFixed(2)).split(".");
-                                if(splitFunction[1]==="00"){
-                                    return splitFunction[0];
-                                }else{
-                                    return (parseFloat(value).toFixed(2));
-                                }
-                            },
-                            tooltipFormatFunction: function(value){
-                                var splitFunction = (parseFloat(value).toFixed(2)).split(".");
-                                if(splitFunction[1]==="00"){
-                                    return splitFunction[0];
-                                }else{
-                                    return (parseFloat(value).toFixed(2));
-                                }
-                            }
-                        }); 
-                        $('.dataValueObtaniedSlider'+rows[i].id).hide();
-                    }                
-                    evaluateActivityByRow(row, "slider");
-                }else{  
-                    evaluateActivityByRow(row, "slider");
-                }
-            }else{
-                $(".typeInput").hide();
-                $(".typeSlider").hide();
-                if($('.dataValueObtaniedInput'+row.id).length==0){
-                    var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');
-                    for(var i=0; i<rows.length; i++){
-                        var htmlControl=$('<div class="typeInput dataValueObtaniedInput'+rows[i].id+'" style="float: left;"></div>');
-                        $("#contentDataValueObtanied").append(htmlControl);
-                        $('.dataValueObtaniedInput'+rows[i].id).jqxNumberInput({ 
-                            width: '60px', 
-                            height: '25px', 
-                            inputMode: 'simple', 
-                            spinButtons: true,
-                            digits:1,
-                            min:0,
-                            max: value_max
-                        });
-                        $('.dataValueObtaniedInput'+rows[i].id).hide();
-                    }                
-                    evaluateActivityByRow(row, "input");
-                }else{  
-                    evaluateActivityByRow(row, "input");
-                }
-            }
-        }
-        function evaluateActivityByRow(row, type){
-            var classSelective;
-            var typeEvent;
-            if(type==="slider"){
-                classSelective="dataValueObtaniedSlider";
-                typeEvent="slide";
-            }else{
-                classSelective="dataValueObtaniedInput";
-                typeEvent="change";
-            }
-            $('.'+classSelective+row.id).show();
-            var dataValueObtaniedOld=$('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataValueObtanied");
-            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', row.id, "dataAcomulatedNow"); 
-            if(anyActivityEvaluated()>=1){                        
-                if(row.dataEnrollment===row.id){    
-                    $("#dataEnrollment").text(row.dataEnrollment);
-                    $("#dataNameStudent").text(row.dataNameStudent);  
-                    $("#dataValueObtanied").text(row.dataValueObtanied);
-                    $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
-                    $("#evaluateActivityPopover").parent().hide();
-                    $("#deleteEvaluatedActivityPopover").parent().show();
-                    $("#captureCal").show();
-                }else{ 
-                    $("#dataEnrollment").text(row.dataEnrollment);
-                    $("#dataNameStudent").text(row.dataNameStudent);
-                    $("#dataValueObtanied").text(row.dataValueObtanied);
-                    $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
-                    $('.'+classSelective+row.id).val(parseFloat(row.dataValueObtanied));    
-                    $("#evaluateActivityPopover").parent().hide();
-                    $("#deleteEvaluatedActivityPopover").parent().show();
-                    $("#captureCal").show();
-                }
-            }else{
-                $("#dataEnrollment").text(row.dataEnrollment);
-                $("#dataNameStudent").text(row.dataNameStudent);  
-                $("#dataValueObtanied").text(row.dataValueObtanied);
-                $("#dataValueObtaniedScale").text(row.dataValueObtaniedEquivalent);
-                $("#evaluateActivityPopover").parent().show();
-                $("#deleteEvaluatedActivityPopover").parent().hide();
-                $("#captureCal").hide();                        
-            }
+        function evaluateActivityByRow(param){
+            var rowData = $('#tableRegisterCalActivities').jqxGrid('getrowdata', param.row);
+            var dataValueObtaniedOld= $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', rowData.id, "dataValueObtanied");
+            var dataAcomulatedNow = $('#tableRegisterCalActivities').jqxGrid('getcellvaluebyid', rowData.id, "dataAcomulatedNow");      
             dataAcomulatedNow=parseFloat(dataAcomulatedNow);
-            $('.'+classSelective+row.id).off(typeEvent);
-            $('.'+classSelective+row.id).on(typeEvent, function (event){   
-                var value = event.args.value;                                    
-                value = parseFloat(value).toFixed(2);
-                var dataValueObtaniedNew=value;
-                var equivalent =parseFloat(dataValueObtaniedNew*10/value_max).toFixed(2);
-                var total=parseFloat((dataValueObtaniedNew-dataValueObtaniedOld)+dataAcomulatedNow).toFixed(2);
-                
-                if(equivalent==="10.00"){
-                    equivalent=10;
-                }
-                if(equivalent==="0.00"){
-                    equivalent=0;
-                }
-                if(isNaN(total)){
-                    total=value_max;
-                }
-                var data = {
+            var value = parseFloat(param.value);                    
+            var equivalent =parseFloat(value*10/value_max).toFixed(2);
+            var total=parseFloat(value-dataValueObtaniedOld+dataAcomulatedNow).toFixed(2);
+            if(equivalent==="10.00"){
+                equivalent=10;
+            }
+            if(equivalent==="0.00"){
+                equivalent=0;
+            }
+            if(isNaN(total)){
+                total=value_max;
+            }
+            var data = {
+                "update":"1",
+                "pkActivityByStudent": rowData.id, 
+                "valueOptanied": value,
+                "valueOptaniedEquivalent": equivalent
+            };
+            if(rowData.dataEnrollment===rowData.id){
+                itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
+                itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
+                itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+                itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+                itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                data = {
+                    "insertByStudent":"",
+                    "pkStudent": rowData.dataPkStudent, 
+                    "valueOptanied": value,
+                    "valueOptaniedEquivalent": equivalent,
+                    "pkCareer": itemCareer.value,
+                    "pkSemester": itemSemester.value,
+                    "pkGroup": itemGroup.value,
+                    "pkMatter": itemSubjectMatter.value,
+                    "pkActivity": itemActivity.value,
+                    "pkPeriod": itemPeriod.value
+                };
+            }else{
+                data = {
                     "update":"1",
-                    "pkActivityByStudent": row.id, 
-                    "valueOptanied": dataValueObtaniedNew,
+                    "pkActivityByStudent": rowData.id, 
+                    "valueOptanied": value,
                     "valueOptaniedEquivalent": equivalent
                 };
-                if(row.dataEnrollment===row.id){
-                    itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
-                    itemSemester = $('#registerCalFlangeSemesterFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
-                    itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
-                    itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-                    data = {
-                        "insertByStudent":"",
-                        "pkStudent": row.dataPkStudent, 
-                        "valueOptanied": dataValueObtaniedNew,
-                        "valueOptaniedEquivalent": equivalent,
-                        "pkCareer": itemCareer.value,
-                        "pkSemester": itemSemester.value,
-                        "pkGroup": itemGroup.value,
-                        "pkMatter": itemSubjectMatter.value,
-                        "pkActivity": itemActivity.value,
-                        "pkPeriod": itemPeriod.value
-                    };
-                }else{
-                    data = {
-                        "update":"1",
-                        "pkActivityByStudent": row.id, 
-                        "valueOptanied": dataValueObtaniedNew,
-                        "valueOptaniedEquivalent": equivalent
-                    };
+            }
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                url: "../serviceActivitiesCalByStudents",
+                data: data,
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) {  
+                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowData.id, "dataAcomulatedNow", total);
+                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowData.id, "dataValueObtanied", value);
+                    $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', rowData.id, "dataValueObtaniedEquivalent", equivalent);
                 }
-                $.ajax({
-                    //Send the paramethers to servelt
-                    type: "POST",
-                    async: false,
-                    url: "../serviceActivitiesCalByStudents",
-                    data: data,
-                    beforeSend: function (xhr) {
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        //This is if exits an error with the server internal can do server off, or page not found
-                        alert("Error interno del servidor");
-                    },
-                    success: function (data, textStatus, jqXHR) {  
-                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataAcomulatedNow", total);
-                        if(dataValueObtaniedNew==="0.00"){
-                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", 0);
-                        }else{
-                            $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtanied", dataValueObtaniedNew);
-                        }
-                        $("#tableRegisterCalActivities").jqxGrid('setcellvaluebyid', row.id, "dataValueObtaniedEquivalent", equivalent);
-                        $("#dataValueObtanied").text(dataValueObtaniedNew);
-                        $("#dataValueObtaniedScale").text(equivalent);
-                    }
-                });
             });
         }
         function loadActivities(type_eval, pkStudent){
@@ -725,55 +557,117 @@
                 }
                 return classTheme;
             };
+            var cellbeginedit = function (row, datafield, columntype, value) {
+                //if (row == 0 || row == 2 || row == 5) return false;
+            };
+            var cellsrenderer = function (row, column, value, defaultHtml) {
+                if(column==="dataValueObtaniedEquivalent"){
+                    if (value<8) {
+                        var element = $(defaultHtml);
+                        element.css('color', 'red');
+                        return element[0].outerHTML;
+                    }
+                }else{
+                    if ((value*10/value_max)<8) {
+                        var element = $(defaultHtml);
+                        element.css('color', 'red');
+                        return element[0].outerHTML;
+                    }
+                }
+                
+                return defaultHtml;
+            };
+            
             $("#tableRegisterCalActivities").jqxGrid({
-                width: 600,
+                width: 750,
                 height:450,
-                selectionMode: "singlerow",
+                selectionMode: "multiplecellsadvanced",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: false,
-                editable: false,
+                editable: true,
                 filterable: false,
+                clipboard: false,
                 altRows: true,
                 columns: [
-                    { text: '#',dataField: 'dataProgresivNumber', cellclassname: cellclass, width: 20},
-                    { text: 'Matrícula',disabled: true, align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass },
-                    { text: 'Alumno',disabled: true, align: 'center', dataField: 'dataNameStudent', cellclassname: cellclass},
-                    { text: 'R', columngroup: 'rating', dataField: 'dataValueObtanied', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass },
-                    { text: 'E', columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass },
-                    { text: 'Total', dataField: 'dataAcomulatedNow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass }
+                    { text: '#', dataField: 'dataProgresivNumber', cellclassname: cellclass, width: 20, editable: false},
+                    { text: 'Matrícula',disabled: true, align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
+                    { text: 'Alumno',disabled: true, align: 'center', dataField: 'dataNameStudent', cellclassname: cellclass, editable: false},
+                    { text: 'Total', dataField: 'dataAcomulatedNow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, editable: false },
+                    { text: 'R', hidecolumn : true, columngroup: 'rating', dataField: 'dataValueObtanied', cellsalign: 'center', align: 'center', width: 10, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+                    { text: 'Equivalente', cellsformat:"f2", columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+                    { 
+                        text: 'Obtenido', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataValueObtaniedNew', cellsalign: 'left', align: 'center', width: 80,  columntype: 'numberinput',
+                        validation: function (cell, value) {
+                            if (value < 0 || value > value_max) {
+                                return { result: false, message: "Calificación máxima "+value_max};
+                            }
+                            return true;
+                        },
+                        initeditor: function (row, cellvalue, editor) {
+                            editor.jqxNumberInput({ 
+                                inputMode: 'simple', 
+                                spinButtons: true,
+                                digits:1,
+                                min:0,
+                                max: value_max
+                            });
+                            editor.off('change');
+                            editor.on('change', function (event) {  
+                                if(event.args){
+                                    var params = {
+                                        "row": row,
+                                        "value": $(this).val(),
+                                        "oldvalue" : cellvalue
+                                    };
+                                    evaluateActivityByRow(params);
+                                }
+                            });
+                        }, 
+                        cellbeginedit: cellbeginedit, 
+                        cellsrenderer: cellsrenderer,
+                        cellclassname: cellclass,
+                        clipboard: true
+                  }
                 ],
                 columngroups: [{
                     text: 'Calificación',
                     name: 'rating',
                     align: 'center'
-                }]
+                }],
+                ready: function (){
+                    $('#tableRegisterCalActivities').jqxGrid('hidecolumn', 'dataValueObtanied');
+                }
             });
+            $('#tableRegisterCalActivities').jqxGrid('hidecolumn', 'dataValueObtanied');
             if(status==1){                
                 $('#tableRegisterCalActivities').jqxGrid({ enablehover: false, selectionmode: 'none'});
             }
             $("#tableRegisterCalActivities").jqxGrid('focus');
-            
+            $("#tableRegisterCalActivities").off('cellendedit');
+            $("#tableRegisterCalActivities").on('cellendedit', function (event) {
+                // event arguments.
+                var args = event.args;
+                var param = {
+                    "row": args.rowindex,
+                    "value": args.value,
+                    "oldvalue" : args.oldvalue
+                };
+                evaluateActivityByRow(param);
+            });
             if(length>0){
                 if(status==1){
+                    
                     $('#tableRegisterCalActivities').jqxGrid('clearselection');
-                    $("#detailsScaleEvaluation").parent().hide("fast");
-                    //$("#dataValueObtanied").jqxSlider({ disabled: true }); 
-                    btns.jqxButton({disabled: true});
-                    $("#dataEnrollment").text("Sin dato");
-                    $("#dataNameStudent").text("Sin dato");
                 }else{
-                    $("#register").show();
-                    $("#dataEnrollment").text("");
-                    $("#dataNameStudent").text("");
-                    $("#detailsScaleEvaluation").parent().show("fast");
-                    $('#tableRegisterCalActivities').jqxGrid('selectrow', 0);
-                    //
-                    //$("#dataValueObtanied").jqxSlider({ disabled: false }); 
-                     btns.jqxButton({disabled: false});
+                    if(anyActivityEvaluated()>=1){
+                        $(evaluateActivityPopover).parent().hide();
+                        $(deleteEvaluatedActivityPopover).parent().show();
+                    }else{      
+                        $(deleteEvaluatedActivityPopover).parent().hide();
+                        $(evaluateActivityPopover).parent().show();
+                    }
                 }                
-            }else{
-                $("#captureCal").hide();
             }
         }
         function anyActivityEvaluated(){
@@ -815,7 +709,7 @@
                     //This is if exits an error with the server internal can do server off, or page not found
                     alert("Error interno del servidor");
                 },
-                success: function (data, textStatus, jqXHR) {                    
+                success: function (data, textStatus, jqXHR) {
                     returnValue=data[0].dataAnyActivityEvaluated;
                 }
             });
@@ -878,7 +772,8 @@
                 }
             });
         }
-        function initDropDownActivities(update){
+        function initDropDownActivities(update, indexSelect){
+            
             var valItemLevel=0;
             var valItemPeriod=0;
             var valItemGroup=0;
@@ -911,8 +806,9 @@
                 filtrableActivities[2]=valItemLevel;
                 filtrableActivities[3]=valItemSubjectMatter;
                 filtrableActivities[4]=valItemGroup;
-                filtrableActivities[5]=valItemScaleEvaluation;
-                createDropDownActivities("#calTeacherActivitiesFilter", filtrableActivities, update);
+                filtrableActivities[5]=valItemScaleEvaluation;  
+                filtrableActivities[6]=indexSelect;  
+                createDropDownActivities("#calTeacherActivitiesFilter", filtrableActivities, update);                
                 itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem'); 
                 maxValActivity();
                 loadTable();
@@ -982,64 +878,11 @@
                 });
                 itemScaleEvaluation = $("#calTeacherScaleEvaluationFilter").jqxDropDownList('getSelectedItem');
                 var val_max_scale = maxValScale(itemScaleEvaluation.value);
-                $("#valMaxActivity").text(Math.round((value_max*100/val_max_scale))+"%");
+                $("#valMaxActivity").text(value_max);
             }else{
                 $('#tableRegisterCalActivities').fadeOut("slow");
             }
-        }   
-        
-        btns.jqxButton({theme: theme, cursor: "pointer",  height: 10, width: 20 });
-        var rows = $('#tableRegisterCalActivities').jqxGrid('getrows');        
-        $("#btnFirst").click(function (){
-            if(status!=1){
-                if(rows.length>0){
-                    $('#tableRegisterCalActivities').jqxGrid('selectrow', 0);
-                    $('#tableRegisterCalActivities').jqxGrid('scrolloffset', 0, 0);
-                }
-            }
-        });
-        var i=0;
-        $("#btnNext").click(function (){
-            if(status!=1){
-                var position = $('#tableRegisterCalActivities').jqxGrid('scrollposition');
-                i=position.top+15;
-                var rows = $('#tableRegisterCalActivities').jqxGrid('getrows'); 
-                var rowindex = $('#tableRegisterCalActivities').jqxGrid('getselectedrowindex');
-                if(rowindex<rows.length-1){
-                    $('#tableRegisterCalActivities').jqxGrid('selectrow', rowindex+1);
-                    $('#tableRegisterCalActivities').jqxGrid('scrolloffset', i, 0);
-                }     
-            }
-        });
-        var d=110;
-        $("#btnPrev").click(function (){
-            if(status!=1){
-                var position = $('#tableRegisterCalActivities').jqxGrid('scrollposition');
-                d=position.top-15;
-                var rowindex = $('#tableRegisterCalActivities').jqxGrid('getselectedrowindex');
-                if(rowindex>=1){
-                    $('#tableRegisterCalActivities').jqxGrid('selectrow', rowindex-1);
-                    $('#tableRegisterCalActivities').jqxGrid('scrolloffset', d, 0);
-                }
-            }
-        });        
-        $("#btnLast").click(function (){
-            if(status!=1){
-                var rows = $('#tableRegisterCalActivities').jqxGrid('getrows'); 
-                $('#tableRegisterCalActivities').jqxGrid('selectrow', (rows.length-1));
-                $('#tableRegisterCalActivities').jqxGrid('scrolloffset', 400, 0);
-            }
-        });
-        var evaluateActivityPopover = $("#evaluateActivityPopover");
-        var deleteEvaluatedActivityPopover = $("#deleteEvaluatedActivityPopover");
-        var evaluateActivity = $("#evaluateActivity");
-        var deleteActivity = $("#deleteActivity");
-        evaluateActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
-        deleteEvaluatedActivityPopover.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
-        evaluateActivity.jqxButton({"height": 30, "width": 60, cursor: "pointer"});
-        deleteActivity.jqxButton({ cursor: "pointer", height: 20, width: 20 });
-        deleteActivity.jqxTooltip({ position: 'bottom', content: "Eliminar"});
-        
+        }  
         
         $("#tableRegisterCalActivities").on('contextmenu', function () {
             return false;
@@ -1090,7 +933,6 @@
         color: rgb(84, 146, 95) !important;
     }
 </style>
-<div id="slider"></div>
 <div style="float: left; margin-right: 5px;">
     Nivel de estudio<br>
     <div id='registerCalFlangeLevelFilter'></div>
@@ -1131,10 +973,6 @@
         <div id='calTeacherActivitiesFilter'></div>
     </div>
 </div>
-<div style="display: none; float: left; margin-right: 5px; text-align: center;">
-    Valor<br>
-    <div id='valMaxActivity' style="font-size: 23px;"></div>
-</div>
 <div style="float: left; margin-right: 5px; text-align: center; display: none;">
     Acción<br>
     <div id="evaluateActivityPopover" style="height: 28px; margin-left: 7px;">
@@ -1153,12 +991,12 @@
         <br>
         <label style="font-size: 12px">            
             <input id="typeMin" value="0" type="radio" name="wayScaleEvaluation"/>
-            Mínimo
+            Mínimo 0
         </label>
         <br>
         <label style="font-size: 12px">           
             <input id="typeMax" value="1" type="radio" name="wayScaleEvaluation" />
-            Máximo
+            Máximo <span id='valMaxActivity'></span>
         </label>
         <br>
         <center><button id="evaluateActivity">Evaluar</button></center>
@@ -1168,85 +1006,16 @@
     <div style="color: olive;">
         <label style="font-size: 12px;">Al borrar la evaluación de esta actividad se perdera la calificación de todo el grupo seleccionado.</label>
         <br>
-        <center><div id="deleteActivity" style="height: 28px; margin-left: 7px;">
-            <div class="jqx-icon-delete" style="height: 20px; width: 20px;"></div>
-            </div></center>
+        <center>
+            <div id="deleteActivity" style="height: 28px; margin-left: 7px;">
+                <div class="jqx-icon-delete" style="height: 20px; width: 20px;"></div>
+            </div>
+        </center>
     </div>
 </div>
 <br><br><br>
 <div style="float: left; margin-right: 5px;">
     <div id="tableRegisterCalActivities"></div>
-</div>
-<div id="captureCal" style="float: left; margin-right: 5px;">
-    <div id="register">
-        <div style="width: 100%">
-            <b>Calificación</b>
-            <div id="settingsButton" style="float: right;"></div>
-            <div id="popoverSettings" style="">
-                <div style="color: olive;">
-                    <label style="font-size: 12px; font-weight: bold">Tipo de entrada</label>
-                    <br>
-                    <label style="font-size: 12px">            
-                        <input id="typeInput" type="radio" name="wayInputEval"/>
-                        Caja númerica
-                    </label>
-                    <br>
-                    <label style="font-size: 12px">           
-                        <input id="typeSlider" type="radio" name="wayInputEval" />
-                        Deslizador
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div id="testForm">
-            <table class="register-table" style="width: 400px; color: rgb(84, 146, 95) !important;">
-                <tr style="height: 20px">
-                    <td style="width: 78px">Matrícula:</td>
-                    <td id="dataEnrollment"></td>
-                </tr>
-                <tr style="height: 50px">
-                    <td style="width: 78px">Alumno:</td>
-                    <td id="dataNameStudent"></td>
-                </tr>
-                <tr style="height: 40px">
-                    <td style="width: 78px">Obtenido:</td>
-                    <td>
-                        <div id="dataValueObtanied"></div>                        
-                    </td>
-                </tr>
-                <tr style="height: 40px">
-                    <td style="width: 78px">Escala 0-10:</td>
-                    <td>
-                        <div id="dataValueObtaniedScale"></div>                        
-                    </td>
-                </tr>
-                <tr style="height: 40px">
-                    <td style="width: 78px">Valor:</td>
-                    <td>
-                        <div id="contentDataValueObtanied"></div>                        
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div style="text-align: center; float: right; margin-top: 10px;"> 
-                            <div id="btnFirst" style="float: left; margin-right:5px;">
-                                <div class="jqx-icon-arrow-first" style="height: 10px; width: 20px;"></div>
-                            </div>
-                            <div id="btnPrev" style="float: left;">
-                                <div class="jqx-icon-arrow-left" style="height: 10px; width: 20px;"></div>
-                            </div>
-                            <div id="btnNext" style="float: left; margin-left: 5px;">
-                                <div class="jqx-icon-arrow-right" style="height: 10px; width: 20px;"></div>
-                            </div>
-                            <div id="btnLast" style="float: left; margin-left: 5px;">
-                                <div class="jqx-icon-arrow-last" style="height: 10px; width: 20px;"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
 </div>
 <div id="popupWindow">
     <div>
