@@ -44,6 +44,13 @@ public class candidateControl {
                     allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
                     allData.setFL_PINNED(res.getString("FL_PINNED"));
+                    allData.setFL_FILTERTYPE(res.getString("FL_FILTERTYPE"));
+                    allData.setFL_SORTABLE(res.getString("FL_SORTABLE"));
+                    allData.setFL_RESIZABLE(res.getString("FL_RESIZABLE"));
+                    allData.setFL_CREATEFILTERPANE(res.getString("FL_CREATEFILTERPANE"));
+                    allData.setFL_FILTERABLE(res.getString("FL_FILTERABLE"));
+                    allData.setFL_COLUMNTYPE(res.getString("FL_COLUMNTYPE"));
+                    
                     list.add(allData);
                 }
                 res.close();

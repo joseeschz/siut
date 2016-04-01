@@ -735,6 +735,7 @@ function createDropDownActivities(selector, filterable, update){
             width: 250
         }).css("display","inline-block");
     }
+    $(selector).jqxDropDownList({selectedIndex: filterable[6] || 0});
 }
 
 function createDropDownTutorTeacher(selector, update){

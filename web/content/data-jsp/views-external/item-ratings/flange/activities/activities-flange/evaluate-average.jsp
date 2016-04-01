@@ -313,7 +313,7 @@
             if(itemGroup!==undefined){
                 valItemGroup=itemGroup.value;
             }
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){
                 valItemActivity=itemActivity.value;
                 $('#tableRegisterCalActivities').fadeIn("slow");
             }else{
@@ -693,7 +693,7 @@
             if(itemGroup!==undefined){
                 valItemGroup=itemGroup.value;
             }
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){
                 valItemActivity=itemActivity.value;
             }
             var returnValue=undefined;
@@ -773,7 +773,6 @@
             });
         }
         function initDropDownActivities(update, indexSelect){
-            
             var valItemLevel=0;
             var valItemPeriod=0;
             var valItemGroup=0;
@@ -816,7 +815,7 @@
             $("#calTeacherActivitiesFilter").on('change',function (event){
                 if(event.args){
                     itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-                    if(itemActivity!==undefined){
+                    if(itemActivity!==undefined && itemActivity!==null){
                         $('#tableRegisterCalActivities').fadeIn("slow");
                         maxValActivity();
                         loadTable();
@@ -855,7 +854,7 @@
         }
         function maxValActivity(){
             itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){                
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",

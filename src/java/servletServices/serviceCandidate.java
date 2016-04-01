@@ -53,15 +53,50 @@ public class serviceCandidate extends HttpServlet {
               
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataColums = new JSONObject();
-                    dataColums.put("text", listColumns.get(i).getFL_TEXT());
-                    dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
-                    dataColums.put("align", listColumns.get(i).getFL_ALIGN());
-                    dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_TEXT()!=null){
+                        dataColums.put("text", listColumns.get(i).getFL_TEXT());
+                    }
+                    if(listColumns.get(i).getFL_DATA_FIELD()!=null){
+                        dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
+                    }
+                    if(listColumns.get(i).getFL_SORTABLE()!=null){
+                        dataColums.put("sortable", listColumns.get(i).getFL_SORTABLE());
+                    }
+                    if(listColumns.get(i).getFL_FILTERABLE()!=null){
+                        dataColums.put("filterable", listColumns.get(i).getFL_FILTERABLE());
+                    }
+                    if(listColumns.get(i).getFL_RESIZABLE()!=null){
+                        dataColums.put("resizable", listColumns.get(i).getFL_RESIZABLE());
+                    }
+                    if(listColumns.get(i).getFL_FILTER()!=null){
+                        dataColums.put("filter", listColumns.get(i).getFL_FILTER());
+                    }
+                    if(listColumns.get(i).getFL_HIDEABLE()!=null){
+                        dataColums.put("hideable", listColumns.get(i).getFL_HIDEABLE());
+                    }
+                    if(listColumns.get(i).getFL_HIDDEN()!=null){
+                        dataColums.put("hiden", listColumns.get(i).getFL_HIDDEN());
+                    }
+                    if(listColumns.get(i).getFL_ALIGN()!=null){
+                        dataColums.put("align", listColumns.get(i).getFL_ALIGN());
+                    }
+                    if(listColumns.get(i).getFL_CELLSALING()!=null){
+                        dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    }
                     if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
-                        dataColums.put("cellclassname", listColumns.get(i).getFL_CELLSRENDERER());
+                        dataColums.put("cellsrenderer", listColumns.get(i).getFL_CELLSRENDERER());
                     }
                     if(listColumns.get(i).getFL_PINNED()!=null){
                         dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
+                    if(listColumns.get(i).getFL_CREATEFILTERPANE()!=null){
+                        dataColums.put("createfilterpanel", listColumns.get(i).getFL_CREATEFILTERPANE());
+                    }
+                    if(listColumns.get(i).getFL_FILTERTYPE()!=null){
+                        dataColums.put("filtertype", listColumns.get(i).getFL_FILTERTYPE());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNTYPE()!=null){
+                        dataColums.put("columntype", listColumns.get(i).getFL_COLUMNTYPE());
                     }
                     if(listColumns.get(i).getFL_RENDERED()!=null){
                         dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
