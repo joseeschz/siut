@@ -5,16 +5,19 @@
  */
 package control;
 
-import com.sun.xml.rpc.processor.modeler.j2ee.xml.string;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.propetiesTableModel;
 import model.requirementsModel;
 import model.studentModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -30,6 +33,63 @@ public class studentControl {
             System.out.println(listStudents2.get(i).getFL_NAME());
         }
         //System.out.print(new studentControl().UpdateStudent(819, "fl_above_average", "10.0"));
+    }
+    public ArrayList<propetiesTableModel> SelectReportColums(){
+        ArrayList<propetiesTableModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('columsMetadata', '')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    propetiesTableModel allData=new propetiesTableModel();
+                    allData.setFL_TEXT(res.getString("FL_TEXT"));
+                    allData.setFL_DATA_FIELD(res.getString("FL_DATA_FIELD"));
+                    allData.setFL_ALIGN(res.getString("FL_ALIGN"));
+                    allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
+                    allData.setFL_CELLSRENDERER(res.getString("FL_CELLSRENDERER"));
+                    allData.setFL_RENDERED(res.getString("FL_RENDERED"));
+                    allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
+                    allData.setFL_WIDHT(res.getString("FL_WIDHT"));
+                    allData.setFL_PINNED(res.getString("FL_PINNED"));
+                    allData.setFL_FILTERTYPE(res.getString("FL_FILTERTYPE"));
+                    allData.setFL_SORTABLE(res.getString("FL_SORTABLE"));
+                    allData.setFL_RESIZABLE(res.getString("FL_RESIZABLE"));
+                    allData.setFL_CREATEFILTERPANE(res.getString("FL_CREATEFILTERPANE"));
+                    allData.setFL_FILTERABLE(res.getString("FL_FILTERABLE"));
+                    allData.setFL_COLUMNTYPE(res.getString("FL_COLUMNTYPE"));
+                    
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public JSONArray SelectMetadataRows(){
+        JSONArray contentColums = new JSONArray();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('rowsMetadata', '')"); ResultSet res = ps.executeQuery()) {
+                ResultSetMetaData rsmd = res.getMetaData();
+                JSONObject columns;
+                while(res!=null&&res.next()){
+                    columns = new JSONObject();
+                    for(int col=1; col<rsmd.getColumnCount()+1; col++){  
+                        String value = res.getString(rsmd.getColumnLabel(col));
+                        columns.put(rsmd.getColumnName(col),value);
+                    }
+                    contentColums.add(columns);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contentColums;
     }
     public ArrayList<studentModel> SelectStudentLogin(studentModel dataStudent){
         ArrayList<studentModel> list=new ArrayList<>();

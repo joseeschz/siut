@@ -313,7 +313,7 @@
             if(itemGroup!==undefined){
                 valItemGroup=itemGroup.value;
             }
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){
                 valItemActivity=itemActivity.value;
                 $('#tableRegisterCalActivities').fadeIn("slow");
             }else{
@@ -537,13 +537,15 @@
                     length = dataAdapter.records.length;
                 }
             });
-            status = loadEventRowclick();            
+            status = loadEventRowclick();   
+            var activityEvaluated = anyActivityEvaluated();
+            
             var cellclass = function (row, columnfield, value) {
                 var classTheme="";
                 if(status==1){
                     var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
                     if(data.dataAcomulatedNow>="8"){
-                        classTheme="approved";
+                        classTheme="disabled";
                     }else{
                         classTheme="not-approved";
                     }                    
@@ -554,23 +556,53 @@
 //                    }else{
 //                        classTheme="";
 //                    } 
+                    if(activityEvaluated>=1){
+                    }else{      
+                        classTheme="disabled";
+                    }
                 }
                 return classTheme;
             };
             var cellbeginedit = function (row, datafield, columntype, value) {
-                //if (row == 0 || row == 2 || row == 5) return false;
+                if(status==1){
+                    return false;
+                }
+                if(activityEvaluated>=1){
+                    return true;
+                }else{    
+                    $("#popoverOptionEvaluate").jqxPopover("open");
+                    return false;
+                }
             };
             var cellsrenderer = function (row, column, value, defaultHtml) {
                 if(column==="dataValueObtaniedEquivalent"){
                     if (value<8) {
+                        var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
                         var element = $(defaultHtml);
-                        element.css('color', 'red');
+                        element.css('color', '#656565');
+                        if(data.dataAcomulatedNow>="8"){
+                            if(status==1){
+                                element.css('color', '#656565 !important');
+                            }else{
+                                element.css('color', 'red');
+                            }
+                        }else{
+                            if(status==1){
+                                element.css('color', '#656565 !important');
+                            }else{
+                                element.css('color', 'red');
+                            }
+                        }  
                         return element[0].outerHTML;
                     }
                 }else{
                     if ((value*10/value_max)<8) {
                         var element = $(defaultHtml);
-                        element.css('color', 'red');
+                        if(status==1){
+                            element.css('color', '#656565');
+                        }else{
+                            element.css('color', 'red');
+                        }
                         return element[0].outerHTML;
                     }
                 }
@@ -587,13 +619,13 @@
                 pageable: false,
                 editable: true,
                 filterable: false,
-                clipboard: false,
+                clipboard: true,
                 altRows: true,
                 columns: [
                     { text: '#', dataField: 'dataProgresivNumber', cellclassname: cellclass, width: 20, editable: false},
                     { text: 'Matrícula',disabled: true, align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
-                    { text: 'Alumno',disabled: true, align: 'center', dataField: 'dataNameStudent', cellclassname: cellclass, editable: false},
-                    { text: 'Total', dataField: 'dataAcomulatedNow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, editable: false },
+                    { text: 'Alumno', clipboard: false, disabled: true, align: 'center', dataField: 'dataNameStudent', cellclassname: cellclass, editable: false},
+                    
                     { text: 'R', hidecolumn : true, columngroup: 'rating', dataField: 'dataValueObtanied', cellsalign: 'center', align: 'center', width: 10, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                     { text: 'Equivalente', cellsformat:"f2", columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                     { 
@@ -626,9 +658,9 @@
                         }, 
                         cellbeginedit: cellbeginedit, 
                         cellsrenderer: cellsrenderer,
-                        cellclassname: cellclass,
-                        clipboard: true
-                  }
+                        cellclassname: cellclass
+                  },
+                  { text: 'Total', dataField: 'dataAcomulatedNow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, editable: false }
                 ],
                 columngroups: [{
                     text: 'Calificación',
@@ -655,12 +687,12 @@
                 };
                 evaluateActivityByRow(param);
             });
+            
             if(length>0){
                 if(status==1){
-                    
                     $('#tableRegisterCalActivities').jqxGrid('clearselection');
                 }else{
-                    if(anyActivityEvaluated()>=1){
+                    if(activityEvaluated>=1){
                         $(evaluateActivityPopover).parent().hide();
                         $(deleteEvaluatedActivityPopover).parent().show();
                     }else{      
@@ -693,7 +725,7 @@
             if(itemGroup!==undefined){
                 valItemGroup=itemGroup.value;
             }
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){
                 valItemActivity=itemActivity.value;
             }
             var returnValue=undefined;
@@ -773,7 +805,6 @@
             });
         }
         function initDropDownActivities(update, indexSelect){
-            
             var valItemLevel=0;
             var valItemPeriod=0;
             var valItemGroup=0;
@@ -816,7 +847,7 @@
             $("#calTeacherActivitiesFilter").on('change',function (event){
                 if(event.args){
                     itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-                    if(itemActivity!==undefined){
+                    if(itemActivity!==undefined && itemActivity!==null){
                         $('#tableRegisterCalActivities').fadeIn("slow");
                         maxValActivity();
                         loadTable();
@@ -855,7 +886,7 @@
         }
         function maxValActivity(){
             itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-            if(itemActivity!==undefined){
+            if(itemActivity!==undefined && itemActivity!==null){                
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",
@@ -927,7 +958,8 @@
         background-color: rgb(117, 201, 228) !important;
     }
     .not-approved{
-        background-color: rgb(225, 139, 139) !important;
+        color: #656565 !important;
+        background-color: #D7C1C1 !important;
     }
     .jqx-slider-tickscontainer{
         color: rgb(84, 146, 95) !important;
@@ -1029,7 +1061,7 @@
             <style>
                 .table-utsem{
                     color: #779670; margin: 2px;
-                    //width:99%;
+                    /*width:99%;*/
                 }
                 .table-utsem thead{
                     background: rgb(190, 242, 152) none repeat scroll 0% 0%;

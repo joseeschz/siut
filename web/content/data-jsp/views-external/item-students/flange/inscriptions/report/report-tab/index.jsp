@@ -1,7 +1,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         function loadSource(){
-            var url = "../serviceCandidate?tableByAllColumsMetadata";
+            var url = "../serviceStudent?tableByAllColumsMetadata";
             var ordersSource ={
                 dataType: "json",
                 async: false,

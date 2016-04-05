@@ -35,7 +35,6 @@ public class candidateControl {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
-                    allData.setFL_TEXT_EXTENDS(res.getString("FL_TEXT_EXTENDS"));
                     allData.setFL_DATA_FIELD(res.getString("FL_DATA_FIELD"));
                     allData.setFL_ALIGN(res.getString("FL_ALIGN"));
                     allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
@@ -44,6 +43,13 @@ public class candidateControl {
                     allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
                     allData.setFL_PINNED(res.getString("FL_PINNED"));
+                    allData.setFL_FILTERTYPE(res.getString("FL_FILTERTYPE"));
+                    allData.setFL_SORTABLE(res.getString("FL_SORTABLE"));
+                    allData.setFL_RESIZABLE(res.getString("FL_RESIZABLE"));
+                    allData.setFL_CREATEFILTERPANE(res.getString("FL_CREATEFILTERPANE"));
+                    allData.setFL_FILTERABLE(res.getString("FL_FILTERABLE"));
+                    allData.setFL_COLUMNTYPE(res.getString("FL_COLUMNTYPE"));
+                    
                     list.add(allData);
                 }
                 res.close();
@@ -65,7 +71,8 @@ public class candidateControl {
                 while(res!=null&&res.next()){
                     columns = new JSONObject();
                     for(int col=1; col<rsmd.getColumnCount()+1; col++){  
-                        columns.put(rsmd.getColumnName(col), res.getString(rsmd.getColumnLabel(col)));
+                        String value = res.getString(rsmd.getColumnLabel(col));
+                        columns.put(rsmd.getColumnName(col),value);
                     }
                     contentColums.add(columns);
                 }
