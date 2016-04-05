@@ -635,7 +635,7 @@
 						</cellContents>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<measure name="FL_VALUE_OBTANIEDMeasure" class="java.lang.Float" calculation="Sum">
+				<measure name="FL_VALUE_OBTANIEDMeasure" class="java.math.BigDecimal" calculation="Sum">
 					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED_FLOAT}]]></measureExpression>
 				</measure>
 				<measure name="FL_ENROLLMENT" class="java.lang.String">
@@ -685,7 +685,7 @@
 							<textElement>
 								<font fontName="Calibri" size="8"/>
 							</textElement>
-							<textFieldExpression><![CDATA[($V{FL_AVG_FL_NAME_ALL}.equals( 10.0 ) ? "10" : ""+$V{FL_AVG_FL_NAME_ALL})]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>

@@ -537,7 +537,9 @@
                     length = dataAdapter.records.length;
                 }
             });
-            status = loadEventRowclick();            
+            status = loadEventRowclick();   
+            var activityEvaluated = anyActivityEvaluated();
+            
             var cellclass = function (row, columnfield, value) {
                 var classTheme="";
                 if(status==1){
@@ -554,11 +556,21 @@
 //                    }else{
 //                        classTheme="";
 //                    } 
+                    if(activityEvaluated>=1){
+                    }else{      
+                        classTheme="disabled";
+                    }
                 }
                 return classTheme;
             };
             var cellbeginedit = function (row, datafield, columntype, value) {
                 if(status==1){
+                    return false;
+                }
+                if(activityEvaluated>=1){
+                    return true;
+                }else{    
+                    $("#popoverOptionEvaluate").jqxPopover("open");
                     return false;
                 }
             };
@@ -675,12 +687,12 @@
                 };
                 evaluateActivityByRow(param);
             });
+            
             if(length>0){
                 if(status==1){
-                    
                     $('#tableRegisterCalActivities').jqxGrid('clearselection');
                 }else{
-                    if(anyActivityEvaluated()>=1){
+                    if(activityEvaluated>=1){
                         $(evaluateActivityPopover).parent().hide();
                         $(deleteEvaluatedActivityPopover).parent().show();
                     }else{      
