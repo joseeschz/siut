@@ -61,7 +61,8 @@ public class serviceMail extends HttpServlet {
                     studentModel obj = new studentModel();
                     obj.setFL_MAIL(email);
                     obj.setFL_ENROLLMENT(enrollment);
-                    ArrayList<studentModel> listStudent=new studentControl().SelectRememberPassword(obj);                    
+                    ArrayList<studentModel> listStudent=new studentControl().SelectRememberPassword(obj); 
+                    JSONObject data = new JSONObject();
                     for(int i=0;i<listStudent.size();i++){
                         enrollment = listStudent.get(i).getFL_ENROLLMENT();
                         email = listStudent.get(i).getFL_MAIL();
@@ -120,11 +121,17 @@ public class serviceMail extends HttpServlet {
                         } catch( MessagingException e){
                             //e.printStackTrace();
                             message = "FailConnectionNetwork";
-                        }                        
+                        }    
+                        response.setHeader("Access-Control-Allow-Origin", "*");
+                        response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                        response.setHeader("Access-Control-Max-Age", "3600");
+                        response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                        response.setContentType("application/json"); 
                     }else{
                         message = "EmailNotFountForEnrrollment";
                     }
-                    out.print(message);
+                    data.put("statusSendMail", message);
+                    out.print(data);
                 }
             }
             

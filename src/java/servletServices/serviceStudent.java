@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.propetiesTableModel;
 import model.requirementsModel;
 import model.studentModel;
 import org.json.simple.JSONArray;
@@ -43,6 +44,89 @@ public class serviceStudent extends HttpServlet {
         HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("tableByAllColumsMetadata")!=null){  
+                ArrayList<propetiesTableModel> listColumns=new studentControl().SelectReportColums();
+                JSONArray contentRowsCal=new studentControl().SelectMetadataRows();
+                JSONArray contentColums = new JSONArray();
+                JSONArray contentDataFields = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rowsCal = new JSONObject();
+                JSONObject columns = new JSONObject();
+                JSONObject dataFields = new JSONObject();
+              
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataColums = new JSONObject();
+                    if(listColumns.get(i).getFL_TEXT()!=null){
+                        dataColums.put("text", listColumns.get(i).getFL_TEXT());
+                    }
+                    if(listColumns.get(i).getFL_DATA_FIELD()!=null){
+                        dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
+                    }
+                    if(listColumns.get(i).getFL_SORTABLE()!=null){
+                        dataColums.put("sortable", listColumns.get(i).getFL_SORTABLE());
+                    }
+                    if(listColumns.get(i).getFL_FILTERABLE()!=null){
+                        dataColums.put("filterable", listColumns.get(i).getFL_FILTERABLE());
+                    }
+                    if(listColumns.get(i).getFL_RESIZABLE()!=null){
+                        dataColums.put("resizable", listColumns.get(i).getFL_RESIZABLE());
+                    }
+                    if(listColumns.get(i).getFL_FILTER()!=null){
+                        dataColums.put("filter", listColumns.get(i).getFL_FILTER());
+                    }
+                    if(listColumns.get(i).getFL_HIDEABLE()!=null){
+                        dataColums.put("hideable", listColumns.get(i).getFL_HIDEABLE());
+                    }
+                    if(listColumns.get(i).getFL_HIDDEN()!=null){
+                        dataColums.put("hiden", listColumns.get(i).getFL_HIDDEN());
+                    }
+                    if(listColumns.get(i).getFL_ALIGN()!=null){
+                        dataColums.put("align", listColumns.get(i).getFL_ALIGN());
+                    }
+                    if(listColumns.get(i).getFL_CELLSALING()!=null){
+                        dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    }
+                    if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
+                        dataColums.put("cellsrenderer", listColumns.get(i).getFL_CELLSRENDERER());
+                    }
+                    if(listColumns.get(i).getFL_PINNED()!=null){
+                        dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
+                    if(listColumns.get(i).getFL_CREATEFILTERPANE()!=null){
+                        dataColums.put("createfilterpanel", listColumns.get(i).getFL_CREATEFILTERPANE());
+                    }
+                    if(listColumns.get(i).getFL_FILTERTYPE()!=null){
+                        dataColums.put("filtertype", listColumns.get(i).getFL_FILTERTYPE());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNTYPE()!=null){
+                        dataColums.put("columntype", listColumns.get(i).getFL_COLUMNTYPE());
+                    }
+                    if(listColumns.get(i).getFL_RENDERED()!=null){
+                        dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNGROUP()!=null){
+                        dataColums.put("columngroup", listColumns.get(i).getFL_COLUMNGROUP());
+                    }
+                    dataColums.put("width", listColumns.get(i).getFL_WIDHT());
+                    contentColums.add(dataColums); 
+                }
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject datadataFields = new JSONObject();
+                    datadataFields.put("name", listColumns.get(i).getFL_DATA_FIELD());
+                    datadataFields.put("type", "string");                    
+                    contentDataFields.add(datadataFields); 
+                }
+                rowsCal.put("rowsCal", contentRowsCal);
+                columns.put("columns", contentColums);
+                dataFields.put("dataFields", contentDataFields);
+                bulding.add(columns);
+                bulding.add(dataFields);
+                bulding.add(rowsCal);
+                response.setContentType("application/json"); 
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("generateEnrollment")!=null){
                 String period = request.getParameter("period");
                 out.print(new studentControl().GenerateEnrollment(period));   

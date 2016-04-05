@@ -70,7 +70,28 @@
                             </div><!-- /.col -->
                         </div>
                     </form>
-                    <br><a href="#">Creo que olvidé mi contraseña</a><br>
+                    <br><a href="#" id="rememberPass">Creo que olvidé mi contraseña</a><br>
+                </div>
+                <div style="padding: 20px; display: none">
+                    <p class="login-box-msg"><b style="font-size: 18px">Bien para recordar tu contraseña...</b></p>
+                    <form method="post" id="formLoginRemember">
+                        <input type="hidden" name="statusLogin" value="in"/>
+                        <div class="form-group has-feedback">
+                            <input id="nameUserRemember" name="enrollment" type="text" class="form-control" placeholder="Usuario"/>
+                            <span class="glyphicon glyphicon-user form-control-feedback" style="margin-right: 8px; top: 0px"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <input id="mail" name="mail" type="text" class="form-control" placeholder="Correo"/>
+                            <span class="glyphicon glyphicon-log-in form-control-feedback" style="margin-right: 8px; top: 0px"></span>
+                        </div>
+                        <label id="message">Indica tu usuario y tu correo</label>
+                        <div class="row">
+                            <div class="col-xs-10" style="text-align: center">
+                                <button id="buttonRemember" type="submit" class="btn btn-block  btn-success" style="margin-left: 30px;">Recordar</button>
+                            </div><!-- /.col -->
+                        </div>
+                    </form>
+                    <br><a href="#" id="back">Ir atras</a><br>
                 </div>
                 <div style="padding: 20px; display: none">
                     <p class=""><b style="font-size: 18px">Ups... Por favor valida tu correo electrónico para poder ingresar</b></p>
@@ -350,6 +371,83 @@
                             console.log(datos);
                         }
                     });
+                });
+                $("#formLoginRemember").jqxValidator({
+                    hintType: 'label',
+                    animationDuration: 0,
+                    rules: [
+                        {
+                            input: "#nameUserRemember", 
+                            message: "Este campo es requerido!", 
+                            action: 'keyup, blur', 
+                            rule: "required"
+                        },
+                        {   
+                            input: "#mail", 
+                            message: "El correo es necesario!", 
+                            action: 'keyup, blur', 
+                            rule: 'required' 
+                        },
+                        {   
+                            input: "#mail", 
+                            message: "El correo parece ser incorrecto", 
+                            action: 'keyup, blur', 
+                            rule: 'email' 
+                        }
+                    ]
+                });
+                $('#formLoginRemember').on('validationSuccess', function (event) {
+                    //en el evento submit del fomulario
+                    if($("#buttonRemember").text()==="OK"){
+                        $("#back").click();
+                        $("#buttonRemember").text("Recordar");
+                    }else{
+                        var datos = $("#formLoginRemember").serialize(); // los datos del 
+                        $.ajax({
+                            type: "POST",
+                            async: true,
+                            url: "../serviceMail?rememberPassword",
+                            data:datos,
+                            beforeSend: function (xhr) {
+                                $("#windowBlock").fadeIn("slow");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");
+                                $("#windowBlock").fadeOut("slow");
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                                if(data.statusSendMail==="Success"){
+                                    $("#message").text("Se envió correctamente el recordatorio al correo, favor de revisar...");  
+                                    $("#buttonRemember").text("OK");
+                                }else if(data.statusSendMail==="EmailNotFountForEnrrollment"){
+                                    $("#message").text("Lo sentimos los datos no fueron ingresados de forma correcta favor de verificar...");  
+                                }else if(data.statusSendMail==="FailConnectionNetwork"){
+                                    $("#message").text("Lamentamos que estemos teniendo problemas de conexión favor de intentar mas tarde.");  
+                                }else{
+                                    $("#message").text("Al parecer el correo que ingreso no es correcto, intenta corregir este problema.");  
+                                }
+                                $("#windowBlock").fadeOut("slow");
+                            }
+                        });
+                    }
+                });
+                $("#buttonRemember").click(function (){
+                    $('#formLoginRemember').jqxValidator('validate');
+                    return false;
+                });
+                $('#formLoginRemember').submit(function (){
+                    $('#formLoginRemember').jqxValidator('validate');
+                    return false;
+                });
+                $("#rememberPass").click(function (){
+                    $("#nameUserRemember").val("");
+                    $("#mail").val("");
+                    $("#formLogin").parent().hide();                            
+                    $("#formLoginRemember").parent().show();                       
+                });
+                $("#back").click(function (){
+                    $("#formLogin").parent().show();
+                    $("#formLoginRemember").parent().hide();   
                 });
                 
                 $("#sendButtonBack").click(function (){
