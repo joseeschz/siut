@@ -59,6 +59,10 @@
 	<field name="FL_CALIFICATION_DO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="FL_NAME_WORKER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DIRECTOR_NAME" class="java.lang.String"/>
 	<field name="FL_OBSERVATIONS" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -305,7 +309,7 @@
 					<textFieldExpression><![CDATA[$F{FL_NAME_SUBJECT_MATTER}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="87" width="149" height="15" uuid="1b82fdc6-527f-46ef-9f33-e86ec7448543"/>
+					<reportElement x="0" y="87" width="159" height="15" uuid="1b82fdc6-527f-46ef-9f33-e86ec7448543"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement verticalAlignment="Top">
 						<font fontName="Calibri" size="10" isBold="true"/>
@@ -313,7 +317,7 @@
 					<text><![CDATA[ASIGNATURA INTEGRADORA:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="149" y="87" width="26" height="15" uuid="85166e9d-27aa-4efd-a1ff-427c546ade93"/>
+					<reportElement x="159" y="87" width="26" height="15" uuid="85166e9d-27aa-4efd-a1ff-427c546ade93"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font fontName="Calibri" size="10" isBold="true"/>
@@ -321,7 +325,7 @@
 					<text><![CDATA[SI]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="179" y="89" width="12" height="12" uuid="fc1edddb-0b8f-491d-8ec5-d3763b95b970"/>
+					<reportElement x="189" y="89" width="12" height="12" uuid="fc1edddb-0b8f-491d-8ec5-d3763b95b970"/>
 					<box topPadding="0">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -335,7 +339,7 @@
 					<textFieldExpression><![CDATA[( ($F{FL_INTEGRADORA}.equals( "Si" )) ? "X" : "" )]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="194" y="87" width="26" height="15" uuid="0fee62cf-2074-4e82-a98e-b863bc854442"/>
+					<reportElement x="204" y="87" width="26" height="15" uuid="0fee62cf-2074-4e82-a98e-b863bc854442"/>
 					<box leftPadding="5" rightPadding="5"/>
 					<textElement textAlignment="Center" verticalAlignment="Top">
 						<font fontName="Calibri" size="10" isBold="true"/>
@@ -343,7 +347,7 @@
 					<text><![CDATA[NO]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="224" y="89" width="12" height="12" uuid="24e89a6f-68f4-49d9-a239-d35777f08630"/>
+					<reportElement x="234" y="89" width="12" height="12" uuid="24e89a6f-68f4-49d9-a239-d35777f08630"/>
 					<box topPadding="0">
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -930,11 +934,7 @@
 					</staticText>
 				</frame>
 				<staticText>
-					<reportElement x="0" y="51" width="584" height="10" uuid="d0aad59d-0d8f-4fe2-9bc5-be1a55be5f12"/>
-					<text><![CDATA[]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="0" y="63" width="238" height="32" uuid="be556ad1-82db-4be6-8bb6-d6185b85bfa0"/>
+					<reportElement x="0" y="77" width="238" height="18" uuid="be556ad1-82db-4be6-8bb6-d6185b85bfa0"/>
 					<box leftPadding="5" rightPadding="5">
 						<topPen lineWidth="0.5"/>
 					</box>
@@ -944,7 +944,7 @@
 					<text><![CDATA[NOMBRE Y FIRMA DEL PROFESOR]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="323" y="63" width="261" height="32" uuid="bd98daf8-5602-4063-992b-a1ee695cdddb"/>
+					<reportElement x="323" y="77" width="261" height="18" uuid="bd98daf8-5602-4063-992b-a1ee695cdddb"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -1006,6 +1006,32 @@
 				<reportElement x="0" y="150" width="584" height="10" uuid="c1ae4c86-4bad-41a5-8052-1c9df7236a6a"/>
 				<text><![CDATA[]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="0" y="62" width="238" height="15" uuid="0f880aec-dfc3-4133-bd33-c7c012fd7d8b"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_WORKER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="323" y="62" width="261" height="15" uuid="1380c572-b0dc-4239-8f0d-d0d693daef81"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_DIRECTOR_NAME}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>

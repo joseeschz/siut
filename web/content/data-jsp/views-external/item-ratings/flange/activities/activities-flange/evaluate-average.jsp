@@ -200,6 +200,7 @@
         evaluateActivity.click(function (){
             var disabled = $(this).jqxButton('disabled');            
             if(!disabled){
+                evaluateActivity.jqxButton({disabled: true });
                 var valItemCareer=0;
                 var valItemSemester=0;
                 var valItemPeriod=0;
@@ -255,13 +256,13 @@
                     error: function (jqXHR, textStatus, errorThrown) {
                         //This is if exits an error with the server internal can do server off, or page not found
                         alert("Error interno del servidor");
-                        $(this).jqxButton({disabled: true });
+                        evaluateActivity.jqxButton({disabled: true });
                     },
                     success: function (data, textStatus, jqXHR) {
                         $("#popoverOptionEvaluate").jqxPopover("close");
                         initDropDownActivities(true, indexActivity);
                         $("#loadEvaluating").hide();
-                        $(this).jqxButton({disabled: true });
+                        evaluateActivity.jqxButton({disabled: false });
                     }
                 }); 
             }
@@ -269,7 +270,7 @@
         deleteActivity.click(function (){            
             var disabled = $(this).jqxButton('disabled');            
             if(!disabled){
-                $(this).jqxButton({disabled: true });
+                deleteActivity.jqxButton({disabled: true });
                 var valItemPeriod=0;
                 var valItemGroup=0;
                 var valItemActivity=0;
@@ -306,13 +307,13 @@
                     error: function (jqXHR, textStatus, errorThrown) {
                         //This is if exits an error with the server internal can do server off, or page not found
                         alert("Error interno del servidor");
-                        $(this).jqxButton({disabled: true });
+                        deleteActivity.jqxButton({disabled: true });
                     },
                     success: function (data, textStatus, jqXHR) {                        
                         $("#popoverOptionDeleteEvaluated").jqxPopover("close");
                         initDropDownActivities(true, indexActivity);
                         $("#loadDeleting").hide();
-                        $(this).jqxButton({disabled: true });
+                        deleteActivity.jqxButton({disabled: false });
                     }
                 }); 
             }
@@ -781,7 +782,7 @@
                 if(itemTypeEvaluation.value===1){                    
                     if(status==1){
                         var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
-                        if(data.dataAcomulatedNow>="8"){
+                        if(data.dataAcomulatedNow>=8){
                             classTheme=classTheme+"disabled";
                         }else{
                             classTheme=classTheme+"not-approved";
@@ -795,7 +796,7 @@
                 }else if(itemTypeEvaluation.value===2){ 
                     if(status==1){
                         var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
-                        if(data.dataObtaniedRegularizationTotal>="8"){
+                        if(data.dataObtaniedRegularizationTotal>=8){
                             classTheme=classTheme+"disabled";
                         }else{
                             classTheme=classTheme+"not-approved";
@@ -818,7 +819,7 @@
                 }else if(itemTypeEvaluation.value===3){ 
                     if(status==1){
                         var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
-                        if(data.dataObtaniedGlobalTotal>="8"){
+                        if(data.dataObtaniedGlobalTotal>=8){
                             classTheme=classTheme+"disabled";
                         }else{
                             classTheme=classTheme+"not-approved";
@@ -1004,7 +1005,7 @@
             ];
             var columsAcumulated =[
                 { text: 'R', hidecolumn : true, columngroup: 'rating', dataField: 'dataValueObtanied', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-                { text: 'Equivalente', cellsformat:"f2", columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+                { text: 'Equivalente', clipboard: false, cellsformat:"f2", columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                 { 
                     text: 'Obtenido', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataValueObtaniedNew', cellsalign: 'left', align: 'center', width: 80,  columntype: 'numberinput',
                     validation: validation,
@@ -1092,15 +1093,15 @@
                 colums=columsDefault;
             }
             $("#tableRegisterCalActivities").jqxGrid({
-                width: "95%",
-                height:450,
+                width: "100%",
+                height: "100%",
                 selectionMode: "multiplecellsadvanced",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: false,
                 editable: true,
                 filterable: false,
-                clipboard: false,
+                clipboard: true,
                 altRows: true,
                 columns: colums,
                 columngroups: columngroups,
@@ -1566,7 +1567,7 @@
     </div>
 </div>
 <br><br><br>
-<div style="float: left; margin-right: 5px; position: absolute; width: 100%">
+<div style=" margin-right: 5px;  width: 100%; height: 70%; display: inline-block;">
     <div id="tableRegisterCalActivities"></div>
 </div>
 <div id="popupWindow">

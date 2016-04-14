@@ -411,6 +411,7 @@ public class calificationControl {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
                     allData.setFL_TOTAL_OBTAINED(res.getString("FL_AVG"));
                     allData.setFL_TOTAL_EVALUATED(res.getString("FL_TOTAL_EVALUATED"));
                     list.add(allData);
@@ -433,6 +434,7 @@ public class calificationControl {
                     calificationModel allData=new calificationModel();
                     allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
                     allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
                     allData.setFL_TOTAL_EVALUATED(res.getString("FL_TOTAL_EVALUATED"));
                     allData.setFL_TOTAL_OBTAINED(res.getString("FL_TOTAL_OBTAINED"));
                     list.add(allData);

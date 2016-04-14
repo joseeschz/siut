@@ -73,7 +73,6 @@ public class serviceSubjectMatter extends HttpServlet {
                     int pkStudent = 0;
                     if(session.getAttribute("pkStudent")!=null){
                         pkStudent = Integer.parseInt(session.getAttribute("pkStudent").toString());
-                        
                     }
                     if(request.getParameter("pkStudent")!=null){
                         pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
@@ -103,6 +102,7 @@ public class serviceSubjectMatter extends HttpServlet {
                     data.put("dataPkTeacher", listSubjectMatters.get(i).getPK_WORKER());
                     data.put("dataPkSubjectMatter", listSubjectMatters.get(i).getPK_SUBJECT_MATTER());
                     data.put("dataNameSubjectMatter", listSubjectMatters.get(i).getFL_NAME_SUBJECT_MATTER());
+                    data.put("dataNameWorker", listSubjectMatters.get(i).getFL_NAME_WORKER());
                     data.put("dataIntegradora", listSubjectMatters.get(i).getFL_INTEGRADORA());
                     data.put("dataFkStudyPlan", listSubjectMatters.get(i).getFK_STUDY_PLAN());
                     data.put("dataNamePlan", listSubjectMatters.get(i).getFL_NAME_PLAN());

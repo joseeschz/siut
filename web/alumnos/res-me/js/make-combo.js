@@ -1222,6 +1222,7 @@ function createDropDownSubjectMatterByStudent(selector, update){
             datafields: [
                 { name: 'dataNameSubjectMatter' },
                 { name: 'dataPkSubjectMatter' },
+                { name: 'dataNameWorker' },
                 { name: 'dataPkTeacher' }
             ],
             root: "__ENTITIES",

@@ -28,6 +28,7 @@
                 { name: 'index'},
                 { name: 'Pk_matter'},
                 { name: 'Materias'},
+                { name: 'Profesor'},
                 { name: 'MateriasAbre'},
                 { name: 'Evaluado'},
                 { name: 'Obtenido'},
@@ -59,6 +60,9 @@
                                     <span class='sr-only'>"+records[i].Evaluado+"% Complete</span>\n\
                                 </div>\n\
                             </div>\n\
+                            <span class='cortar'>\n\
+                                "+records[i].Profesor+"\n\
+                            </span>\n\
                         </a>\n\
                     </li>";
                 }
@@ -88,6 +92,7 @@
                     <div class='inner'>\n\
                         <h4>"+data[i].Obtenido+"% de "+data[i].Evaluado+"% </h4>\n\
                         <p class='cortar' style='width:80%'>"+data[i].Materias+"</p>\n\
+                        <p class='cortar' style='width:80%'>"+data[i].Profesor+"</p>\n\
                     </div>\n\
                     <div class='icon'>\n\
                         <i class='ion ion-stats-bars'></i>\n\

@@ -14,7 +14,7 @@ public class activitiesToGroupModel extends workPlanningModel{
     String FL_NUM="";
     String FL_EVALUATED="";
     String FL_NAME_ACTIVITY="";
-    double FL_VALUE_ACTIVITY=0; 
+    String FL_VALUE_ACTIVITY=""; 
     String FL_VALUE_ACTIVITY_PERCENT="";
 
     public String getPK_ACTIVITY() {
@@ -49,11 +49,11 @@ public class activitiesToGroupModel extends workPlanningModel{
         this.FL_NAME_ACTIVITY = FL_NAME_ACTIVITY;
     }
 
-    public double getFL_VALUE_ACTIVITY() {
+    public String getFL_VALUE_ACTIVITY() {
         return FL_VALUE_ACTIVITY;
     }
 
-    public void setFL_VALUE_ACTIVITY(double FL_VALUE_ACTIVITY) {
+    public void setFL_VALUE_ACTIVITY(String FL_VALUE_ACTIVITY) {
         this.FL_VALUE_ACTIVITY = FL_VALUE_ACTIVITY;
     }
 

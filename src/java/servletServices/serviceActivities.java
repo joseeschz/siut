@@ -96,7 +96,8 @@ public class serviceActivities extends HttpServlet {
                     }
 
                     String img = "<img class='img"+i+"' height='15' width='15' src='"+imgurl+"'/>";
-                    String rowHTML = listActivity.get(i).getFL_NUM()+" "+img+" "+ (listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase();
+                    String right = "<img class='img"+i+"' height='15' width='15' src='../content/pictures-system/right.png'/>";
+                    String rowHTML = right+" "+listActivity.get(i).getFL_VALUE_ACTIVITY()+" | "+img+" "+ listActivity.get(i).getFL_NUM()+" - "+(listActivity.get(i).getFL_NAME_ACTIVITY()).toUpperCase();
                     data.put("id", listActivity.get(i).getPK_ACTIVITY());
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkActivity", listActivity.get(i).getPK_ACTIVITY());
@@ -210,7 +211,7 @@ public class serviceActivities extends HttpServlet {
                 int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                 int pkScaleEvaluation = Integer.parseInt(request.getParameter("pkScaleEvaluation"));
                 String nameActivity=request.getParameter("nameActivity");
-                double valueActivity=Double.parseDouble(request.getParameter("valueActivity"));
+                String valueActivity=(request.getParameter("valueActivity"));
                 String descriptionActivity=request.getParameter("descriptionActivity");
                 dataActivitiesToGroup.setFL_NAME_ACTIVITY(nameActivity);
                 dataActivitiesToGroup.setFL_VALUE_ACTIVITY(valueActivity);
@@ -267,7 +268,7 @@ public class serviceActivities extends HttpServlet {
                     int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                     int pkScaleEvaluation = Integer.parseInt(request.getParameter("pkScaleEvaluation"));
                     String nameActivity=request.getParameter("nameActivity");
-                    double valueActivity=Double.parseDouble(request.getParameter("valueActivity"));
+                    String valueActivity=(request.getParameter("valueActivity"));
                     String descriptionActivity=request.getParameter("descriptionActivity");
                     dataActivitiesToGroup.setPK_ACTIVITY(pkActivity);
                     dataActivitiesToGroup.setFL_NAME_ACTIVITY(nameActivity);
