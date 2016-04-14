@@ -547,27 +547,7 @@ function createDropDownRol(selector){
         width: 180                
     }).css("display","inline-block");
 }
-function createDropDownEvaluationType(selector){
-    var sourceRol =[
-        {"dataNameType":"PRIMER PARCIAL","dataValueType":"1"},
-        {"dataNameType":"SEGUNDO PARCIAL","dataValueType":"2"},
-        {"dataNameType":"PROMEDIO","dataValueType":"3"},
-        {"dataNameType":"REGULARIZACIÓN","dataValueType":"4"},
-        {"dataNameType":"GLOBAL","dataValueType":"5"}
-    ];
-    $(selector).jqxDropDownList({
-        theme: theme,
-        filterable: false, 
-        autoDropDownHeight: true,
-        placeHolder: "SELECCIONAR",
-        selectedIndex: 0, 
-        source: sourceRol, 
-        displayMember: "dataNameType", 
-        valueMember: "dataValueType",
-        height: 26, 
-        width: 150               
-    }).css("display","inline-block");
-}
+
 function createDropDownEvaluationTypeByActivity(selector){
     var sourceRol =[
         {"dataNameType":"PRIMER PARCIAL","dataValueType":"1"},
@@ -628,7 +608,8 @@ function createDropDownScaleEvaluationBloqued(selector,pkPeriod,pkSubjectMatter,
         id: "id",
         datafields: [
             { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' }
+            { name: 'dataNameScale' },
+            { name: 'dataMaxValue' }
         ],
         url: "../serviceScaleEvaluation?view=comboBloqued&&pkPeriod="+pkPeriod+"&&pkSubjectMatter="+pkSubjectMatter+"",
         async: false
@@ -659,7 +640,8 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
         id: "id",
         datafields: [
             { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' }
+            { name: 'dataNameScale' },
+            { name: 'dataMaxValue' }
         ],
         url: "http://148.223.215.19/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
         async: false

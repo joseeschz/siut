@@ -35,6 +35,7 @@ public class scaleEvaluationControl {
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
                     listStudyLevel.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
                     listStudyLevel.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));
+                    listStudyLevel.setFL_TYPE_SCALE(res.getInt("FL_TYPE_SCALE"));
                     list.add(listStudyLevel);
                 }
                 res.close();
@@ -57,6 +58,7 @@ public class scaleEvaluationControl {
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
                     listStudyLevel.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
                     listStudyLevel.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));
+                    listStudyLevel.setFL_TYPE_SCALE(res.getInt("FL_TYPE_SCALE"));
                     list.add(listStudyLevel);
                 }
                 res.close();
@@ -79,6 +81,7 @@ public class scaleEvaluationControl {
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
                     listStudyLevel.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
                     listStudyLevel.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));
+                    listStudyLevel.setFL_TYPE_SCALE(res.getInt("FL_TYPE_SCALE"));
                     list.add(listStudyLevel);
                 }
                 res.close();
@@ -101,6 +104,7 @@ public class scaleEvaluationControl {
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
                     listStudyLevel.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));
                     listStudyLevel.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));
+                    listStudyLevel.setFL_TYPE_SCALE(res.getInt("FL_TYPE_SCALE"));
                     list.add(listStudyLevel);
                 }
                 res.close();

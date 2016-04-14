@@ -6,6 +6,7 @@
 package servletServices;
 
 import control.calificationControl;
+import control.evaluationTypeControl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.calificationModel;
+import model.evaluationTypeModel;
 import model.propetiesTableModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -72,71 +74,12 @@ public class serviceCalification extends HttpServlet {
                     out.print(principal);
                     out.flush(); 
                     out.close();
-                }else if(request.getParameter("view").equals("recordsCalificationsAverage")){
+                }else if(request.getParameter("view").equals("recordsCalifications")){
                     int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
                     int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                     int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
-                    ArrayList<calificationModel> listStudents=new calificationControl().SelectCalificationRecordsAverage(fkGroup, fkMatter, fkPeriod);
-                    JSONArray principal = new JSONArray();
-                    JSONObject settings = new JSONObject();
-                    JSONArray content = new JSONArray();
-                    settings.put("__entityModel","Students"); 
-                    for(int i=0;i<listStudents.size();i++){
-                        JSONObject datos = new JSONObject();
-                        datos.put("id", i+1);
-                        datos.put("dataProgresivNumber", i+1);
-                        datos.put("dataPkCalification", listStudents.get(i).getPK_CALIFICATION());
-                        datos.put("dataEnrollment", listStudents.get(i).getFL_ENROLLMENT());
-                        datos.put("dataFkStudent", listStudents.get(i).getFK_STUDENT());
-                        datos.put("dataStudentName", listStudents.get(i).getFL_NAME());
-                        datos.put("dataCalificationBe", listStudents.get(i).getFL_CALIFICATION_BE());
-                        datos.put("dataCalificationKnow", listStudents.get(i).getFL_CALIFICATION_KNOW());
-                        datos.put("dataCalificationDo", listStudents.get(i).getFL_CALIFICATION_DO());
-                        datos.put("dataLetter", listStudents.get(i).getFL_LETTER());
-                        datos.put("dataAvg", listStudents.get(i).getFL_AVG());
-                        content.add(datos); 
-                    }
-                    settings.put("__ENTITIES", content);
-                    principal.add(settings);
-                    response.setContentType("application/json"); 
-                    out.print(principal);
-                    out.flush(); 
-                    out.close();
-                }else if(request.getParameter("view").equals("recordsCalificationsRegula")){
-                    int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
-                    int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
-                    int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
-                    ArrayList<calificationModel> listStudents=new calificationControl().SelectCalificationRecordsRegularization(fkGroup, fkMatter, fkPeriod);
-                    JSONArray principal = new JSONArray();
-                    JSONObject settings = new JSONObject();
-                    JSONArray content = new JSONArray();
-                    settings.put("__entityModel","Students"); 
-                    for(int i=0;i<listStudents.size();i++){
-                        JSONObject datos = new JSONObject();
-                        datos.put("id", i+1);
-                        datos.put("dataProgresivNumber", i+1);
-                        datos.put("dataPkCalification", listStudents.get(i).getPK_CALIFICATION());
-                        datos.put("dataEnrollment", listStudents.get(i).getFL_ENROLLMENT());
-                        datos.put("dataFkStudent", listStudents.get(i).getFK_STUDENT());
-                        datos.put("dataStudentName", listStudents.get(i).getFL_NAME());
-                        datos.put("dataCalificationBe", listStudents.get(i).getFL_CALIFICATION_BE());
-                        datos.put("dataCalificationKnow", listStudents.get(i).getFL_CALIFICATION_KNOW());
-                        datos.put("dataCalificationDo", listStudents.get(i).getFL_CALIFICATION_DO());
-                        datos.put("dataLetter", listStudents.get(i).getFL_LETTER());
-                        datos.put("dataAvg", listStudents.get(i).getFL_AVG());
-                        content.add(datos); 
-                    }
-                    settings.put("__ENTITIES", content);
-                    principal.add(settings);
-                    response.setContentType("application/json"); 
-                    out.print(principal);
-                    out.flush(); 
-                    out.close();
-                }else if(request.getParameter("view").equals("recordsCalificationsGlobal")){
-                    int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
-                    int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
-                    int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
-                    ArrayList<calificationModel> listStudents=new calificationControl().SelectCalificationRecordsGlobal(fkGroup, fkMatter, fkPeriod);
+                    int pkTypeEvaluation = Integer.parseInt(request.getParameter("pkTypeEvaluation"));
+                    ArrayList<calificationModel> listStudents=new calificationControl().SelectCalificationRecordsAverage(fkGroup, fkMatter, fkPeriod, pkTypeEvaluation);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
@@ -183,6 +126,29 @@ public class serviceCalification extends HttpServlet {
                     out.close();
                 }
             }
+            if(request.getParameter("getTypeEvaluations")!=null){
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                ArrayList<evaluationTypeModel> listItems=new evaluationTypeControl().SelectEvaluationType("all",fkGroup, fkMatter, fkPeriod);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__entityModel","TypeEvaluations"); 
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("displayMember", listItems.get(i).getFL_NAME_TYPE());
+                    datos.put("valueMember", listItems.get(i).getPK_EVALUATION_TYPE());
+                    datos.put("status", listItems.get(i).getFL_STATUS());
+                    content.add(datos);
+                }
+                settings.put("__ENTITIES", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("setObservations")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
@@ -208,13 +174,39 @@ public class serviceCalification extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().CloseWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
             }
+            if(request.getParameter("openWorkPlanning")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                response.setContentType("text/html;charset=UTF-8"); 
+                out.print(new calificationControl().OpenWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
+            }
             if(request.getParameter("isCloseWorkPlanning")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
-                response.setContentType("text/html;charset=UTF-8"); 
-                out.print(new calificationControl().IsCloseWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
+                String closed =  new calificationControl().IsCloseWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod);
+                ArrayList<evaluationTypeModel> listItems=new evaluationTypeControl().SelectEvaluationType("all",fkGroup, fkMatter, fkPeriod);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__entityModel","TypeEvaluations"); 
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("displayMember", listItems.get(i).getFL_NAME_TYPE());
+                    datos.put("valueMember", listItems.get(i).getPK_EVALUATION_TYPE());
+                    datos.put("status", listItems.get(i).getFL_STATUS());
+                    content.add(datos);
+                }
+                settings.put("closed", closed);
+                settings.put("items", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();          
             }
             if(request.getParameter("table")!=null){
                 int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));

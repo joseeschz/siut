@@ -16,11 +16,11 @@
         int pt_group = Integer.parseInt(request.getParameter("pt_group"));
         int pt_matter = Integer.parseInt(request.getParameter("pt_matter"));
         int pt_period = Integer.parseInt(request.getParameter("pt_period"));
-        String pt_type_report = request.getParameter("pt_type_report");
+        int pt_evaluation_type = Integer.parseInt(request.getParameter("pt_evaluation_type"));
         session.setAttribute("pt_group", pt_group);
         session.setAttribute("pt_matter", pt_matter);
         session.setAttribute("pt_period", pt_period);
-        session.setAttribute("pt_type_report", pt_type_report);
+        session.setAttribute("pt_evaluation_type", pt_evaluation_type);
     }else{
         //Parametros para realizar la conexión// 
         conectionControl connection=new conectionControl();
@@ -32,7 +32,7 @@
         parameters.put("pt_group", session.getAttribute("pt_group")); 
         parameters.put("pt_matter", session.getAttribute("pt_matter")); 
         parameters.put("pt_period", session.getAttribute("pt_period"));
-        parameters.put("pt_type_report", session.getAttribute("pt_type_report"));
+        parameters.put("pt_evaluation_type", session.getAttribute("pt_evaluation_type"));
         //Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)//
 //        
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, connection.getConexion()); 

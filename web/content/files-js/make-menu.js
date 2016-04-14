@@ -120,11 +120,7 @@ $(document).ready(function () {
     //*Splitter*//
     /*Este codigo hace un div splitter*/
     $("#jqxSplitter").jqxSplitter({theme:theme,height: "100%", width: "100%", panels: [{ size: 250}] });
-    $('#jqxTree').jqxTree({theme:theme, height: '100%', width: '100%',allowDrag: false});
-    $('#jqxTree').css('visibility', 'visible');
-    $('#jqxTree').on('select', function (event) {
-       // $("#ContentPanel").html("<div style='margin: 10px;'>" + event.args.element.id + "</div>");
-    });
+
     //->Muenu<-//
     // Create jqxExpander
     $('#jqxExpander').jqxExpander({theme:theme, showArrow: false, toggleMode: 'none', width: '100%', height: '100%'});
@@ -155,15 +151,17 @@ $(document).ready(function () {
     // specifies the mapping between the 'text' and 'label' fields.  
     var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label', icon: 'icon'}]);
     $('#jqxTree').jqxTree({ 
-        source: records, 
+        theme:theme, 
+        height: '100%',
         width: '100%',
+        allowDrag: false,
+        source: records, 
         toggleMode: 'click'
-    });
-    $('#jqxTree').jqxTree('selectItem', $("#1")[0]);
+    }).css('visibility', 'visible');
     //menu-load-state
+    var itemNew;
     var dir;
     var itemClickedId;
-    var itemClickedText;
     var itemParentId;
     var itemChildrenId;
     var dirCookie = $.cookie('dir');
@@ -183,35 +181,21 @@ $(document).ready(function () {
         $.cookie('itemClickedId',"25");
         location="/admin";
     });
-    if(dirCookie==undefined){
-        $.cookie('dir','item-start/start.jsp');
-        dirCookie=$.cookie('dir');
-        $("#ContentPanel").load("../content/data-jsp/views-external/item-start/start.jsp?lockPage=false");
+    var isParent = $.cookie('isParent') || true;
+    var isChildren = $.cookie('isChildren') || false;
+    if($.cookie('isParent') || $.cookie('dir')===""){        
+        $('#jqxTree').jqxTree('selectItem', $("#"+$.cookie('itemParentId')||1)[0]);
+        $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+$.cookie('itemParentId')+"");
+        $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);    
+    }else{
+         $("#ContentPanel").load("../content/data-jsp/views-external/item-start/start.jsp?lockPage=false");
         $('#jqxTree').jqxTree('selectItem', $("#1")[0]);
-        $.cookie('itemParentId',"undefined");
-        $.cookie('itemClickedId',"1");
     }
-    if(dirCookie==="undefined"){
-        dirCookie=$.cookie('dir');
-        itemClickedId=$.cookie('itemClickedId');
-        itemClickedText=$.cookie('itemClickedText');
-        $('#jqxTree').jqxTree('selectItem', $("#"+itemClickedId)[0]);
-        $.cookie('itemParentId',"undefined");
-        $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+itemClickedId+"");
-    }else if(dirCookie==="null"){
-        $.cookie('dir','item-start/start.jsp');
-        $("#ContentPanel").load("../content/data-jsp/views-external/item-start/start.jsp?lockPage=false");
-        $('#jqxTree').jqxTree('selectItem', $("#1")[0]);
-        $.cookie('itemParentId',"undefined");
-        $.cookie('itemClickedId',"1");
-    }
-    else{
-        itemParentId=$.cookie('itemParentId');
-        itemClickedId=$.cookie('itemClickedId');
-        $('#jqxTree').jqxTree('selectItem', $("#"+itemClickedId)[0]);  
-        $("#jqxTree").jqxTree('expandItem', $("#"+itemParentId)[0]);
+    if(isChildren && $.cookie('dir')!==""){
+        $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);  
+        $('#jqxTree').jqxTree('selectItem', $("#"+$.cookie('itemClickedId')||1)[0]); 
         $.ajax({
-            url:"../content/data-jsp/views-external/"+dirCookie+"?lockPage=false",
+            url:"../content/data-jsp/views-external/"+$.cookie('dir')+"?lockPage=false",
             async: true,
             beforeSend: function (xhr) {
                 $("#load-page-external").jqxWindow('open');
@@ -224,76 +208,43 @@ $(document).ready(function () {
                 },'1000');
             },
             error: function (jqXHR, textStatus, errorThrown) {
-
+                setTimeout(function (){
+                    $(".hidenTab").show();
+                    $("#load-page-external").jqxWindow('close');
+                },'1000');
             }
         });
-    }
-    var itemOld = $.cookie('itemNew');
+    }   
+    
     $('#jqxTree').on('select',function (event){
         var args = event.args;
-//        var item = $('#jqxTree').jqxTree('getItem', args.element);
-//        var label = item.label; 
-//        $.cookie('itemNew',$(this).text());
-    });
-    //menu-click´s
-    $(".itemsMenu").parent().on("click",function (){   
-        $("div").off("valueChanged");
-        dir = $(this).children("span").attr("dir");
-        //alert(dir);
-        dir = dir.split(',');
-        if(dir[1]!=="undefined"){
-            itemParentId = $(this).parent().parent().parent().attr("id");
-            itemChildrenId = $(this).parent().attr("id");
-            itemClickedId=$(this).parent().attr("id");
-            $.cookie('dir',dir[1]);
-            $.cookie('itemNew',$(this).text());  
+        if($(args.element).children().children("span").attr("parent")==="-1" || $(args.element).children().children("span").attr("dir")===""){
+            isParent = true;
+            $.removeCookie("isChildren");
+            itemParentId=$(args.element).attr("id");
+            itemChildrenId=$(args.element).children().children("span").attr("parent");
+            itemClickedId=$(args.element).attr("id");
+            itemNew = $(args.element).text();
+            dir = $(args.element).children().children("span").attr("dir");            
+            $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+itemClickedId+"");     
+            $.cookie('isParent',isParent);
+            $.cookie('dir',dir);
+            $.cookie('itemNew',itemNew);  
             $.cookie('itemParentId',itemClickedId);
             $.cookie('itemClickedId',itemClickedId);
         }else{
-            //Es parent por default
-            itemParentId = $(this).parent().attr("id");
-            itemClickedId=$(this).parent().attr("id");
-            itemClickedText=$(this).text();
-            $("#jqxTree").jqxTree('expandItem', $("#"+itemParentId)[0]);
-            $.cookie('itemParentId',itemParentId);
-            $.cookie('itemClickedId',itemClickedId);
-            $.cookie('itemClickedText',itemClickedText);
-            $.cookie('dir',dir[1]);
-            $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+itemClickedId+"");
+            $.cookie('isChildren', true);
+            $.removeCookie("isParent");
+            itemParentId=$(args.element).attr("id");
+            itemChildrenId=$(args.element).children().children("span").attr("parent");
+            itemClickedId=$(args.element).attr("id");
+            itemNew = $(args.element).text();
+            dir = $(args.element).children().children("span").attr("dir");  
+            $.cookie('dir',dir);
+            $.cookie('itemClickedId',itemClickedId); 
+            location="/admin";
         }
-        if($.cookie('itemNew')!==itemOld){
-            $.cookie('tabActive',0);
-            itemOld=$.cookie('itemNew');
-            if(dir[1]!=="undefined"){
-                //alert(dir[1]);
-                $.cookie('dir',dir[1]);
-                location="/admin";
-//                $.ajax({
-//                    url:"../content/data-jsp/views-external/"+dir[1]+"?lockPage=false",
-//                    async: true,
-//                    beforeSend: function (xhr) {
-//                        if(dir[0]!=="undefined"){
-//                            $("#load-page-external").jqxWindow('open');
-//                        }
-//                    },
-//                    success: function (data, textStatus, jqXHR) {
-//                        $("#ContentPanel").html(data);
-//                        if(dir[0]!=="undefined"){
-//                            setTimeout(function (){
-//                                $(".hidenTab").show();
-//                                $("#load-page-external").jqxWindow('close');
-//                            },'1000');
-//                        }
-//                    },
-//                    error: function (jqXHR, textStatus, errorThrown) {
-//
-//                    }
-//                });
-            }
-        } 
-        itemChildrenId=undefined;
-        itemClickedId=undefined;
-        itemParentId=undefined;
     });
+    
 });
 

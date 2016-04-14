@@ -46,18 +46,7 @@ if(session.getAttribute("logueado") != null){%>
                     $('#okWarning').focus();
                 }
             });
-            var tabActive;
-            var selectedTab = $.cookie('tabActive');
-            $('#jqxTabs').on('selected', function (event) { 
-                selectedTab = event.args.item;
-                $.cookie('tabActive',selectedTab);
-            }); 
-            if(selectedTab!==undefined){
-                tabActive = selectedTab;
-            }else{
-                tabActive=0;
-            }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:"100%", scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme, width:'99.9%',height:"100%", scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#updateDataPefilTab").load("../content/data-jsp/views-external/item-adjustment/flange/acount/acount-flange/update-data.jsp");
         });
     </script>

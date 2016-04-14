@@ -16,19 +16,19 @@
 	<parameter name="pt_period" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="pt_type_report" class="java.lang.String">
-		<defaultValueExpression><![CDATA["byMatterRecordsCalificationsRegularization"]]></defaultValueExpression>
+	<parameter name="pt_evaluation_type" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_CALIFICATIONS_BY_TEACHER`($P{pt_type_report}, null, $P{pt_group}, $P{pt_matter}, $P{pt_period})]]>
+		<![CDATA[CALL `GET_CALIFICATIONS_BY_TEACHER`("byMatterRecordsCalifications", null, $P{pt_group}, $P{pt_matter}, $P{pt_period}, $P{pt_evaluation_type})]]>
 	</queryString>
-	<field name="FL_NUMBER" class="java.lang.String"/>
+	<field name="FL_NUMBER" class="java.lang.Object"/>
 	<field name="FK_LEVEL" class="java.lang.Long">
-		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
+		<fieldDescription><![CDATA[ID NIVEL DE ESTUDIO]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
-		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_GROUP" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -41,23 +41,29 @@
 	</field>
 	<field name="EVALUATION_TYPE" class="java.lang.Long"/>
 	<field name="PK_STUDENT" class="java.lang.Long">
-		<fieldDescription><![CDATA[Este campo es la llave primaria del registro con ella podemos borrar o actualizar algún registro y en su caso podremos realizar con este relaciones externas entre tablas]]></fieldDescription>
+		<fieldDescription><![CDATA[ID UNICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
 	</field>
-	<field name="FL_COUNT" class="java.lang.Double"/>
+	<field name="FL_COUNT" class="java.lang.Object"/>
 	<field name="FL_ENROLLMENT" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
 	</field>
 	<field name="FL_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_CALIFICATION_BE" class="java.lang.String"/>
-	<field name="FL_CALIFICATION_KNOW" class="java.lang.String"/>
-	<field name="FL_CALIFICATION_DO" class="java.lang.String"/>
+	<field name="FL_CALIFICATION_BE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_CALIFICATION_KNOW" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_CALIFICATION_DO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FL_OBSERVATIONS" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_CALIFICATION_TOTAL" class="java.lang.String"/>
 	<field name="FL_LETTER" class="java.lang.String"/>
+	<field name="FL_CALIFICATION_TOTAL" class="java.lang.String"/>
 	<field name="FK_PERIOD" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
