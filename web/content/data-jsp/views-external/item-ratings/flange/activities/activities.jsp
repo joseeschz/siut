@@ -13,12 +13,7 @@ if(session.getAttribute("logueado") != null){%>
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
             }); 
-            if(selectedTab!==undefined){
-                tabActive = selectedTab;
-            }else{
-                tabActive=0;
-            }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false });
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false });
             $('#averageTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-average.jsp');
 //            $('#regularizationTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-regularization.jsp');
 //            $('#globalTab').load('../content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-global.jsp');
@@ -27,22 +22,10 @@ if(session.getAttribute("logueado") != null){%>
     <div id='jqxTabs'>
         <ul>
             <li class="jqxTabsTitle" dir="average-cal">Actividades Programadas</li>
-            <li class="jqxTabsTitle" dir="regula-cal">Regularización</li>
-            <li class="jqxTabsTitle" dir="global-cal">Global</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
                 <div id="averageTab" style="padding: 20px;"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="regularizationTab" style="padding: 20px;"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="globalTab" style="padding: 20px;"></div>
             </div>
         </div>
     </div>

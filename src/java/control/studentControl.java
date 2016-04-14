@@ -28,11 +28,10 @@ public class studentControl {
         studentModel obj = new studentModel();
         obj.setFL_MAIL("karlos.antoni-1994@hotmail.com");
         obj.setFL_ENROLLMENT("UTS12S-003661");
-        ArrayList<studentModel> listStudents2=new studentControl().SelectRememberPassword(obj);
-        for(int i=0;i<listStudents2.size();i++){
-            System.out.println(listStudents2.get(i).getFL_NAME());
+        ArrayList<propetiesTableModel> listColumns=new studentControl().SelectReportColums();
+        for(int i=0;i<listColumns.size();i++){
+            System.out.println(listColumns.get(i).getFL_TEXT());
         }
-        //System.out.print(new studentControl().UpdateStudent(819, "fl_above_average", "10.0"));
     }
     public ArrayList<propetiesTableModel> SelectReportColums(){
         ArrayList<propetiesTableModel> list=new ArrayList<>();

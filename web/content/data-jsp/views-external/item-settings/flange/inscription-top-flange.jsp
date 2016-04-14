@@ -13,12 +13,7 @@ if(session.getAttribute("logueado") != null){%>
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
             }); 
-            if(selectedTab!==undefined){
-                tabActive = selectedTab;
-            }else{
-                tabActive=0;
-            }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#goalsInscriptionsTab").load("../content/data-jsp/views-external/item-settings/flange/inscription-top-flange/inscription-top.jsp");
         });
     </script>

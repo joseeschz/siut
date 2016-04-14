@@ -125,7 +125,7 @@
                     $("#tableQualifications").jqxGrid({
                         source: gridAdapter,
                         columns: columns,
-                        width: 750,
+                        width: 900,
                         height: 350,
                         ready:function(){
                             var rows2 = dataExternal[1].rows;
@@ -209,9 +209,9 @@
                 source: dataAdapterDescription,
                 columns: [
                     { text: 'Nombre', align: 'center', dataField: 'text', width: 100 },
-                    { text: 'Descripción',align: 'center', dataField: 'textExtends', width: 400 }
+                    { text: 'Descripción',align: 'center', dataField: 'textExtends'}
                 ],
-                width: 280,
+                width: 900,
                 height: 250
             });
         }

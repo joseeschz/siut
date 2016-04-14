@@ -125,7 +125,7 @@
                     $("#tableQualifications").jqxGrid({
                         source: gridAdapter,
                         columns: columns,
-                        width: 750,
+                        width: 900,
                         height: 350,
                         ready:function(){
                             var rows2 = dataExternal[1].rows;

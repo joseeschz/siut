@@ -50,9 +50,6 @@
                     if(newArr[i].resizable){
                         newArr[i].resizable = eval(newArr[i].resizable);
                     }
-                    if(newArr[i].resizable){
-                        newArr[i].resizable = eval(newArr[i].resizable);
-                    }
                     if(newArr[i].sortable){
                         newArr[i].sortable = eval(newArr[i].sortable);
                     }
@@ -71,7 +68,6 @@
                     if(newArr[i].filterable){
                         newArr[i].filterable = eval(newArr[i].filterable);
                     }
-                    
                 }
                 columns=newArr;
             }

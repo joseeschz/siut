@@ -39,6 +39,7 @@ public class activitiesToGroupControl {
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
                     listActivitiesToGroup.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesToGroup.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                    listActivitiesToGroup.setFL_TYPE_SCALE(res.getInt("FL_TYPE_SCALE"));
                     list.add(listActivitiesToGroup);
                 }
                 res.close();
@@ -86,7 +87,7 @@ public class activitiesToGroupControl {
     public ArrayList<activitiesToGroupModel> SelectActivityToGroup(int pkActivity){
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('byPk', null, null, null, "+pkActivity+", null)";
+            String procedure="CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('byPk', null, null, null, null, "+pkActivity+", null)";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();

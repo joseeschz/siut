@@ -547,26 +547,41 @@ function createDropDownRol(selector){
         width: 180                
     }).css("display","inline-block");
 }
-function createDropDownEvaluationType(selector){
-    var sourceRol =[
-        {"dataNameType":"PRIMER PARCIAL","dataValueType":"1"},
-        {"dataNameType":"SEGUNDO PARCIAL","dataValueType":"2"},
-        {"dataNameType":"PROMEDIO","dataValueType":"3"},
-        {"dataNameType":"REGULARIZACIÓN","dataValueType":"4"},
-        {"dataNameType":"GLOBAL","dataValueType":"5"}
-    ];
+function createDropDownEvaluationType(selector, data){
+    var source ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'displayMember' },
+            { name: 'valueMember' },
+            { name: 'status' }
+        ],
+        data:data,
+        url: "../serviceCalification?getTypeEvaluations",
+        async: false
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    
     $(selector).jqxDropDownList({
         theme: theme,
+        selectedIndex: 0, 
         filterable: false, 
         autoDropDownHeight: true,
+        filterPlaceHolder: "Buscar",
         placeHolder: "SELECCIONAR",
-        selectedIndex: 0, 
-        source: sourceRol, 
-        displayMember: "dataNameType", 
-        valueMember: "dataValueType",
-        height: 26, 
-        width: 150               
+        source: dataAdapter, 
+        displayMember: "displayMember", 
+        valueMember: "valueMember",
+        width: 150                
     }).css("display","inline-block");
+    
+    var items = $(selector).jqxDropDownList('getItems'); 
+    for(var i=0; i<items.length; i++){
+        if(items[i].originalItem.status==="-1"){
+            $(selector).jqxDropDownList('disableItem', items[i] ); 
+        }        
+    }
 }
 function createDropDownEvaluationTypeByActivity(selector){
     var sourceRol =[
@@ -628,7 +643,9 @@ function createDropDownScaleEvaluationBloqued(selector,pkPeriod,pkSubjectMatter,
         id: "id",
         datafields: [
             { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' }
+            { name: 'dataNameScale' },
+            { name: 'dataMaxValue' },
+            { name: 'dataTypeEvaluation' }
         ],
         url: "../serviceScaleEvaluation?view=comboBloqued&&pkPeriod="+pkPeriod+"&&pkSubjectMatter="+pkSubjectMatter+"",
         async: false
@@ -660,7 +677,9 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
         crossDomain: true,
         datafields: [
             { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' }
+            { name: 'dataNameScale' },
+            { name: 'dataMaxValue' },
+            { name: 'dataTypeEvaluation' }
         ],
         url: "../serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
         async: false
@@ -685,6 +704,11 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
     }
 }
 function createDropDownActivities(selector, filterable, update){
+    var renderer = function (index, label, value) {
+        var item = $(selector).jqxDropDownList('getItem', index ); 
+        var label = label+"<br>Val: "+item.originalItem.dataValueActivity;
+        return label;
+    };
     var sourceCareer ={
         datatype: "json",
         type: "POST",
@@ -694,7 +718,8 @@ function createDropDownActivities(selector, filterable, update){
             { name: 'dataPkActivity' },
             { name: 'dataNameActivity' },
             { name: 'dataDescriptActivity'},
-            { name: 'dataEvaluatedActivityByGroup'}
+            { name: 'dataEvaluatedActivityByGroup'},
+            { name: 'dataValueActivity'}
         ],
         url: "../serviceActivities?view",
         data:{
@@ -725,10 +750,12 @@ function createDropDownActivities(selector, filterable, update){
         $(selector).jqxDropDownList({
             theme: theme,
             selectedIndex: 0, 
-            filterable: false, 
-            autoDropDownHeight: true,
+            filterable: true, 
+            searchMode: 'contains',
+            autoDropDownHeight: false,
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
+            renderer: renderer,
             source: dataAdapterCareer, 
             displayMember: "dataDescriptActivity", 
             valueMember: "dataPkActivity",

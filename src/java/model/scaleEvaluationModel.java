@@ -13,6 +13,7 @@ public class scaleEvaluationModel {
     int PK_SCALE_EVALUATION=0;
     String FL_NAME_SCALE="";
     double FL_MAX_VALUE=0;
+    int FL_TYPE_SCALE=0;
 
     public int getPK_SCALE_EVALUATION() {
         return PK_SCALE_EVALUATION;
@@ -36,5 +37,13 @@ public class scaleEvaluationModel {
 
     public void setFL_MAX_VALUE(double FL_MAX_VALUE) {
         this.FL_MAX_VALUE = FL_MAX_VALUE;
+    }
+
+    public int getFL_TYPE_SCALE() {
+        return FL_TYPE_SCALE;
+    }
+
+    public void setFL_TYPE_SCALE(int FL_TYPE_SCALE) {
+        this.FL_TYPE_SCALE = FL_TYPE_SCALE;
     }
 }

@@ -35,12 +35,7 @@ if(session.getAttribute("logueado") != null){%>
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
             }); 
-            if(selectedTab!==undefined){
-                tabActive = selectedTab;
-            }else{
-                tabActive=0;
-            }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#qualificationsTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-average.jsp");
 //            $("#regulaTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-regula.jsp");
 //            $("#globlalTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-global.jsp");
@@ -65,23 +60,11 @@ if(session.getAttribute("logueado") != null){%>
     
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="update-data">Promedio</li>
-            <li class="jqxTabsTitle" dir="regula-data">Regularización</li>
-            <li class="jqxTabsTitle" dir="global-data">Global</li>
+            <li class="jqxTabsTitle" dir="update-data">Reporte</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
                 <div id="qualificationsTab" style="padding: 20px;"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="regulaTab" style="padding: 20px;"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="globlalTab" style="padding: 20px;"></div>
             </div>
         </div>
     </div>

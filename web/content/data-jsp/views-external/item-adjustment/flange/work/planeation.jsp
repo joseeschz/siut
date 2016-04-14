@@ -30,12 +30,7 @@ if(session.getAttribute("logueado") != null){%>
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
             }); 
-            if(selectedTab!==undefined){
-                tabActive = selectedTab;
-            }else{
-                tabActive=0;
-            }
-            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
+            $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             $("#newWorkTab").load("../content/data-jsp/views-external/item-adjustment/flange/work/planeation-flange/work.jsp");
             $("#assingGroup").load("../content/data-jsp/views-external/item-adjustment/flange/work/planeation-flange/to-group.jsp");
         });

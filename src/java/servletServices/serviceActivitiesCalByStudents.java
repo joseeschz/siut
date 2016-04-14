@@ -6,6 +6,7 @@
 package servletServices;
 
 import control.activitiesByStudentsControl;
+import control.calificationControl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -41,13 +42,14 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             if(request.getParameter("view")!=null){
-                if(request.getParameter("view").equals("average")){
+                if(request.getParameter("view").equals("1")){
                     int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                     int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
+                    int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                     int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudents(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
+                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudents(pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, pkPeriod);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
@@ -86,62 +88,85 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     out.print(principal);                    
                     out.flush(); 
                     out.close();
-                }else if(request.getParameter("view").equals("regularization")){
+                }else if(request.getParameter("view").equals("2")){
                     int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                     int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
-                    int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                    int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudentsRegularization(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
+                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudentsRegularization(pkCareer, pkSemester, pkGroup, pkMatter, pkPeriod);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
-                    settings.put("__ActivityByStudent","ActivityByStudent");
-                    for(int i=0;i<listActivity.size();i++){
+                    settings.put("__ActivityByStudent","ActivityByStudent");    
+                    for(int i=0;i<listActivity.size();i++){                        
                         JSONObject data = new JSONObject();
-                        data.put("id", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
+                        data.put("id", listActivity.get(i).getPK_CALIFICATIONS_OF_STUDEN_BY_MATTER());
                         data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkStudent", listActivity.get(i).getFK_STUDENT());
+                        data.put("dataRealized", listActivity.get(i).getFL_REALIZED());
                         data.put("dataEnrollment", listActivity.get(i).getFL_ENROLLMENT());
-                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());
-                        data.put("dataApproved", listActivity.get(i).getFL_APPROVED());
-                        data.put("dataValueObtaniedOld", listActivity.get(i).getFL_VALUE_OBTANIED_OLD());
-                        data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
-                        data.put("dataAcomulatedNow", listActivity.get(i).getFL_ACUMULATED_NOW());
-                        content.add(data); 
+                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());  
+
+                        data.put("dataObtaniedAcumulatedBe", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_BE());  
+                        data.put("dataObtaniedAcumulatedKnow", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_KNOW());
+                        data.put("dataObtaniedAcumulatedDo", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_DO());
+                        data.put("dataObtaniedAcumulatedTotal", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_TOTAL());
+                        
+                        data.put("dataObtaniedRegularizationBe", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_BE());
+                        data.put("dataObtaniedRegularizationKnow", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_KNOW());
+                        data.put("dataObtaniedRegularizationDo", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_DO());
+                        data.put("dataObtaniedRegularizationTotal", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_TOTAL());
+                        
+                        content.add(data);                         
                     }
-                    settings.put("__ENTITIES", content);
-                    principal.add(settings);
+                    settings.put("__ENTITIES", content);                    
+                    principal.add(settings);                    
                     response.setContentType("application/json"); 
-                    out.print(principal);
+                    out.print(principal);                    
                     out.flush(); 
                     out.close();
-                }else if(request.getParameter("view").equals("global")){
+                }else if(request.getParameter("view").equals("3")){
                     int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                     int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
-                    int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
+                    int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudentsGlobal(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
+                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectActivitiesByStudentsGlobal(pkCareer, pkSemester, pkGroup, pkMatter, pkPeriod);
                     JSONArray principal = new JSONArray();
                     JSONObject settings = new JSONObject();
                     JSONArray content = new JSONArray();
-                    settings.put("__ActivityByStudent","ActivityByStudent");
-                    for(int i=0;i<listActivity.size();i++){
+                    settings.put("__ActivityByStudent","ActivityByStudent");    
+                    for(int i=0;i<listActivity.size();i++){                        
                         JSONObject data = new JSONObject();
-                        data.put("id", listActivity.get(i).getPK_ACTIVITY_BY_STUDENT());
+                        data.put("id", listActivity.get(i).getPK_CALIFICATIONS_OF_STUDEN_BY_MATTER());
                         data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkStudent", listActivity.get(i).getFK_STUDENT());
+                        data.put("dataRealized", listActivity.get(i).getFL_REALIZED());
                         data.put("dataEnrollment", listActivity.get(i).getFL_ENROLLMENT());
-                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());
-                        data.put("dataApproved", listActivity.get(i).getFL_APPROVED());
-                        data.put("dataValueObtaniedOld", listActivity.get(i).getFL_VALUE_OBTANIED_OLD());
-                        data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
-                        data.put("dataAcomulatedNow", listActivity.get(i).getFL_ACUMULATED_NOW());
-                        content.add(data); 
+                        data.put("dataNameStudent", listActivity.get(i).getFL_NAME_STUDENT());  
+
+                        data.put("dataObtaniedAcumulatedBe", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_BE());  
+                        data.put("dataObtaniedAcumulatedKnow", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_KNOW());
+                        data.put("dataObtaniedAcumulatedDo", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_DO());
+                        data.put("dataObtaniedAcumulatedTotal", listActivity.get(i).getFL_VALUE_OBTANIED_ACUMULATED_TOTAL());
+                        
+                        data.put("dataObtaniedRegularizationBe", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_BE());
+                        data.put("dataObtaniedRegularizationKnow", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_KNOW());
+                        data.put("dataObtaniedRegularizationDo", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_DO());
+                        data.put("dataObtaniedRegularizationTotal", listActivity.get(i).getFL_VALUE_OBTANIED_REGULARIZATION_TOTAL());
+                        
+                        data.put("dataObtaniedGlobalBe", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_BE());
+                        data.put("dataObtaniedGlobalKnow", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_KNOW());
+                        data.put("dataObtaniedGlobalDo", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_DO());
+                        data.put("dataObtaniedGlobalTotal", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_TOTAL());
+                        
+                        content.add(data);                         
                     }
-                    settings.put("__ENTITIES", content);
-                    principal.add(settings);
+                    settings.put("__ENTITIES", content);                    
+                    principal.add(settings);                    
                     response.setContentType("application/json"); 
-                    out.print(principal);
+                    out.print(principal);                    
                     out.flush(); 
                     out.close();
                 }
@@ -150,9 +175,10 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                     int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
+                    int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
                     int pkActivity = Integer.parseInt(request.getParameter("pkActivity"));
                     int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
-                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectAnyActivityEvaluated(pkCareer, pkSemester, pkGroup, pkActivity, pkPeriod);
+                    ArrayList<activitiesByStudentsModel> listActivity=new activitiesByStudentsControl().SelectAnyActivityEvaluated(pkCareer, pkSemester, pkGroup, pkMatter, pkActivity, pkPeriod);
                     JSONArray content = new JSONArray();                    
                     for(int i=0;i<listActivity.size();i++){                        
                         JSONObject data = new JSONObject();
@@ -282,10 +308,17 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
             }
             if(request.getParameter("update")!=null){
                 int updateTypeEval=Integer.parseInt(request.getParameter("update"));
-                int pkActivityByStudent = Integer.parseInt(request.getParameter("pkActivityByStudent"));
-                double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
-                double valueOptaniedEquivalent = Double.parseDouble(request.getParameter("valueOptaniedEquivalent"));
-                out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(updateTypeEval, pkActivityByStudent, valueOptanied, valueOptaniedEquivalent));
+                if(updateTypeEval==1){
+                    int pkActivityByStudent = Integer.parseInt(request.getParameter("pkActivityByStudent"));
+                    double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
+                    double valueOptaniedEquivalent = Double.parseDouble(request.getParameter("valueOptaniedEquivalent"));
+                    out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, pkActivityByStudent, valueOptanied, valueOptaniedEquivalent));
+                }else{
+                    int pkCalificationByStudent = Integer.parseInt(request.getParameter("pkCalificationByStudent"));
+                    double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
+                    int scaleType = Integer.parseInt(request.getParameter("scaleType"));
+                    out.print(new calificationControl().UpdateCalificationByStudent(pkCalificationByStudent, scaleType, valueOptanied));
+                }     
             }
             if(request.getParameter("delete")!=null){
                 int pkGroup = Integer.parseInt(request.getParameter("pkGroup"));

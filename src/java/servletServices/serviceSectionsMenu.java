@@ -64,8 +64,7 @@ public class serviceSectionsMenu extends HttpServlet {
                             data.put("dataAccessDescription", descriptionAccess);
                             content.add(data);
                         }   break;
-                    case "byPk":
-                    {
+                    case "byPk": {
                         int pkParent= Integer.parseInt(request.getParameter("pkParent"));
                         pt_rol= Integer.parseInt(request.getParameter("userRol"));
                         listSectionMenu=new sectionControl().SelectSection(pkParent, pt_rol);
@@ -75,10 +74,10 @@ public class serviceSectionsMenu extends HttpServlet {
                             data.put("parentid", listSectionMenu.get(i).getPK_PARENT());
                             data.put("text", "<img width=16 src='"+listSectionMenu.get(i).getFL_ICON()+"' /> <span class='itemsMenu2' itemid='"+listSectionMenu.get(i).getFL_ITEM_ID()+"' parent='"+listSectionMenu.get(i).getPK_PARENT()+"'  dir='"+listSectionMenu.get(i).getFL_URL()+"'> "+listSectionMenu.get(i).getFL_NAME_SECTION()+"</span>");
                             content.add(data);
-                    }       break;
-                        }
-                    case "selectItem":
-                    {
+                        }       
+                        break;
+                    }
+                    case "selectItem":{
                         int pkParent= Integer.parseInt(request.getParameter("pkParent"));
                         listSectionMenu=new sectionControl().SelectItem(pkParent);
                         for(int i=0;i<listSectionMenu.size();i++){
@@ -87,7 +86,8 @@ public class serviceSectionsMenu extends HttpServlet {
                             data.put("parentid", listSectionMenu.get(i).getPK_PARENT());
                             data.put("text", "<img width=16 src='"+listSectionMenu.get(i).getFL_ICON()+"' /> <span class='itemsMenu' itemid='"+listSectionMenu.get(i).getFL_ITEM_ID()+"' parent='"+listSectionMenu.get(i).getPK_PARENT()+"'  dir='"+listSectionMenu.get(i).getFL_URL()+"'> "+listSectionMenu.get(i).getFL_NAME_SECTION()+"</span>");
                             content.add(data);
-                    }       break;
+                        }       
+                        break;
                     }
                     default:
                         int pt_pk_user = Integer.parseInt(session.getAttribute("pkUser").toString());
@@ -100,9 +100,9 @@ public class serviceSectionsMenu extends HttpServlet {
                             data.put("text", "<span class='itemsMenu' itemid='"+listSectionMenu.get(i).getFL_ITEM_ID()+"' parent='"+listSectionMenu.get(i).getPK_PARENT()+"'  dir='"+listSectionMenu.get(i).getFL_URL()+"'>"+listSectionMenu.get(i).getFL_NAME_SECTION()+"</span>");
                             data.put("icon", listSectionMenu.get(i).getFL_ICON());
                             content.add(data);
-                    }   break;
+                        }   
+                        break;
                 }
-                
                 response.setContentType("application/json"); 
                 out.print(content);
                 out.flush(); 

@@ -38,10 +38,10 @@ public class activitiesByStudentsControl {
         decimal = decimal/java.lang.Math.pow(10, numeroDecimales);
         return decimal;  
     }
-    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkActivity, int pkPeriod){
+    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", null, "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){                    
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     
@@ -66,10 +66,10 @@ public class activitiesByStudentsControl {
         }
         return list;
     }
-    public ArrayList<activitiesByStudentsModel> SelectAnyActivityEvaluated(int pkCareer, int pkSemester, int pkGroup, int pkActivity, int pkPeriod){
+    public ArrayList<activitiesByStudentsModel> SelectAnyActivityEvaluated(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('statusAnyEvaluated', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('statusAnyEvaluated', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setFL_REALIZED(res.getInt("FL_REALIZED"));
@@ -85,20 +85,24 @@ public class activitiesByStudentsControl {
         }
         return list;
     }
-    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsRegularization(int pkCareer, int pkSemester, int pkGroup, int pkActivity, int pkPeriod){
+    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsRegularization(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterRegularization', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterRegularization', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
-                    listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
+                    listActivitiesByStudents.setPK_CALIFICATIONS_OF_STUDEN_BY_MATTER(res.getString("PK_CALIFICATIONS_OF_STUDEN_BY_MATTER"));
                     listActivitiesByStudents.setFK_STUDENT(res.getInt("PK_STUDENT"));
                     listActivitiesByStudents.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     listActivitiesByStudents.setFL_NAME_STUDENT(res.getString("FL_NAME_STUDENT"));
-                    listActivitiesByStudents.setFL_VALUE_OBTANIED_OLD(res.getString("FL_VALUE_OBTANIED_OLD"));
-                    listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
-                    listActivitiesByStudents.setFL_APPROVED(res.getString("FL_APPROVED"));
-                    listActivitiesByStudents.setFL_ACUMULATED_NOW(res.getString("FL_ACUMULATED_NOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_BE(res.getString("FL_VALUE_OBTANIED_ACUMULATED_BE"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_KNOW(res.getString("FL_VALUE_OBTANIED_ACUMULATED_KNOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_DO(res.getString("FL_VALUE_OBTANIED_ACUMULATED_DO"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_TOTAL(res.getString("FL_VALUE_OBTANIED_ACUMULATED_TOTAL"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_BE(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_BE"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_KNOW(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_KNOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_DO(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_DO"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_TOTAL(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_TOTAL"));
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
@@ -111,20 +115,31 @@ public class activitiesByStudentsControl {
         }
         return list;
     }
-    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsGlobal(int pkCareer, int pkSemester, int pkGroup, int pkActivity, int pkPeriod){
+    public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsGlobal(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterGlobal', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterGlobal', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
-                    listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
+                    listActivitiesByStudents.setPK_CALIFICATIONS_OF_STUDEN_BY_MATTER(res.getString("PK_CALIFICATIONS_OF_STUDEN_BY_MATTER"));
                     listActivitiesByStudents.setFK_STUDENT(res.getInt("PK_STUDENT"));
                     listActivitiesByStudents.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     listActivitiesByStudents.setFL_NAME_STUDENT(res.getString("FL_NAME_STUDENT"));
-                    listActivitiesByStudents.setFL_VALUE_OBTANIED_OLD(res.getString("FL_VALUE_OBTANIED_OLD"));
-                    listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
-                    listActivitiesByStudents.setFL_APPROVED(res.getString("FL_APPROVED"));
-                    listActivitiesByStudents.setFL_ACUMULATED_NOW(res.getString("FL_ACUMULATED_NOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_BE(res.getString("FL_VALUE_OBTANIED_ACUMULATED_BE"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_KNOW(res.getString("FL_VALUE_OBTANIED_ACUMULATED_KNOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_DO(res.getString("FL_VALUE_OBTANIED_ACUMULATED_DO"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_ACUMULATED_TOTAL(res.getString("FL_VALUE_OBTANIED_ACUMULATED_TOTAL"));
+                    
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_BE(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_BE"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_KNOW(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_KNOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_DO(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_DO"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_REGULARIZATION_TOTAL(res.getString("FL_VALUE_OBTANIED_REGULARIZATION_TOTAL"));
+                    
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_BE(res.getString("FL_VALUE_OBTANIED_GLOBAL_BE"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_KNOW(res.getString("FL_VALUE_OBTANIED_GLOBAL_KNOW"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_DO(res.getString("FL_VALUE_OBTANIED_GLOBAL_DO"));
+                    listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_TOTAL(res.getString("FL_VALUE_OBTANIED_GLOBAL_TOTAL"));
+                    
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
