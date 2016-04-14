@@ -755,7 +755,7 @@ function createDropDownActivities(selector, filterable, update){
             autoDropDownHeight: false,
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
-            renderer: renderer,
+            //renderer: renderer,
             source: dataAdapterCareer, 
             displayMember: "dataDescriptActivity", 
             valueMember: "dataPkActivity",

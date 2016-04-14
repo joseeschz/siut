@@ -164,7 +164,7 @@ public class activitiesByStudentsControl {
                     listActivitiesByStudents.setFL_NAME_ACTIVITY(res.getString("FL_NAME_ACTIVITY"));
                     listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
                     listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
-                    listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                    listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getString("FL_VALUE_ACTIVITY"));
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
@@ -191,7 +191,7 @@ public class activitiesByStudentsControl {
                         listActivitiesByStudents.setPK_ACTIVITY_BY_STUDENT(res.getString("PK_ACTIVITY_BY_STUDENT"));
                         listActivitiesByStudents.setFL_VALUE_OBTANIED(res.getString("FL_VALUE_OBTANIED"));
                         listActivitiesByStudents.setFL_VALUE_OBTANIED_EQUIVALENT(res.getString("FL_VALUE_OBTANIED_EQUIVALENT"));
-                        listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getDouble("FL_VALUE_ACTIVITY"));
+                        listActivitiesByStudents.setFL_VALUE_ACTIVITY(res.getString("FL_VALUE_ACTIVITY"));
                         listActivitiesByStudents.setFL_MAX_VALUE(res.getDouble("FL_MAX_VALUE"));  
                         list.add(listActivitiesByStudents);
                     }

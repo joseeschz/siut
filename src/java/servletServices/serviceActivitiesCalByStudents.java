@@ -214,7 +214,10 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                         data.put("dataValueObtanied", "");
                         data.put("dataValueObtaniedEquivalent", "");
                     }else{
-                        double equivalent =  (Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED())*10/listActivity.get(i).getFL_VALUE_ACTIVITY());
+                        double valueObtanied = Double.parseDouble(listActivity.get(i).getFL_VALUE_OBTANIED());
+                        double valueActivity = Double.parseDouble(listActivity.get(i).getFL_VALUE_ACTIVITY());
+                        
+                        double equivalent = (valueObtanied*10/valueActivity);
                         data.put("dataValueObtanied", listActivity.get(i).getFL_VALUE_OBTANIED());
                         if(String.format( "%.1f", equivalent).equals("10.0")){
                             data.put("dataValueObtaniedEquivalent","10");

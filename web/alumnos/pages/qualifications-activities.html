@@ -23,7 +23,8 @@
         <div class="col-lg-12" style="padding: 0px">
             <div>
                 <b>Materia:</b>
-                <div style="border: 1px solid rgb(221, 221, 221);" id="qualificationsListSubjectMatters"></div><br>
+                <div style="border: 1px solid rgb(221, 221, 221);" id="qualificationsListSubjectMatters"></div>
+                <b>Profesor: <span id="nameTeacher"></span></b><br>
             </div>
         </div>
 
@@ -56,6 +57,7 @@
         var itemPeriod=0;
         var itemSubjectMatters=0;
         var itemsScaleEvaluation=0;
+        var nameTeacher = "";
         createDropDownPeriodActive("comboActiveYear","#qualificationsPeriod");
         itemPeriod=$('#qualificationsPeriod').jqxDropDownList('getSelectedItem');
         if(itemPeriod!==undefined){
@@ -65,6 +67,10 @@
         }
         createDropDownSubjectMatterByStudent("#qualificationsListSubjectMatters", false);
         itemSubjectMatters=$('#qualificationsListSubjectMatters').jqxDropDownList('getSelectedItem');
+        if(itemSubjectMatters.originalItem.dataNameWorker){
+            nameTeacher=itemSubjectMatters.originalItem.dataNameWorker;
+        }
+        $("#nameTeacher").text(nameTeacher);
         if(itemSubjectMatters!==undefined){
             createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, false);
             itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getItems'); 
@@ -79,6 +85,10 @@
         $('#qualificationsListSubjectMatters').on('change',function (event){  
             itemSubjectMatters=$('#qualificationsListSubjectMatters').jqxDropDownList('getSelectedItem');
             if(itemSubjectMatters!==undefined){
+                if(itemSubjectMatters.originalItem.dataNameWorker){
+                    nameTeacher=itemSubjectMatters.originalItem.dataNameWorker;
+                }
+                $("#nameTeacher").text(nameTeacher);
                 createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, true); 
                 itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getSelectedItem'); 
                 if(itemsScaleEvaluation!==undefined){
