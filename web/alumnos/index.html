@@ -197,7 +197,7 @@
           </div><!-- /.content-wrapper -->
           <footer class="main-footer">
             <div class="pull-right hidden-xs">
-              <b>Versión</b> 2.0.01
+              <b>Versión</b> 2.1.0
             </div>
             <strong>Copyright &copy; 2015-2016 </strong> Todos los derechos reservados.
           </footer>
@@ -334,6 +334,11 @@
                         sessionStorage.setItem("indexSelectedMatter", $(this).attr("data-index"));
                     }else{
                         sessionStorage.removeItem("indexSelectedMatter");
+                    }
+                    if($(this).attr("data-idItem")!=undefined){
+                        sessionStorage.setItem("idSelectedMatter", $(this).attr("data-idItem"));
+                    }else{
+                        sessionStorage.removeItem("idSelectedMatter");
                     }
                     if($(this).attr("data-href")){
                         $(".treeview-menu li").removeClass("active");

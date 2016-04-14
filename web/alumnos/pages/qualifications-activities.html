@@ -74,7 +74,8 @@
         }else{
             createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", null, false);
         }
-        $("#qualificationsListSubjectMatters").jqxDropDownList('selectIndex', sessionStorage.getItem("indexSelectedMatter")||0); 
+//        $("#qualificationsListSubjectMatters").jqxDropDownList('selectIndex', sessionStorage.getItem("indexSelectedMatter")||0); 
+        
         $('#qualificationsListSubjectMatters').on('change',function (event){  
             itemSubjectMatters=$('#qualificationsListSubjectMatters').jqxDropDownList('getSelectedItem');
             if(itemSubjectMatters!==undefined){
@@ -89,6 +90,8 @@
                 createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", null, false);
             }
         });
+        var item = $("#qualificationsListSubjectMatters").jqxDropDownList('getItemByValue', sessionStorage.getItem("idSelectedMatter")||null);
+        $("#qualificationsListSubjectMatters").jqxDropDownList('selectItem', item );
         $('#qualificationsScaleEvaluationFilter').on('change',function (event){  
             if(event.args){
                 loadActivities();

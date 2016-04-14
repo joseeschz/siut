@@ -324,6 +324,11 @@
                 exportButton.hide();
                 showButton.show();
                 infoButton.show();
+            }else{
+                lockButton.hide();
+                unlockButton.hide();
+                exportButton.hide();
+                showButton.show();
             }
             $("#tableQualifications").jqxGrid({
                 width: 800,
@@ -345,6 +350,11 @@
                         showButton.show();
                     }else if(status==0){    
                         lockButton.show();
+                        unlockButton.hide();
+                        exportButton.hide();
+                        showButton.show();
+                    }else{
+                        lockButton.hide();
                         unlockButton.hide();
                         exportButton.hide();
                         showButton.show();

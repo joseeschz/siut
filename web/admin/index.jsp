@@ -223,7 +223,7 @@ if(session.getAttribute("logueado") == null){%>
                 <!-- Fixed column bottom -->
                 <div id="culumna-bottom" class="">
                     <span style="float: left; margin-left: 20px;">Sistema desarrollado por la Universidad Tecnológica del Sur del Estado de México.</span>
-                    <span style="float: right; margin-right: 20px;">siut© copyright 2015. Versión 1.0.0.1</span>
+                    <span style="float: right; margin-right: 20px;">siut© copyright 2015. Versión 1.0.1.1</span>
                     <span style="float: right; margin-right: 20px; display: none">Guardando...<img src="../content/pictures-system/712.GIF"/></span>
                 </div> 
                 <div id="panel-principal">
