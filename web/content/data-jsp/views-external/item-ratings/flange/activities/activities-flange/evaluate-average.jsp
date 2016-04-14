@@ -1126,8 +1126,8 @@
                 // old cell value.
                 var oldvalue = args.oldvalue;
                 
-                if(getTypeScale(datafield)===1 || getTypeScale(datafield)===2 || getTypeScale(datafield)===3){
-                    itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');
+                itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');
+                if(datafield==="dataValueObtaniedNew"){
                     if(itemTypeEvaluation.value===1){
                         var params = {
                             "evaluationType" : itemTypeEvaluation.value,
@@ -1136,7 +1136,10 @@
                             "oldvalue" : oldvalue
                         };
                         evaluateActivityByRow(params);
-                    }else if(itemTypeEvaluation.value===2){  
+                    }  
+                }                              
+                if(getTypeScale(datafield)===1 || getTypeScale(datafield)===2 || getTypeScale(datafield)===3){
+                    if(itemTypeEvaluation.value===2){  
                         var rowData = $('#tableRegisterCalActivities').jqxGrid('getrowdata', rowBoundIndex);
                         var cellBe = $('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowBoundIndex, "dataObtaniedRegularizationBe");
                         var cellKnow = $('#tableRegisterCalActivities').jqxGrid('getcellvalue', rowBoundIndex, "dataObtaniedRegularizationKnow");

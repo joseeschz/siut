@@ -24,7 +24,21 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-        System.out.print(new calificationControl().IsCloseWorkPlanningByGroupMatter(1, 327, 1, 13)); 
+        ArrayList<calificationModel> listColumns=new calificationControl().SelectCalificationMattersStudent(629);
+        JSONArray contentRows = new JSONArray();
+        JSONArray bulding = new JSONArray();
+        JSONObject rows = new JSONObject();
+        for(int i=0;i<listColumns.size();i++){
+            JSONObject dataRows = new JSONObject();
+            dataRows.put("index", i);
+            dataRows.put("Pk_matter", listColumns.get(i).getPK_SUBJECT_MATTER());
+            dataRows.put("Materias", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
+            dataRows.put("MateriasAbre", "M"+(i+1));
+            dataRows.put("Evaluado", Double.parseDouble(listColumns.get(i).getFL_TOTAL_EVALUATED()));
+            dataRows.put("Obtenido", Double.parseDouble(listColumns.get(i).getFL_TOTAL_OBTAINED()));
+            contentRows.add(dataRows); 
+        }
+        System.out.println(contentRows);
     }
     
     public String UpdateCalificationByStudent(int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
