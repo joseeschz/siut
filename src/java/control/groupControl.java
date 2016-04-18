@@ -20,7 +20,7 @@ import model.groupModel;
  */
 public class groupControl {
     public static void main(String[] args) {
-        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(59, 2, 13, 2, null);
+        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(30, 6, 13, 2, null);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_GROUP());
         }
@@ -48,7 +48,7 @@ public class groupControl {
     
     public ArrayList<groupModel> SelectGroupByTeacher(int pkTeacher, int pkCareer, int fkPeriod, int fkSemester, String fkMatter){
         ArrayList<groupModel> list=new ArrayList<>();
-        String procedure;
+        String procedure = null;
         if(fkMatter!=null){
             procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherByMatter', "+pkTeacher+", null, "+pkCareer+", "+fkPeriod+", "+fkSemester+", null, "+fkMatter+")";
         }else{

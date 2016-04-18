@@ -39,7 +39,7 @@
                     createDropDownGruopByTeacher(itemCareer.value, itemPeriod.value, itemSemester.value, "#registerCalFlangeGroupFilter", false);
                     itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
                     if(itemGroup!==undefined){
-                        createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#registerCalFlangeSubjectMatterFilter", false);
+                        createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, itemGroup.value, "#registerCalFlangeSubjectMatterFilter", false);
                         $("#registerCalFlangeSubjectMatterFilter").jqxDropDownList({width: 300});
                         itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
                         initEvaluationType();
@@ -349,6 +349,22 @@
             });
             return status;
         }
+        function resizeGrid(){    
+            var p = $("#registerCalEvaluationType");
+            var position = p.position();
+            var height = $("#averageTab").parent().parent().height();
+            var finalHeight = (height-position.top)-20;
+            $("#tableRegisterCalActivities").jqxGrid({
+                height: finalHeight +"px"
+            });
+        }
+        $('#jqxSplitter').on('resize', function (event) {       
+            resizeGrid();
+        });
+        $(window).on('resize', function (event) {       
+            resizeGrid();
+        });
+        
         function loadSource(){
             var valItemCareer=0;
             var valItemSemester=0;
@@ -653,6 +669,22 @@
                     length = dataAdapter.records.length;
                 }
             });
+            $("#tableRegisterCalActivities").off('cellselect');
+            $("#tableRegisterCalActivities").on('cellselect', function (event) {
+                var rowBoundIndex = event.args.rowindex;
+                $("#contenttabletableRegisterCalActivities").each(function (){
+                    $(this).children().children().css({
+                        "text-decoration":"none"
+                    });
+                });
+                var colorUnderline = $("#row"+rowBoundIndex+"tableRegisterCalActivities").children().children().css("color");
+                $("#row"+rowBoundIndex+"tableRegisterCalActivities").children().css({
+                    "text-decoration":"underline",
+                    "text-decoration-color":colorUnderline||"#000"
+                });
+            });
+            
+            
             status = loadEventRowclick();   
             var activityEvaluated = anyActivityEvaluated();
             var initeditor = function (row, cellvalue, editor) {  
@@ -1094,7 +1126,7 @@
             }
             $("#tableRegisterCalActivities").jqxGrid({
                 width: "100%",
-                height: "100%",
+                height: "600px",
                 selectionMode: "multiplecellsadvanced",
                 localization: getLocalization("es"),
                 source: dataAdapter,
@@ -1107,8 +1139,10 @@
                 columngroups: columngroups,
                 ready: function (){
                     $('#tableRegisterCalActivities').jqxGrid('hidecolumn', 'dataValueObtanied');
+                    resizeGrid();
                 }
             });
+            resizeGrid();
             $('#tableRegisterCalActivities').jqxGrid('hidecolumn', 'dataValueObtanied');
             if(status==1){                
                 $('#tableRegisterCalActivities').jqxGrid({ enablehover: false, selectionmode: 'none'});

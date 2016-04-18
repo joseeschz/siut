@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import model.calificationModel;
 import model.evaluationTypeModel;
 import model.propetiesTableModel;
+import model.subjectMattersModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -173,6 +174,32 @@ public class serviceCalification extends HttpServlet {
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().CloseWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
+            }
+            if(request.getParameter("canPrint")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                String canPrint =  new calificationControl().CanPrint(fkType, fkMatter, fkGroup, fkPeriod);
+                ArrayList<subjectMattersModel> listItems=new calificationControl().TeacherMissingClose(fkType, fkMatter, fkGroup, fkPeriod);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("dataPkTeacher", listItems.get(i).getPK_WORKER());
+                    datos.put("dataNameTeacher", listItems.get(i).getFL_NAME_WORKER());
+                    datos.put("dataPkSubjectMatter", listItems.get(i).getPK_SUBJECT_MATTER());
+                    datos.put("dataNameSubjectMatter", listItems.get(i).getFL_NAME_SUBJECT_MATTER());
+                    content.add(datos);
+                }
+                settings.put("canPrint", canPrint);
+                settings.put("items", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();                 
             }
             if(request.getParameter("openWorkPlanning")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));

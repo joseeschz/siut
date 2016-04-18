@@ -198,7 +198,34 @@
                 return classTheme;
             };
             
-            
+            var exportSourse = function (){
+                var canPrintResult;
+                itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+                itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+                $.ajax({
+                    url: "../serviceCalification?canPrint",
+                    data: {
+                        "fkType": itemTypeEvaluation.value, 
+                        "fkMatter": itemSubjectMatter.value,
+                        "fkGroup": itemGroup.value,
+                        "fkPeriod": itemPeriod.value
+                    },
+                    type: 'POST',
+                    async: false,
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        canPrintResult = data;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");                
+                    }
+                });
+                return canPrintResult;
+            };
             
             var toolbarfunc = function (toolbar) {
                 var themeRenderToolbar = "";
@@ -247,9 +274,41 @@
                 
                 lockButton.off("click");
                 lockButton.click(function (){
-                    $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
-                    $("#typeEval").val("average");
-                    $('#jqxWindowWarningCalications').jqxWindow("open");
+                    var exportSettings = exportSourse()[0];
+                    itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+                    if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
+                        $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
+                        $("#typeEval").val("average");
+                        $('#jqxWindowWarningCalications').jqxWindow("open");
+                    }else if(itemTypeEvaluation.value==3){
+                        console.log(exportSettings)
+                        if(exportSettings.canPrint==0){
+                            if(exportSettings.items.length>0){
+                                var listTeachers="";
+                                var source = exportSettings.items;
+                                var dataAdapter = new $.jqx.dataAdapter(source);
+                                // Create a jqxListBox
+                                $("#listTeacher").jqxListBox({ 
+                                    source: dataAdapter, 
+                                    displayMember: "dataNameTeacher", 
+                                    valueMember: "dataPkTeacher", 
+                                    width: 310, 
+                                    height: 120,
+                                    renderer: function (index, label, value) {
+                                        var datarecord = source[index];
+                                        return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                                    }
+                                });
+                                $('#jqxWindowMissingTeachers').jqxWindow("open");
+                            }
+                        }else if(exportSettings.canPrint==1){
+                            $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
+                            $("#typeEval").val("average");
+                            $('#jqxWindowWarningCalications').jqxWindow("open");
+                        }else{
+                            alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
+                        }
+                    }
                 });
                 
                 unlockButton.off("click");
@@ -288,28 +347,36 @@
                 });
                 exportButton.off("click");
                 exportButton.click(function (){
-                    itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
-                    itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
-                    itemTypeEvaluation = $('#qualificationsCalEvaluationType').jqxDropDownList('getSelectedItem');
-                    $.ajax({
-                        url: "../content/data-jr/recordsCalifications/index.jsp?session",
-                        data: { 
-                            "pt_matter": itemSubjectMatter.value,
-                            "pt_group": itemGroup.value,
-                            "pt_period": itemPeriod.value,
-                            "pt_evaluation_type" : itemTypeEvaluation.value
-                        },
-                        type: 'POST',
-                        beforeSend: function (xhr) {
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            window.open("../content/data-jr/recordsCalifications");
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            alert("Error interno del servidor");                
+                    var exportSettings = exportSourse()[0];
+                    itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+                    if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
+                        printReport();
+                    }else if(itemTypeEvaluation.value==3){
+                        if(exportSettings.canPrint==0){
+                            if(exportSettings.items.length>0){
+                                var listTeachers="";
+                                var source = exportSettings.items;
+                                var dataAdapter = new $.jqx.dataAdapter(source);
+                                // Create a jqxListBox
+                                $("#listTeacher").jqxListBox({ 
+                                    source: dataAdapter, 
+                                    displayMember: "dataNameTeacher", 
+                                    valueMember: "dataPkTeacher", 
+                                    width: 310, 
+                                    height: 120,
+                                    renderer: function (index, label, value) {
+                                        var datarecord = source[index];
+                                        return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                                    }
+                                });
+                                $('#jqxWindowMissingTeachers').jqxWindow("open");
+                            }
+                        }else if(exportSettings.canPrint==1){
+                            printReport();
+                        }else{
+                            alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
                         }
-                    });
+                    }
                 });
             };
             if(status==1){
@@ -479,6 +546,31 @@
                 }
             });
         }
+        function printReport(){
+            itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemTypeEvaluation = $('#qualificationsCalEvaluationType').jqxDropDownList('getSelectedItem');
+            $.ajax({
+                url: "../content/data-jr/recordsCalifications/index.jsp?session",
+                data: { 
+                    "pt_matter": itemSubjectMatter.value,
+                    "pt_group": itemGroup.value,
+                    "pt_period": itemPeriod.value,
+                    "pt_evaluation_type" : itemTypeEvaluation.value
+                },
+                type: 'POST',
+                beforeSend: function (xhr) {
+                },
+                success: function (data, textStatus, jqXHR) {
+                    window.open("../content/data-jr/recordsCalifications");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");                
+                }
+            });
+        }
+        
         
         $('#okWarning').click(function (){
             if($("#typeEval").val()==="average"){

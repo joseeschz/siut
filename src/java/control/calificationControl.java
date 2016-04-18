@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.calificationModel;
 import model.propetiesTableModel;
+import model.subjectMattersModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -38,7 +39,7 @@ public class calificationControl {
             dataRows.put("Obtenido", Double.parseDouble(listColumns.get(i).getFL_TOTAL_OBTAINED()));
             contentRows.add(dataRows); 
         }
-        System.out.println(contentRows);
+        System.out.println(new calificationControl().CanPrint(3, 327, 11, 13));
     }
     
     public String UpdateCalificationByStudent(int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -349,6 +350,48 @@ public class calificationControl {
         }
         return status;
     }
+    public String CanPrint(int fkType, int pkMatter, int  pkGroup, int period){
+        String status = null;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('canPrint',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    status= res.getString("FL_RESULT");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    
+    public ArrayList<subjectMattersModel> TeacherMissingClose(int fkType, int pkMatter, int  pkGroup, int period){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingClose',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setPK_WORKER(res.getInt("FK_TEACHER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public String OpenWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
