@@ -29,6 +29,29 @@ if(session.getAttribute("logueado") != null){%>
                     $('#okWarning').focus();
                 }
             });
+            
+            $('#jqxWindowMissingTeachers').jqxWindow({
+                theme: theme,
+                height: 225,
+                width: 450,
+                resizable: false,
+                draggable: false,
+                okButton: $('#okWarningTeachers'),
+                autoOpen: false,
+                isModal: true,
+                cancelButton: $('#cancelWarningTeachers'),
+                initContent: function () {
+                    $('#okWarningTeachers').jqxButton({
+                        width: '80px',
+                        theme: theme
+                    });
+                    $('#cancelWarningTeachers').jqxButton({
+                        width: '80px',
+                        theme: theme
+                    });
+                    $('#okWarningTeachers').focus();
+                }
+            });
             var tabActive;
             var selectedTab = $.cookie('tabActive');
             $('#jqxTabs').on('selected', function (event) { 
@@ -54,6 +77,26 @@ if(session.getAttribute("logueado") != null){%>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="okWarning" value="OK" style="margin-right: 10px" />
                 <input type="button" id="cancelWarning" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+    
+    <div id='jqxWindowMissingTeachers'>
+        <div>
+            <div>
+                <div id="iconWarning" class="warning" style="position: absolute; width: 20px; height: 20px;"></div> 
+                <span style="margin-left: 30px"> Ups... No puedes generar el reporte</span>
+            </div>
+        </div>
+        <div>
+            <span style="color: olive; width: 310px; position: absolute;">
+                <b style="display: inline-block;" id="message">Mestros que faltan por cerrar regularización</b>
+                <div style="margin-top: 4px;" id="listTeacher"></div>
+            </span>
+            <div id="iconWarning" class="warning" style="position: absolute; right: 40px; top: 85px;"></div> 
+            <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
+                <input type="button" id="okWarningTeachers" value="OK" style="margin-right: 10px" />
+                <input type="button" id="cancelWarningTeachers" value="Cancelar" />
             </div>
         </div>
     </div>

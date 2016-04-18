@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-adjustment/flange/work/activities.jsp</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/files-js/make-menu.js</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/servletServices/serviceActivitiesCalByStudents.java</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-ratings/flange/activities/activities-flange/evaluate-average.jsp</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/control/activitiesByStudentsControl.java</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/alumnos/index.html</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/control/calificationControl.java</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/servletServices/serviceCalification.java</file>
         </group>
     </open-files>
 </project-private>

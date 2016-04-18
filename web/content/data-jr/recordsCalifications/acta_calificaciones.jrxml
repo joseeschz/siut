@@ -712,8 +712,8 @@
 							<bottomPen lineWidth="0.0"/>
 							<rightPen lineWidth="0.0"/>
 						</box>
-						<textElement verticalAlignment="Top">
-							<font fontName="Calibri" size="8" isBold="false"/>
+						<textElement verticalAlignment="Middle">
+							<font fontName="Calibri" size="6" isBold="false"/>
 						</textElement>
 						<text><![CDATA[ASIGNATURAS NO INTEGRADORAS]]></text>
 					</staticText>
@@ -831,8 +831,8 @@
 							<bottomPen lineWidth="0.0"/>
 							<rightPen lineWidth="0.0"/>
 						</box>
-						<textElement verticalAlignment="Top">
-							<font fontName="Calibri" size="8" isBold="false"/>
+						<textElement verticalAlignment="Middle">
+							<font fontName="Calibri" size="6" isBold="false"/>
 						</textElement>
 						<text><![CDATA[ASIGNATURAS INTEGRADORAS]]></text>
 					</staticText>
@@ -904,7 +904,7 @@
 						<textElement>
 							<font fontName="Calibri" size="7" isBold="false"/>
 						</textElement>
-						<text><![CDATA[DE = Destacado]]></text>
+						<text><![CDATA[CO = Competente]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="87" y="0" width="12" height="15" uuid="5927e7b8-3606-4d57-be7a-edce6eaf9c44"/>
@@ -939,7 +939,7 @@
 						<topPen lineWidth="0.5"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="Calibri" size="12" isBold="true"/>
+						<font fontName="Calibri" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NOMBRE Y FIRMA DEL PROFESOR]]></text>
 				</staticText>
@@ -953,7 +953,7 @@
 						<rightPen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="Calibri" size="12" isBold="true"/>
+						<font fontName="Calibri" size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[NOMBRE Y FIRMA DEL DIRECTOR DE CARRERA]]></text>
 				</staticText>
