@@ -161,6 +161,8 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                         data.put("dataObtaniedGlobalDo", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_DO());
                         data.put("dataObtaniedGlobalTotal", listActivity.get(i).getFL_VALUE_OBTANIED_GLOBAL_TOTAL());
                         
+                        data.put("dataPermitGlobal", listActivity.get(i).getFL_PERMIT_GLOBAL());
+                        
                         content.add(data);                         
                     }
                     settings.put("__ENTITIES", content);                    

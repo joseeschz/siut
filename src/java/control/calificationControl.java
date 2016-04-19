@@ -25,7 +25,7 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-        ArrayList<calificationModel> listColumns=new calificationControl().SelectCalificationMattersStudent(629);
+        ArrayList<subjectMattersModel> listColumns=new calificationControl().SubjectsMattersRepprovedByStudent(2976, 2, 11, 13);
         JSONArray contentRows = new JSONArray();
         JSONArray bulding = new JSONArray();
         JSONObject rows = new JSONObject();
@@ -33,13 +33,9 @@ public class calificationControl {
             JSONObject dataRows = new JSONObject();
             dataRows.put("index", i);
             dataRows.put("Pk_matter", listColumns.get(i).getPK_SUBJECT_MATTER());
-            dataRows.put("Materias", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
-            dataRows.put("MateriasAbre", "M"+(i+1));
-            dataRows.put("Evaluado", Double.parseDouble(listColumns.get(i).getFL_TOTAL_EVALUATED()));
-            dataRows.put("Obtenido", Double.parseDouble(listColumns.get(i).getFL_TOTAL_OBTAINED()));
             contentRows.add(dataRows); 
         }
-        System.out.println(new calificationControl().CanPrint(3, 327, 11, 13));
+        System.out.println(contentRows);
     }
     
     public String UpdateCalificationByStudent(int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -368,7 +364,50 @@ public class calificationControl {
         }
         return status;
     }
-    
+    public ArrayList<subjectMattersModel> SubjectsMattersRepprovedByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('subjectsRepprovedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setPK_WORKER(res.getInt("PK_WORKER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<subjectMattersModel> TeacherMissingCloseByStudent(int fkType, int pkMatter, int  pkGroup, int period){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingCloseByStudent',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setPK_WORKER(res.getInt("FK_TEACHER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<subjectMattersModel> TeacherMissingClose(int fkType, int pkMatter, int  pkGroup, int period){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {

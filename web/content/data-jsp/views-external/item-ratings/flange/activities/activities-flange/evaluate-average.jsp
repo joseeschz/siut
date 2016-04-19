@@ -420,7 +420,8 @@
                     { name: 'dataObtaniedGlobalBe', type: 'double' },
                     { name: 'dataObtaniedGlobalKnow', type: 'double' },
                     { name: 'dataObtaniedGlobalDo', type: 'double' },
-                    { name: 'dataObtaniedGlobalTotal', type: 'double' }
+                    { name: 'dataObtaniedGlobalTotal', type: 'double' },
+                    { name: 'dataPermitGlobal', type: 'string' }
                 ],
                 root: "__ENTITIES",
                 type:"POST",
@@ -849,8 +850,8 @@
                         
                     }
                 }else if(itemTypeEvaluation.value===3){ 
-                    if(status==1){
-                        var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
+                    var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
+                    if(status==1){                        
                         if(data.dataObtaniedGlobalTotal>=8){
                             classTheme=classTheme+"disabled";
                         }else{
@@ -878,9 +879,48 @@
                         if(columnfield==="dataObtaniedGlobalBe"){
                             classTheme=classTheme+"disabled";
                         }
+                        
+                        if(data.dataPermitGlobal==="1"){
+                            classTheme=classTheme;
+                        }else if(data.dataPermitGlobal==="2"){
+                            classTheme="down";
+                        }else if(data.dataPermitGlobal==="3"){
+                            classTheme="missingTeacherRegula";
+                        }else if(data.dataPermitGlobal==="4"){
+                            classTheme="missingTeacherAcumulated";
+                        }
+                        
                     }
                 }
                 return classTheme;
+            };
+            var exportSourse = function (fkStudent, typeEvaluation, typeSourse){
+                var canPrintResult;
+                itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
+                itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
+                itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                $.ajax({
+                    url: "../serviceCalification?"+typeSourse,
+                    data: {
+                        "fkType": typeEvaluation, 
+                        "fkMatter": itemSubjectMatter.value,
+                        "fkGroup": itemGroup.value,
+                        "fkPeriod": itemPeriod.value,
+                        "fkStudent" : fkStudent
+                    },
+                    type: 'POST',
+                    async: false,
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        canPrintResult = data;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");                
+                    }
+                });
+                return canPrintResult;
             };
             var cellbeginedit = function (row, datafield, columntype, value) {
                 itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');          
@@ -894,7 +934,92 @@
                         $("#popoverOptionEvaluate").jqxPopover("open");
                         return false;
                     }
+                }else{
+                    if(status==1){
+                        return false;
+                    }
+                    if(itemTypeEvaluation.value===3){
+                        var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
+                        if(data.dataPermitGlobal==="1"){
+                            return true;
+                        }else if(data.dataPermitGlobal==="2"){
+                            openWindow(data, "2");
+                            return false;
+                        }else if(data.dataPermitGlobal==="3"){
+                            openWindow(data, "3");
+                            return false;
+                        }else if(data.dataPermitGlobal==="4"){
+                            openWindow(data, "4");
+                            return false;
+                        }
+                    }
                 }
+            };
+            var openWindow = function (rowData, statusPermit){
+                if(statusPermit==="2"){
+                    $("#message").text("Materias reprobadas en regularización");
+                    var typeParameter = "subjectsMattersRepprovedByStudent";
+                    var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
+                    if(exportSettings.items.length>0){
+                        var source = exportSettings.items;
+                        var dataAdapter = new $.jqx.dataAdapter(source);
+                        // Create a jqxListBox
+                        $("#listTeacher").jqxListBox({ 
+                            source: dataAdapter, 
+                            displayMember: "dataNameTeacher", 
+                            valueMember: "dataPkTeacher", 
+                            width: 310, 
+                            height: 120,
+                            renderer: function (index, label, value) {
+                                var datarecord = source[index];
+                                return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                            }
+                        });
+                    }
+                }
+                if(statusPermit==="3"){
+                    $("#message").text("Mestros que faltan por cerrar regularización");
+                    var typeParameter = "teacherMissingCloseByStudent";
+                    var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
+                    if(exportSettings.items.length>0){
+                        var source = exportSettings.items;
+                        var dataAdapter = new $.jqx.dataAdapter(source);
+                        // Create a jqxListBox
+                        $("#listTeacher").jqxListBox({ 
+                            source: dataAdapter, 
+                            displayMember: "dataNameTeacher", 
+                            valueMember: "dataPkTeacher", 
+                            width: 310, 
+                            height: 120,
+                            renderer: function (index, label, value) {
+                                var datarecord = source[index];
+                                return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                            }
+                        });
+                    }
+                }
+                if(statusPermit==="4"){
+                    $("#message").text("Mestros que faltan por cerrar acumulado");
+                     var typeParameter = "teacherMissingCloseByStudent";
+                    var exportSettings = exportSourse(rowData.dataPkStudent, 1, typeParameter)[0];
+                    if(exportSettings.items.length>0){
+                        var source = exportSettings.items;
+                        var dataAdapter = new $.jqx.dataAdapter(source);
+                        // Create a jqxListBox
+                        $("#listTeacher").jqxListBox({ 
+                            source: dataAdapter, 
+                            displayMember: "dataNameTeacher", 
+                            valueMember: "dataPkTeacher", 
+                            width: 310, 
+                            height: 120,
+                            renderer: function (index, label, value) {
+                                var datarecord = source[index];
+                                return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                            }
+                        });
+                    }
+                }
+                $('#jqxWindowMissingTeachers').jqxWindow("open");
             };
             var cellsrenderer = function (row, column, value, defaultHtml) {
                 itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');  
@@ -941,15 +1066,20 @@
                         return element[0].outerHTML;
                     }
                 }else if(itemTypeEvaluation.value===3){
-                    if(data.dataObtaniedGlobalTotal<"8"){
-                        if(status==1){
-                            element.css('color', '#656565 !important');
-                        }else{
-                            
-                            element.css('color', '#F70025 !important');
+                    if(data.dataPermitGlobal==="3"){
+                        element.css('color', '#656565 !important');
+                    }else{
+                        if(data.dataObtaniedGlobalTotal<"8"){
+                            if(status==1){
+                                element.css('color', '#656565 !important');
+                            }else{
+
+                                element.css('color', '#F70025 !important');
+                            }
+                            return element[0].outerHTML;
                         }
-                        return element[0].outerHTML;
                     }
+                    
                 }
                 return defaultHtml;
             };
@@ -1506,6 +1636,22 @@
     .not-approved{
         color: #656565 !important;
         background-color: #D7C1C1 !important;
+    }
+    .down{
+        color: #656565 !important;
+        background-color: #D7C1C1 !important;
+    }
+    .down{
+        color: #656565 !important;
+        background-color: #D7C1C1 !important;
+    }
+    .missingTeacherAcumulated{
+        color: #656565 !important;
+        background-color: #F2E0C1 !important;
+    }
+    .missingTeacherRegula{
+        color: #656565 !important;
+        background-color: #DECAB0 !important;
     }
     .jqx-slider-tickscontainer{
         color: rgb(84, 146, 95) !important;

@@ -138,6 +138,9 @@ public class activitiesByStudentsControl {
                     listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_DO(res.getString("FL_VALUE_OBTANIED_GLOBAL_DO"));
                     listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_TOTAL(res.getString("FL_VALUE_OBTANIED_GLOBAL_TOTAL"));
                     
+                    listActivitiesByStudents.setFL_PERMIT_GLOBAL(res.getString("FL_PERMIT_GLOBAL"));
+                    
+                    
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
