@@ -104,7 +104,7 @@ function createDropDownSubjectMatterByStudent(selector, update){
         });
     }
 }
-function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update){
+function createDropDownScaleEvaluationBloquedStudent(selector, params, update){
     var sourceCareer ={
         datatype: "json",
         root: "__ENTITIES",
@@ -114,7 +114,12 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
             { name: 'dataNameScale' },
             { name: 'dataMaxValue' }
         ],
-        url: "http://10.10.10.23/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
+        url: "http://10.10.10.23/serviceScaleEvaluation",
+        data : {
+            "view" : "comboBloquedStudent",
+            "pkMatter" : params.pkMatter,
+            "pkTeacher" : params.pkTeacher
+        },
         async: false
     };
     var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
@@ -123,7 +128,7 @@ function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update)
         $(selector).jqxDropDownList({source: dataAdapterCareer, selectedIndex: 0});
     }else{
         $(selector).jqxDropDownList({
-            theme: "android",
+            theme: "mobile",
             selectedIndex: 0, 
             filterable: false, 
             autoDropDownHeight: true,
