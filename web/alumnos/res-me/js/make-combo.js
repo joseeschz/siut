@@ -88,14 +88,6 @@ function createDropDownSubjectMatterByStudent(selector, update){
             width: "100%",
             height: 35
         });
-        $(selector).on('select', function (event) {
-            if (event.args) {
-                var item = event.args.item;
-                if (item) {
-                    //alert();
-                }
-            }
-        });
         $(selector).off("select");
         $(selector).on("select", function (){
             if(navigator.vibrate) {
