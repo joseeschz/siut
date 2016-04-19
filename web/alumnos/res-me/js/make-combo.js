@@ -104,35 +104,3 @@ function createDropDownSubjectMatterByStudent(selector, update){
         });
     }
 }
-function createDropDownScaleEvaluationBloquedStudent(selector, pkMatter, update){
-    var sourceCareer ={
-        datatype: "json",
-        root: "__ENTITIES",
-        id: "id",
-        datafields: [
-            { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' },
-            { name: 'dataMaxValue' }
-        ],
-        url: "http://148.223.215.19/serviceScaleEvaluation?view=comboBloquedStudent&&pkMatter="+pkMatter,
-        async: false
-    };
-    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
-    if(update){
-        $(selector).jqxDropDownList('clearSelection');
-        $(selector).jqxDropDownList({source: dataAdapterCareer, selectedIndex: 0});
-    }else{
-        $(selector).jqxDropDownList({
-            theme: "android",
-            selectedIndex: 0, 
-            filterable: false, 
-            autoDropDownHeight: true,
-            filterPlaceHolder: "Buscar",
-            placeHolder: "SELECCIONAR",
-            source: dataAdapterCareer, 
-            displayMember: "dataNameScale", 
-            valueMember: "dataPkScaleEvalution",
-            width: 70                
-        });
-    }
-}

@@ -94,10 +94,10 @@ public class scaleEvaluationControl {
         }
         return list;
     }
-    public ArrayList<scaleEvaluationModel> SelectScaleEvaluationByLevelBloquedStudent(int pkMatter){
+    public ArrayList<scaleEvaluationModel> SelectScaleEvaluationByLevelBloquedStudent(int pkMatter, int pkTeacher){
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
-            String procedure="CALL `GET_SCALE_EVALUATION`('allByLevelBloquedStudent',null, null, "+pkMatter+")";
+            String procedure="CALL `GET_SCALE_EVALUATION`('allByLevelBloquedStudent',null, "+pkTeacher+", "+pkMatter+")";
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();

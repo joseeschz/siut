@@ -20,11 +20,9 @@ import model.activitiesByStudentsModel;
  */
 public class activitiesByStudentsControl {
     public static void main(String[] args) throws InterruptedException {
-        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectListActivitiesByStudent(3064, 327, 3, 13);
+        ArrayList<activitiesByStudentsModel> list=new activitiesByStudentsControl().SelectListActivitiesByStudent(3064, 333, 3, 13);
         for(int i=0;i<list.size();i++){
-            if(!list.get(i).getFL_VALUE_OBTANIED().equals("Sin evaluar")){
-                System.out.println(Double.parseDouble(list.get(i).getFL_VALUE_OBTANIED()));
-            }
+            System.out.println(Double.parseDouble(list.get(i).getFL_NAME_ACTIVITY()));
             
         }
 //        System.out.print(new activitiesByStudentsControl().UpdateActivitiesByStudents(1, 0));
@@ -140,6 +138,9 @@ public class activitiesByStudentsControl {
                     listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_DO(res.getString("FL_VALUE_OBTANIED_GLOBAL_DO"));
                     listActivitiesByStudents.setFL_VALUE_OBTANIED_GLOBAL_TOTAL(res.getString("FL_VALUE_OBTANIED_GLOBAL_TOTAL"));
                     
+                    listActivitiesByStudents.setFL_PERMIT_GLOBAL(res.getString("FL_PERMIT_GLOBAL"));
+                    
+                    
                     list.add(listActivitiesByStudents);
                 }
                 res.close();
@@ -182,7 +183,7 @@ public class activitiesByStudentsControl {
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatterByStudent', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
-                    if(res.getString("FL_VALUE_OBTANIED")!=null){
+                    if(res.getString("FL_VALUE_OBTANIED")!=null){                        
                         activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                         listActivitiesByStudents.setFK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
                         listActivitiesByStudents.setFL_NAME_SCALE(res.getString("FL_NAME_SCALE"));

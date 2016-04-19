@@ -96,7 +96,8 @@ public class serviceScaleEvaluation extends HttpServlet {
                 }
                 if(request.getParameter("view").equals("comboBloquedStudent")){
                     int pkMatter = Integer.parseInt(request.getParameter("pkMatter"));
-                    listScaleEvaluation = new scaleEvaluationControl().SelectScaleEvaluationByLevelBloquedStudent(pkMatter);
+                    int pkTeacher = Integer.parseInt(request.getParameter("pkTeacher"));
+                    listScaleEvaluation = new scaleEvaluationControl().SelectScaleEvaluationByLevelBloquedStudent(pkMatter, pkTeacher);
                     for(int i=0;i<listScaleEvaluation.size();i++){
                         JSONObject data = new JSONObject();
                         data.put("id", listScaleEvaluation.get(i).getPK_SCALE_EVALUATION());

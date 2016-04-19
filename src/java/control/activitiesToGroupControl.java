@@ -21,11 +21,11 @@ import model.activitiesToGroupModel;
  */
 public class activitiesToGroupControl {
     public static void main(String[] args) {
-        ArrayList<activitiesToGroupModel> list=new activitiesToGroupControl().SelectActivitiesToGroup(0, 12, 64, 1, 325, 6, 1);
+        ArrayList<activitiesToGroupModel> list=new activitiesToGroupControl().SelectActivitiesToGroup(170, 13, 49, 1, 332, 11, 1);
         String[] result = new activitiesToGroupControl().SelectWorkPlanning(28, 1, 329, 1, 13);
         System.out.println(result[6]);
         for(int i=0;i<list.size();i++){
-            //System.out.println(list.get(i).getFL_NAME_ACTIVITY());
+            System.out.println(list.get(i).getFL_NAME_ACTIVITY());
         }
         //System.out.println(Arrays.toString(new activitiesToGroupControl().SelectWorkPlanning(33, 3, 109, 4, 5)));
     }

@@ -33,6 +33,7 @@ public class activitiesByStudentsModel extends activitiesToGroupModel{
     String FL_VALUE_OBTANIED_GLOBAL_KNOW="";
     String FL_VALUE_OBTANIED_GLOBAL_DO="";
     String FL_VALUE_OBTANIED_GLOBAL_TOTAL="";
+    String FL_PERMIT_GLOBAL="";    
 
     public String getPK_ACTIVITY_BY_STUDENT() {
         return PK_ACTIVITY_BY_STUDENT;
@@ -216,5 +217,13 @@ public class activitiesByStudentsModel extends activitiesToGroupModel{
 
     public void setFL_VALUE_OBTANIED_GLOBAL_TOTAL(String FL_VALUE_OBTANIED_GLOBAL_TOTAL) {
         this.FL_VALUE_OBTANIED_GLOBAL_TOTAL = FL_VALUE_OBTANIED_GLOBAL_TOTAL;
+    }
+    
+    public String getFL_PERMIT_GLOBAL() {
+        return FL_PERMIT_GLOBAL;
+    }
+
+    public void setFL_PERMIT_GLOBAL(String FL_PERMIT_GLOBAL) {
+        this.FL_PERMIT_GLOBAL = FL_PERMIT_GLOBAL;
     }
 }

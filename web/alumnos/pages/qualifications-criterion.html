@@ -73,7 +73,11 @@
         $("#nameTeacher").text(nameTeacher);
         
         if (itemSubjectMatters !== undefined) {
-            createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, false);
+            var params = {
+                pkMatter : itemSubjectMatters.value,
+                pkTeacher : itemSubjectMatters.originalItem.dataPkTeacher
+            };
+            createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", params, false);
             itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getItems');
             if (itemsScaleEvaluation.length == 0) {
                 $(".tablesActivities1").html("El profesor no a cerrado ningún bloque de los saberes de evaluación");
@@ -88,8 +92,12 @@
                 if(itemSubjectMatters.originalItem.dataNameWorker){
                     nameTeacher=itemSubjectMatters.originalItem.dataNameWorker;
                 }
+                var params = {
+                    pkMatter : itemSubjectMatters.value,
+                    pkTeacher : itemSubjectMatters.originalItem.dataPkTeacher
+                };
                 $("#nameTeacher").text(nameTeacher);
-                createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", itemSubjectMatters.value, true);
+                createDropDownScaleEvaluationBloquedStudent("#qualificationsScaleEvaluationFilter", params, true);
                 itemsScaleEvaluation = $("#qualificationsScaleEvaluationFilter").jqxDropDownList('getSelectedItem');
                 if (itemsScaleEvaluation !== undefined) {
                     if (itemsScaleEvaluation === null) {

@@ -66,6 +66,8 @@
                 itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');                
                 var args = event.args;
                 if (args) {
+                    var item = $("#qualificationsCalEvaluationType").jqxDropDownList('getItemByValue', 1);
+                    $("#qualificationsCalEvaluationType").jqxDropDownList('selectItem', item );
                     loadTableQualifications();
                 }
             });            
