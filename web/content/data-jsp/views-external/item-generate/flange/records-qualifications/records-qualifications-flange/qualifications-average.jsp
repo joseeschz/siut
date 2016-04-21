@@ -319,7 +319,9 @@
                 
                 unlockButton.off("click");
                 unlockButton.click(function (){
-                    openWorkPlanningByGroupMatters();
+                    $("#messageWarning").html("El sistema no permite abrir tus calificaciones, si la necesidad persiste acudir con el administrador del sistema...!");
+                    $('#jqxWindowWarningCalications').jqxWindow("open");
+                    //openWorkPlanningByGroupMatters();
                 });
                 
                 var onShow=true;
