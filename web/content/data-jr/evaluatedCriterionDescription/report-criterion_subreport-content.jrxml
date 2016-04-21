@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="7ab577f1-c6c3-4f0c-b1a1-65caa95ed675">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pt_study_level" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_career" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_matter" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter});]]>
+	</queryString>
+	<field name="PK_GROUP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_PERIOD" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_LEVEL" class="java.lang.Long">
+		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_GROUP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_SUBJECT_MATTER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_OBSERVATIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_TEACHER" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="13" y="41" width="87" height="20" backcolor="#CCCCCC" uuid="f284beba-ebec-4608-849c-5535fdd2c29a"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Materia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="100" y="41" width="352" height="20" backcolor="#CCCCCC" uuid="e44af9e9-bb3c-4459-925b-0b9929a2faab"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_SUBJECT_MATTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="452" y="41" width="54" height="20" backcolor="#CCCCCC" uuid="623600ca-430d-433f-9bba-b4d39c99bcd7"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Grupo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="506" y="41" width="35" height="20" backcolor="#CCCCCC" uuid="6d9be5ce-1482-46c3-98fc-d95f38c65296"/>
+				<box topPadding="3" leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_GROUP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="267" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="561" height="267" uuid="6ec1985b-1204-4c35-ab00-bbfb4af19cbb"/>
+				<subreportParameter name="pt_career">
+					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_group">
+					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_period">
+					<subreportParameterExpression><![CDATA[$F{FK_PERIOD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion_subreport1_1.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="503" y="14" width="40" height="20" uuid="a1e028d2-3a8e-491d-a96a-2738be2556b4"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="14" width="80" height="20" uuid="f8f1ca2a-e162-4c17-a0f4-d725c6e7a84b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

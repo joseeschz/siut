@@ -282,10 +282,8 @@
                             $("#typeEval").val("average");
                             $('#jqxWindowWarningCalications').jqxWindow("open");
                         }else if(itemTypeEvaluation.value==3){
-                            console.log(exportSettings)
-                            if(exportSettings.canPrint==0){
-                                if(exportSettings.items.length>0){
-                                    var listTeachers="";
+                            if(exportSettings.canPrint==="0"){
+                                if(exportSettings.items){
                                     var source = exportSettings.items;
                                     var dataAdapter = new $.jqx.dataAdapter(source);
                                     // Create a jqxListBox
@@ -303,7 +301,7 @@
                                     });
                                     $('#jqxWindowMissingTeachers').jqxWindow("open");
                                 }
-                            }else if(exportSettings.canPrint==1){
+                            }else if(exportSettings.canPrint==="1"){
                                 $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
                                 $("#typeEval").val("average");
                                 $('#jqxWindowWarningCalications').jqxWindow("open");
@@ -319,9 +317,9 @@
                 
                 unlockButton.off("click");
                 unlockButton.click(function (){
-                    $("#messageWarning").html("El sistema no permite abrir tus calificaciones, si la necesidad persiste acudir con el administrador del sistema...!");
-                    $('#jqxWindowWarningCalications').jqxWindow("open");
-                    //openWorkPlanningByGroupMatters();
+//                    $("#messageWarning").html("El sistema no permite abrir tus calificaciones, si la necesidad persiste acudir con el administrador del sistema...!");
+//                    $('#jqxWindowWarningCalications').jqxWindow("open");
+                    openWorkPlanningByGroupMatters();
                 });
                 
                 var onShow=true;
@@ -360,9 +358,8 @@
                     if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
                         printReport();
                     }else if(itemTypeEvaluation.value==3){
-                        if(exportSettings.canPrint==0){
-                            if(exportSettings.items.length>0){
-                                var listTeachers="";
+                        if(exportSettings.canPrint==="0"){                            
+                            if(exportSettings.items){
                                 var source = exportSettings.items;
                                 var dataAdapter = new $.jqx.dataAdapter(source);
                                 // Create a jqxListBox
@@ -380,7 +377,7 @@
                                 });
                                 $('#jqxWindowMissingTeachers').jqxWindow("open");
                             }
-                        }else if(exportSettings.canPrint==1){
+                        }else if(exportSettings.canPrint==="1"){
                             printReport();
                         }else{
                             $("#messageWarning").html("Lamentamos que estemos teniendo problemas, por favor reporta el problema....!");

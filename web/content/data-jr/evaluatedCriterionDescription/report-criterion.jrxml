@@ -17,7 +17,7 @@
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activities', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2}, $P{pt_teacher2});]]>
+			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activitiesDescription', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2}, $P{pt_teacher2});]]>
 		</queryString>
 		<field name="FL_NAME_ACTIVITY_BE" class="java.lang.String"/>
 		<field name="FL_VALUE_ACTIVITY_BE" class="java.lang.String"/>

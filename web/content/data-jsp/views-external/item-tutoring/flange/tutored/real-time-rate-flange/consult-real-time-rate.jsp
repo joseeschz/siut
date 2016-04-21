@@ -215,6 +215,47 @@
                 height: 250
             });
         }
+        var theme = "";
+        var toTheme = function (className) {
+            if (theme === "") return className;
+            return className + " " + className + "-" + theme;
+        };
+        var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+        var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+        var exportButton = $(buttonTemplate);
+        container.append(exportButton);
+        $("#exporPDF").append(container);
+        exportButton.jqxButton({cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
+        exportButton.find('div:first').addClass(toTheme('jqx-icon-export'));
+        exportButton.jqxTooltip({ position: 'bottom', content: "Exportar a PDF"});
+        exportButton.attr("id","exportButton");       
+        exportButton.click(function (event) {
+            itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+            itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
+            $.ajax({
+                url: "../content/data-jr/studentsEvaluation/index.jsp?sessionCalificationsByStudents",
+                data: {
+                    "pt_level": itemLevel.value,
+                    "pt_career": itemCareer.value,
+                    "pt_group": itemGroup.value,
+                    "pt_semester": itemSemester.value,
+                    "pt_matter": null,
+                    "pt_period": itemPeriod.value
+                },
+                type: 'POST',
+                beforeSend: function (xhr) {
+                },
+                success: function (data, textStatus, jqXHR) {
+                    window.open("../../content/data-jr/studentsEvaluationAllSubjects/");
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");                
+                }
+            });
+        });   
     });
 </script>
 <div style="float: left; margin-right: 5px;">
@@ -242,6 +283,7 @@
     Grupo<br>
     <div id='qualificationsGroupFilter'></div>
 </div>
+<div id="exporPDF"></div>
 <br><br><br>
 <div style="float: left; margin-right: 5px" id="tableQualifications"></div>
 <div style="float: left" id="tableQualificationsDescription"></div>
