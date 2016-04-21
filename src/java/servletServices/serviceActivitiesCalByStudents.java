@@ -322,7 +322,7 @@ public class serviceActivitiesCalByStudents extends HttpServlet {
                     int pkCalificationByStudent = Integer.parseInt(request.getParameter("pkCalificationByStudent"));
                     double valueOptanied = Double.parseDouble(request.getParameter("valueOptanied"));
                     int scaleType = Integer.parseInt(request.getParameter("scaleType"));
-                    out.print(new calificationControl().UpdateCalificationByStudent(pkCalificationByStudent, scaleType, valueOptanied));
+                    out.print(new calificationControl().UpdateCalificationByStudent(updateTypeEval, pkCalificationByStudent, scaleType, valueOptanied));
                 }     
             }
             if(request.getParameter("delete")!=null){

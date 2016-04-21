@@ -940,15 +940,15 @@
                     }
                     if(itemTypeEvaluation.value===3){
                         var data = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
-                        if(data.dataPermitGlobal==="1"){
+                        if(data.dataPermitGlobal==="1"){//Puede pasar a global
                             return true;
-                        }else if(data.dataPermitGlobal==="2"){
+                        }else if(data.dataPermitGlobal==="2"){//Baja
                             openWindow(data, "2");
                             return false;
-                        }else if(data.dataPermitGlobal==="3"){
+                        }else if(data.dataPermitGlobal==="3"){//Faltan maestros evaluar en regula
                             openWindow(data, "3");
                             return false;
-                        }else if(data.dataPermitGlobal==="4"){
+                        }else if(data.dataPermitGlobal==="4"){//Faltan maestros de evaluar en acumulado
                             openWindow(data, "4");
                             return false;
                         }
@@ -957,13 +957,14 @@
             };
             var openWindow = function (rowData, statusPermit){
                 if(statusPermit==="2"){
-                    $("#message").text("Materias reprobadas en regularización");
+                    $("#message").text("Materias reprobadas en regularización en las que causo baja.");
                     var typeParameter = "subjectsMattersRepprovedByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
                         var dataAdapter = new $.jqx.dataAdapter(source);
                         // Create a jqxListBox
+                        $("#listTeacher").jqxListBox('clear');
                         $("#listTeacher").jqxListBox({ 
                             source: dataAdapter, 
                             displayMember: "dataNameTeacher", 
@@ -978,13 +979,14 @@
                     }
                 }
                 if(statusPermit==="3"){
-                    $("#message").text("Mestros que faltan por cerrar regularización");
+                    $("#message").text("Materias que faltan por cerrar regularización en las que el alumno hasta el momento está reprobado.");
                     var typeParameter = "teacherMissingCloseByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
                         var dataAdapter = new $.jqx.dataAdapter(source);
                         // Create a jqxListBox
+                        $("#listTeacher").jqxListBox('clear'); 
                         $("#listTeacher").jqxListBox({ 
                             source: dataAdapter, 
                             displayMember: "dataNameTeacher", 
@@ -999,13 +1001,14 @@
                     }
                 }
                 if(statusPermit==="4"){
-                    $("#message").text("Mestros que faltan por cerrar acumulado");
+                    $("#message").text("Materias de los profesores que faltan por cerrar acumulado.");
                      var typeParameter = "teacherMissingCloseByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 1, typeParameter)[0];
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
                         var dataAdapter = new $.jqx.dataAdapter(source);
                         // Create a jqxListBox
+                        $("#listTeacher").jqxListBox('clear');
                         $("#listTeacher").jqxListBox({ 
                             source: dataAdapter, 
                             displayMember: "dataNameTeacher", 
@@ -1333,6 +1336,9 @@
                             "total" : total,
                             "scaleType" :  getTypeScale(datafield)
                         };
+                        console.log(cellBe)
+                        console.log(cellKnow)
+                        console.log(cellDo)
                         evaluateScaleByRow(params);
                     }
                 } 

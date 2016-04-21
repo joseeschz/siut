@@ -49,10 +49,10 @@ if(session.getAttribute("logueado") != null){%>
             </div>
         </div>
         <div>
-            <span style="color: olive; width: 310px; position: absolute;">
-                <b style="display: inline-block;" id="message"></b>
-                <div style="margin-top: 4px;" id="listTeacher"></div>
+            <span style="color: olive; width: 310px;">
+                <b style="" id="message"></b>
             </span>
+            <div style="margin-top: 4px;" id="listTeacher"></div>
             <div id="iconWarning" class="warning" style="position: absolute; right: 40px; top: 85px;"></div> 
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="okWarningTeachers" value="OK" style="margin-right: 10px" />

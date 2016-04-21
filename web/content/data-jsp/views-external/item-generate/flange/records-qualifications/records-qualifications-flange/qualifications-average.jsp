@@ -250,8 +250,6 @@
                 lockButton.jqxTooltip({ position: 'bottom', content: "Cerrar calificaciones"});
                 lockButton.attr("id","lockButton");
                 
-                
-                
                 unlockButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
                 unlockButton.find('div:first').addClass(toTheme('jqx-icon-unlock'));
                 unlockButton.jqxTooltip({ position: 'bottom', content: "Abrir calificaciones"});
@@ -275,47 +273,55 @@
                 showButton.attr("id","showButton");
                 
                 lockButton.off("click");
-                lockButton.click(function (){
-                    var exportSettings = exportSourse()[0];
-                    itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
-                    if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
-                        $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
-                        $("#typeEval").val("average");
-                        $('#jqxWindowWarningCalications').jqxWindow("open");
-                    }else if(itemTypeEvaluation.value==3){
-                        console.log(exportSettings)
-                        if(exportSettings.canPrint==0){
-                            if(exportSettings.items.length>0){
-                                var listTeachers="";
-                                var source = exportSettings.items;
-                                var dataAdapter = new $.jqx.dataAdapter(source);
-                                // Create a jqxListBox
-                                $("#listTeacher").jqxListBox({ 
-                                    source: dataAdapter, 
-                                    displayMember: "dataNameTeacher", 
-                                    valueMember: "dataPkTeacher", 
-                                    width: 310, 
-                                    height: 120,
-                                    renderer: function (index, label, value) {
-                                        var datarecord = source[index];
-                                        return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
-                                    }
-                                });
-                                $('#jqxWindowMissingTeachers').jqxWindow("open");
-                            }
-                        }else if(exportSettings.canPrint==1){
+                lockButton.click(function (){           
+                    if(status==0){
+                        var exportSettings = exportSourse()[0];
+                        itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+                        if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
                             $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
                             $("#typeEval").val("average");
                             $('#jqxWindowWarningCalications').jqxWindow("open");
-                        }else{
-                            alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
+                        }else if(itemTypeEvaluation.value==3){
+                            console.log(exportSettings)
+                            if(exportSettings.canPrint==0){
+                                if(exportSettings.items.length>0){
+                                    var listTeachers="";
+                                    var source = exportSettings.items;
+                                    var dataAdapter = new $.jqx.dataAdapter(source);
+                                    // Create a jqxListBox
+                                    $("#listTeacher").jqxListBox('clear');
+                                    $("#listTeacher").jqxListBox({ 
+                                        source: dataAdapter, 
+                                        displayMember: "dataNameTeacher", 
+                                        valueMember: "dataPkTeacher", 
+                                        width: 310, 
+                                        height: 120,
+                                        renderer: function (index, label, value) {
+                                            var datarecord = source[index];
+                                            return datarecord.dataNameTeacher + "<br>" + datarecord.dataNameSubjectMatter;
+                                        }
+                                    });
+                                    $('#jqxWindowMissingTeachers').jqxWindow("open");
+                                }
+                            }else if(exportSettings.canPrint==1){
+                                $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
+                                $("#typeEval").val("average");
+                                $('#jqxWindowWarningCalications').jqxWindow("open");
+                            }else{
+                                alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
+                            }
                         }
+                    }else{
+                        $("#messageWarning").html("Para poder cerrar acumulado debes de terminar de evaluar todas tus actividades para este grupo...!");
+                        $('#jqxWindowWarningCalications').jqxWindow("open");
                     }
                 });
                 
                 unlockButton.off("click");
                 unlockButton.click(function (){
-                    openWorkPlanningByGroupMatters();
+                    $("#messageWarning").html("El sistema no permite abrir tus calificaciones, si la necesidad persiste acudir con el administrador del sistema...!");
+                    $('#jqxWindowWarningCalications').jqxWindow("open");
+                    //openWorkPlanningByGroupMatters();
                 });
                 
                 var onShow=true;
@@ -360,6 +366,7 @@
                                 var source = exportSettings.items;
                                 var dataAdapter = new $.jqx.dataAdapter(source);
                                 // Create a jqxListBox
+                                $("#listTeacher").jqxListBox('clear');
                                 $("#listTeacher").jqxListBox({ 
                                     source: dataAdapter, 
                                     displayMember: "dataNameTeacher", 
@@ -376,7 +383,8 @@
                         }else if(exportSettings.canPrint==1){
                             printReport();
                         }else{
-                            alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
+                            $("#messageWarning").html("Lamentamos que estemos teniendo problemas, por favor reporta el problema....!");
+                            $('#jqxWindowWarningCalications').jqxWindow("open");
                         }
                     }
                 });
@@ -393,8 +401,8 @@
                 exportButton.hide();
                 showButton.show();
                 infoButton.show();
-            }else{
-                lockButton.hide();
+            }else if(status==3){
+                lockButton.show();
                 unlockButton.hide();
                 exportButton.hide();
                 showButton.show();
@@ -422,8 +430,8 @@
                         unlockButton.hide();
                         exportButton.hide();
                         showButton.show();
-                    }else{
-                        lockButton.hide();
+                    }else if(status==3){
+                        lockButton.show();
                         unlockButton.hide();
                         exportButton.hide();
                         showButton.show();

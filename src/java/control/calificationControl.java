@@ -38,11 +38,11 @@ public class calificationControl {
         System.out.println(contentRows);
     }
     
-    public String UpdateCalificationByStudent(int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
+    public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CALIFICATION`('update', "+pt_pk_calification_student+", null, null, null, "+pt_scale_evaluation+", "+pt_value+")")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CALIFICATION`('update', "+pt_pk_calification_student+", null, null, "+updateTypeEval+", "+pt_scale_evaluation+", "+pt_value+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();
@@ -363,6 +363,28 @@ public class calificationControl {
             Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return status;
+    }
+    public ArrayList<subjectMattersModel> SubjectsMattersMissingCloseAndRepprovedByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('teacherMissingCloseAndRepprovedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setPK_WORKER(res.getInt("PK_WORKER"));
+                    allData.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     public ArrayList<subjectMattersModel> SubjectsMattersRepprovedByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();

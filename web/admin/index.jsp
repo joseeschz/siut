@@ -61,11 +61,8 @@ if(session.getAttribute("logueado") == null){%>
         <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
         <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxcore.js"></script>
         <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxpasswordinput.js"></script>
-        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxtooltip.js"></script>
         <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxinput.js"></script>
         <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxvalidator.js"></script>
-        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxdraw.js"></script>
-        <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqxchart.core.js"></script>
         <script type="text/javascript">
             $(document).ready(function (){
                 window.location.hash="";
@@ -139,8 +136,8 @@ if(session.getAttribute("logueado") == null){%>
             <meta charset="UTF-8"/>
             <link title="Bienvenido Home" rel="icon" type="image/png" href="../content/pictures-system/favicon.png" />
             <link rel="stylesheet" href="../content/files-css/main-system.css" type="text/css"/>
-            <!-- Bootstrap core CSS -->
-            <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>
+<!--             Bootstrap core CSS 
+            <link href="../content/files-bs/bootstrap-3.2.0-dist/css/bootstrap.min.css" rel="stylesheet"/>-->
             <!-- jQWidgets CSS -->
             <link href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.base.css" rel="stylesheet"/>
             <link href="../content/files-jq/<%out.print(vertion);%>/jqwidgets/styles/jqx.bootstrap.css" rel="stylesheet"/>
@@ -255,9 +252,11 @@ if(session.getAttribute("logueado") == null){%>
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js"></script>
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
-            <script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>
-            <script type="text/javascript" src="../content/files-jq/jquery-ui-1.11.1/jquery-ui.js"></script>
+            <!--<script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>-->
+            <!--<script type="text/javascript" src="../content/files-jq/jquery //-ui-1.11.1/jquery-ui.js"></script>-->
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
+            
+            
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
             <script type="text/javascript" src="../content/files-jq/jquery.cookie.js"></script>

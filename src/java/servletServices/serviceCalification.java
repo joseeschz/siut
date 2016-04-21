@@ -177,11 +177,10 @@ public class serviceCalification extends HttpServlet {
             }
             if(request.getParameter("teacherMissingCloseByStudent")!=null){
                 int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
-                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
-                ArrayList<subjectMattersModel> listItems=new calificationControl().TeacherMissingCloseByStudent(fkType, fkMatter, fkGroup, fkPeriod);
+                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersMissingCloseAndRepprovedByStudent(fkStudent, fkType, fkGroup, fkPeriod);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
