@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="3"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
@@ -50,6 +50,18 @@
 	<field name="FL_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="FL_NAME_WORKER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DIRECTOR_NAME" class="java.lang.String"/>
+	<field name="FL_OBSERVATIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DATE_PRINT" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PERMIT_GLOBAL" class="java.lang.Long"/>
+	<field name="@FL_CALIFICATION_FINAL_REGULARIZATION := FN_GET_CALIFICATION_BY_SCALE(2, PT_PK_SUBJECT_MATTER, tb_students.PK_STUDENT, PT_PK_PERIOD, 0)" class="java.lang.Double"/>
 	<field name="FL_CALIFICATION_BE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -59,15 +71,8 @@
 	<field name="FL_CALIFICATION_DO" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_NAME_WORKER" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="FL_DIRECTOR_NAME" class="java.lang.String"/>
-	<field name="FL_OBSERVATIONS" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="FL_LETTER" class="java.lang.String"/>
 	<field name="FL_CALIFICATION_TOTAL" class="java.lang.String"/>
+	<field name="FL_LETTER" class="java.lang.String"/>
 	<field name="FK_PERIOD" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -990,13 +995,6 @@
 					</textElement>
 					<text><![CDATA[FECHA DE ELABORACIÓN:]]></text>
 				</staticText>
-				<textField pattern="dd/MM/yyyy">
-					<reportElement x="164" y="130" width="126" height="20" uuid="b05f7796-1670-4d9e-a9d8-6e3e204061ab"/>
-					<textElement verticalAlignment="Top">
-						<font fontName="Calibri" size="12" isUnderline="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-				</textField>
 			</elementGroup>
 			<staticText>
 				<reportElement x="0" y="95" width="584" height="14" uuid="0f2963f1-4136-4d7f-bd03-1aefff81b76a"/>
@@ -1031,6 +1029,19 @@
 					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FL_DIRECTOR_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="130" width="148" height="20" uuid="2f3e3b92-4f00-4ce9-8683-f5053f927d95"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_DATE_PRINT}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

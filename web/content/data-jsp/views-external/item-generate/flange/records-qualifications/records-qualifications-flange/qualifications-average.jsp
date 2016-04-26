@@ -31,7 +31,7 @@
             itemSubjectMatter=$('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
             createDropDownGruopByTeacherMattter(itemPeriod.value, itemSemester.value, itemSubjectMatter.value, "#qualificationsGroupFilter",false);
             itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
-            
+            $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "dd/MM/yyyy", theme: theme, width: '120px', height: '26px'});
             initEvaluationType();
             $('#qualificationsLevelFilter').on('change',function (event){  
                 itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
@@ -74,7 +74,6 @@
                   
             loadTableQualifications();
             loadTableDescription();
-            getObservations();
         }else{
             createDropDownCareerByTeacher(null ,"#qualificationsCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
@@ -173,7 +172,9 @@
         }
         
         
-        function loadTableQualifications(){              
+        function loadTableQualifications(){      
+            getObservations();
+            getDatePrint();
             var status = isClosedWorkPlanning();
             var length =0 ;
             var dataAdapter = new $.jqx.dataAdapter(loadSource(),{
@@ -470,6 +471,45 @@
                 }
             });
         }
+        function getDatePrint(){
+            itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+            $.ajax({
+                url: "../serviceCalification?getDatePrint",
+                data: {"fkType": itemTypeEvaluation.value, "fkMatter": itemSubjectMatter.value,"fkGroup": itemGroup.value,"fkPeriod": itemPeriod.value},
+                type: 'POST',
+                beforeSend: function (xhr) {
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.calendarInput').val(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");                
+                }
+            });
+        }
+        function setDatePrint(){
+            itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+            var Date = $('.calendarInput').jqxDateTimeInput('getDate').toJSON();
+            var flDatePrint = Date;
+            $.ajax({
+                url: "../serviceCalification?setDatePrint",
+                data: {"fkType": itemTypeEvaluation.value, "flDatePrint": flDatePrint, "fkMatter": itemSubjectMatter.value,"fkGroup": itemGroup.value,"fkPeriod": itemPeriod.value},
+                type: 'POST',
+                beforeSend: function (xhr) {
+                },
+                success: function (data, textStatus, jqXHR) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");                
+                }
+            });
+        }
         function isClosedWorkPlanning(){
             var status;
             itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
@@ -602,6 +642,11 @@
                 }
             });
         });
+        $('.calendarInput').on('change', function (event) {
+            if(event.args){
+                setDatePrint();         
+            }
+        }); 
         $("#jqxObservations").jqxExpander({
             width: 210,
             toggleMode: "none",
@@ -660,6 +705,12 @@
     <div id='qualificationsCalEvaluationType'></div>
 </div>
 <br><br><br>
+<div style="float: left; margin-right: 5px;">
+    Fecha de Elaboración<br>
+    <div class="calendarInput" id="datePrint"></div>
+    <span>DD-MM-AAAA</span>
+</div>
+<br><br><br><br>
 <div style="" id="tableQualifications"></div>
 <div style="float: left; margin-top: 15px; margin-right: 15px; display: none" id="tableDescription2"></div>
 <div style="float: left; margin-top: 15px; display: none" id="tableDescription"></div>
