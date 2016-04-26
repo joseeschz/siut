@@ -726,9 +726,7 @@
                         if(itemTypeEvaluation.value===1){
                             if(cell.column==="dataValueObtaniedEquivalent"){
                                 var value = parseFloat($(this).val());
-                                console.log(value_max)
                                 var valueObtaniedNew = parseFloat(value*value_max/10).toFixed(2);
-                                console.log(valueObtaniedNew)
                                 $("#tableRegisterCalActivities").jqxGrid('setcellvalue', row, "dataValueObtaniedNew", valueObtaniedNew); 
                             }else{
                                 var params = {
@@ -985,7 +983,7 @@
             var openWindow = function (rowData, statusPermit){
                 if(statusPermit==="2"){
                     $("#message").text("Materias reprobadas en regularización en las que causo baja.");
-                    var typeParameter = "subjectsMattersRepprovedByStudent";
+                    var typeParameter = "subjectsMattersRepprovedRegularizationByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
@@ -1007,7 +1005,7 @@
                 }
                 if(statusPermit==="3"){
                     $("#message").text("Materias que faltan por cerrar regularización en las que el alumno hasta el momento está reprobado.");
-                    var typeParameter = "teacherMissingCloseByStudent";
+                    var typeParameter = "teacherMissingCloseRegularizationByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 2, typeParameter)[0];
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
@@ -1029,13 +1027,13 @@
                 }
                 if(statusPermit==="4"){
                     $("#message").text("Materias de los profesores que faltan por cerrar acumulado.");
-                     var typeParameter = "teacherMissingCloseByStudent";
+                     var typeParameter = "teacherMissingCloseAcumulatedByStudent";
                     var exportSettings = exportSourse(rowData.dataPkStudent, 1, typeParameter)[0];
+                    $("#listTeacher").jqxListBox('clear');
                     if(exportSettings.items.length>0){
                         var source = exportSettings.items;
                         var dataAdapter = new $.jqx.dataAdapter(source);
                         // Create a jqxListBox
-                        $("#listTeacher").jqxListBox('clear');
                         $("#listTeacher").jqxListBox({ 
                             source: dataAdapter, 
                             displayMember: "dataNameTeacher", 
@@ -1350,9 +1348,7 @@
                         if(isNaN(value)){
                             $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowBoundIndex, "dataValueObtaniedEquivalent", oldvalue);
                         }else{
-                            console.log(value_max)
                             var valueObtaniedNew = parseFloat(valueFloat*value_max/10).toFixed(2);
-                            console.log(valueObtaniedNew)
                             $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowBoundIndex, "dataValueObtaniedNew", valueObtaniedNew);
                         }
                     }
