@@ -172,9 +172,7 @@
         }
         
         
-        function loadTableQualifications(){      
-            getObservations();
-            getDatePrint();
+        function loadTableQualifications(){     
             var status = isClosedWorkPlanning();
             var length =0 ;
             var dataAdapter = new $.jqx.dataAdapter(loadSource(),{
@@ -533,7 +531,9 @@
                             $("#qualificationsCalEvaluationType").jqxDropDownList('enableItem', item ); 
                         }        
                     }
-                    status=parseInt(data[0].closed);                    
+                    status=parseInt(data[0].closed);   
+                    getObservations();
+                    getDatePrint();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Error interno del servidor");                

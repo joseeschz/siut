@@ -90,7 +90,7 @@ if(session.getAttribute("logueado") != null){%>
         </div>
         <div>
             <span style="color: olive; width: 310px; position: absolute;">
-                <b style="display: inline-block;" id="message">Mestros que faltan por cerrar regularización</b>
+                <b style="display: inline-block;" id="message">Mestros que faltan por cerrar acumulado o regularización</b>
                 <div style="margin-top: 4px;" id="listTeacher"></div>
             </span>
             <div id="iconWarning" class="warning" style="position: absolute; right: 40px; top: 85px;"></div> 

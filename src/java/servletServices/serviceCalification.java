@@ -194,12 +194,12 @@ public class serviceCalification extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().CloseWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
             }
-            if(request.getParameter("teacherMissingCloseByStudent")!=null){
+            if(request.getParameter("teacherMissingCloseAcumulatedByStudent")!=null){
                 int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
-                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersMissingCloseAndRepprovedByStudent(fkStudent, fkType, fkGroup, fkPeriod);
+                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersMissingCloseAcumulatedByStudent(fkStudent, fkType, fkGroup, fkPeriod);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
@@ -218,12 +218,36 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();                 
             }
-            if(request.getParameter("subjectsMattersRepprovedByStudent")!=null){
+            if(request.getParameter("teacherMissingCloseRegularizationByStudent")!=null){
                 int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
-                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersRepprovedByStudent(fkStudent, fkType, fkGroup, fkPeriod);
+                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersMissingCloseRegularizationAndRepprovedByStudent(fkStudent, fkType, fkGroup, fkPeriod);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("dataPkTeacher", listItems.get(i).getPK_WORKER());
+                    datos.put("dataNameTeacher", listItems.get(i).getFL_NAME_WORKER());
+                    datos.put("dataPkSubjectMatter", listItems.get(i).getPK_SUBJECT_MATTER());
+                    datos.put("dataNameSubjectMatter", listItems.get(i).getFL_NAME_SUBJECT_MATTER());
+                    content.add(datos);
+                }
+                settings.put("items", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();                 
+            }
+            if(request.getParameter("subjectsMattersRepprovedRegularizationByStudent")!=null){
+                int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                ArrayList<subjectMattersModel> listItems=new calificationControl().SubjectsMattersRepprovedRegularizationByStudent(fkStudent, fkType, fkGroup, fkPeriod);
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
