@@ -167,6 +167,25 @@ public class serviceCalification extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().GetObservations(fkType, fkMatter, fkGroup, fkPeriod));               
             }
+            
+            if(request.getParameter("setDatePrint")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));  
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                String flDatePrint = request.getParameter("flDatePrint");
+                response.setContentType("text/html;charset=UTF-8"); 
+                out.print(new calificationControl().SetDatePrint(fkType, fkMatter, fkGroup, fkPeriod, flDatePrint));               
+            }
+            if(request.getParameter("getDatePrint")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod")); 
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                response.setContentType("text/html;charset=UTF-8"); 
+                out.print(new calificationControl().GetDatePrint(fkType, fkMatter, fkGroup, fkPeriod));               
+            }
+            
             if(request.getParameter("closeWorkPlanning")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));

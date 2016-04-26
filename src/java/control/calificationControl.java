@@ -330,6 +330,42 @@ public class calificationControl {
         }
         return status;
     }
+    public String SetDatePrint(int fkType, int pkMatter, int  pkGroup, int period, String flDatePrint){
+        String status;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDatePrint+"')"); ResultSet res = ps.executeQuery()) {
+                status= "Success";
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public String GetDatePrint(int fkType, int pkMatter, int  pkGroup, int period){
+        String status;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                if(res!=null && res.next()){
+                    status=""+res.getString("FL_DATE_PRINT");   
+                }else{
+                    status="null"; 
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
     public String CloseWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {

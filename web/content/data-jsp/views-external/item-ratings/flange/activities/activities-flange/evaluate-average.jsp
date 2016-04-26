@@ -692,13 +692,23 @@
                 itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');
                 var cell = $('#tableRegisterCalActivities').jqxGrid('getselectedcell');                 
                 if(itemTypeEvaluation.value===1){
-                    editor.jqxNumberInput({ 
-                        inputMode: 'simple', 
-                        spinButtons: true,
-                        digits:1,
-                        min:0,
-                        max: value_max
-                    });                    
+                    if(cell.column==="dataValueObtaniedEquivalent"){
+                        editor.jqxNumberInput({ 
+                            inputMode: 'simple', 
+                            spinButtons: true,
+                            digits:2,
+                            min:0,
+                            max: 10
+                        }); 
+                    }else{
+                        editor.jqxNumberInput({ 
+                            inputMode: 'simple', 
+                            spinButtons: true,
+                            digits:1,
+                            min:0,
+                            max: value_max
+                        }); 
+                    }                                       
                 }else{
                     var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
                     var minValueScale = parseFloat(getMinValueByScale(cell)).toFixed(2);
@@ -714,13 +724,21 @@
                 editor.on('change', function (event) {  
                     if(event.args){                  
                         if(itemTypeEvaluation.value===1){
-                            var params = {
-                                "evaluationType" : itemTypeEvaluation.value,
-                                "row": row,
-                                "value": $(this).val(),
-                                "oldvalue" : cellvalue
-                            };
-                            evaluateActivityByRow(params);
+                            if(cell.column==="dataValueObtaniedEquivalent"){
+                                var value = parseFloat($(this).val());
+                                console.log(value_max)
+                                var valueObtaniedNew = parseFloat(value*value_max/10).toFixed(2);
+                                console.log(valueObtaniedNew)
+                                $("#tableRegisterCalActivities").jqxGrid('setcellvalue', row, "dataValueObtaniedNew", valueObtaniedNew); 
+                            }else{
+                                var params = {
+                                    "evaluationType" : itemTypeEvaluation.value,
+                                    "row": row,
+                                    "value": $(this).val(),
+                                    "oldvalue" : cellvalue
+                                };
+                                evaluateActivityByRow(params);
+                            }
                         }else if(itemTypeEvaluation.value===2){  
                             var rowData = $('#tableRegisterCalActivities').jqxGrid('getrowdata', row);
                             var cellBe = null;
@@ -791,11 +809,20 @@
             var validation = function (cell, value) {    
                 itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');
                 if(itemTypeEvaluation.value===1){
-                    if (value > value_max) {
-                        return { result: false, message: "Calificación máxima "+value_max};
-                    }
-                    if (value < 0) {
-                        return { result: false, message: "Calificación minima 0"};
+                    if(cell.column==="dataValueObtaniedEquivalent"){
+                        if (value > 10) {
+                            return { result: false, message: "Calificación máxima 10"};
+                        }
+                        if (value < 0) {
+                            return { result: false, message: "Calificación minima 0"};
+                        }
+                    }else{
+                        if (value > value_max) {
+                            return { result: false, message: "Calificación máxima "+value_max};
+                        }
+                        if (value < 0) {
+                            return { result: false, message: "Calificación minima 0"};
+                        }
                     }
                 }else{
                     var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
@@ -1170,9 +1197,31 @@
             ];
             var columsAcumulated =[
                 { text: 'R', hidecolumn : true, columngroup: 'rating', dataField: 'dataValueObtanied', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-                { text: 'Equivalente', clipboard: false, cellsformat:"f2", columngroup: 'rating', dataField: 'dataValueObtaniedEquivalent', cellsalign: 'center', align: 'center', width: 100, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                 { 
-                    text: 'Obtenido', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataValueObtaniedNew', cellsalign: 'left', align: 'center', width: 80,  columntype: 'numberinput',
+                    text: 'Equivalente', 
+                    cellsformat:"f2", 
+                    columngroup: 'rating', 
+                    dataField: 'dataValueObtaniedEquivalent', 
+                    cellsalign: 'center', 
+                    align: 'center', 
+                    width: 100, 
+                    columntype: 'numberinput',
+                    validation: validation,
+                    initeditor: initeditor, 
+                    cellbeginedit: cellbeginedit, 
+                    cellsrenderer: cellsrenderer,
+                    cellclassname: cellclass
+                    
+                },
+                { 
+                    text: 'Obtenido', 
+                    cellsformat:"f2",  
+                    columngroup: 'rating', 
+                    dataField: 'dataValueObtaniedNew', 
+                    cellsalign: 'left', 
+                    align: 'center', 
+                    width: 80,  
+                    columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor, 
                     cellbeginedit: cellbeginedit, 
@@ -1295,17 +1344,33 @@
                 var oldvalue = args.oldvalue;
                 
                 itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');
-                if(datafield==="dataValueObtaniedNew"){
-                    if(itemTypeEvaluation.value===1){
-                        var params = {
-                            "evaluationType" : itemTypeEvaluation.value,
-                            "row": rowBoundIndex,
-                            "value": value,
-                            "oldvalue" : oldvalue
-                        };
-                        evaluateActivityByRow(params);
-                    }  
-                }                              
+                if(itemTypeEvaluation.value===1){
+                    if(datafield==="dataValueObtaniedEquivalent"){
+                        var valueFloat = parseFloat(value);
+                        if(isNaN(value)){
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowBoundIndex, "dataValueObtaniedEquivalent", oldvalue);
+                        }else{
+                            console.log(value_max)
+                            var valueObtaniedNew = parseFloat(valueFloat*value_max/10).toFixed(2);
+                            console.log(valueObtaniedNew)
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowBoundIndex, "dataValueObtaniedNew", valueObtaniedNew);
+                        }
+                    }
+                    if(datafield==="dataValueObtaniedNew"){
+                        var valueFloat = parseFloat(value);
+                        if(isNaN(valueFloat)){
+                            $("#tableRegisterCalActivities").jqxGrid('setcellvalue', rowBoundIndex, "dataValueObtaniedNew", oldvalue);
+                        }else{
+                            var params = {
+                                "evaluationType" : itemTypeEvaluation.value,
+                                "row": rowBoundIndex,
+                                "value": valueFloat,
+                                "oldvalue" : oldvalue
+                            };
+                            evaluateActivityByRow(params);
+                        }                        
+                    }
+                }
                 if(getTypeScale(datafield)===1 || getTypeScale(datafield)===2 || getTypeScale(datafield)===3){
                     if(itemTypeEvaluation.value===2){  
                         var rowData = $('#tableRegisterCalActivities').jqxGrid('getrowdata', rowBoundIndex);
