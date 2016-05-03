@@ -39,7 +39,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", null, "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){                    
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     

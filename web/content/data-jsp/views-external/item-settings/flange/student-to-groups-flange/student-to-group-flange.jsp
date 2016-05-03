@@ -326,11 +326,6 @@
     Carrera <br>
     <div id='studentToGroupFlangeCareerFilter'></div>
 </div>
-<div style="float: right; margin-right: 5px;">
-    Periodo <br>
-    <div id='studentToGroupFlangePeriodFilter'></div>
-</div>
-<br><br><br>
 <div style="float: left; margin-right: 5px;">
     Cuatrimestre<br>
     <div id='studentToGroupFlangeSemesterFilter'></div>
@@ -342,6 +337,10 @@
 <div style="float: left; margin-right: 5px;">
     Tutor<br>
     <div id='studentToGroupFlangeTutorFilter'></div>
+</div>
+<div style="float: left; margin-right: 5px;">
+    Periodo <br>
+    <div id='studentToGroupFlangePeriodFilter'></div>
 </div>
 <br><br><br>
 <div style="float: left; margin-right: 5px;">

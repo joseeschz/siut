@@ -10,7 +10,7 @@ package model;
  * @author Carlos
  */
 public class groupMatterTeacherModel {
-    int PK_GROUP_MATTER_TECHER = 0;
+    int PK_GROUP_MATTER_TEACHER = 0;
     int FK_CAREER = 0;
     int FK_PERIOD = 0;
     int FK_SEMESTER = 0;
@@ -22,12 +22,12 @@ public class groupMatterTeacherModel {
     int FK_TEACHER = 0;
     String FL_NAME_TEACHER = "";
 
-    public int getPK_GROUP_MATTER_TECHER() {
-        return PK_GROUP_MATTER_TECHER;
+    public int getPK_GROUP_MATTER_TEACHER() {
+        return PK_GROUP_MATTER_TEACHER;
     }
 
-    public void setPK_GROUP_MATTER_TECHER(int PK_GROUP_MATTER_TECHER) {
-        this.PK_GROUP_MATTER_TECHER = PK_GROUP_MATTER_TECHER;
+    public void setPK_GROUP_MATTER_TEACHER(int PK_GROUP_MATTER_TEACHER) {
+        this.PK_GROUP_MATTER_TEACHER = PK_GROUP_MATTER_TEACHER;
     }
 
     public int getFK_CAREER() {

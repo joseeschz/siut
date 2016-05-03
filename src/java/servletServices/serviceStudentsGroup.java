@@ -48,11 +48,13 @@ public class serviceStudentsGroup extends HttpServlet {
                     int fk_career = Integer.parseInt(request.getParameter("fkCareer"));
                     int fk_semester = Integer.parseInt(request.getParameter("fkSemester"));
                     int fk_group = Integer.parseInt(request.getParameter("fkGroup"));
+                    int fk_subject_matter = Integer.parseInt(request.getParameter("fkSubjectMatter"));
                     int fk_period = Integer.parseInt(request.getParameter("fkPeriod"));
-                    listGroupStudent = new groupStudentControl().SelectGroupStudent(fk_career, fk_semester, fk_group, fk_period);
+                    listGroupStudent = new groupStudentControl().SelectGroupStudent(fk_career, fk_semester, fk_group, fk_subject_matter, fk_period);
                     for(int i=0;i<listGroupStudent.size();i++){
                         JSONObject datos = new JSONObject();
-                        datos.put("id", listGroupStudent.get(i).getPK_GRUPOS_BY_STUDENT());
+                        datos.put("dataID", i+1);
+                        datos.put("dataPkGroupMatterTeacherStudent", listGroupStudent.get(i).getPK_GROUP_MATTER_TEACHER());
                         datos.put("dataProgresivNumber", i+1);
                         datos.put("dataEnrollment", listGroupStudent.get(i).getFL_ENROLLMENT());
                         datos.put("dataStudentName", listGroupStudent.get(i).getFL_STUDENT_NAME());
@@ -63,7 +65,8 @@ public class serviceStudentsGroup extends HttpServlet {
                 if(request.getParameter("view").equals("insert")){
                     for(int i=0;i<50;i++){
                         JSONObject datos = new JSONObject();
-                        datos.put("id", i);
+                        datos.put("dataID", i+1);
+                        datos.put("dataPkGroupMatterTeacherStudent", null);
                         datos.put("dataProgresivNumber", i+1);
                         datos.put("dataEnrollment", "");
                         datos.put("dataStudentName", "");
@@ -78,33 +81,39 @@ public class serviceStudentsGroup extends HttpServlet {
                 out.close();
             }
             if(request.getParameter("insert")!=null){
-                if(request.getParameter("fkCareer") != null && request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkPeriod") != null && request.getParameter("fkTutor") != null){
+                if(request.getParameter("fkCareer") != null && request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkPeriod") != null && request.getParameter("fkTutor") != null && request.getParameter("fkTeacher") != null && request.getParameter("fkSubjectMatter") != null){
                     groupStudentModel dataGroupStudent=new groupStudentModel();
                     dataGroupStudent.setFK_CAREER(Integer.parseInt(request.getParameter("fkCareer")));
                     dataGroupStudent.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
                     dataGroupStudent.setFK_GROUP(Integer.parseInt(request.getParameter("fkGroup")));
                     dataGroupStudent.setFK_PERIOD(Integer.parseInt(request.getParameter("fkPeriod")));
                     dataGroupStudent.setFK_TUTOR_TEACHER(Integer.parseInt(request.getParameter("fkTutor")));
+                    dataGroupStudent.setFK_TEACHER(Integer.parseInt(request.getParameter("fkTeacher")));
+                    dataGroupStudent.setFK_SUBJECT_MATTER(Integer.parseInt(request.getParameter("fkSubjectMatter")));
                     dataGroupStudent.setFL_ENROLLMENT(request.getParameter("enrollment"));
                     out.print(new groupStudentControl().InsertGroupStudent(dataGroupStudent));
+                    out.flush(); 
+                    out.close();
                 }                
             }
             if(request.getParameter("update")!=null){       
-                if(request.getParameter("fkCareer") != null && request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkPeriod") != null && request.getParameter("fkTutor") != null){
+                if(request.getParameter("fkCareer") != null && request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkPeriod") != null && request.getParameter("fkTutor") != null && request.getParameter("fkTeacher") != null && request.getParameter("fkSubjectMatter") != null){
                     groupStudentModel dataGroupStudent=new groupStudentModel();
                     dataGroupStudent.setFK_CAREER(Integer.parseInt(request.getParameter("fkCareer")));
                     dataGroupStudent.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
                     dataGroupStudent.setFK_GROUP(Integer.parseInt(request.getParameter("fkGroup")));
                     dataGroupStudent.setFK_PERIOD(Integer.parseInt(request.getParameter("fkPeriod")));
                     dataGroupStudent.setFK_TUTOR_TEACHER(Integer.parseInt(request.getParameter("fkTutor")));
+                    dataGroupStudent.setFK_TEACHER(Integer.parseInt(request.getParameter("fkTeacher")));
+                    dataGroupStudent.setFK_SUBJECT_MATTER(Integer.parseInt(request.getParameter("fkSubjectMatter")));
                     dataGroupStudent.setFL_ENROLLMENT(request.getParameter("enrollment"));
                     out.print(new groupStudentControl().UpdateGroupStudent(dataGroupStudent));
                 }                    
             }
             if(request.getParameter("delete")!=null){       
-                if(request.getParameter("pkGroupByStudent") != null){
-                    int pkGroupByStudent = Integer.parseInt(request.getParameter("pkGroupByStudent")); 
-                    out.print(new groupStudentControl().DeleteGroupStudent(pkGroupByStudent));
+                if(request.getParameter("dataPkGroupMatterTeacherStudent") != null){
+                    int dataPkGroupMatterTeacherStudent = Integer.parseInt(request.getParameter("dataPkGroupMatterTeacherStudent")); 
+                    out.print(new groupStudentControl().DeleteGroupStudent(dataPkGroupMatterTeacherStudent));
                 }                
             }
         }

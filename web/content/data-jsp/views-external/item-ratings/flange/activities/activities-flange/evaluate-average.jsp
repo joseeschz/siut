@@ -27,8 +27,6 @@
         itemLevel = $('#registerCalFlangeLevelFilter').jqxDropDownList('getSelectedItem');
         if(itemLevel!==undefined && itemCareer!==undefined){
             createDropDownCareerByTeacher( itemLevel.value ,"#registerCalFlangeCareerFilter",false);
-            
-            
             itemCareer = $('#registerCalFlangeCareerFilter').jqxDropDownList('getSelectedItem');
             createDropDownPeriod("comboActiveYear","#registerCalFlangePeriodFilter");
             itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
@@ -41,9 +39,9 @@
                     if(itemGroup!==undefined){
                         createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, itemGroup.value, "#registerCalFlangeSubjectMatterFilter", false);
                         $("#registerCalFlangeSubjectMatterFilter").jqxDropDownList({width: 300});
-                        itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-                        initEvaluationType();
+                        itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');                        
                         if(itemSubjectMatter!==undefined){
+                            initEvaluationType();
                             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, false);
                             itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
                             if(itemScaleEvaluation!==undefined){    
@@ -51,6 +49,9 @@
                             }else{
                                 createDropDownActivities("#calTeacherActivitiesFilter", [], false);
                             }
+                        }else{
+                            createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
+                            initEvaluationType();
                         }
                     }else{
                         createDropDownSubjectMatterByTeacher(null, null, null, null, "#registerCalFlangeSubjectMatterFilter", false);
@@ -100,17 +101,18 @@
                 itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
                 createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, true);
                 itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
-                if(itemScaleEvaluation==undefined){
-                    createDropDownActivities("#calTeacherActivitiesFilter", [], true);
+                if(itemScaleEvaluation==undefined || itemScaleEvaluation==null){                    
+                    $('#calTeacherActivitiesFilter').jqxDropDownList('clear'); 
                     $('#tableRegisterCalActivities').jqxGrid("clear");
-                    $("#evaluateActivityPopover").parent().fadeOut("slow");                     
+                    $("#evaluateActivityPopover").parent().fadeOut("slow");   
+                    initEvaluationType();
                 }
             });
             
             $("#calTeacherScaleEvaluationFilter").on('change',function (event){
                 if(event.args){
                     itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
-                    if(itemScaleEvaluation!==undefined){
+                    if(itemScaleEvaluation!==undefined || itemScaleEvaluation!==null){
                         initDropDownActivities(true, undefined);
                     }else{
                         createDropDownActivities("#calTeacherActivitiesFilter", [], true);
@@ -131,35 +133,54 @@
         function initEvaluationType(){
             itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
             itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
-            itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-            var data = {
-                "fkGroup":itemGroup.value,
-                "fkMatter":itemSubjectMatter.value,
-                "fkPeriod":itemPeriod.value
-            };            
-            createDropDownEvaluationType("#registerCalEvaluationType", data);
-            $("#registerCalEvaluationType").off("change");
-            $("#registerCalEvaluationType").on('change',function (event){ 
-                var args = event.args;
-                if (args) {
-                    itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');                    
-                    if(itemTypeEvaluation.value==1){
-                        $("#calTeacherScaleEvaluationFilter").parent().show();
-                        $("#contentCalTeacherActivitiesFilter").parent().show();                        
-                    }else{
-                        $("#calTeacherScaleEvaluationFilter").parent().hide();
-                        $("#contentCalTeacherActivitiesFilter").parent().hide();                        
-                    }                    
-                    itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
-                    if(itemActivity!==undefined && itemActivity!==null){
-                        $('#tableRegisterCalActivities').fadeIn("slow");
-                        maxValActivity();
-                        loadTable();
-                    }else{
-                        $('#tableRegisterCalActivities').hide();
+            itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');                       
+            if(itemSubjectMatter!==undefined){
+                var data = {
+                    "fkGroup":itemGroup.value,
+                    "fkMatter":itemSubjectMatter.value,
+                    "fkPeriod":itemPeriod.value
+                }; 
+                createDropDownEvaluationType("#registerCalEvaluationType", data);
+                $("#registerCalEvaluationType").off("change");
+                $("#registerCalEvaluationType").on('change',function (event){ 
+                    var args = event.args;
+                    if (args) {
+                        itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');  
+                        if(itemScaleEvaluation!=undefined || itemScaleEvaluation!=null){
+                            itemTypeEvaluation = $('#registerCalEvaluationType').jqxDropDownList('getSelectedItem');                    
+                            if(itemTypeEvaluation.value==1){
+                                $("#calTeacherScaleEvaluationFilter").parent().show();
+                                $("#contentCalTeacherActivitiesFilter").parent().show();                        
+                            }else{
+                                $("#calTeacherScaleEvaluationFilter").parent().hide();
+                                $("#contentCalTeacherActivitiesFilter").parent().hide();                        
+                            }   
+
+                            $('#tableRegisterCalActivities').fadeIn("slow");
+                            $("#evaluateActivityPopover").parent().show();
+                            $("#deleteEvaluatedActivityPopover").parent().show();
+                            itemActivity = $('#calTeacherActivitiesFilter').jqxDropDownList('getSelectedItem');
+                            if(itemActivity!=undefined && itemActivity!=null){
+                                $('#tableRegisterCalActivities').fadeIn("slow");
+                                maxValActivity();
+                                loadTable();
+                            }else{
+                                $("#evaluateActivityPopover").parent().hide();
+                                $("#deleteEvaluatedActivityPopover").parent().hide();
+                                $('#tableRegisterCalActivities').hide();
+                            }
+                        }
+                        else{
+                            $("#evaluateActivityPopover").parent().hide();
+                            $("#deleteEvaluatedActivityPopover").parent().hide();
+                            $('#tableRegisterCalActivities').hide();
+                        }
                     }
-                }
-            }); 
+                }); 
+            }else{                
+                createDropDownEvaluationType("#registerCalEvaluationType", null);
+                createDropDownActivities("#calTeacherActivitiesFilter", [], false);
+            }
         }
         $("#popoverOptionDeleteEvaluated").jqxPopover({
             offset: {left: -80, top:0}, 
@@ -1218,7 +1239,7 @@
                     dataField: 'dataValueObtaniedNew', 
                     cellsalign: 'left', 
                     align: 'center', 
-                    width: 80,  
+                    width: 70,  
                     columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor, 
@@ -1239,7 +1260,7 @@
                 { text: 'Hacer', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedDo', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false }, 
                 { text: 'Ser', columngroup: 'rating', dataField: 'dataObtaniedRegularizationBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                 { 
-                    text: 'Saber', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedRegularizationKnow', cellsalign: 'left', align: 'center', width: 50,  columntype: 'numberinput',
+                    text: 'Saber', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedRegularizationKnow', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor,
                     cellbeginedit: cellbeginedit, 
@@ -1247,7 +1268,7 @@
                     cellclassname: cellclass
                 },
                 { 
-                    text: 'Hacer', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedRegularizationDo', cellsalign: 'left', align: 'center', width: 50,  columntype: 'numberinput',
+                    text: 'Hacer', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedRegularizationDo', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor, 
                     cellbeginedit: cellbeginedit, 
@@ -1270,7 +1291,7 @@
                 { text: 'Hacer', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationDo', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                 { text: 'Ser', columngroup: 'rating', dataField: 'dataObtaniedGlobalBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
                 { 
-                    text: 'Saber', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedGlobalKnow', cellsalign: 'left', align: 'center', width: 50,  columntype: 'numberinput',
+                    text: 'Saber', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedGlobalKnow', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor,
                     cellbeginedit: cellbeginedit, 
@@ -1278,7 +1299,7 @@
                     cellclassname: cellclass
                 },
                 { 
-                    text: 'Hacer', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedGlobalDo', cellsalign: 'left', align: 'center', width: 50,  columntype: 'numberinput',
+                    text: 'Hacer', cellsformat:"f2",  columngroup: 'rating', dataField: 'dataObtaniedGlobalDo', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                     validation: validation,
                     initeditor: initeditor, 
                     cellbeginedit: cellbeginedit, 

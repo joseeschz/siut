@@ -73,12 +73,18 @@ public class servicePeriod extends HttpServlet {
                 }
                 if(request.getParameter("view").equals("comboAll")){
                     listPeriod=new periodControl().SelectPeriod("comboAll");
+                    int pkPeriodActive = new periodControl().SelectPeriodActive("activePeriodYear");
                     for(int i=0;i<listPeriod.size();i++){
                         JSONObject data = new JSONObject();
                         data.put("id", listPeriod.get(i).getPK_PERIOD());
                         data.put("dataProgresivNumber", i+1);
                         data.put("dataPkPeriod", listPeriod.get(i).getPK_PERIOD());
                         data.put("dataNamePeriod", listPeriod.get(i).getFL_NAME());
+                        if(listPeriod.get(i).getFL_YEAR_ACTIVE()!=1){
+                            data.put("dataPkPeriodActive", null);
+                        }else{
+                            data.put("dataPkPeriodActive", pkPeriodActive);
+                        }                        
                         data.put("dataNamePeriodAbbreviated", listPeriod.get(i).getFL_NAME_ABBREVIATED());
                         content.add(data); 
                     }

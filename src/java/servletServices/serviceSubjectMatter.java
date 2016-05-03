@@ -62,6 +62,11 @@ public class serviceSubjectMatter extends HttpServlet {
                             pkTeacher=Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
                         listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByTeacher(pkTeacher, pkCareer, pkPeriod, pkSemester, pkGroup);
+                    }else if(request.getParameter("byGroup")!=null){
+                        pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
+                        pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
+                        pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByGroup(pkCareer, pkSemester, pkGroup, pkPeriod);
                     }else{
                         pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                         pkGroup = Integer.parseInt(request.getParameter("pkGroup"));

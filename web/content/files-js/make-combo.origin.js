@@ -345,7 +345,8 @@ function createDropDownPeriod(filtrable, selector){
         id: "id",
         datafields: [
             { name: 'dataPkPeriod' },
-            { name: 'dataNamePeriod' }
+            { name: 'dataNamePeriod' },
+            { name: 'dataPkPeriodActive' }
         ],
         url: "../servicePeriod?view="+filtrable+"",
         async: false
@@ -355,13 +356,16 @@ function createDropDownPeriod(filtrable, selector){
         theme: theme, 
         selectedIndex: 0, 
         placeHolder: "SELECCIONAR",
+        filterPlaceHolder: "Buscar",
+        filterable: true, 
+        searchMode: 'containsignorecase',
         source: dataAdapterPeriod, 
         displayMember: "dataNamePeriod", 
         valueMember: "dataPkPeriod",
         height: 26, 
         width: 240,
-        dropDownHeight: 200
-    });
+        dropDownHeight: 100
+    }).css("display","inline-block");
     var item = $(selector).jqxDropDownList('getItemByValue', periodSelected);
     $(selector).jqxDropDownList({selectedIndex: item.index}); 
 }
@@ -522,7 +526,7 @@ function createDropDownStudyPlan(filtrable, selector, update){
             source: dataAdapterCareer, 
             displayMember: "dataNameStudyPlan", 
             valueMember: "dataPkStudyPlan",
-            width: 350                
+            width: 290                
         }).css("display","inline-block");
     }
 }
@@ -575,7 +579,7 @@ function createDropDownEvaluationType(selector, data){
         valueMember: "valueMember",
         width: 150                
     }).css("display","inline-block");
-    
+//    $(selector).jqxDropDownList('clearSelection');
     var items = $(selector).jqxDropDownList('getItems'); 
     for(var i=0; i<items.length; i++){
         if(items[i].originalItem.status==="-1"){
@@ -786,6 +790,7 @@ function createDropDownTutorTeacher(selector, update){
             theme: theme,
             selectedIndex: 0, 
             filterable: true, 
+            searchMode: 'containsignorecase',
             dropDownHeight: 150,
             filterPlaceHolder: "Buscar",
             placeHolder: "SELECCIONAR",
@@ -795,6 +800,41 @@ function createDropDownTutorTeacher(selector, update){
             width: 240                
         }).css("display","inline-block");
     }
+}
+
+function createDropDownTeachers(selector, selectValue){
+    var ordersSource ={
+            datatype: "json",
+            datafields: [
+                { name: 'dataNameWorker' },
+                { name: 'id' }
+            ],
+            root: "__ENTITIES",
+            id: 'id',
+            async: false,
+            url: '../serviceTeacher?view'
+        };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+   
+    // Create a jqxListBox
+    $(selector).jqxDropDownList({ 
+        theme: theme,
+        source: dataAdapter, 
+        displayMember: "dataNameWorker", 
+        valueMember: "id", 
+        placeHolder: "SELECCIONAR",
+        filterable:true,
+        filterPlaceHolder: "Buscar",
+        dropDownHeight: 150,
+        searchMode: 'containsignorecase'
+    });
+    var item;
+    if(selectValue==null){
+        item=null;
+    }else{
+        item = $(selector).jqxDropDownList('getItemByValue', selectValue);
+    }
+    $(selector).jqxDropDownList('selectItem', item ); 
 }
 
 function createDropDownStudyLevelByTeacher(selector, update){
@@ -884,7 +924,7 @@ function createDropDownStudyLevelByDirector(selector, update){
             source: dataAdapterEntity, 
             displayMember: "dataNameStudyLevel", 
             valueMember: "dataPkStudyLevel",
-            width: 270                
+            width: 100                
         }).css("display","inline-block");
     }
 }
@@ -1237,6 +1277,44 @@ function createDropDownSubjectMatter(filtrable, selector, update){
                 }
             }
         });
+    }
+}
+function createDropDownSubjectMatterByGroup(filtrable, selector, update){
+    var ordersSource ={
+            datatype: "json",
+            datafields: [
+                { name: 'dataNameSubjectMatter' },
+                { name: 'dataPkSubjectMatter' }
+            ],
+            root: "__ENTITIES",
+            id: 'id',
+            async: false,
+            url: '../serviceSubjectMatter?view=combo',
+            data : {
+                byGroup : null,
+                pkCareer : filtrable.pkCareer,
+                pkSemester : filtrable.pkSemester,
+                pkGroup : filtrable.pkGroup,
+                pkPeriod : filtrable.pkPeriod
+            }
+        };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapter,selectedIndex:0});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxDropDownList({ 
+            theme: theme,
+            selectedIndex: 0, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapter, 
+            displayMember: "dataNameSubjectMatter", 
+            valueMember: "dataPkSubjectMatter",
+            width: 390
+        }).css("display","inline-block");
     }
 }
 function createDropDownSubjectMatterByTeacher(period, career, filtrable, group, selector, update){
