@@ -522,8 +522,8 @@
 					</cellContents>
 				</crosstabHeaderCell>
 				<rowGroup name="PK_STUDENT" width="280">
-					<bucket class="java.lang.Long">
-						<bucketExpression><![CDATA[$F{PK_STUDENT}]]></bucketExpression>
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{FL_NAME}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
 						<cellContents backcolor="#F0F8FF" mode="Transparent">
@@ -579,7 +579,7 @@
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="105" height="15" backcolor="#CCCCCC" uuid="48ec37ce-3dee-4984-b2bc-fff5e9b5fa64"/>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="125" height="15" backcolor="#CCCCCC" uuid="48ec37ce-3dee-4984-b2bc-fff5e9b5fa64"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -592,7 +592,7 @@
 								<textFieldExpression><![CDATA[$V{FL_SERIAL_NUM_MATTER}]]></textFieldExpression>
 							</textField>
 							<staticText>
-								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="15" width="25" height="13" backcolor="#CCCCCC" uuid="55d81e43-139b-49fd-980e-58047f340570"/>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="15" width="30" height="13" backcolor="#CCCCCC" uuid="55d81e43-139b-49fd-980e-58047f340570"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -605,7 +605,7 @@
 								<text><![CDATA[Ser]]></text>
 							</staticText>
 							<staticText>
-								<reportElement style="Crosstab Data Text" mode="Opaque" x="25" y="15" width="25" height="13" backcolor="#CCCCCC" uuid="48ea6be9-b7af-4423-868e-72020203a45c"/>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="30" y="15" width="30" height="13" backcolor="#CCCCCC" uuid="48ea6be9-b7af-4423-868e-72020203a45c"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -618,7 +618,7 @@
 								<text><![CDATA[Saber]]></text>
 							</staticText>
 							<staticText>
-								<reportElement style="Crosstab Data Text" mode="Opaque" x="50" y="15" width="25" height="13" backcolor="#CCCCCC" uuid="d9baa422-61e5-477b-bf2b-ce8dc8473248"/>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="60" y="15" width="30" height="13" backcolor="#CCCCCC" uuid="d9baa422-61e5-477b-bf2b-ce8dc8473248"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -631,7 +631,7 @@
 								<text><![CDATA[Hacer]]></text>
 							</staticText>
 							<staticText>
-								<reportElement style="Crosstab Data Text" mode="Opaque" x="75" y="15" width="30" height="13" backcolor="#CCCCCC" uuid="67e1309a-25e5-4ab1-b1be-49c9985d7b4e"/>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="90" y="15" width="35" height="13" backcolor="#CCCCCC" uuid="67e1309a-25e5-4ab1-b1be-49c9985d7b4e"/>
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -667,13 +667,13 @@
 				<measure name="FL_SUBTOTAL_DO" class="java.lang.String">
 					<measureExpression><![CDATA[$F{FL_SUBTOTAL_DO}]]></measureExpression>
 				</measure>
-				<crosstabCell width="105" height="14">
+				<crosstabCell width="125" height="14">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="14" uuid="e63de747-31db-455b-9e15-b9ee2bdfab45"/>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="30" height="14" uuid="e63de747-31db-455b-9e15-b9ee2bdfab45"/>
 							<box>
 								<leftPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
@@ -684,7 +684,7 @@
 							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_BE}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="25" y="0" width="25" height="14" uuid="82b91ca2-006b-45c0-8a9e-94dd13fbe99d"/>
+							<reportElement style="Crosstab Data Text" x="30" y="0" width="30" height="14" uuid="82b91ca2-006b-45c0-8a9e-94dd13fbe99d"/>
 							<box>
 								<leftPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
@@ -695,7 +695,7 @@
 							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_KNOW}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="50" y="0" width="25" height="14" uuid="91036040-2e70-4a5c-ac0c-d802d34ed40e"/>
+							<reportElement style="Crosstab Data Text" x="60" y="0" width="30" height="14" uuid="91036040-2e70-4a5c-ac0c-d802d34ed40e"/>
 							<box>
 								<leftPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
@@ -706,13 +706,13 @@
 							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_DO}]]></textFieldExpression>
 						</textField>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="75" y="0" width="30" height="14" uuid="5653da38-0c87-4a9f-baeb-17ee953b92d9"/>
+							<reportElement style="Crosstab Data Text" x="90" y="0" width="35" height="14" uuid="5653da38-0c87-4a9f-baeb-17ee953b92d9"/>
 							<box>
 								<leftPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement>
-								<font fontName="Calibri"/>
+								<font fontName="Calibri" isBold="true"/>
 							</textElement>
 							<textFieldExpression><![CDATA[$V{FL_AVGMeasure}]]></textFieldExpression>
 						</textField>

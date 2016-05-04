@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="42" bottomMargin="42" isSummaryWithPageHeaderAndFooter="true" uuid="8d09f675-7c27-4f5d-a1a2-410d1b19cc35">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="42" bottomMargin="42" isSummaryWithPageHeaderAndFooter="true" uuid="8d09f675-7c27-4f5d-a1a2-410d1b19cc35">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -86,6 +86,10 @@
 		<field name="FL_NAME" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
+		<field name="FL_SUBTOTAL_BE_EVALUATED" class="java.lang.String"/>
+		<field name="FL_SUBTOTAL_KNOW_EVALUATED" class="java.lang.String"/>
+		<field name="FL_SUBTOTAL_DO_EVALUATED" class="java.lang.String"/>
+		<field name="FL_AVG_EVALUATED" class="java.lang.String"/>
 		<field name="FL_SUBTOTAL_BE" class="java.lang.String"/>
 		<field name="FL_SUBTOTAL_KNOW" class="java.lang.String"/>
 		<field name="FL_SUBTOTAL_DO" class="java.lang.String"/>
@@ -163,6 +167,9 @@
 	<field name="PK_LEVEL_STUDY" class="java.lang.Long">
 		<fieldDescription><![CDATA[Este campo es la llave primaria del registro con ella podemos borrar o actualizar algún registro y en su caso podremos realizar con este relaciones externas entre tablas]]></fieldDescription>
 	</field>
+	<field name="FL_NAME_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FL_NAME" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -184,24 +191,24 @@
 				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="102" y="0" width="650" height="48" uuid="20b60c89-29a8-4622-85e8-82200c3fa881"/>
+				<reportElement x="102" y="0" width="470" height="48" uuid="20b60c89-29a8-4622-85e8-82200c3fa881"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[UNIVERSIDAD TECNOLÓGICA DEL SUR DEL ESTADO DE MÉXICO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="48" width="650" height="41" uuid="d03df2f2-4a59-4486-9a31-b0b9b15c01b2"/>
+				<reportElement x="102" y="48" width="470" height="41" uuid="d03df2f2-4a59-4486-9a31-b0b9b15c01b2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[REPORTE  DE ACTIVIDADES EVALUADAS]]></text>
+				<text><![CDATA[REPORTE  DE CALIFICACIONES  EVALUADAS]]></text>
 			</staticText>
 			<frame>
-				<reportElement x="2" y="89" width="750" height="19" uuid="c9fc8e7f-6656-4347-931f-5672a4ebf054"/>
+				<reportElement x="2" y="89" width="570" height="19" uuid="c9fc8e7f-6656-4347-931f-5672a4ebf054"/>
 			</frame>
 			<frame>
-				<reportElement x="2" y="128" width="750" height="20" uuid="0e76ba1b-8b5b-4fac-a9b6-c1a30a9ac3cf"/>
+				<reportElement x="2" y="128" width="570" height="20" uuid="0e76ba1b-8b5b-4fac-a9b6-c1a30a9ac3cf"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -210,14 +217,16 @@
 				</box>
 				<staticText>
 					<reportElement x="0" y="0" width="100" height="20" uuid="8c455acd-6342-4591-b8ac-d0377a33c92a"/>
-					<box leftPadding="5" rightPadding="5"/>
+					<box leftPadding="5" rightPadding="5">
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[ASIGNATURA:]]></text>
+					<text><![CDATA[MATERIA:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="100" y="1" width="650" height="19" uuid="4b518d6e-ec85-4f82-8854-9c83b3a63f69"/>
+					<reportElement x="100" y="0" width="470" height="19" uuid="c38fb813-f36d-45ce-82e6-b49ed4742844"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
@@ -225,7 +234,7 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="2" y="148" width="750" height="20" uuid="858a1d67-de6d-4688-bf77-601839383d21"/>
+				<reportElement x="2" y="148" width="570" height="20" uuid="858a1d67-de6d-4688-bf77-601839383d21"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -233,87 +242,117 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="114" height="20" uuid="42a57cef-315e-45cd-940c-c0b3721bcf4f"/>
-					<box leftPadding="5" rightPadding="5"/>
+					<reportElement x="0" y="0" width="100" height="20" uuid="42a57cef-315e-45cd-940c-c0b3721bcf4f"/>
+					<box leftPadding="5" rightPadding="5">
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CUATRIMESTRE:]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="114" y="0" width="146" height="19" uuid="34692454-29bf-4e8d-8a3e-a70b86573c29"/>
+					<reportElement x="100" y="1" width="134" height="19" uuid="34692454-29bf-4e8d-8a3e-a70b86573c29"/>
+					<box>
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_NAME_SEMESTER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="589" y="0" width="122" height="20" uuid="95e93688-5a23-41ad-a324-b352f2261fc2"/>
+					<reportElement x="428" y="0" width="142" height="20" uuid="95e93688-5a23-41ad-a324-b352f2261fc2"/>
+					<box>
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_NAME}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="295" y="0" width="64" height="20" uuid="28a75c7d-45ab-4dea-8379-49dbca2f21d7"/>
-					<box leftPadding="5" rightPadding="5"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Calibri" size="12" isBold="true"/>
-					</textElement>
-					<text><![CDATA[GRUPO:]]></text>
-				</staticText>
 				<textField>
-					<reportElement x="359" y="1" width="143" height="19" uuid="960bba02-c296-4e1e-b335-351d1de34a3d"/>
+					<reportElement x="285" y="1" width="74" height="19" uuid="960bba02-c296-4e1e-b335-351d1de34a3d"/>
+					<box>
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_NAME_GROUP}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="514" y="0" width="73" height="20" uuid="28181412-5b76-4218-9518-25e1a27b6cd9"/>
+					<reportElement x="234" y="0" width="51" height="20" uuid="28a75c7d-45ab-4dea-8379-49dbca2f21d7"/>
 					<box leftPadding="5" rightPadding="5"/>
-					<textElement verticalAlignment="Middle">
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[GRUPO:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="359" y="0" width="66" height="20" uuid="28181412-5b76-4218-9518-25e1a27b6cd9"/>
+					<box leftPadding="5" rightPadding="5"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PERIODO:]]></text>
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="2" y="89" width="750" height="20" uuid="25924147-f4de-4c4d-bd8a-3a491a602f9d"/>
+				<reportElement x="2" y="89" width="570" height="20" uuid="25924147-f4de-4c4d-bd8a-3a491a602f9d"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textField>
+					<reportElement x="273" y="1" width="297" height="19" uuid="b138b494-8e4d-47f2-8b6f-dc0ad500b9ad"/>
+					<box>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{PK_LEVEL_STUDY}.intValue()==2 ? "(X)" : " "]]></textFieldExpression>
+				</textField>
 			</frame>
 			<frame>
-				<reportElement x="2" y="168" width="750" height="20" uuid="2e23976d-e6d0-4d5c-82e3-742221e47e57"/>
+				<reportElement x="2" y="168" width="570" height="20" uuid="2e23976d-e6d0-4d5c-82e3-742221e47e57"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
+				<textField>
+					<reportElement x="428" y="1" width="142" height="19" uuid="4b518d6e-ec85-4f82-8854-9c83b3a63f69"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Calibri" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_NAME_TYPE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="359" y="0" width="66" height="20" uuid="5df4dfbb-4e87-4cd1-a02d-13f6a60dc1f6"/>
+					<box leftPadding="5" rightPadding="5"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Calibri" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[TIPO:]]></text>
+				</staticText>
 			</frame>
 			<textField>
-				<reportElement x="2" y="169" width="750" height="20" uuid="5265cd2c-5626-43ea-9bab-ffd1b7ae901b"/>
-				<box leftPadding="5"/>
+				<reportElement x="2" y="169" width="359" height="20" uuid="5265cd2c-5626-43ea-9bab-ffd1b7ae901b"/>
+				<box leftPadding="5">
+					<rightPen lineWidth="0.5"/>
+				</box>
 				<textElement verticalAlignment="Middle" markup="none">
 					<font fontName="Calibri" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["AL "+$F{FL_DAY}+" DE "+$F{FL_MONTH}+"  DEL "+$F{FL_YEAR}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="2" y="89" width="750" height="20" uuid="a099afaa-21b3-4d21-ad88-5775bdb64655"/>
-				<box leftPadding="5"/>
-				<textElement verticalAlignment="Middle" markup="none">
-					<font fontName="Calibri" size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA["NIVEL:       TSU   ("+( $F{PK_LEVEL_STUDY}.intValue()==1 ? "X" : " " )+")     LIC./ING   ("+( $F{PK_LEVEL_STUDY}.intValue()==2 ? "X" : " " )+")"]]></textFieldExpression>
-			</textField>
 			<frame>
-				<reportElement x="2" y="109" width="750" height="20" uuid="872d7080-7cfa-4a7b-9ca2-a78a61849e2b"/>
+				<reportElement x="2" y="109" width="570" height="20" uuid="872d7080-7cfa-4a7b-9ca2-a78a61849e2b"/>
 				<box>
 					<topPen lineWidth="1.0"/>
 					<leftPen lineWidth="1.0"/>
@@ -321,115 +360,72 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textField>
-					<reportElement x="82" y="1" width="668" height="19" uuid="14a4258c-9116-4992-85bd-572b79e86185"/>
+					<reportElement x="100" y="1" width="470" height="19" uuid="14a4258c-9116-4992-85bd-572b79e86185"/>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="0" width="82" height="20" uuid="57a02982-c2a3-4cc0-9105-a7e40288b70c"/>
-					<box leftPadding="5" rightPadding="5"/>
+					<reportElement x="0" y="0" width="100" height="20" uuid="57a02982-c2a3-4cc0-9105-a7e40288b70c"/>
+					<box leftPadding="5" rightPadding="5">
+						<rightPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Calibri" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[CARRERA:]]></text>
 				</staticText>
 			</frame>
+			<staticText>
+				<reportElement x="2" y="88" width="100" height="20" uuid="19e95de4-2b8b-4574-9b12-2086276c4492"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NIVEL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="88" width="40" height="20" uuid="e3c9fc38-03bb-4f94-9b64-792f9eda8d5c"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TSU:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="90" width="59" height="20" uuid="4c35985d-d79c-4425-a7ab-4ca2d5f84f15"/>
+				<box leftPadding="5" rightPadding="5">
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LIC./ING:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="88" width="74" height="19" uuid="f293c0da-70d4-45d5-98ab-038f6d169b51"/>
+				<box>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{PK_LEVEL_STUDY}.intValue()==1 ? "(X)" : " " )]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
-	<detail>
-		<band height="316">
-			<componentElement>
-				<reportElement key="table 1" style="table 1" x="2" y="0" width="750" height="316" uuid="c7404b7b-f782-4d56-becc-06307d34bd12"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset2" uuid="ad036f72-8f90-4e04-ad73-ba4a04160d20">
-						<datasetParameter name="pt_level_1">
-							<datasetParameterExpression><![CDATA[$P{pt_level}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_career_1">
-							<datasetParameterExpression><![CDATA[$P{pt_career}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_semester_1">
-							<datasetParameterExpression><![CDATA[$P{pt_semester}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_group_1">
-							<datasetParameterExpression><![CDATA[$P{pt_group}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_matter_1">
-							<datasetParameterExpression><![CDATA[$P{pt_matter}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_period_1">
-							<datasetParameterExpression><![CDATA[$P{pt_period}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_evaluation_type_1">
-							<datasetParameterExpression><![CDATA[$P{pt_evaluation_type}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="90" uuid="54a86d7c-86f8-4dca-9747-4a6b9fca158a">
-						<jr:columnHeader style="table" height="30" rowSpan="1">
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" backcolor="#CCCCCC" uuid="f81bcc24-5a94-46b2-a890-90beee3904ff"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Calibri" size="12" isBold="true"/>
-								</textElement>
-								<text><![CDATA[NUMERO]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="table 1_TD" height="15" rowSpan="1">
-							<textField isStretchWithOverflow="true">
-								<reportElement style="style1" x="0" y="0" width="90" height="15" uuid="1cbb1d2f-c5d3-475a-a243-f759da431261"/>
-								<box leftPadding="5" rightPadding="5">
-									<topPen lineWidth="0.0"/>
-									<leftPen lineWidth="0.0"/>
-									<bottomPen lineWidth="0.0"/>
-									<rightPen lineWidth="0.0"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Calibri" size="10"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{FL_NUM}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="306" uuid="7633d5e9-eabf-4aa8-bc69-cb4c53bc476a">
-						<jr:columnHeader style="table" height="30" rowSpan="1">
-							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="306" height="30" backcolor="#CCCCCC" uuid="e2684bfa-4a1f-44b4-a4ec-b5c8a1e2c69e"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle">
-									<font fontName="Calibri" size="12" isBold="true"/>
-								</textElement>
-								<text><![CDATA[DESCRIPCIÓN]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="table 1_TD" height="15" rowSpan="1">
-							<textField isStretchWithOverflow="true">
-								<reportElement style="style1" x="0" y="0" width="306" height="15" uuid="86016c91-7202-40f7-96ca-c29e75053c16"/>
-								<box leftPadding="5" rightPadding="5">
-									<topPen lineWidth="0.0"/>
-									<leftPen lineWidth="0.0"/>
-									<bottomPen lineWidth="0.0"/>
-									<rightPen lineWidth="0.0"/>
-								</box>
-								<textElement verticalAlignment="Middle">
-									<font fontName="Calibri" size="10"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$F{FL_NAME_ACTIVITY}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
-		</band>
-	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="648" y="0" width="104" height="20" uuid="1179085f-fe52-495c-9510-e6294b4591c3"/>
+				<reportElement x="468" y="0" width="104" height="20" uuid="1179085f-fe52-495c-9510-e6294b4591c3"/>
 				<box leftPadding="5" rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Calibri" size="12" isBold="true"/>
@@ -447,13 +443,13 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="44" splitType="Stretch">
+		<band height="45" splitType="Stretch">
 			<elementGroup/>
-			<crosstab columnBreakOffset="600" ignoreWidth="false">
-				<reportElement stretchType="RelativeToTallestObject" isPrintRepeatedValues="false" x="2" y="0" width="750" height="41" uuid="ace7d9bf-97bf-45df-b8c8-78cf85b09ed1"/>
+			<crosstab>
+				<reportElement isPrintRepeatedValues="false" mode="Transparent" x="0" y="0" width="572" height="45" isPrintWhenDetailOverflows="true" uuid="66d9c7fc-e49b-4343-98fe-a90092e87441"/>
 				<crosstabDataset>
 					<dataset>
-						<datasetRun subDataset="Dataset1" uuid="f3e9a8df-ba88-4aed-acad-73bd707014c8">
+						<datasetRun subDataset="Dataset1" uuid="ee6fc187-a50c-4e39-914c-7119295831ab">
 							<datasetParameter name="pt_level_1">
 								<datasetParameterExpression><![CDATA[$P{pt_level}]]></datasetParameterExpression>
 							</datasetParameter>
@@ -481,7 +477,7 @@
 				<crosstabHeaderCell>
 					<cellContents>
 						<staticText>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="15" height="24" uuid="9b88731a-8c89-40bd-bd0d-7894670fd00d"/>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="25" height="24" backcolor="#CCCCCC" uuid="71a2bdc8-a61c-4737-ba48-c0841d3e6c44"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -489,12 +485,12 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement verticalAlignment="Middle">
-								<font fontName="Calibri" size="8" isBold="true"/>
+								<font fontName="Calibri" size="12" isBold="true"/>
 							</textElement>
 							<text><![CDATA[No.]]></text>
 						</staticText>
 						<staticText>
-							<reportElement style="Crosstab Data Text" x="15" y="0" width="76" height="24" uuid="2b531e2a-290d-442b-879e-18121862f54e"/>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="25" y="0" width="81" height="24" backcolor="#CCCCCC" uuid="b8e7b765-38d8-46b9-9bcd-e84812f368b7"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -502,12 +498,12 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement verticalAlignment="Middle">
-								<font fontName="Calibri" size="8" isBold="true"/>
+								<font fontName="Calibri" size="12" isBold="true"/>
 							</textElement>
-							<text><![CDATA[MATRÍCULA]]></text>
+							<text><![CDATA[Matrícula]]></text>
 						</staticText>
 						<staticText>
-							<reportElement style="Crosstab Data Text" x="91" y="0" width="137" height="24" uuid="8c35de26-1eb9-4d00-a92d-caee9447c580"/>
+							<reportElement style="Crosstab Data Text" mode="Opaque" x="106" y="0" width="165" height="24" backcolor="#CCCCCC" uuid="35a06f88-0666-47f1-97dd-1b968355102c"/>
 							<box>
 								<topPen lineWidth="0.5"/>
 								<leftPen lineWidth="0.5"/>
@@ -515,59 +511,53 @@
 								<rightPen lineWidth="0.5"/>
 							</box>
 							<textElement verticalAlignment="Middle">
-								<font fontName="Calibri" size="8" isBold="true"/>
+								<font fontName="Calibri" size="12" isBold="true"/>
 							</textElement>
-							<text><![CDATA[NOMBRE]]></text>
+							<text><![CDATA[Nombre]]></text>
 						</staticText>
 					</cellContents>
 				</crosstabHeaderCell>
-				<rowGroup name="FL_NAME" width="228">
+				<rowGroup name="PK_STUDENT" width="271">
 					<bucket class="java.lang.String">
 						<bucketExpression><![CDATA[$F{FL_NAME}]]></bucketExpression>
 					</bucket>
 					<crosstabRowHeader>
-						<cellContents backcolor="#C3CFD9" mode="Transparent">
+						<cellContents backcolor="#F0F8FF" mode="Transparent">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="91" y="0" width="137" height="15" uuid="73564dc9-2c9f-4b8a-a66a-f719ba3aff81"/>
-								<box leftPadding="5" rightPadding="5">
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Left" verticalAlignment="Middle">
-									<font fontName="Calibri" size="8"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{FL_NAME}]]></textFieldExpression>
-							</textField>
-							<textField>
-								<reportElement style="Crosstab Data Text" x="15" y="0" width="76" height="15" uuid="f5e94879-f0f3-4a10-bb2c-da6b71223523"/>
+								<reportElement style="Crosstab Data Text" x="25" y="0" width="81" height="12" uuid="0ccaa175-2c6c-4e57-9c54-c8bc7dc4dee3"/>
 								<box>
-									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement verticalAlignment="Middle">
-									<font fontName="Calibri" size="8"/>
+								<textElement>
+									<font fontName="Calibri" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{FL_ENROLLMENT}]]></textFieldExpression>
 							</textField>
 							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="15" height="15" uuid="9d844166-35c7-464b-b8df-637e09663789"/>
+								<reportElement style="Crosstab Data Text" x="0" y="0" width="25" height="12" uuid="f66acc3a-37f3-4a67-9e76-19ebb64548b7"/>
 								<box>
-									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
 									<rightPen lineWidth="0.5"/>
 								</box>
-								<textElement verticalAlignment="Middle">
-									<font fontName="Calibri" size="8"/>
+								<textElement>
+									<font fontName="Calibri" size="9"/>
 								</textElement>
 								<textFieldExpression><![CDATA[$V{ROW_COUNT}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement style="Crosstab Data Text" x="106" y="0" width="165" height="12" uuid="7d1d369a-30ab-45c3-b33b-baed70e39a6f"/>
+								<box leftPadding="2">
+									<leftPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Left">
+									<font fontName="Calibri" size="9"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$V{FL_NAME}]]></textFieldExpression>
 							</textField>
 						</cellContents>
 					</crosstabRowHeader>
@@ -575,129 +565,332 @@
 						<cellContents/>
 					</crosstabTotalRowHeader>
 				</rowGroup>
-				<columnGroup name="FL_NAME_SCALE" height="13" totalPosition="End">
+				<columnGroup name="FL_SERIAL_NUM_MATTER" height="24">
 					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{FL_NAME_SCALE}]]></bucketExpression>
+						<bucketExpression><![CDATA[$F{FL_SERIAL_NUM_MATTER}]]></bucketExpression>
 					</bucket>
 					<crosstabColumnHeader>
-						<cellContents backcolor="#C3CFD9" mode="Transparent">
+						<cellContents backcolor="#F0F8FF" mode="Transparent">
 							<box>
 								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 							</box>
-							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="61" height="13" uuid="c78af632-acb9-4552-bdf8-53ebf0f1c63b"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
-									<font fontName="Calibri" size="8" isBold="true"/>
-									<paragraph lineSpacing="Single" tabStopWidth="80"/>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="0" width="71" height="12" backcolor="#CCCCCC" uuid="55d81e43-139b-49fd-980e-58047f340570"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="9" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$V{FL_NAME_SCALE}]]></textFieldExpression>
-							</textField>
+								<text><![CDATA[Ser]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="71" y="0" width="71" height="12" backcolor="#CCCCCC" uuid="48ea6be9-b7af-4423-868e-72020203a45c"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Saber]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="142" y="0" width="71" height="12" backcolor="#CCCCCC" uuid="d9baa422-61e5-477b-bf2b-ce8dc8473248"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Hacer]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="213" y="0" width="71" height="12" backcolor="#CCCCCC" uuid="67e1309a-25e5-4ab1-b1be-49c9985d7b4e"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="9" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="0" y="12" width="35" height="12" backcolor="#CCCCCC" uuid="f1bbd341-1719-4716-9dcb-631933290f1c"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Evaluado]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="35" y="12" width="36" height="12" backcolor="#CCCCCC" uuid="b9cd5155-a825-4232-bf12-c43e244871ac"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Obtenido]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="71" y="12" width="35" height="12" backcolor="#CCCCCC" uuid="10228441-0efc-4448-add7-fbe902228394"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Evaluado]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="106" y="12" width="36" height="12" backcolor="#CCCCCC" uuid="2d287a46-05d0-4330-a7e8-d8fa056269bd"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Obtenido]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="142" y="12" width="35" height="12" backcolor="#CCCCCC" uuid="2a03351b-8bfe-4f9c-8972-c35fdc05d9c4"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Evaluado]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="177" y="12" width="36" height="12" backcolor="#CCCCCC" uuid="5bd10ea6-bc2d-4166-9307-bb1f60d4d131"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Obtenido]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="213" y="12" width="35" height="12" backcolor="#CCCCCC" uuid="2a03351b-8bfe-4f9c-8972-c35fdc05d9c4"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Evaluado]]></text>
+							</staticText>
+							<staticText>
+								<reportElement style="Crosstab Data Text" mode="Opaque" x="248" y="12" width="36" height="12" backcolor="#CCCCCC" uuid="5bd10ea6-bc2d-4166-9307-bb1f60d4d131"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement verticalAlignment="Top">
+									<font fontName="Calibri" size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Obtenido]]></text>
+							</staticText>
 						</cellContents>
 					</crosstabColumnHeader>
 					<crosstabTotalColumnHeader>
-						<cellContents backcolor="#737A80" mode="Transparent">
-							<box>
-								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-							</box>
-						</cellContents>
+						<cellContents/>
 					</crosstabTotalColumnHeader>
 				</columnGroup>
-				<columnGroup name="FL_NAME_ACTIVITY" height="11" totalPosition="End" headerPosition="Center">
-					<bucket class="java.lang.String">
-						<bucketExpression><![CDATA[$F{FL_NAME_ACTIVITY}]]></bucketExpression>
-					</bucket>
-					<crosstabColumnHeader>
-						<cellContents backcolor="#C3CFD9" mode="Transparent">
-							<box>
-								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-							</box>
-							<textField>
-								<reportElement style="Crosstab Data Text" x="0" y="0" width="61" height="11" uuid="f4d5a3c0-13fd-4fd8-a549-48d71dd573f0"/>
-								<textElement>
-									<font fontName="Calibri" size="8" isBold="true"/>
-								</textElement>
-								<textFieldExpression><![CDATA[$V{FL_NAME_ACTIVITY}]]></textFieldExpression>
-							</textField>
-						</cellContents>
-					</crosstabColumnHeader>
-					<crosstabTotalColumnHeader>
-						<cellContents backcolor="#E6F3FF" mode="Transparent">
-							<box>
-								<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-							</box>
-						</cellContents>
-					</crosstabTotalColumnHeader>
-				</columnGroup>
-				<measure name="FL_VALUE_OBTANIEDMeasure" class="java.lang.String" calculation="Sum">
-					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED_FLOAT}]]></measureExpression>
+				<measure name="FL_AVGMeasure" class="java.lang.String" calculation="Count">
+					<measureExpression><![CDATA[$F{FL_AVG}]]></measureExpression>
 				</measure>
 				<measure name="FL_ENROLLMENT" class="java.lang.String">
 					<measureExpression><![CDATA[$F{FL_ENROLLMENT}]]></measureExpression>
 				</measure>
-				<measure name="FL_AVG" class="java.lang.String">
-					<measureExpression><![CDATA[$F{FL_AVG}]]></measureExpression>
+				<measure name="FL_NAME" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_NAME}]]></measureExpression>
 				</measure>
-				<measure name="FL_VALUE_OBTANIED" class="java.lang.String" calculation="Count">
-					<measureExpression><![CDATA[$F{FL_VALUE_OBTANIED}]]></measureExpression>
+				<measure name="FL_SUBTOTAL_BE" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_BE}]]></measureExpression>
 				</measure>
-				<crosstabCell width="61" height="15">
+				<measure name="FL_SUBTOTAL_KNOW" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_KNOW}]]></measureExpression>
+				</measure>
+				<measure name="FL_SUBTOTAL_DO" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_DO}]]></measureExpression>
+				</measure>
+				<measure name="FL_SUBTOTAL_BE_EVALUATED" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_BE_EVALUATED}]]></measureExpression>
+				</measure>
+				<measure name="FL_SUBTOTAL_KNOW_EVALUATED" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_KNOW_EVALUATED}]]></measureExpression>
+				</measure>
+				<measure name="FL_SUBTOTAL_DO_EVALUATED" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_SUBTOTAL_DO_EVALUATED}]]></measureExpression>
+				</measure>
+				<measure name="FL_AVG_EVALUATED" class="java.lang.String">
+					<measureExpression><![CDATA[$F{FL_AVG_EVALUATED}]]></measureExpression>
+				</measure>
+				<crosstabCell width="284" height="12">
 					<cellContents>
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="61" height="15" uuid="a7767b19-37ff-4860-9882-faeb68ed4550"/>
+							<reportElement style="Crosstab Data Text" x="35" y="0" width="36" height="12" uuid="e63de747-31db-455b-9e15-b9ee2bdfab45"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
 							<textElement>
-								<font fontName="Calibri" size="8"/>
+								<font fontName="Calibri" size="9"/>
 							</textElement>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIED}]]></textFieldExpression>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_BE}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="106" y="0" width="36" height="12" uuid="82b91ca2-006b-45c0-8a9e-94dd13fbe99d"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_KNOW}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="177" y="0" width="36" height="12" uuid="91036040-2e70-4a5c-ac0c-d802d34ed40e"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_DO}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="248" y="0" width="36" height="12" uuid="5653da38-0c87-4a9f-baeb-17ee953b92d9"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9" isBold="true"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_AVGMeasure}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="35" height="12" uuid="42d79aa4-2641-4198-b97e-17b3cb1f824a"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_BE_EVALUATED}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="71" y="0" width="35" height="12" uuid="89b4abe2-64b4-4db4-b188-4ec7903ea65e"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_KNOW_EVALUATED}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="142" y="0" width="35" height="12" uuid="23450c9e-146b-45a6-bc2d-dbb61fbeb3f8"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_SUBTOTAL_DO_EVALUATED}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement style="Crosstab Data Text" x="213" y="0" width="35" height="12" uuid="c5d6f3e7-789e-404b-bd66-c7e96e529caa"/>
+							<box>
+								<leftPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$V{FL_AVG_EVALUATED}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell height="25" rowTotalGroup="FL_NAME">
-					<cellContents backcolor="#E6F3FF" mode="Opaque">
+				<crosstabCell height="25" rowTotalGroup="PK_STUDENT">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="cd0e58ac-a6ea-4ecb-8252-8433aba601df"/>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="dbec34d8-0d95-4a40-93bd-32fe8eb6cad7"/>
+							<textFieldExpression><![CDATA[$V{FL_AVGMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="0" height="15" columnTotalGroup="FL_NAME_SCALE">
-					<cellContents backcolor="#737A80" mode="Transparent">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell rowTotalGroup="FL_NAME" columnTotalGroup="FL_NAME_SCALE">
-					<cellContents backcolor="#737A80" mode="Opaque">
+				<crosstabCell width="50" columnTotalGroup="FL_SERIAL_NUM_MATTER">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" forecolor="#FFFFFF" uuid="5d16ee49-48a6-4f12-8b37-69438f7906da"/>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="8053f8ca-a784-4818-a367-769ee884ced3"/>
+							<textFieldExpression><![CDATA[$V{FL_AVGMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>
-				<crosstabCell width="0" height="15" columnTotalGroup="FL_NAME_ACTIVITY">
-					<cellContents backcolor="#CCCCCC" mode="Opaque">
-						<box>
-							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
-						</box>
-					</cellContents>
-				</crosstabCell>
-				<crosstabCell rowTotalGroup="FL_NAME" columnTotalGroup="FL_NAME_ACTIVITY">
-					<cellContents backcolor="#E6F3FF" mode="Opaque">
+				<crosstabCell rowTotalGroup="PK_STUDENT" columnTotalGroup="FL_SERIAL_NUM_MATTER">
+					<cellContents backcolor="#BFE1FF" mode="Opaque">
 						<box>
 							<pen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
 						</box>
 						<textField>
-							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="b6bd379e-5691-40fc-8138-b14ee20618af"/>
-							<textFieldExpression><![CDATA[$V{FL_VALUE_OBTANIEDMeasure}]]></textFieldExpression>
+							<reportElement style="Crosstab Data Text" x="0" y="0" width="50" height="25" uuid="f9569ef8-094a-4f3b-9d6b-3eb2c0bc0934"/>
+							<textFieldExpression><![CDATA[$V{FL_AVGMeasure}]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>

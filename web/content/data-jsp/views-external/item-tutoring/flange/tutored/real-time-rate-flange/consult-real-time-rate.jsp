@@ -70,20 +70,42 @@
                 }
                 
             });
-            $('#qualificationsCareerFilter').on('change',function (event){           
-                itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
-            });
-            $("#qualificationsSemesterFilter").on('change',function (){
-                itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
-                if(itemPeriod!==null){
+            $('#qualificationsCareerFilter').on('change',function (event){  
+                var args = event.args;
+                if (args) {
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                    itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
                     itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
-                    if(itemSemester!==undefined){
-                        createDropDownGruopByTeacherTutor(itemPeriod.value, itemSemester.value, "#qualificationsGroupFilter",true);
-                    }else{
-                        createDropDownGruopByTeacherTutor(null, null, "#qualificationsGroupFilter",true);
-                    }
-                }else{
-                    createDropDownGruopByTeacherTutor(null, null, "#qualificationsGroupFilter",true);
+                    itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter",true);
+                    itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
+                }                
+            });
+            $("#qualificationsSemesterFilter").on('change',function (event){
+                var args = event.args;
+                if (args) {
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                    itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter",true);
+                    itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
                 }
             });
             $("#qualificationsGroupFilter").on('change',function (event){  
@@ -310,10 +332,11 @@
                             $("#tableQualifications").jqxGrid('focus');
                         },
                         columngroups: [
-                            { text: 'M1',  name: 'subject_matter', cellsalign: 'center', align: 'center' },
-                            { text: 'Ser',  parentgroup: 'subject_matter',  name: 'content_be', cellsalign: 'center', align: 'center' },
-                            { text: 'Saber', parentgroup: 'subject_matter', name: 'content_know', cellsalign: 'center', align: 'center' },
-                            { text: 'Hacer', parentgroup: 'subject_matter', name: 'content_do', cellsalign: 'center', align: 'center' }
+//                            { text: 'M1',  name: 'subject_matter', cellsalign: 'center', align: 'center' },
+                            { text: 'Ser',  /*parentgroup: 'subject_matter',*/  name: 'content_be', cellsalign: 'center', align: 'center' },
+                            { text: 'Saber', /*parentgroup: 'subject_matter',*/  name: 'content_know', cellsalign: 'center', align: 'center' },
+                            { text: 'Hacer', /*parentgroup: 'subject_matter',*/  name: 'content_do', cellsalign: 'center', align: 'center' },
+                            { text: 'Total', /*parentgroup: 'subject_matter',*/  name: 'content_total', cellsalign: 'center', align: 'center' }
                             
                         ],
                         columns: columns,
