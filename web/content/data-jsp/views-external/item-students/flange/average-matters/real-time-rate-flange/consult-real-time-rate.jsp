@@ -13,7 +13,6 @@
         createDropDownStudyLevelByDirector("#qualificationsLevelFilter",false);
         itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
         if(itemLevel!==undefined){
-            alert()
             createDropDownCareerByDirector( itemLevel.value ,"#qualificationsCareerFilter",false);
             itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
