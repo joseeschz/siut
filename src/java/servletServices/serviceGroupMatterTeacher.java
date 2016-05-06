@@ -53,9 +53,11 @@ public class serviceGroupMatterTeacher extends HttpServlet {
                 }  
                 for(int i=0;i<listGroupMatterTeacher.size();i++){
                     JSONObject datos = new JSONObject();
-                    datos.put("id", listGroupMatterTeacher.get(i).getPK_GROUP_MATTER_TECHER());
+                    datos.put("id", i+1);
                     datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataPkSubjectMatter", listGroupMatterTeacher.get(i).getFK_SUBJECT_MATTER());
                     datos.put("dataSubjectMatterName", listGroupMatterTeacher.get(i).getFL_NAME_SUBJECT_MATTER());
+                    datos.put("dataPkTeacher", listGroupMatterTeacher.get(i).getFK_TEACHER());
                     datos.put("dataTeacherName", listGroupMatterTeacher.get(i).getFL_NAME_TEACHER());
                     content.add(datos); 
                 }
@@ -66,22 +68,22 @@ public class serviceGroupMatterTeacher extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
-            if(request.getParameter("insert")!=null){
-                if(request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkMatter") != null && request.getParameter("fkTeacher") != null){
-                    groupMatterTeacherModel dataGroupMatterTeacher=new groupMatterTeacherModel();
-                    dataGroupMatterTeacher.setFK_CAREER(Integer.parseInt(request.getParameter("fkCareer")));
-                    dataGroupMatterTeacher.setFK_PERIOD(Integer.parseInt(request.getParameter("fkPeriod")));
-                    dataGroupMatterTeacher.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
-                    dataGroupMatterTeacher.setFK_GROUP(Integer.parseInt(request.getParameter("fkGroup")));
-                    dataGroupMatterTeacher.setFK_SUBJECT_MATTER(Integer.parseInt(request.getParameter("fkMatter")));
-                    dataGroupMatterTeacher.setFK_TEACHER(Integer.parseInt(request.getParameter("fkTeacher")));
-                    out.print(new groupMatterTeacherControl().InsertGroupMatterTeacher(dataGroupMatterTeacher));
-                }                
-            }
+//            if(request.getParameter("insert")!=null){
+//                if(request.getParameter("fkSemester") != null && request.getParameter("fkGroup") != null && request.getParameter("fkMatter") != null && request.getParameter("fkTeacher") != null){
+//                    groupMatterTeacherModel dataGroupMatterTeacher=new groupMatterTeacherModel();
+//                    dataGroupMatterTeacher.setFK_CAREER(Integer.parseInt(request.getParameter("fkCareer")));
+//                    dataGroupMatterTeacher.setFK_PERIOD(Integer.parseInt(request.getParameter("fkPeriod")));
+//                    dataGroupMatterTeacher.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
+//                    dataGroupMatterTeacher.setFK_GROUP(Integer.parseInt(request.getParameter("fkGroup")));
+//                    dataGroupMatterTeacher.setFK_SUBJECT_MATTER(Integer.parseInt(request.getParameter("fkMatter")));
+//                    dataGroupMatterTeacher.setFK_TEACHER(Integer.parseInt(request.getParameter("fkTeacher")));
+//                    out.print(new groupMatterTeacherControl().InsertGroupMatterTeacher(dataGroupMatterTeacher));
+//                }                
+//            }
             if(request.getParameter("update")!=null){       
                 if(request.getParameter("pkGroupMatterTeacher") != null && request.getParameter("pkGroupMatterTeacher") != null){
                     groupMatterTeacherModel dataGroupMatterTeacher=new groupMatterTeacherModel();
-                    dataGroupMatterTeacher.setPK_GROUP_MATTER_TECHER(Integer.parseInt(request.getParameter("pkGroupMatterTeacher")));
+                    dataGroupMatterTeacher.setPK_GROUP_MATTER_TEACHER(Integer.parseInt(request.getParameter("pkGroupMatterTeacher")));
                     dataGroupMatterTeacher.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
                     dataGroupMatterTeacher.setFK_GROUP(Integer.parseInt(request.getParameter("fkGroup")));
                     dataGroupMatterTeacher.setFK_SUBJECT_MATTER(Integer.parseInt(request.getParameter("fkMatter")));
@@ -89,11 +91,11 @@ public class serviceGroupMatterTeacher extends HttpServlet {
                     out.print(new groupMatterTeacherControl().UpdateGroupMatterTeacher(dataGroupMatterTeacher));
                 }                
             }
-            if(request.getParameter("delete")!=null){       
-                if(request.getParameter("pkGroupMatterTeacher") != null){
-                    out.print(new groupMatterTeacherControl().DeleteGroupMatterTeacher(Integer.parseInt(request.getParameter("pkGroupMatterTeacher"))));
-                }                
-            }
+//            if(request.getParameter("delete")!=null){       
+//                if(request.getParameter("pkGroupMatterTeacher") != null){
+//                    out.print(new groupMatterTeacherControl().DeleteGroupMatterTeacher(Integer.parseInt(request.getParameter("pkGroupMatterTeacher"))));
+//                }                
+//            }
         }
     }
 

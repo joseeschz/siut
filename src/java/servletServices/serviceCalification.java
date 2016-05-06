@@ -329,68 +329,52 @@ public class serviceCalification extends HttpServlet {
             if(request.getParameter("table")!=null){
                 int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
-                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));                
-                ArrayList<calificationModel> listStudents=new calificationControl().SelectCalificationNowTutoring(fkCareer, fkGroup, fkPeriod);
-                ArrayList<calificationModel> listRowsCal=new calificationControl().SelectCalificationRows(fkCareer, fkGroup, fkPeriod);
-                ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationNowTutoringColumns(fkCareer, fkGroup, fkPeriod);
+                int fkSubjectMatter = Integer.parseInt(request.getParameter("fkSubjectMatter"));
+                int fkEvaluationType = Integer.parseInt(request.getParameter("fkEvaluationType"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));     
+                ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationNowTutoringColumns(fkCareer, fkGroup, fkSubjectMatter, fkPeriod);
+                JSONArray contentRowsCal=new calificationControl().SelectCalificationRows(fkCareer, fkGroup, fkSubjectMatter, fkEvaluationType, fkPeriod);
                 JSONArray contentColums = new JSONArray();
-                JSONArray contentRows = new JSONArray();
-                JSONArray contentRowsCal = new JSONArray();
+                JSONArray contentDataFields = new JSONArray();
                 JSONArray bulding = new JSONArray();
-                JSONObject rows = new JSONObject();
                 JSONObject rowsCal = new JSONObject();
                 JSONObject columns = new JSONObject();
-                for(int i=0;i<listRowsCal.size();i++){
-                    JSONObject datos = new JSONObject();
-                    datos.put("dataNameMatter", listRowsCal.get(i).getFL_NAME_ALIAS_SUBJECT_MATTER());
-                    datos.put("dataCalMatters", listRowsCal.get(i).getFL_AVG());
-                    datos.put("dataFkStudent", listRowsCal.get(i).getFK_STUDENT());
-                    contentRowsCal.add(datos); 
-                }
-                for(int i=0;i<listStudents.size();i++){
-                    JSONObject datos = new JSONObject();
-                    datos.put("id", i+1);
-                    datos.put("dataProgresivNumber", i+1);
-                    datos.put("dataEnrollment", listStudents.get(i).getFL_ENROLLMENT());
-                    datos.put("dataFkStudent", listStudents.get(i).getFK_STUDENT());
-                    datos.put("dataStudentName", listStudents.get(i).getFL_NAME());
-                    contentRows.add(datos); 
-                }
+                JSONObject dataFields = new JSONObject();
+              
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataColums = new JSONObject();
-                    dataColums.put("text", listColumns.get(i).getFL_TEXT());
+                    dataColums.put("text", "<div desc='"+listColumns.get(i).getFL_TEXT_EXTENDS()+"'>"+ listColumns.get(i).getFL_TEXT()+"</div>");
                     dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
                     dataColums.put("align", listColumns.get(i).getFL_ALIGN());
                     dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
+                        dataColums.put("cellclassname", listColumns.get(i).getFL_CELLSRENDERER());
+                    }
+                    if(listColumns.get(i).getFL_PINNED()!=null){
+                        dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
+                    if(listColumns.get(i).getFL_RENDERED()!=null){
+                        dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNGROUP()!=null){
+                        dataColums.put("columngroup", listColumns.get(i).getFL_COLUMNGROUP());
+                    }
                     dataColums.put("width", listColumns.get(i).getFL_WIDHT());
                     contentColums.add(dataColums); 
                 }
-                rows.put("rows", contentRows);
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject datadataFields = new JSONObject();
+                    datadataFields.put("name", listColumns.get(i).getFL_DATA_FIELD());
+                    datadataFields.put("type", "string");                    
+                    contentDataFields.add(datadataFields); 
+                }
                 rowsCal.put("rowsCal", contentRowsCal);
                 columns.put("columns", contentColums);
+                dataFields.put("dataFields", contentDataFields);
                 bulding.add(columns);
-                bulding.add(rows);
+                bulding.add(dataFields);
                 bulding.add(rowsCal);
-                out.print(bulding);
-                out.flush(); 
-                out.close();
-            }
-            if(request.getParameter("tableDescription")!=null){
-                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
-                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
-                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));                
-                ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationNowTutoringColumnsDescription(fkCareer, fkGroup, fkPeriod);
-                JSONArray contentColums = new JSONArray();
-                JSONArray bulding = new JSONArray();
-                JSONObject columns = new JSONObject();
-                for(int i=0;i<listColumns.size();i++){
-                    JSONObject dataColums = new JSONObject();
-                    dataColums.put("text", listColumns.get(i).getFL_TEXT());
-                    dataColums.put("textExtends", listColumns.get(i).getFL_TEXT_EXTENDS());
-                    contentColums.add(dataColums); 
-                }
-                columns.put("columns", contentColums);
-                bulding.add(columns);                
+                response.setContentType("application/json"); 
                 out.print(bulding);
                 out.flush(); 
                 out.close();

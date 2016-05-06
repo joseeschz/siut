@@ -25,17 +25,9 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-        ArrayList<subjectMattersModel> listColumns=new calificationControl().SubjectsMattersRepprovedRegularizationByStudent(2976, 2, 11, 13);
-        JSONArray contentRows = new JSONArray();
-        JSONArray bulding = new JSONArray();
-        JSONObject rows = new JSONObject();
-        for(int i=0;i<listColumns.size();i++){
-            JSONObject dataRows = new JSONObject();
-            dataRows.put("index", i);
-            dataRows.put("Pk_matter", listColumns.get(i).getPK_SUBJECT_MATTER());
-            contentRows.add(dataRows); 
-        }
-        System.out.println(contentRows);
+
+        JSONArray contentRowsCal=new calificationControl().SelectCalificationRows(6, 11, 327, 1, 13);
+        System.out.println(contentRowsCal);
     }
     
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -178,10 +170,10 @@ public class calificationControl {
         }
         return list;
     }
-    public ArrayList<calificationModel> SelectCalificationNowTutoring(int pkCareer, int  pkGroup, int pkPeriod){
+    public ArrayList<calificationModel> SelectCalificationNowTutoring(int pkCareer, int  pkGroup, int pkSubjectMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byTutor', "+pkCareer+", "+pkGroup+",null, "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byTutor', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -199,26 +191,28 @@ public class calificationControl {
         }
         return list;
     }
-    public ArrayList<calificationModel> SelectCalificationRows(int pkCareer, int  pkGroup, int pkPeriod){
-        ArrayList<calificationModel> list=new ArrayList<>();
+    
+    public JSONArray SelectCalificationRows(int pkCareer, int  pkGroup, int pkSubjectMatter, int pkEvaluationType, int pkPeriod){
+        JSONArray contentColums = new JSONArray();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('rowsCal', "+pkCareer+", "+pkGroup+",null, "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('rowsCal', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", "+pkEvaluationType+")"); ResultSet res = ps.executeQuery()) {
+                ResultSetMetaData rsmd = res.getMetaData();                
+                JSONObject columns;
                 while(res!=null&&res.next()){
-                    calificationModel allData=new calificationModel();
-                    allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
-                    allData.setFL_NAME_ALIAS_SUBJECT_MATTER(res.getString("FL_TEXT"));
-                    allData.setFL_AVG(res.getString("FL_CALIFICATION_TOTAL"));
-                    list.add(allData);
+                    columns = new JSONObject();                    
+                    for(int col=0; col<rsmd.getColumnCount(); col++){    
+                        columns.put(rsmd.getColumnName(col+1), res.getString(rsmd.getColumnName(col+1)));
+                    }
+                    contentColums.add(columns);
                 }
                 res.close();
                 ps.close();
                 conn.close();
             }
-            return list;
         } catch (SQLException ex) {
             Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+        return contentColums;
     }
     public JSONArray SelectCalificationsByActivitiesRows(int pkCareer, int fkMatter, int pkGroup, int pkPeriod){
         JSONArray contentColums = new JSONArray();
@@ -242,18 +236,22 @@ public class calificationControl {
         }
         return contentColums;
     }
-    public ArrayList<propetiesTableModel> SelectCalificationNowTutoringColumns(int pkCareer, int  pkGroup, int period){
+    public ArrayList<propetiesTableModel> SelectCalificationNowTutoringColumns(int pkCareer, int  pkGroup, int fkSubjectMatter, int period){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('colums', "+pkCareer+", "+pkGroup+", null, "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('colums', "+pkCareer+", "+pkGroup+", "+fkSubjectMatter+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
+                    allData.setFL_TEXT_EXTENDS(res.getString("FL_TEXT_EXTENDS"));
                     allData.setFL_DATA_FIELD(res.getString("FL_DATA_FIELD"));
                     allData.setFL_ALIGN(res.getString("FL_ALIGN"));
                     allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
                     allData.setFL_CELLSRENDERER(res.getString("FL_CELLSRENDERER"));
+                    allData.setFL_RENDERED(res.getString("FL_RENDERED"));
+                    allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
+                    allData.setFL_PINNED(res.getString("FL_PINNED"));
                     list.add(allData);
                 }
                 res.close();

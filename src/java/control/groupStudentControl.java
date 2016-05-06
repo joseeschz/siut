@@ -35,14 +35,14 @@ public class groupStudentControl {
         dataStudent.setFK_TUTOR_TEACHER(1);
         System.out.println(new groupStudentControl().InsertGroupStudent(dataStudent));
     }
-    public ArrayList<groupStudentModel> SelectGroupStudent(int pt_fk_career, int pt_fk_semester, int pt_fk_group, int pt_fk_period){
+    public ArrayList<groupStudentModel> SelectGroupStudent(int pt_fk_career, int pt_fk_semester, int pt_fk_group, int fk_subject_matter, int pt_fk_period){
         ArrayList<groupStudentModel> list=new ArrayList<>();
         try {
             //Was removed the parameter pt_fk_semester because is not necesary...
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_BY_STUDENTS`('filterable', '"+pt_fk_career+"', '"+pt_fk_semester+"' ,'"+pt_fk_group+"', '"+pt_fk_period+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_BY_STUDENTS`('filterable', "+pt_fk_career+", "+pt_fk_semester+" ,"+pt_fk_group+", "+fk_subject_matter+", "+pt_fk_period+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupStudentModel allGroupStudent=new groupStudentModel();
-                    allGroupStudent.setPK_GRUPOS_BY_STUDENT(res.getInt("PK_GRUPOS_BY_STUDENT"));
+                    allGroupStudent.setPK_GROUP_MATTER_TEACHER(res.getInt("PK_GROUP_MATTER_TEACHER"));
                     allGroupStudent.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     allGroupStudent.setFL_STUDENT_NAME(res.getString("FL_STUDENT_NAME"));
                     allGroupStudent.setFK_TUTOR_TEACHER(res.getInt("FK_TUTOR_TEACHER"));
@@ -62,7 +62,7 @@ public class groupStudentControl {
     public String InsertGroupStudent(groupStudentModel dataGroupStudent){
         String request="";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('insert', NULL, '"+dataGroupStudent.getFL_ENROLLMENT()+"', "+dataGroupStudent.getFK_CAREER()+", "+dataGroupStudent.getFK_SEMESTER()+", "+dataGroupStudent.getFK_GROUP()+", "+dataGroupStudent.getFK_PERIOD()+", "+dataGroupStudent.getFK_TUTOR_TEACHER()+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('insert', NULL, '"+dataGroupStudent.getFL_ENROLLMENT()+"', "+dataGroupStudent.getFK_CAREER()+", "+dataGroupStudent.getFK_SEMESTER()+", "+dataGroupStudent.getFK_GROUP()+", "+dataGroupStudent.getFK_PERIOD()+", "+dataGroupStudent.getFK_TUTOR_TEACHER()+", "+dataGroupStudent.getFK_TEACHER()+", "+dataGroupStudent.getFK_SUBJECT_MATTER()+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }
@@ -81,7 +81,7 @@ public class groupStudentControl {
     public String UpdateGroupStudent(groupStudentModel dataGroupStudent){
         String request="";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('update', NULL, '"+dataGroupStudent.getFL_ENROLLMENT()+"', "+dataGroupStudent.getFK_CAREER()+", "+dataGroupStudent.getFK_SEMESTER()+", "+dataGroupStudent.getFK_GROUP()+", "+dataGroupStudent.getFK_PERIOD()+", "+dataGroupStudent.getFK_TUTOR_TEACHER()+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('update', NULL, '"+dataGroupStudent.getFL_ENROLLMENT()+"', "+dataGroupStudent.getFK_CAREER()+", "+dataGroupStudent.getFK_SEMESTER()+", "+dataGroupStudent.getFK_GROUP()+", "+dataGroupStudent.getFK_PERIOD()+", "+dataGroupStudent.getFK_TUTOR_TEACHER()+", "+dataGroupStudent.getFK_TEACHER()+", "+dataGroupStudent.getFK_SUBJECT_MATTER()+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }
@@ -97,10 +97,10 @@ public class groupStudentControl {
         return request;
     }
     
-    public String DeleteGroupStudent(int pkGroupByStudent){
+    public String DeleteGroupStudent(int dataPkGroupMatterTeacherStudent){
         String request="";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('delete', "+pkGroupByStudent+", NULL, NULL, NULL, NULL, NULL, NULL)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_BY_STUDENT`('delete', "+dataPkGroupMatterTeacherStudent+", NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }

@@ -244,7 +244,7 @@ if(session.getAttribute("logueado") == null){%>
                 <div>Cargando modulos...</div>
                 <div id="loadExamPreview">
                     <img src="../content/pictures-system/load.GIF" width="60" style="margin-right: 20px" />
-                    Procesando scripts y páginas asíncronas etc...
+                    <span>Procesando scripts y páginas asíncronas etc...</span>
                 </div>
             </div>
             <!--En esta parte importo mis archivos de jQuery boostrap y jQuery-UI
@@ -261,7 +261,7 @@ if(session.getAttribute("logueado") == null){%>
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
             <script type="text/javascript" src="../content/files-jq/jquery.cookie.js"></script>
             <script type="text/javascript" src="../content/files-js/make-menu.js" charset="utf-8"></script>
-            <script type="text/javascript" src="../content/files-js/make-combo.js"  charset="UTF-8"></script>
+            <script type="text/javascript" src="../content/files-js/make-combo.origin.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-list.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-input.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/clock.js"  charset="UTF-8"></script>

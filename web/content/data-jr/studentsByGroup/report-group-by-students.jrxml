@@ -16,13 +16,13 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_GROUP_BY_STUDENTS`('filterable', $P{pt_career}, $P{pt_semester}, $P{pt_group}, $P{pt_period});]]>
+		<![CDATA[CALL `GET_GROUP_BY_STUDENTS`('filterableOnlyGroup', $P{pt_career}, $P{pt_semester}, $P{pt_group}, null, $P{pt_period});]]>
 	</queryString>
-	<field name="PK_GRUPOS_BY_STUDENT" class="java.lang.Long">
+	<field name="PK_GROUP_MATTER_TEACHER" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_ENROLLMENT" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
 	</field>
 	<field name="FL_STUDENT_NAME" class="java.lang.String"/>
 	<field name="FK_TUTOR_TEACHER" class="java.lang.Long">

@@ -31,10 +31,12 @@ public class groupMatterTeacherControl {
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('"+command+"','"+pk_career+"','"+pk_study_plan+"','"+pk_semester+"', '"+pk_group+"', '"+pk_period+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
-                    groupMatterTeacherModel allGroupMatterTecher=new groupMatterTeacherModel();
-                    allGroupMatterTecher.setPK_GROUP_MATTER_TECHER(res.getInt("PK_GROUP_MATTER_TECHER"));
-                    allGroupMatterTecher.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    groupMatterTeacherModel allGroupMatterTecher=new groupMatterTeacherModel();                    
+                    allGroupMatterTecher.setFK_TEACHER(res.getInt("PK_WORKER"));
                     allGroupMatterTecher.setFL_NAME_TEACHER(res.getString("FL_NAME_TEACHER"));
+                    allGroupMatterTecher.setFK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    allGroupMatterTecher.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    
                     list.add(allGroupMatterTecher);
                 }
                 res.close();
@@ -84,7 +86,7 @@ public class groupMatterTeacherControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_MATTER_TEACHER`('update', '"+dataGroupMatterTecher.getPK_GROUP_MATTER_TECHER()+"', '"+dataGroupMatterTecher.getFK_SEMESTER()+"', '"+dataGroupMatterTecher.getFK_GROUP()+"', '"+dataGroupMatterTecher.getFK_SUBJECT_MATTER()+"', '"+dataGroupMatterTecher.getFK_TEACHER()+"', '"+dataGroupMatterTecher.getFK_PERIOD()+"')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_MATTER_TEACHER`('update', '"+dataGroupMatterTecher.getPK_GROUP_MATTER_TEACHER()+"', '"+dataGroupMatterTecher.getFK_SEMESTER()+"', '"+dataGroupMatterTecher.getFK_GROUP()+"', '"+dataGroupMatterTecher.getFK_SUBJECT_MATTER()+"', '"+dataGroupMatterTecher.getFK_TEACHER()+"', '"+dataGroupMatterTecher.getFK_PERIOD()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

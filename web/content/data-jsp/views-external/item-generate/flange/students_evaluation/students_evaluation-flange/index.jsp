@@ -95,11 +95,10 @@
                 beforeLoadComplete:function (){
                     $("#tableQualifications").jqxGrid('hideloadelement');
                 },
-                downloadComplete: function (data) {
-                    
+                downloadComplete: function (data) {                    
                     //dataExternal=data;
                     var columns = data[0].columns;
-                    console.log(data[0].columns);
+//                    console.log(data[0].columns);
                     var dataFields = data[1].dataFields;
                     var rows = data[2].rowsCal;
                     var gridAdapter = new $.jqx.dataAdapter({
@@ -206,8 +205,7 @@
 //                        ],
                         columnsresize: false
                     });
-                    $("#tableQualifications").jqxGrid('endupdate');
-                    
+                    $("#tableQualifications").jqxGrid('endupdate');                    
                     $('#tableQualifications').jqxGrid('render');
                 }
             });    

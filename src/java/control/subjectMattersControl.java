@@ -53,6 +53,29 @@ public class subjectMattersControl {
         }
         return list;
     }
+    public ArrayList<subjectMattersModel> SelectSubjectMattersByGroup(int pkCareer, int pkSemester, int pkGroup, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        String procedure;
+        procedure = "CALL `GET_SUBJECT_MATTERS`('mattersByGroup', "+pkCareer+", "+pkSemester+", "+pkGroup+" , null, null, "+pkPeriod+")";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    subjectMattersModel listSubjectMatters=new subjectMattersModel();
+                    listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_INTEGRADORA(res.getString("FL_INTEGRADORA"));
+                    list.add(listSubjectMatters);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(subjectMattersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<subjectMattersModel> SelectListSubjectMattersByStudents(int pkStudent){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         String procedure="CALL `GET_SUBJECT_MATTERS`('byStudentPeriodNow', null, null, null, null, "+pkStudent+", null)";        
