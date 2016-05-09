@@ -157,6 +157,7 @@ public class studentModel extends careerModel{
     String FL_WHAT_WORK="";
     String FL_BIRTH_CERTIFICATE_NUMBER="";
     String FL_HIGH_SCHOOL_CERTIFICATE="";
+    int FL_DOWN=0;
     int FL_MODIFY=0;
 
     public int getPK_STUDENT() {
@@ -1341,6 +1342,14 @@ public class studentModel extends careerModel{
 
     public void setFL_HIGH_SCHOOL_CERTIFICATE(String FL_HIGH_SCHOOL_CERTIFICATE) {
         this.FL_HIGH_SCHOOL_CERTIFICATE = FL_HIGH_SCHOOL_CERTIFICATE;
+    }
+
+    public int getFL_DOWN() {
+        return FL_DOWN;
+    }
+
+    public void setFL_DOWN(int FL_DOWN) {
+        this.FL_DOWN = FL_DOWN;
     }
     
 }

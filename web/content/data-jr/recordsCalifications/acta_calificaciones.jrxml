@@ -61,7 +61,7 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_PERMIT_GLOBAL" class="java.lang.Long"/>
-	<field name="@FL_CALIFICATION_FINAL_REGULARIZATION := FN_GET_CALIFICATION_BY_SCALE(2, PT_PK_SUBJECT_MATTER, tb_students.PK_STUDENT, PT_PK_PERIOD, 0)" class="java.lang.Double"/>
+	<field name="FL_CALIFICATION_FINAL_REGULARIZATION" class="java.lang.Double"/>
 	<field name="FL_CALIFICATION_BE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
