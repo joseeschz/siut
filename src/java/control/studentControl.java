@@ -212,6 +212,29 @@ public class studentControl {
         }   
         return request;
     }
+    public ArrayList<studentModel> SelectStudentsCareerSemesterGroup(int fkCareer, int fkSemester, int fkGroup, int fkPeriod){
+        ArrayList<studentModel> list=new ArrayList<>();
+        String procedure = "CALL `GET_STUDENTS_DOWN`('studentsDown', "+fkCareer+", "+fkSemester+", "+fkGroup+", "+fkPeriod+")";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel Student=new studentModel();
+                    Student.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    Student.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    Student.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    Student.setFL_DOWN(res.getInt("FL_DOWN"));
+                    list.add(Student);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<studentModel> SelectStudent(String enrollment, String condition){
         ArrayList<studentModel> list=new ArrayList<>();
         String procedure;
@@ -524,6 +547,57 @@ public class studentControl {
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_STUDENT`('update', '"+pk_student+"', '"+field_name+"', '"+field_value+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String GenerateDownStudent(int pk_student){
+        String request;
+        String procedure = "CALL `SET_STUDENT_DOWN`('generateDown', "+pk_student+", null, null, null)";
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.executeUpdate();
+                request="Baja Generada";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String RemoveDownStudent(int pk_student){
+        String request;
+        String procedure = "CALL `SET_STUDENT_DOWN`('removeDown', "+pk_student+", null, null, null)";
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.executeUpdate();
+                request="Baja Cancelada";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String DetailDownStudent(int pk_student,  int fk_down_detail, String motive, int fk_period){
+        String request;
+        String procedure = "CALL `SET_STUDENT_DOWN`('generateDown', "+pk_student+", "+fk_down_detail+", "+motive+", "+fk_period+")";
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.executeUpdate();
+                request="Detalle Modificado";
                 ps.close();
                 conn.close();
             }

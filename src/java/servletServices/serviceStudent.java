@@ -6,6 +6,7 @@
 package servletServices;
 
 import control.aes;
+import control.downDetailControl;
 import control.mailControl;
 import control.studentControl;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.downDetailModel;
 import model.propetiesTableModel;
 import model.requirementsModel;
 import model.studentModel;
@@ -150,6 +152,66 @@ public class serviceStudent extends HttpServlet {
                 out.print(principal);
                 out.flush(); 
                 out.close();
+            }
+            if(request.getParameter("selectStudentsCareerSemesterGroup")!=null){
+                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
+                int fkSemester = Integer.parseInt(request.getParameter("fkSemester"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkGroup"));
+                ArrayList<studentModel> listStudents=new studentControl().SelectStudentsCareerSemesterGroup(fkCareer, fkSemester, fkGroup, fkPeriod);
+  
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listStudents.size();i++) {
+                    JSONObject datos = new JSONObject();
+                    datos.put("dataPkStudent", listStudents.get(i).getPK_STUDENT());                    
+                    datos.put("dataName", listStudents.get(i).getFL_NAME());
+                    datos.put("dataEnrollment", listStudents.get(i).getFL_ENROLLMENT());
+                    if(listStudents.get(i).getFL_DOWN()==1){
+                        datos.put("dataDown", "Si");
+                    }else{
+                        datos.put("dataDown", "No");
+                    }                  
+                    content.add(datos); 
+                }                
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();               
+            }
+            if(request.getParameter("selectDetailDowns")!=null){
+                ArrayList<downDetailModel> listDetails=new downDetailControl().SelectDownDetails();
+                JSONObject datos = new JSONObject();
+                for(int i=0;i<listDetails.size();i++){
+                    datos.put("dataPkDownDetail", listDetails.get(i).getPK_DOWN_DETAIL());
+                    datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataDescription", listDetails.get(i).getFL_DESCRIPTION());
+                    response.setContentType("application/json"); 
+                    out.print(datos);
+                    out.flush(); 
+                    out.close();
+                }                
+            }
+            if(request.getParameter("generateDown")!=null){
+                int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
+                out.print(new studentControl().GenerateDownStudent(fkStudent));
+                out.flush(); 
+                out.close();         
+            }
+            if(request.getParameter("removeDown")!=null){
+                int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
+                out.print(new studentControl().RemoveDownStudent(fkStudent));
+                out.flush(); 
+                out.close();         
+            }
+            if(request.getParameter("detailDown")!=null){
+                int fkStudent = Integer.parseInt(request.getParameter("fkStudent"));
+                int fkDownDetail = Integer.parseInt(request.getParameter("fkDownDetail"));
+                String motive = request.getParameter("fkStudent");
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
+                response.setContentType("application/json"); 
+                out.print(new studentControl().DetailDownStudent(fkStudent, fkDownDetail, motive, fkPeriod));
+                out.flush(); 
+                out.close();         
             }
             if(request.getParameter("selectStudent")!=null){
                 String enrollment = request.getParameter("enrollment");

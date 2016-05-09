@@ -23,30 +23,37 @@
                 if(itemSemester!==undefined){
                     createDropDownGruopByTeacherTutor(itemPeriod.value, itemSemester.value, "#qualificationsGroupFilter",false);
                     itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
-                    var filtrable = {
-                        pkCareer : itemCareer.value,
-                        pkSemester : itemSemester.value,
-                        pkGroup : itemGroup.value,
-                        pkPeriod : itemPeriod.value
-                    };
-                    createDropDownSubjectMatterByGroup(filtrable, "#qualificationsSubjectMatterFilter", false);
-                    itemSubjectMatter = $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-                    if(itemSubjectMatter!==undefined){
-                        var data = {
-                            "fkGroup":itemGroup.value,
-                            "fkMatter":itemSubjectMatter.value,
-                            "fkPeriod":itemPeriod.value
-                        }; 
-                        createDropDownEvaluationType("#qualificationsEvaluationTypeFilter", data);                        
-                        itemEvaluationType = $('#qualificationsEvaluationTypeFilter').jqxDropDownList('getSelectedItem');
-                        if(itemEvaluationType!==undefined || itemEvaluationType!==null){
-                            loadGridCalifications();
+                    if(itemGroup!==undefined || itemGroup!==null){
+                        var filtrable = {
+                            pkCareer : itemCareer.value,
+                            pkSemester : itemSemester.value,
+                            pkGroup : itemGroup.value,
+                            pkPeriod : itemPeriod.value
+                        };
+                        createDropDownSubjectMatterByGroup(filtrable, "#qualificationsSubjectMatterFilter", false);
+                        itemSubjectMatter = $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                        if(itemSubjectMatter!==undefined){
+                            var data = {
+                                "fkGroup":itemGroup.value,
+                                "fkMatter":itemSubjectMatter.value,
+                                "fkPeriod":itemPeriod.value
+                            }; 
+                            createDropDownEvaluationType("#qualificationsEvaluationTypeFilter", data);                        
+                            itemEvaluationType = $('#qualificationsEvaluationTypeFilter').jqxDropDownList('getSelectedItem');
+                            if(itemEvaluationType!==undefined || itemEvaluationType!==null){
+                                loadGridCalifications();
+                            }
+                        }else{
+                            createDropDownEvaluationType("#qualificationsEvaluationTypeFilter", {});
                         }
                     }else{
-                        createDropDownEvaluationTypeBloqued("#qualificationsEvaluationTypeFilter", null, null, false);
+                        createDropDownSubjectMatterByGroup({}, "#qualificationsSubjectMatterFilter", false);
+                        createDropDownEvaluationType("#qualificationsEvaluationTypeFilter", {}); 
                     }
                 }else{
                     createDropDownGruopByTeacherTutor(null, null, "#qualificationsGroupFilter",false);
+                    createDropDownSubjectMatterByGroup({}, "#qualificationsSubjectMatterFilter", false);
+                    createDropDownEvaluationType("#qualificationsEvaluationTypeFilter", {});  
                 }
             }else{
                 createDropDownSemesterByTeacherTutor(null, null,"#qualificationsSemesterFilter",false);

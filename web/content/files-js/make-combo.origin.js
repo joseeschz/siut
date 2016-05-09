@@ -836,7 +836,36 @@ function createDropDownTeachers(selector, selectValue){
     }
     $(selector).jqxDropDownList('selectItem', item ); 
 }
-
+function createDropDownDetailDowns(selector, update){
+    var sourceEntity ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataPkDownDetail' },
+            { name: 'dataDescription' }
+        ],
+        url: "../serviceStudent?selectDetailDowns",
+        async: false
+    };
+    var dataAdapterEntity = new $.jqx.dataAdapter(sourceEntity);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterEntity, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            selectedIndex: 0, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapterEntity, 
+            displayMember: "dataDescription", 
+            valueMember: "dataPkDownDetail",
+            width: 270                
+        }).css("display","inline-block");
+    }
+}
 function createDropDownStudyLevelByTeacher(selector, update){
     var sourceEntity ={
         datatype: "json",
