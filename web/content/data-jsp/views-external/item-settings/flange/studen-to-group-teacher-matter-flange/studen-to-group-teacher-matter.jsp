@@ -94,8 +94,7 @@
                 var label = item.label;
                 var value = item.value;
                 var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                createDropDownCareerByDirector(value, "#teacherToGroupFlangeCareerFilter", true);
-                createDropDownSemester(value,"#teacherToGroupFlangeSemesterFilter", true);                
+                createDropDownCareerByDirector(value, "#teacherToGroupFlangeCareerFilter", true);                                
             }            
         });
         
@@ -110,6 +109,21 @@
                 var value = item.value;
                 var type = args.type; // keyboard, mouse or null depending on how the item was selected.
                 createDropDownStudyPlan(value,"#subjectMattersStudyPlanFilter",true);                
+            }   
+        });
+        
+        $('#subjectMattersStudyPlanFilter').on('change',function (event){
+            var args = event.args;
+            if (args) {
+                // index represents the item's index.                      
+                var index = args.index;
+                var item = args.item;
+                // get item's label and value.
+                var label = item.label;
+                var value = item.value;
+                var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                itemLevel = $('#teacherToGroupFlangeLevelFilter').jqxDropDownList('getSelectedItem');
+                createDropDownSemester(itemLevel.value,"#teacherToGroupFlangeSemesterFilter", true);               
             }   
         });
         
@@ -890,7 +904,7 @@
                 async: false,
                 url: "../serviceStudentsGroup?delete",
                 data:{
-                    'pkGroupByStudent': rowData.dataPkGroupMatterTeacherStudent
+                    'dataPkGroupMatterTeacherStudent': rowData.dataPkGroupMatterTeacherStudent
                 },
                 beforeSend: function (xhr) {
                 },

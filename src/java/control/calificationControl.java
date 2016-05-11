@@ -26,8 +26,8 @@ import org.json.simple.JSONObject;
 public class calificationControl {
     public static void main(String[] args){
 
-        JSONArray contentRowsCal=new calificationControl().SelectCalificationRows(6, 11, 327, 1, 13);
-        System.out.println(contentRowsCal);
+        String canPrint =  new calificationControl().CanPrint(3, 506, 11, 13);
+        System.err.println(canPrint);
     }
     
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -383,7 +383,7 @@ public class calificationControl {
     public String CanPrint(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('canPrint',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('canPrint',3, 506, 11, 13, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     status= res.getString("FL_RESULT");
                 }

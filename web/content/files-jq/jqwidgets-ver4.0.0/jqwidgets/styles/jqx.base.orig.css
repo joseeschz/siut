@@ -3115,6 +3115,14 @@ of the horizontal scrollbar.*/
     background-position: center;
 }
 
+.jqx-icon-validate
+{
+    background-image: url('images/icon-validate.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 16px;
+    margin: 0px !important;
+}
 /*////////////////////*/
 
 .jqx-icon-arrow-up, .jqx-icon-arrow-up-hover, .jqx-icon-arrow-up-selected

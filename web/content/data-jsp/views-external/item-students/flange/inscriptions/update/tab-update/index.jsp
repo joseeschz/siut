@@ -1,6 +1,6 @@
 <script>
 $(document).ready(function () {
-    $("#removeEnrrollment").hide();
+    $("#removeEnrollment").hide();
     $("#loadingPictureUpdate").hide();
     var itemLevel="";
     var itemCareer="";
@@ -141,7 +141,7 @@ $(document).ready(function () {
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $("#removeEnrrollment").show();
+                    $("#removeEnrollment").show();
                     disableElements(false);
                     loadData(data);
                 }
@@ -151,7 +151,7 @@ $(document).ready(function () {
             });
         }
     });
-    $("#removeEnrrollment").click(function (){
+    $("#removeEnrollment").click(function (){
         $(this).hide();
         disableElements(true);
     });
@@ -216,11 +216,11 @@ $(document).ready(function () {
     <div id="registerUpdate">
         <div style="padding-left: 15px;">
             <b>Editar registro</b>
-            <div style="float: right; margin-right: 5px; width: 350px;">
-                <div style="float: right; margin-right: 5px;">
+            <div style="float: right; width: 316px; height: 28px; position: relative;">
+                <div style="float: right;">
                     <span>Matrícula</span>
                     <input type="text" id="enrollmentUpdate" style="width: 140px; height: 26px" class="text-input" />
-                    <span id="removeEnrrollment" style="cursor: pointer;font-size: 16px;position: relative;right: 20px;top: 2px;">X</span>
+                    <span id="removeEnrollment" style="cursor: pointer; font-size: 16px; position: absolute; right: 6px; top: 4px; display: block;">X</span>
                 </div>
             </div>
         </div>

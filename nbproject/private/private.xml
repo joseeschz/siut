@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/control/groupMatterTeacherControl.java</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/servletServices/serviceStudentsGroup.java</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-settings/flange/studen-to-group-teacher-matter-flange/studen-to-group-teacher-matter.jsp</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-settings/flange/student-to-groups-flange/student-to-group-flange.jsp</file>
-            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/src/java/servletServices/serviceGroupMatterTeacher.java</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-students/flange/adjustment/rattings/tab-new/index.jsp</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-catalogs/flange/academic-flange/subjectMatters.jsp</file>
+            <file>file:/C:/Users/Carlos%20Antonio/Documents/GitHub/siut/web/content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-average.jsp</file>
         </group>
     </open-files>
 </project-private>

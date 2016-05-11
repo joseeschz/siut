@@ -90,7 +90,7 @@
                 "fkMatter":itemSubjectMatter.value,
                 "fkPeriod":itemPeriod.value
             };
-            createDropDownEvaluationType("#qualificationsCalEvaluationType", data);
+            createDropDownEvaluationType("#qualificationsCalEvaluationType", data, false);
             $("#qualificationsCalEvaluationType").off('change');
             $("#qualificationsCalEvaluationType").on('change',function (event){ 
                 var args = event.args;
@@ -276,13 +276,17 @@
                     if(status==0){
                         var exportSettings = exportSourse()[0];
                         itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
-                        if(itemTypeEvaluation.value==1 || itemTypeEvaluation.value==2){
+                        if(itemTypeEvaluation.value==1){
                             $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
                             $("#typeEval").val("average");
                             $('#jqxWindowWarningCalications').jqxWindow("open");
+                        }else if(itemTypeEvaluation.value==2){
+                            $("#messageWarning").text("¡Una ves cerradas las calificaciones de regularización no podrán ser alteradas, esta seguro que desea continuar...?");
+                            $("#typeEval").val("average");
+                            $('#jqxWindowWarningCalications').jqxWindow("open");
                         }else if(itemTypeEvaluation.value==3){
-                            if(exportSettings.canPrint==="0"){
-                                if(exportSettings.items){
+                            if(exportSettings.canPrint==="0"){                                
+                                if(exportSettings.items>0){
                                     var source = exportSettings.items;
                                     var dataAdapter = new $.jqx.dataAdapter(source);
                                     // Create a jqxListBox
@@ -299,13 +303,17 @@
                                         }
                                     });
                                     $('#jqxWindowMissingTeachers').jqxWindow("open");
+                                }else{
+                                    $("#messageWarning").text("¡Una ves cerradas las calificaciones de global no podrán ser alteradas, esta seguro que desea continuar...?");
+                                    $("#typeEval").val("average");
+                                    $('#jqxWindowWarningCalications').jqxWindow("open");
                                 }
                             }else if(exportSettings.canPrint==="1"){
-                                $("#messageWarning").text("¡Una ves cerradas las calificaciones de promedio no podrán ser alteradas, esta seguro que desea continuar...?");
+                                $("#messageWarning").text("¡Una ves cerradas las calificaciones de global no podrán ser alteradas, esta seguro que desea continuar...?");
                                 $("#typeEval").val("average");
                                 $('#jqxWindowWarningCalications').jqxWindow("open");
                             }else{
-                                alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.")
+                                alert("Lamentamos que estemos teniendo problemas, por favor reporta el problema.");
                             }
                         }
                     }else{
