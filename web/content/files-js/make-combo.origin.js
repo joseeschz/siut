@@ -299,7 +299,41 @@ function createDropDownGruopCheck(filtrable, selector, update){
         $(selector).jqxDropDownList('checkIndex',0);
     }
 }
-
+function createDropDownPeriodByStudentsCalifications(selector, params, update){
+    var source ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataPkPeriod' },
+            { name: 'dataNamePeriod' }
+        ],
+        url: "http://10.10.10.23/servicePeriod?view=byStudentAdjustmentCalifications",
+        data : {
+            fkSemester : params.fkSemester,
+            pkStudent : params.pkStudent
+        },
+        async: false
+    };
+    var dataAdapterPeriod = new $.jqx.dataAdapter(source);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterPeriod, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            filterable: false, 
+            autoDropDownHeight: true,
+            placeHolder: "SELECCIONAR",
+            selectedIndex: 0,
+            source: dataAdapterPeriod, 
+            displayMember: "dataNamePeriod", 
+            valueMember: "dataPkPeriod",
+            height: 26, 
+            width: 240                
+        }).css("display","inline-block");
+    }
+}
 function createDropDownPeriod(filtrable, selector){
     var periodSelected = 0;
     if(filtrable==="inscription"){
@@ -551,7 +585,38 @@ function createDropDownRol(selector){
         width: 180                
     }).css("display","inline-block");
 }
-function createDropDownEvaluationType(selector, data){
+function createDropDownEvaluationTypeUnlocked(selector, update){
+    var source ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'displayMember' },
+            { name: 'valueMember' }
+        ],
+        url: "../serviceCalification?getTypeEvaluationsUnlocked",
+        async: false
+    };
+    var dataAdapter = new $.jqx.dataAdapter(source);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapter, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            selectedIndex: 0, 
+            filterable: false, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapter, 
+            displayMember: "displayMember", 
+            valueMember: "valueMember",
+            width: 150                
+        }).css("display","inline-block");
+    }
+}
+function createDropDownEvaluationType(selector, data, update){
     var source ={
         datatype: "json",
         root: "__ENTITIES",
@@ -566,20 +631,23 @@ function createDropDownEvaluationType(selector, data){
         async: false
     };
     var dataAdapter = new $.jqx.dataAdapter(source);
-    
-    $(selector).jqxDropDownList({
-        theme: theme,
-        selectedIndex: 0, 
-        filterable: false, 
-        autoDropDownHeight: true,
-        filterPlaceHolder: "Buscar",
-        placeHolder: "SELECCIONAR",
-        source: dataAdapter, 
-        displayMember: "displayMember", 
-        valueMember: "valueMember",
-        width: 150                
-    }).css("display","inline-block");
-//    $(selector).jqxDropDownList('clearSelection');
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapter, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            selectedIndex: 0, 
+            filterable: false, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapter, 
+            displayMember: "displayMember", 
+            valueMember: "valueMember",
+            width: 150                
+        }).css("display","inline-block");
+    }
     var items = $(selector).jqxDropDownList('getItems'); 
     for(var i=0; i<items.length; i++){
         if(items[i].originalItem.status==="-1"){
@@ -608,7 +676,7 @@ function createDropDownEvaluationTypeByActivity(selector){
     }).css("display","inline-block");
 }
 
-function createDropDownScaleEvaluation(selector,filterable, update){
+function createDropDownScaleEvaluation(selector, filterable, update){
     var sourceCareer ={
         datatype: "json",
         root: "__ENTITIES",

@@ -21,6 +21,26 @@ import model.evaluationTypeModel;
 public class evaluationTypeControl {
     public static void main(String[] args) {
     }
+    public ArrayList<evaluationTypeModel> SelectEvaluationTypeAll(){
+        ArrayList<evaluationTypeModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_TYPE_EVALUATION`('allUnlocked', null, null, null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    evaluationTypeModel Items=new evaluationTypeModel();
+                    Items.setPK_EVALUATION_TYPE(res.getInt("PK_EVALUATION_TYPE"));
+                    Items.setFL_NAME_TYPE(res.getString("FL_NAME_TYPE"));
+                    list.add(Items);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(evaluationTypeModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<evaluationTypeModel> SelectEvaluationType(String action, int fkGroup, int fkMatter, int fkPeriod){
         ArrayList<evaluationTypeModel> list=new ArrayList<>();
         try {

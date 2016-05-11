@@ -95,6 +95,25 @@ public class servicePeriod extends HttpServlet {
                     out.flush(); 
                     out.close();
                 }
+                if(request.getParameter("view").equals("byStudentAdjustmentCalifications")){
+                    int fkSemester = Integer.parseInt(request.getParameter("fkSemester"));
+                    int pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
+                    listPeriod=new periodControl().SelectPeriodByStudentsAdjustmentCalifications(pkStudent, fkSemester);
+                    for(int i=0;i<listPeriod.size();i++){
+                        JSONObject data = new JSONObject();
+                        data.put("id", listPeriod.get(i).getPK_PERIOD());
+                        data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkPeriod", listPeriod.get(i).getPK_PERIOD());
+                        data.put("dataNamePeriod", listPeriod.get(i).getFL_NAME());                        
+                        content.add(data); 
+                    }
+                    settings.put("__ENTITIES", content);
+                    principal.add(settings);
+                    response.setContentType("application/json"); 
+                    out.print(principal);
+                    out.flush(); 
+                    out.close();
+                }
                 if(request.getParameter("view").equals("comboAllByStudent")){
                     String condition;
                     condition=request.getParameter("view")+"-"+session.getAttribute("pkStudent").toString();

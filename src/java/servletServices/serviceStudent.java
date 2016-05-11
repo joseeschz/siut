@@ -220,6 +220,7 @@ public class serviceStudent extends HttpServlet {
                 for(int i=0;i<listStudent.size();i++){
                     datos.put("id", listStudent.get(i).getPK_STUDENT());
                     datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataPkStudent", listStudent.get(i).getPK_STUDENT());
                     datos.put("dataName", listStudent.get(i).getFL_NAME());
                     datos.put("dataEnrollment", listStudent.get(i).getFL_ENROLLMENT());
                     datos.put("dataModify", listStudent.get(i).getFL_MODIFY());

@@ -41,7 +41,7 @@
                         $("#registerCalFlangeSubjectMatterFilter").jqxDropDownList({width: 300});
                         itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');                        
                         if(itemSubjectMatter!==undefined){
-                            initEvaluationType();
+                            initEvaluationType(false);
                             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", itemPeriod.value, itemSubjectMatter.value, false);
                             itemScaleEvaluation = $('#calTeacherScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
                             if(itemScaleEvaluation!==undefined){    
@@ -51,7 +51,7 @@
                             }
                         }else{
                             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
-                            initEvaluationType();
+                            initEvaluationType(false);
                         }
                     }else{
                         createDropDownSubjectMatterByTeacher(null, null, null, null, "#registerCalFlangeSubjectMatterFilter", false);
@@ -105,7 +105,7 @@
                     $('#calTeacherActivitiesFilter').jqxDropDownList('clear'); 
                     $('#tableRegisterCalActivities').jqxGrid("clear");
                     $("#evaluateActivityPopover").parent().fadeOut("slow");   
-                    initEvaluationType();
+                    initEvaluationType(true);
                 }
             });
             
@@ -130,7 +130,7 @@
             createDropDownScaleEvaluationBloqued("#calTeacherScaleEvaluationFilter", null, null, false);
             createDropDownActivities("#calTeacherActivitiesFilter", [], false);
         }
-        function initEvaluationType(){
+        function initEvaluationType(update){
             itemGroup = $('#registerCalFlangeGroupFilter').jqxDropDownList('getSelectedItem');
             itemPeriod = $('#registerCalFlangePeriodFilter').jqxDropDownList('getSelectedItem');
             itemSubjectMatter=$('#registerCalFlangeSubjectMatterFilter').jqxDropDownList('getSelectedItem');                       
@@ -140,7 +140,7 @@
                     "fkMatter":itemSubjectMatter.value,
                     "fkPeriod":itemPeriod.value
                 }; 
-                createDropDownEvaluationType("#registerCalEvaluationType", data);
+                createDropDownEvaluationType("#registerCalEvaluationType", data, update);
                 $("#registerCalEvaluationType").off("change");
                 $("#registerCalEvaluationType").on('change',function (event){ 
                     var args = event.args;

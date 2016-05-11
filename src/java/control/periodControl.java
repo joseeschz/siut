@@ -49,6 +49,29 @@ public class periodControl {
         }
         return list;
     }
+    public ArrayList<periodModel> SelectPeriodByStudentsAdjustmentCalifications(int pkStudent, int fkSemester){
+        ArrayList<periodModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD_BY_STUDENT_CALIFICATIONS`("+pkStudent+", "+fkSemester+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    periodModel listPeriod=new periodModel();
+                    listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    listPeriod.setFL_ACTIVE(res.getInt("FL_ACTIVE"));
+                    listPeriod.setFL_NAME(res.getString("FL_NAME"));
+                    listPeriod.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    listPeriod.setFL_YEAR_ACTIVE(res.getInt("FL_YEAR_ACTIVE"));
+                    list.add(listPeriod);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(periodModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<periodModel> SelectPeriodByTeacher(int pkTeacher, int pkCareer, int pkSemester, int pkMatter, int pkTypeEval){
         ArrayList<periodModel> list=new ArrayList<>();
         String procedure = "CALL `GET_PERIOD_BY_TEACHER`('periodByTeacherByMatterHistory', "+pkTeacher+", "+pkCareer+", "+pkSemester+", "+pkMatter+", "+pkTypeEval+")";

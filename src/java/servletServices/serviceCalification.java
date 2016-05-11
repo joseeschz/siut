@@ -150,6 +150,25 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            if(request.getParameter("getTypeEvaluationsUnlocked")!=null){
+                ArrayList<evaluationTypeModel> listItems=new evaluationTypeControl().SelectEvaluationTypeAll();
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__entityModel","TypeEvaluations"); 
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("displayMember", listItems.get(i).getFL_NAME_TYPE());
+                    datos.put("valueMember", listItems.get(i).getPK_EVALUATION_TYPE());
+                    content.add(datos);
+                }
+                settings.put("__ENTITIES", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("setObservations")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
