@@ -308,7 +308,7 @@ function createDropDownPeriodByStudentsCalifications(selector, params, update){
             { name: 'dataPkPeriod' },
             { name: 'dataNamePeriod' }
         ],
-        url: "http://10.10.10.23/servicePeriod?view=byStudentAdjustmentCalifications",
+        url: "../servicePeriod?view=byStudentAdjustmentCalifications",
         data : {
             fkSemester : params.fkSemester,
             pkStudent : params.pkStudent
