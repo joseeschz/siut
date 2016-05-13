@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="384"/>
 	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -1091,14 +1091,17 @@
 			</textField>
 			<subreport>
 				<reportElement x="9" y="47" width="531" height="697" uuid="e3e6fad8-a3d7-4060-9efa-4409f7d5d969"/>
-				<subreportParameter name="pt_career">
-					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
+				<subreportParameter name="pt_period">
+					<subreportParameterExpression><![CDATA[$F{FK_PERIOD}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pt_group">
 					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="pt_period">
-					<subreportParameterExpression><![CDATA[$F{FK_PERIOD}]]></subreportParameterExpression>
+				<subreportParameter name="pt_matter">
+					<subreportParameterExpression><![CDATA[$P{pt_matter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_career">
+					<subreportParameterExpression><![CDATA[$P{pt_career}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report-criterion_subreport1_1.jasper"]]></subreportExpression>

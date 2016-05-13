@@ -15,7 +15,9 @@ public class careerModel extends  groupModel{
     String FL_NAME_ABBREVIATED = "";
     String FL_STATUS = "";
     int FK_LEVEL = 0;
-
+    int PK_CAREER_LEVEL_STUDY1 = 0;
+    int PK_CAREER_LEVEL_STUDY2 = 0;
+    
     public int getPK_CAREER() {
         return PK_CAREER;
     }
@@ -55,4 +57,22 @@ public class careerModel extends  groupModel{
     public void setFK_LEVEL(int FK_LEVEL) {
         this.FK_LEVEL = FK_LEVEL;
     }
+
+    public int getPK_CAREER_LEVEL_STUDY1() {
+        return PK_CAREER_LEVEL_STUDY1;
+    }
+
+    public void setPK_CAREER_LEVEL_STUDY1(int PK_CAREER_LEVEL_STUDY1) {
+        this.PK_CAREER_LEVEL_STUDY1 = PK_CAREER_LEVEL_STUDY1;
+    }
+
+    public int getPK_CAREER_LEVEL_STUDY2() {
+        return PK_CAREER_LEVEL_STUDY2;
+    }
+
+    public void setPK_CAREER_LEVEL_STUDY2(int PK_CAREER_LEVEL_STUDY2) {
+        this.PK_CAREER_LEVEL_STUDY2 = PK_CAREER_LEVEL_STUDY2;
+    }
+    
+    
 }
