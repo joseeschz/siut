@@ -366,7 +366,7 @@
                         printReport();
                     }else if(itemTypeEvaluation.value==3){
                         if(exportSettings.canPrint==="0"){                            
-                            if(exportSettings.items){
+                            if(exportSettings.items>0){
                                 var source = exportSettings.items;
                                 var dataAdapter = new $.jqx.dataAdapter(source);
                                 // Create a jqxListBox
@@ -383,6 +383,9 @@
                                     }
                                 });
                                 $('#jqxWindowMissingTeachers').jqxWindow("open");
+                            }else{
+                                $("#messageWarning").html("Lamentamos que estemos teniendo problemas, por favor reporta el problema....!");
+                                $('#jqxWindowWarningCalications').jqxWindow("open");
                             }
                         }else if(exportSettings.canPrint==="1"){
                             printReport();

@@ -486,7 +486,7 @@ function createDropDownSemester(filtrable, selector, update){
     }else{
         $(selector).jqxDropDownList({
             theme: theme,
-            filterable: true, 
+            filterable: false, 
             dropDownHeight: 150,
             autoDropDownHeight: true,
             placeHolder: "SELECCIONAR",
@@ -683,7 +683,9 @@ function createDropDownScaleEvaluation(selector, filterable, update){
         id: "id",
         datafields: [
             { name: 'dataPkScaleEvalution' },
-            { name: 'dataNameScale' }
+            { name: 'dataNameScale' },
+            { name: 'dataMaxValue' },
+            { name: 'dataTypeEvaluation' }
         ],
         url: "../serviceScaleEvaluation?view=combo&&fkStudyLevel="+filterable+"",
         async: false

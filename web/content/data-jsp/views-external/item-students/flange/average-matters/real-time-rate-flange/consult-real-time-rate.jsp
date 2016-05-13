@@ -388,5 +388,5 @@
     <div id='qualificationsEvaluationTypeFilter'></div>
 </div>
 <div id="exporPDF"></div>
-<br><br>
+<br><br><br>
 <div style="float: left; margin-right: 5px" id="tableQualifications"></div>

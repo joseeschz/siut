@@ -58,6 +58,7 @@ public class serviceScaleEvaluation extends HttpServlet {
                         data.put("dataPkScaleEvalution", listScaleEvaluation.get(i).getPK_SCALE_EVALUATION());
                         data.put("dataNameScale", listScaleEvaluation.get(i).getFL_NAME_SCALE());
                         data.put("dataMaxValue", listScaleEvaluation.get(i).getFL_MAX_VALUE());
+                        data.put("dataTypeEvaluation", listScaleEvaluation.get(i).getFL_TYPE_SCALE());
                         content.add(data); 
                     }                    
                 }

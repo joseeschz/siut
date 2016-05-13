@@ -13,6 +13,8 @@ $(document).ready(function () {
     
     var enrollmentRatings_temp="";
     var pkStudent_temp="";
+    var pkCareerLevelStudy1_temp="";
+    var pkCareerLevelStudy2_temp="";
     createDropDownStudyLevel("#studyLevelRatings",false);
     itemLevel=$('#studyLevelRatings').jqxDropDownList('getSelectedItem');    
     if(itemLevel!==undefined){
@@ -104,11 +106,11 @@ $(document).ready(function () {
         disableElements(true);
     });
     disableElements(true);
-    function  disableElements(status){
+    function disableElements(status){
         $("#studyLevelRatings").jqxDropDownList({disabled: status}); 
         $("#careerRatings").jqxDropDownList({disabled: status});      
         $("#semesterRatings").jqxDropDownList({disabled: status});  
-        $("#scaleEvaluationRatings").jqxDropDownList({disabled: status});  
+        $("#scaleEvaluationRatings").jqxDropDownList({disabled: true});  
         $("#studyPlanRatings").jqxDropDownList({disabled: status}); 
         $("#evaluationTypeRatings").jqxDropDownList({disabled: status}); 
         $("#periodRatings").jqxDropDownList({disabled: status}); 
@@ -121,8 +123,7 @@ $(document).ready(function () {
             $("#loadingPictureRatings").hide();
             $("#studyLevelRatings").jqxDropDownList('clearSelection'); 
             $("#careerRatings").jqxDropDownList('clearSelection'); 
-            $("#semesterRatings").jqxDropDownList('clearSelection'); 
-            $("#scaleEvaluationRatings").jqxDropDownList('clearSelection'); 
+            $("#semesterRatings").jqxDropDownList('clearSelection');   
             $("#studyPlanRatings").jqxDropDownList('clearSelection'); 
             $("#evaluationTypeRatings").jqxDropDownList('clearSelection'); 
             $("#periodRatings").jqxDropDownList('clearSelection'); 
@@ -136,9 +137,21 @@ $(document).ready(function () {
 //            $("#studyPlanRatings").jqxDropDownList('selectIndex', 0); 
 //            $("#evaluationTypeRatings").jqxDropDownList('selectIndex', 0);
 //            $("#periodRatings").jqxDropDownList('selectIndex', 0);
+            $("#studyLevelRatings").jqxDropDownList({disabled: !status}); 
+            $("#careerRatings").jqxDropDownList({disabled: !status});      
+            $("#scaleEvaluationRatings").jqxDropDownList({disabled: true});  
+            $("#subjectMattersRatings").jqxExpander({disabled: status});
+            
         }
     }
-    function loadData(data){     
+    function loadData(data){    
+        $("#studyLevelRatings").off('change');
+        $("#careerRatings").off('change');
+        $("#studyPlanRatings").off('change');
+        $("#semesterRatings").off('change');
+        $("#evaluationTypeRatings").off('change');
+        $("#periodRatings").off('change');
+        
         $("#nameRatings").val(data.dataName+" "+data.dataPaternName+" "+data.dataMaternName);
         
         itemLevel = $("#studyLevelRatings").jqxDropDownList('getItemByValue', data.dataPkLevelStudy);
@@ -158,7 +171,12 @@ $(document).ready(function () {
         itemLevel=$('#studyLevelRatings').jqxDropDownList('getSelectedItem');
         createDropDownSemester(itemLevel.value,"#semesterRatings", true);
         itemSemester = $('#semesterRatings').jqxDropDownList('getSelectedItem'); 
+        $("#scaleEvaluationRatings").jqxDropDownList('selectIndex', 0);
+        $("#evaluationTypeRatings").jqxDropDownList('selectIndex', 0);
         pkStudent_temp = data.dataPkStudent;
+        pkCareerLevelStudy1_temp=data.dataPkCareerLevelStudy1;
+        pkCareerLevelStudy2_temp=data.dataPkCareerLevelStudy2;
+        
         var params = {
             pkStudent : pkStudent_temp,
             fkSemester : itemSemester.value                
@@ -166,9 +184,72 @@ $(document).ready(function () {
         createDropDownPeriodByStudentsCalifications("#periodRatings", params, true);
         itemPeriod = $('#periodRatings').jqxDropDownList('getSelectedItem');
         
-        loadTable(itemCareer.value, itemSemester.value, itemStudyPlan.value, 1);      
-        loadTableCalifications(itemCareer.value, itemSemester.value, itemStudyPlan.value, 1); 
+        if(itemPeriod==null || itemPeriod==undefined){
+            $("#studyLevelRatings").jqxDropDownList({disabled: false}); 
+            $("#careerRatings").jqxDropDownList({disabled: true});      
+            $("#semesterRatings").jqxDropDownList({disabled: false});  
+            $("#scaleEvaluationRatings").jqxDropDownList({disabled: true});  
+            $("#studyPlanRatings").jqxDropDownList({disabled: false}); 
+            $("#evaluationTypeRatings").jqxDropDownList({disabled: false}); 
+            $("#periodRatings").jqxDropDownList({disabled: false}); 
+            $("#tableSubjectMatters").jqxGrid('clear'); 
+            $("#tableSubjectMattersCalifications").jqxGrid('clear');  
+        }else{
+            $("#studyLevelRatings").jqxDropDownList({disabled: false}); 
+            $("#scaleEvaluationRatings").jqxDropDownList({disabled: true});  
+            loadTable(itemCareer.value, itemSemester.value, itemStudyPlan.value, pkStudent_temp);      
+            loadTableCalifications(itemCareer.value, itemSemester.value, itemStudyPlan.value, pkStudent_temp);
+        }
+        $("#studyLevelRatings").off('change');
+        $("#studyLevelRatings").on('change',function (event){
+            var args = event.args;
+            if (args) {
+                 // index represents the item's index.                      
+                var index = args.index;
+                var item = args.item;
+                // get item's label and value.
+                var label = item.label;
+                var value = item.value;
+                var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                createDropDownCareer(value,"#careerRatings",true);  
+                if(value==1){
+                    itemCareer = $("#careerRatings").jqxDropDownList('getItemByValue', pkCareerLevelStudy1_temp);
+                    $("#careerRatings").jqxDropDownList("selectItem", itemCareer); 
+                    
+                    createDropDownStudyPlan(itemCareer.value,"#studyPlanRatings",true);
+                    itemStudyPlan = $('#studyPlanRatings').jqxDropDownList('getSelectedItem'); 
+                                        
+                    createDropDownScaleEvaluation("#scaleEvaluationRatings", value, true);
+                    itemScaleEvaluation = $('#scaleEvaluationRatings').jqxDropDownList('getSelectedItem');
+                }else{
+                    itemCareer = $("#careerRatings").jqxDropDownList('getItemByValue', pkCareerLevelStudy2_temp);
+                    $("#careerRatings").jqxDropDownList("selectItem", itemCareer); 
+                    
+                    createDropDownStudyPlan(itemCareer.value,"#studyPlanRatings",true);
+                    itemStudyPlan = $('#studyPlanRatings').jqxDropDownList('getSelectedItem');                                        
+                    
+                    createDropDownScaleEvaluation("#scaleEvaluationRatings", value, true);
+                    itemScaleEvaluation = $('#scaleEvaluationRatings').jqxDropDownList('getSelectedItem');
+                }                    
+            }                  
+        });
         
+        $("#studyPlanRatings").off('change');
+        $("#studyPlanRatings").on('change',function (event){
+            var args = event.args;
+            if (args) {
+                 // index represents the item's index.                      
+                var index = args.index;
+                var item = args.item;
+                // get item's label and value.
+                var label = item.label;
+                var value = item.value;
+                var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                itemLevel=$('#studyLevelRatings').jqxDropDownList('getSelectedItem');
+                createDropDownSemester(itemLevel.value,"#semesterRatings", true);
+                itemSemester = $('#semesterRatings').jqxDropDownList('getSelectedItem'); 
+            }                  
+        });
         
         $("#semesterRatings").off('change');
         $("#semesterRatings").on('change',function (event){
@@ -181,8 +262,10 @@ $(document).ready(function () {
                 var label = item.label;
                 var value = item.value;
                 var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem'); 
                 createDropDownEvaluationTypeUnlocked("#evaluationTypeRatings", true);
-                itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem');      
+                itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem'); 
+                $("#evaluationTypeRatings").jqxDropDownList('selectIndex', 0);
             }                  
         });
         
@@ -198,6 +281,7 @@ $(document).ready(function () {
                 var value = item.value;
                 var type = args.type; // keyboard, mouse or null depending on how the item was selected.
                 itemLevel=$('#studyLevelRatings').jqxDropDownList('getSelectedItem');    
+                itemCareer = $("#careerRatings").jqxDropDownList('getSelectedItem');
                 itemSemester = $('#semesterRatings').jqxDropDownList('getSelectedItem');
                 itemStudyPlan = $('#studyPlanRatings').jqxDropDownList('getSelectedItem');
                 
@@ -206,12 +290,45 @@ $(document).ready(function () {
                     fkSemester : itemSemester.value                
                 };
                 createDropDownPeriodByStudentsCalifications("#periodRatings", params, true);
-                itemPeriod = $('#periodRatings').jqxDropDownList('getSelectedItem');
-                
-                loadTable(itemCareer.value, itemSemester.value, itemStudyPlan.value, 1);      
-                loadTableCalifications(itemCareer.value, itemSemester.value, itemStudyPlan.value, 1);      
+                itemPeriod = $('#periodRatings').jqxDropDownList('getSelectedItem'); 
+                if(itemPeriod==null || itemPeriod==undefined){
+                    $("#tableSubjectMatters").jqxGrid('clear'); 
+                    $("#tableSubjectMattersCalifications").jqxGrid('clear'); 
+                }
             }                  
         });
+        
+        $("#periodRatings").off('change');
+        $("#periodRatings").on('change',function (event){
+            var args = event.args;
+            if (args) {
+                 // index represents the item's index.                      
+                var index = args.index;
+                var item = args.item;
+                // get item's label and value.
+                var label = item.label;
+                var value = item.value;
+                var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                itemLevel=$('#studyLevelRatings').jqxDropDownList('getSelectedItem');    
+                itemCareer = $("#careerRatings").jqxDropDownList('getSelectedItem');
+                itemSemester = $('#semesterRatings').jqxDropDownList('getSelectedItem');
+                itemStudyPlan = $('#studyPlanRatings').jqxDropDownList('getSelectedItem');
+                 itemPeriod = $('#periodRatings').jqxDropDownList('getSelectedItem'); 
+                if(itemPeriod!=null || itemPeriod!=undefined){
+                    if(itemLevel.value==1){
+                        loadTable(pkCareerLevelStudy1_temp, itemSemester.value, itemStudyPlan.value, pkStudent_temp);      
+                        loadTableCalifications(pkCareerLevelStudy1_temp, itemSemester.value, itemStudyPlan.value, pkStudent_temp); 
+                    }else{
+                        loadTable(pkCareerLevelStudy2_temp, itemSemester.value, itemStudyPlan.value, pkStudent_temp);      
+                        loadTableCalifications(pkCareerLevelStudy2_temp, itemSemester.value, itemStudyPlan.value, pkStudent_temp);  
+                    }                    
+                }else{
+                    $("#tableSubjectMatters").jqxGrid('clear'); 
+                    $("#tableSubjectMattersCalifications").jqxGrid('clear');  
+                }    
+            }                  
+        });
+        
     }
     function loadTable(pkCareer, pkSemester, pkStudyPlan, pkStudent){
         var loadSource=function(pkCareer, pkSemester, pkStudyPlan, pkStudent){
@@ -226,7 +343,13 @@ $(document).ready(function () {
                 dataType: "json",
                 async: false,
                 id: 'id',
-                url: '../serviceSubjectMatter?view&&pkCareer='+pkCareer+'&&pkSemester='+pkSemester+'&&pkStudyPlan='+pkStudyPlan+''
+                url: '../serviceSubjectMatter?view',
+                data : {
+                    pkCareer : pkCareer,
+                    pkSemester : pkSemester,
+                    pkStudyPlan : pkStudyPlan,
+                    pkStudent : pkStudent
+                }
             };
             return ordersSource;
         };
@@ -256,75 +379,10 @@ $(document).ready(function () {
             ]
         });
     }
-    function loadTableCalifications(pkCareer, pkSemester, pkStudyPlan, pkStudent){
-        var loadSource=function(pkCareer, pkSemester, pkStudyPlan, pkStudent){
-            var ordersSource ={
-                dataFields: [
-                    { name: 'id', type:'int'},
-                    { name: 'dataProgresivNumber', type:'int'},
-                    { name: 'dataNameSubjectMatter', type: 'string' },
-                    { name: 'dataIntegradora', type: 'string' },
-                    { name: 'dataCalificationBe', type: 'string' },
-                    { name: 'dataCalificationKnow', type: 'string' },
-                    { name: 'dataCalificationDo', type: 'string' },
-                    { name: 'dataAvg', type: 'string' }
-                ],
-                root: "__ENTITIES",
-                dataType: "json",
-                async: false,
-                id: 'id',
-                url: '../serviceSubjectMatter?view&&pkCareer='+pkCareer+'&&pkSemester='+pkSemester+'&&pkStudyPlan='+pkStudyPlan+''
-            };
-            return ordersSource;
-        };
-        var dataAdapter = new $.jqx.dataAdapter(loadSource(pkCareer, pkSemester, pkStudyPlan, pkStudent));
-        $("#tableSubjectMattersCalifications").jqxGrid({
-            width: 930,
-            height : 220,
-            selectionmode: "singlerow",
-            localization: getLocalization("es"),
-            source: dataAdapter,
-            pageable: false,
-            editable: true,
-            filterable: false,
-            enabletooltips: true,
-            altRows: true,
-            showToolbar: true,
-            toolbarHeight: 30,
-            pagerbuttonscount: 10,
-            ready: function(){
 
-            },
-            columngroups: [
-                { text: 'Calificación', align: 'center', name: 'calification' }
-            ],
-            columns: [
-                { text: 'NP',filterable: false, editable: false, datafield: 'dataProgresivNumber', width: 20 },
-                { text: 'Materia', dataField: 'dataNameSubjectMatter', editable: false},
-                { text: 'Ser', columngroup: 'calification', datafield: 'dataCalificationBe', width: 50},
-                { text: 'Saber', columngroup: 'calification', datafield: 'dataCalificationKnow', width: 50},
-                { text: 'Hacer', columngroup: 'calification', datafield: 'dataCalificationDo', width: 50},
-                { text: 'Total', columngroup: 'calification', datafield: 'dataAvg', editable: false, width: 50}
-            ]
-        });
-    }
-    function loadTableCalificationsTemp(){
-        var loadSource = function(){
-            var valItemCareer=0;
-            var valItemSemester=0;
-            var valItemPeriod=0;
-            var valItemGroup=0;
-            var valItemActivity=0;
+    function loadTableCalifications(pkCareer, pkSemester, pkStudyPlan, pkStudent){
+        var loadSource = function(pkCareer, pkSemester, pkStudyPlan, pkStudent){
             itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem');
-            if(itemCareer!==undefined){
-                valItemCareer=itemCareer.value;
-            }
-            if(itemSemester!==undefined){
-                valItemSemester=itemSemester.value;
-            }
-            if(itemPeriod!==undefined){
-                valItemPeriod=itemPeriod.value;
-            }
             var ordersSource ={
                 dataFields: [
                     { name: 'id', type:'int'},
@@ -333,6 +391,7 @@ $(document).ready(function () {
                     { name: 'dataRealized', type:'int'},
                     { name: 'dataEnrollment', type:'string'},
                     { name: 'dataNameStudent', type:'string'},
+                    { name: 'dataNameSubjectMatter', type:'string'},
                     { name: 'dataApproved', type: 'string' },
                     { name: 'dataValueObtanied', type: 'double' },
                     { name: 'dataValueObtaniedNew', type: 'double' },
@@ -358,20 +417,17 @@ $(document).ready(function () {
                 id: 'id',
                 async: false,
                 data :{
-                    view: itemTypeEvaluation.value,
-                    pkCareer : 6,
-                    pkSemester : 1,
-                    pkActivity : 0,
-                    pkGroup : 1,
-                    pkMatter : 2,
-                    pkPeriod : 3                    
+                    pkCareer : pkCareer,
+                    pkSemester : pkSemester,
+                    pkStudyPlan: pkStudyPlan,
+                    pkStudent : pkStudent
                 },
-                url: '../serviceActivitiesCalByStudents'
+                url: '../serviceSubjectMatter?view'
             };
             return ordersSource;
         };
         var length =0 ;
-        var dataAdapter = new $.jqx.dataAdapter(loadSource(),{
+        var dataAdapter = new $.jqx.dataAdapter(loadSource(pkCareer, pkSemester, pkStudyPlan, pkStudent),{
             loadComplete: function () {
                 length = dataAdapter.records.length;
             }
@@ -394,52 +450,51 @@ $(document).ready(function () {
         var initeditor = function (row, cellvalue, editor) {  
             itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem');
             var cell = $('#tableSubjectMattersCalifications').jqxGrid('getselectedcell');                 
-            if(itemTypeEvaluation.value===1){
-                if(cell.column==="dataValueObtaniedEquivalent"){
-                    editor.jqxNumberInput({ 
-                        inputMode: 'simple', 
-                        spinButtons: true,
-                        digits:2,
-                        min:0,
-                        max: 10
-                    }); 
-                }else{
-                    editor.jqxNumberInput({ 
-                        inputMode: 'simple', 
-                        spinButtons: true,
-                        digits:1,
-                        min:0,
-                        max: value_max
-                    }); 
-                }                                       
-            }else{
-                var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
-                var minValueScale = parseFloat(getMinValueByScale(cell)).toFixed(2);
-                editor.jqxNumberInput({ 
-                    inputMode: 'simple', 
-                    spinButtons: true,
-                    digits:1,
-                    min: minValueScale,
-                    max: maxValueScale
-                });
-            }
+            var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
+            var minValueScale = parseFloat(getMinValueByScale(cell)).toFixed(2);
+            console.log(minValueScale)
+            editor.jqxNumberInput({ 
+                inputMode: 'simple', 
+                spinButtons: true,
+                digits:1,
+                min: minValueScale,
+                max: maxValueScale
+            });
             editor.off('change');
             editor.on('change', function (event) {  
                 if(event.args){                  
                     if(itemTypeEvaluation.value===1){
-                        if(cell.column==="dataValueObtaniedEquivalent"){
-                            var value = parseFloat($(this).val());
-                            var valueObtaniedNew = parseFloat(value*value_max/10).toFixed(2);
-                            $("#tableSubjectMattersCalifications").jqxGrid('setcellvalue', row, "dataValueObtaniedNew", valueObtaniedNew); 
-                        }else{
-                            var params = {
-                                "evaluationType" : itemTypeEvaluation.value,
-                                "row": row,
-                                "value": $(this).val(),
-                                "oldvalue" : cellvalue
-                            };
-                            evaluateActivityByRow(params);
+                        var rowData = $('#tableSubjectMattersCalifications').jqxGrid('getrowdata', row);
+                        var cellBe = null;
+                        var cellKnow = null;
+                        var cellDo = null;
+
+                        if(cell.datafield==="dataObtaniedAcumulatedBe"){
+                            cellBe = $(this).val();
+                            cellKnow = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedKnow");
+                            cellDo = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedDo");
                         }
+                        if(cell.datafield==="dataObtaniedAcumulatedKnow"){
+                            cellBe = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedBe");
+                            cellKnow = $(this).val();
+                            cellDo = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedDo");
+                        }
+                        if(cell.datafield==="dataObtaniedAcumulatedDo"){
+                            cellBe = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedBe");
+                            cellKnow = $('#tableSubjectMattersCalifications').jqxGrid('getcelltext', row, "dataObtaniedAcumulatedKnow");
+                            cellDo = $(this).val();
+                        }
+
+                        var total = parseFloat(cellBe)+parseFloat(cellKnow)+parseFloat(cellDo);
+                        var total=total.toFixed(2);
+                        var params = {
+                            "evaluationType" : itemTypeEvaluation.value,
+                            "rowID": rowData.id,
+                            "value": $(this).val(),
+                            "total" : total,
+                            "scaleType" :  getTypeScale(cell.datafield)
+                        };
+//                        evaluateScaleByRow(params);
                     }else if(itemTypeEvaluation.value===2){  
                         var rowData = $('#tableSubjectMattersCalifications').jqxGrid('getrowdata', row);
                         var cellBe = null;
@@ -471,7 +526,7 @@ $(document).ready(function () {
                             "total" : total,
                             "scaleType" :  getTypeScale(cell.datafield)
                         };
-                        evaluateScaleByRow(params);
+//                        evaluateScaleByRow(params);
                     }else if(itemTypeEvaluation.value===3){  
                         var rowData = $('#tableSubjectMattersCalifications').jqxGrid('getrowdata', row); 
                         var cellBe = null;
@@ -502,46 +557,28 @@ $(document).ready(function () {
                             "total" : total,
                             "scaleType" :  getTypeScale(cell.datafield)
                         };
-                        evaluateScaleByRow(params);
+//                        evaluateScaleByRow(params);
                     }
                 } 
             });
         };
         var validation = function (cell, value) {    
             itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem');
-            if(itemTypeEvaluation.value===1){
-                if(cell.column==="dataValueObtaniedEquivalent"){
-                    if (value > 10) {
-                        return { result: false, message: "Calificación máxima 10"};
-                    }
-                    if (value < 0) {
-                        return { result: false, message: "Calificación minima 0"};
-                    }
-                }else{
-                    if (value > value_max) {
-                        return { result: false, message: "Calificación máxima "+value_max};
-                    }
-                    if (value < 0) {
-                        return { result: false, message: "Calificación minima 0"};
-                    }
-                }
-            }else{
-                var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
-                var minValueScale = parseFloat(getMinValueByScale(cell)).toFixed(2);                        
-                if (value < 0 || value > maxValueScale) {
-                    return { result: false, message: "Calificación máxima "+maxValueScale};
-                }
-                if (value < minValueScale) {
-                    return { result: false, message: "Calificación minima "+minValueScale};
-                }
+            var maxValueScale = parseFloat(getMaxValueByScale(cell.datafield)).toFixed(2);
+            var minValueScale = parseFloat(getMinValueByScale(cell)).toFixed(2);                        
+            if (value > maxValueScale) {
+                return { result: false, message: "Calificación máxima "+maxValueScale};
+            }
+            if (value < 0 || value < minValueScale) {
+                return { result: false, message: "Calificación minima "+minValueScale};
             }
             return true;
         };
         var cellclass = function (row, columnfield, value) {
             var classTheme="white ";
             itemTypeEvaluation = $('#evaluationTypeRatings').jqxDropDownList('getSelectedItem');          
-            if(itemTypeEvaluation.value===1){                    
-                classTheme=classTheme+"disabled";
+            if(itemTypeEvaluation.value===1){      
+                
             }else if(itemTypeEvaluation.value===2){ 
                 if(columnfield==="dataObtaniedAcumulatedBe"){
                     classTheme=classTheme+"disabled";
@@ -556,30 +593,27 @@ $(document).ready(function () {
                     classTheme=classTheme+"disabled";
                 }
             }else if(itemTypeEvaluation.value===3){ 
-                var data = $('#tableSubjectMattersCalifications').jqxGrid('getrowdata', row);
-                if(data.dataObtaniedGlobalTotal>=8){
-                    if(columnfield==="dataObtaniedAcumulatedBe"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedAcumulatedKnow"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedAcumulatedDo"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedRegularizationBe"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedRegularizationKnow"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedRegularizationDo"){
-                        classTheme=classTheme+"disabled";
-                    }
-                    if(columnfield==="dataObtaniedGlobalBe"){
-                        classTheme=classTheme+"disabled";
-                    };
+                if(columnfield==="dataObtaniedAcumulatedBe"){
+                    classTheme=classTheme+"disabled";
                 }
+                if(columnfield==="dataObtaniedAcumulatedKnow"){
+                    classTheme=classTheme+"disabled";
+                }
+                if(columnfield==="dataObtaniedAcumulatedDo"){
+                    classTheme=classTheme+"disabled";
+                }
+                if(columnfield==="dataObtaniedRegularizationBe"){
+                    classTheme=classTheme+"disabled";
+                }
+                if(columnfield==="dataObtaniedRegularizationKnow"){
+                    classTheme=classTheme+"disabled";
+                }
+                if(columnfield==="dataObtaniedRegularizationDo"){
+                    classTheme=classTheme+"disabled";
+                }
+                if(columnfield==="dataObtaniedGlobalBe"){
+                    classTheme=classTheme+"disabled";
+                };
             }
             return classTheme;
         };
@@ -646,7 +680,13 @@ $(document).ready(function () {
         var getMaxValueByScale = function (colum){                 
             var result = null;
             var matchedColumType = null;
-            if(colum==="dataObtaniedRegularizationBe"){
+            if(colum==="dataObtaniedAcumulatedBe"){
+                matchedColumType=1;
+            }else if(colum==="dataObtaniedAcumulatedKnow"){
+                matchedColumType=2;
+            }else if(colum==="dataObtaniedAcumulatedDo"){
+                matchedColumType=3;
+            }else if(colum==="dataObtaniedRegularizationBe"){
                 matchedColumType=1;
             }else if(colum==="dataObtaniedRegularizationKnow"){
                 matchedColumType=2;
@@ -672,7 +712,13 @@ $(document).ready(function () {
         var getMinValueByScale = function (cell){                 
             var result = null;
             var matchedColumType = null;
-            if(cell.column==="dataObtaniedRegularizationBe"){
+            if(cell.column==="dataObtaniedAcumulatedBe"){
+                matchedColumType="dataObtaniedAcumulatedBe";
+            }else if(cell.column==="dataObtaniedAcumulatedKnow"){
+                matchedColumType="dataObtaniedAcumulatedKnow";
+            }else if(cell.column==="dataObtaniedAcumulatedDo"){
+               matchedColumType="dataObtaniedAcumulatedDo";
+            }else if(cell.column==="dataObtaniedRegularizationBe"){
                 matchedColumType="dataObtaniedAcumulatedBe";
             }else if(cell.column==="dataObtaniedRegularizationKnow"){
                 matchedColumType="dataObtaniedAcumulatedKnow";
@@ -685,21 +731,31 @@ $(document).ready(function () {
             }else if(cell.column==="dataObtaniedGlobalDo"){
                matchedColumType="dataObtaniedRegularizationDo";
             }
-            result = $('#tableSubjectMattersCalifications').jqxGrid('getcellvalue', cell.row, matchedColumType);
+            if(matchedColumType==="dataObtaniedAcumulatedBe" || matchedColumType==="dataObtaniedAcumulatedKnow" || matchedColumType==="dataObtaniedAcumulatedDo"){
+                result=0;
+            }else{
+               result = $('#tableSubjectMattersCalifications').jqxGrid('getcellvalue', cell.row, matchedColumType); 
+            }            
             return result;
         };
 
         var columsDefault = [
             { text: '#', dataField: 'dataProgresivNumber', cellclassname: cellclass, width: 20, cellsrenderer:cellsrenderer, editable: false},
-            { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false },
-            { text: 'Alumno', align: 'center', dataField: 'dataNameStudent', cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false}
+            { text: 'Materia',align: 'center', dataField: 'dataNameSubjectMatter', cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false }
         ];
 
         var columngroupsAcumulated = [
             {text: 'Acumulado', name: 'acumulated', align: 'center'}
         ];
         var columsAcumulated =[
-            { text: 'Ser', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { 
+                text: 'Ser', cellsformat:"f2",  columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
+                validation: validation,
+                initeditor: initeditor,
+                cellbeginedit: cellbeginedit, 
+                cellsrenderer: cellsrenderer,
+                cellclassname: cellclass
+            },
             { 
                 text: 'Saber', cellsformat:"f2",  columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedKnow', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                 validation: validation,
@@ -716,7 +772,7 @@ $(document).ready(function () {
                 cellsrenderer: cellsrenderer,
                 cellclassname: cellclass
             },
-            { text: 'Total', dataField: 'dataObtaniedAcumulatedTotal', columngroup: 'acumulated', cellsalign: 'center', align: 'center', width: 50, cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false }
+            { text: 'Total', dataField: 'dataObtaniedAcumulatedTotal', columngroup: 'acumulated', cellsalign: 'center', align: 'center', width: 70, cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false }
         ];
         var columngroupsRegularization = [
             {text: 'Acumulado', name: 'acumulated', align: 'center'},
@@ -724,10 +780,10 @@ $(document).ready(function () {
         ];
 
         var columsRegularization =[
-            { text: 'Ser', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Saber', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedKnow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Hacer', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedDo', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false }, 
-            { text: 'Ser', columngroup: 'rating', dataField: 'dataObtaniedRegularizationBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Ser', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Saber', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedKnow', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Hacer', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedDo', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false }, 
+            { text: 'Ser', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationBe', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
             { 
                 text: 'Saber', cellsformat:"f2",  columngroup: 'regularization', dataField: 'dataObtaniedRegularizationKnow', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                 validation: validation,
@@ -744,7 +800,7 @@ $(document).ready(function () {
                 cellsrenderer: cellsrenderer,
                 cellclassname: cellclass
             },
-            { text: 'Total', dataField: 'dataObtaniedRegularizationTotal', columngroup: 'regularization', cellsalign: 'center', align: 'center', width: 50, cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false }
+            { text: 'Total', dataField: 'dataObtaniedRegularizationTotal', columngroup: 'regularization', cellsalign: 'center', align: 'center', width: 70, cellsrenderer:cellsrenderer, cellclassname: cellclass, editable: false }
         ];
         var columngroupsGlobal = [
             {text: 'Acumulado', name: 'acumulated', align: 'center'},
@@ -752,13 +808,13 @@ $(document).ready(function () {
             {text: 'Global', name: 'global', align: 'center'}
         ];
         var columsGlobal =[
-            { text: 'Ser', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Saber', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedKnow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Hacer', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedDo', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false }, 
-            { text: 'Ser', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Saber', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationKnow', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Hacer', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationDo', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
-            { text: 'Ser', columngroup: 'rating', dataField: 'dataObtaniedGlobalBe', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Ser', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedBe', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Saber', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedKnow', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Hacer', cellsformat:"f2", columngroup: 'acumulated', dataField: 'dataObtaniedAcumulatedDo', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false }, 
+            { text: 'Ser', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationBe', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Saber', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationKnow', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Hacer', columngroup: 'regularization', dataField: 'dataObtaniedRegularizationDo', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
+            { text: 'Ser', columngroup: 'global', dataField: 'dataObtaniedGlobalBe', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, cellsrenderer: cellsrenderer, editable: false },
             { 
                 text: 'Saber', cellsformat:"f2",  columngroup: 'global', dataField: 'dataObtaniedGlobalKnow', cellsalign: 'left', align: 'center', width: 70,  columntype: 'numberinput',
                 validation: validation,
@@ -775,7 +831,7 @@ $(document).ready(function () {
                 cellsrenderer: cellsrenderer,
                 cellclassname: cellclass
             },
-            { text: 'Total', dataField: 'dataObtaniedGlobalTotal', columngroup: 'global', cellsalign: 'center', align: 'center', width: 50, cellclassname: cellclass, editable: false }
+            { text: 'Total', dataField: 'dataObtaniedGlobalTotal', columngroup: 'global', cellsalign: 'center', align: 'center', width: 70, cellclassname: cellclass, editable: false }
         ];
 
 
@@ -795,8 +851,9 @@ $(document).ready(function () {
             colums=columsDefault;
         }
         $("#tableSubjectMattersCalifications").jqxGrid({
-            width: "100%",
-            height: "600px",
+            
+            width: 930,
+            height : 220,
             selectionMode: "multiplecellsadvanced",
             localization: getLocalization("es"),
             source: dataAdapter,
@@ -805,6 +862,9 @@ $(document).ready(function () {
             filterable: false,
             clipboard: true,
             altRows: true,
+            enabletooltips: true,
+            showToolbar: true,
+            toolbarHeight: 30,
             columns: colums,
             columngroups: columngroups,
             ready: function (){

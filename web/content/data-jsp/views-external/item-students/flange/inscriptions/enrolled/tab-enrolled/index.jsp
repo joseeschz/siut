@@ -293,7 +293,8 @@
                     break;
             }
         };
-        $('#jqxSubTabs').jqxTabs({ width: 750, height: 560,  initTabContent: initWidgets });
+        initDataTable();
+//        $('#jqxSubTabs').jqxTabs({ width: 750, height: 560,  initTabContent: initWidgets });
     });
 </script>
 <div style="float: left; margin-right: 5px;">
@@ -308,22 +309,23 @@
     Periodo <br>
     <div id='periodFilter'></div>
 </div>
-<div id='jqxSubTabs'>
+<!--<div id='jqxSubTabs'>
     <ul style="margin: 0px;">
         <li style="margin-left: 10px;">
             Registros
         </li>
-<!--        <li>
+        <li>
             Gráfica
-        </li>-->
+        </li>
     </ul>
     <div style="overflow: hidden;">
-        <div id="jqxDataTableEnrolled"></div>
+        <div style="float: left; margin-right: 5px" id="jqxDataTableEnrolled"></div>
     </div>
-<!--    <div style="overflow: hidden;">
+    <div style="overflow: hidden;">
         <div style="border:none; width: 720px; height: 500px;" id="jqxChart"></div>
-    </div>-->
-</div>
+    </div>
+</div>-->
+<div style="float: left; margin-right: 5px" id="jqxDataTableEnrolled"></div>
 <div id='jqxMenuContext'>
     <ul>
         <li>Expediente</li>

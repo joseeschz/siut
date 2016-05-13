@@ -227,6 +227,8 @@ public class serviceStudent extends HttpServlet {
                     datos.put("dataPaternName", listStudent.get(i).getFL_PATERN_NAME());
                     datos.put("dataMaternName", listStudent.get(i).getFL_MATERN_NAME());
                     datos.put("dataPkLevelStudy", listStudent.get(i).getPK_LEVEL_STUDY());
+                    datos.put("dataPkCareerLevelStudy1", listStudent.get(i).getPK_CAREER_LEVEL_STUDY1());
+                    datos.put("dataPkCareerLevelStudy2", listStudent.get(i).getPK_CAREER_LEVEL_STUDY2());
                     datos.put("dataFkCareer", listStudent.get(i).getFK_CAREER());
                     datos.put("dataPkEntity", listStudent.get(i).getPK_ENTITY());
                     datos.put("dataPkMunicipality", listStudent.get(i).getPK_MUNICIPALITY());

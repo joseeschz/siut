@@ -249,7 +249,9 @@ public class studentControl {
                         Student.setFL_NAME(res.getString("FL_NAME"));
                         Student.setFL_PATERN_NAME(res.getString("FL_PATERN_NAME"));
                         Student.setFL_MATERN_NAME(res.getString("FL_MATERN_NAME"));
-                        Student.setPK_LEVEL_STUDY(res.getInt("PK_LEVEL_STUDY"));
+                        Student.setPK_LEVEL_STUDY(res.getInt("PK_LEVEL_STUDY_CURRENT"));
+                        Student.setPK_CAREER_LEVEL_STUDY1(res.getInt("PK_CAREER_LEVEL_STUDY1"));
+                        Student.setPK_CAREER_LEVEL_STUDY2(res.getInt("PK_CAREER_LEVEL_STUDY2"));
                         Student.setFK_CAREER(res.getInt("FK_CAREER"));
                         Student.setPK_ENTITY(res.getInt("FK_ENTITY"));
                         Student.setPK_MUNICIPALITY(res.getInt("FK_MUNICIPALITY"));

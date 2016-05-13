@@ -200,7 +200,7 @@
 						<textElement textAlignment="Center" verticalAlignment="Middle">
 							<font fontName="Calibri" size="8"/>
 						</textElement>
-						<textFieldExpression><![CDATA[( $F{FK_LEVEL}.intValue()==3 ? "X" : "" )]]></textFieldExpression>
+						<textFieldExpression><![CDATA[( $F{FK_LEVEL}.intValue()==2 ? "X" : "" )]]></textFieldExpression>
 					</textField>
 				</frame>
 				<staticText>
