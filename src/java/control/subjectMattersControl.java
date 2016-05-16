@@ -26,6 +26,29 @@ public class subjectMattersControl {
             System.out.println(list.get(i).getFL_NAME_SUBJECT_MATTER());
         }
     }
+    public ArrayList<subjectMattersModel> SelectSubjectMattersByCurrentSemester(int pkCareer, int pkSemester, int pkStudyPlan, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        String procedure;
+        procedure = "CALL `GET_SUBJECT_MATTERS`('subjectMattersByCurrentSemester', "+pkCareer+", "+pkSemester+", null , "+pkStudyPlan+", null, "+pkPeriod+")";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    subjectMattersModel listSubjectMatters=new subjectMattersModel();
+                    listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_INTEGRADORA(res.getString("FL_INTEGRADORA"));
+                    list.add(listSubjectMatters);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(subjectMattersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<subjectMattersModel> SelectSubjectMatters(int pkCareer, int pkSemester, int pkGroup, int pkStudyPlan, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         String procedure;

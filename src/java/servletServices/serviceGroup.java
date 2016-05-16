@@ -82,6 +82,11 @@ public class serviceGroup extends HttpServlet {
                             listGruop=new groupControl().SelectGroup("bySemester", fkSemester);
                         }   
                         break;
+                    case "comboByCurrentSemester":
+                        pkCareer = Integer.parseInt(request.getParameter("pkCareer"));     
+                        pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                        listGruop=new groupControl().SelectGroupByCurrentSemester(pkCareer, fkSemester, pkPeriod);  
+                        break;
                     default:
                         listGruop=new groupControl().SelectGroup("bySemester", fkSemester);
                         break;

@@ -467,6 +467,46 @@ function createDropDownPeriodActive(filtrable, selector){
     var item = $(selector).jqxDropDownList('getItemByValue', periodSelected);
     $(selector).jqxDropDownList({selectedIndex: item.index }); 
 }
+function createDropDownCurrentSemester(selector, filtrable, update){
+    var sourceSemester={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataValueSemester' },
+            { name: 'dataNameSemester' }
+        ],
+        url: "../serviceSemester?view=combo",
+        data:{
+            pkStudyLevel:0,
+            currentSemester : null,
+            pkStudyPlan : filtrable.pkStudyPlan,
+            pkCareer: filtrable.pkCareer,
+            pkPeriod: filtrable.pkPeriod
+        },
+        async: false
+    };
+    var dataAdapterSemester = new $.jqx.dataAdapter(sourceSemester);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterSemester, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            filterable: false, 
+            dropDownHeight: 150,
+            autoDropDownHeight: true,
+            placeHolder: "SELECCIONAR",
+            filterPlaceHolder: "Buscar",
+            selectedIndex: 0, 
+            source: dataAdapterSemester, 
+            displayMember: "dataNameSemester", 
+            valueMember: "dataValueSemester",
+            height: 26, 
+            width: 150                
+        }).css("display","inline-block");
+    }
+}
 function createDropDownSemester(filtrable, selector, update){
     var sourceSemester={
         datatype: "json",
@@ -1309,6 +1349,41 @@ function createDropDownGruopByDirector(period, filtrable, selector, update){
         }).css("display","inline-block");
     }
 }
+function createDropDownGruopByCurrentSemester(selector, filtrable, update){
+    var sourceGroup ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataPkGruop' },
+            { name: 'dataNameGroup' }
+        ],
+        url: "../serviceGroup?view=comboByCurrentSemester",
+        data : {
+            pkCareer : filtrable.pkCareer,
+            fkSemester :  filtrable.pkSemester,
+            pkPeriod : filtrable.pkPeriod
+        },
+        async: false
+    };
+    var dataAdapterGroup = new $.jqx.dataAdapter(sourceGroup);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterGroup, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            selectedIndex: 0, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapterGroup, 
+            displayMember: "dataNameGroup", 
+            valueMember: "dataPkGruop",
+            width: 70
+        }).css("display","inline-block");
+    }
+}
 function createDropDownGruopByTeacherMattter(period, filtrable, matter, selector, update){
     var sourceGroup ={
         datatype: "json",
@@ -1376,6 +1451,44 @@ function createDropDownSubjectMatter(filtrable, selector, update){
                 }
             }
         });
+    }
+}
+function createDropDownSubjectMatterByCurrentSemester(selector, filtrable, update){
+    var ordersSource ={
+            datatype: "json",
+            datafields: [
+                { name: 'dataNameSubjectMatter' },
+                { name: 'dataPkSubjectMatter' }
+            ],
+            root: "__ENTITIES",
+            id: 'id',
+            async: false,
+            url: '../serviceSubjectMatter?view=combo',
+            data : {
+                comboByCurrentSemester : null,
+                pkCareer : filtrable.pkCareer,
+                pkSemester : filtrable.pkSemester,
+                pkStudyPlan : filtrable.pkStudyPlan,
+                pkPeriod : filtrable.pkPeriod
+            }
+        };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapter,selectedIndex:0});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxDropDownList({ 
+            theme: theme,
+            selectedIndex: 0, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapter, 
+            displayMember: "dataNameSubjectMatter", 
+            valueMember: "dataPkSubjectMatter",
+            width: 390
+        }).css("display","inline-block");
     }
 }
 function createDropDownSubjectMatterByGroup(filtrable, selector, update){

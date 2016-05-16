@@ -20,15 +20,35 @@ import model.semesterModel;
  */
 public class semesterControl {
     public static void main(String[] args) {
-        ArrayList<semesterModel> list=new semesterControl().SelectSemesterByTeacher(30,1 ,6,4);
+        ArrayList<semesterModel> list=new semesterControl().SelectCurrentSemester(1, 1, 13);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_SEMESTER());
         }
     }
+    public ArrayList<semesterModel> SelectCurrentSemester(int pkCareer, int pkStudyPlan, int pkPeriod){
+        ArrayList<semesterModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SEMESTER`('currentSemester', null, "+pkCareer+", "+pkStudyPlan+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    semesterModel allSemesters=new semesterModel();
+                    allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    allSemesters.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    list.add(allSemesters);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(semesterModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<semesterModel> SelectSemester(int pkStudyLevel){
         ArrayList<semesterModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SEMESTER`('all', "+pkStudyLevel+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SEMESTER`('all', "+pkStudyLevel+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     semesterModel allSemesters=new semesterModel();
                     allSemesters.setPK_SEMESTER(res.getInt("PK_SEMESTER"));

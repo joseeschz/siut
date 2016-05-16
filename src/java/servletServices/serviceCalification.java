@@ -204,7 +204,17 @@ public class serviceCalification extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().GetDatePrint(fkType, fkMatter, fkGroup, fkPeriod));               
             }
-            
+            if(request.getParameter("closeWorkPlanningES")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                response.setContentType("text/html;charset=UTF-8"); 
+                response.setContentType("application/json");
+                JSONObject datos = new JSONObject();
+                datos.put("status", new calificationControl().CloseWorkPlanningByGroupMatterES(fkType, fkMatter, fkGroup, fkPeriod));
+                out.print(datos);          
+            }
             if(request.getParameter("closeWorkPlanning")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
@@ -316,8 +326,46 @@ public class serviceCalification extends HttpServlet {
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
                 int fkType = Integer.parseInt(request.getParameter("fkType"));  
-                response.setContentType("text/html;charset=UTF-8"); 
-                out.print(new calificationControl().OpenWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));               
+                response.setContentType("application/json");
+                JSONObject datos = new JSONObject();
+                datos.put("status", new calificationControl().OpenWorkPlanningByGroupMatter(fkType, fkMatter, fkGroup, fkPeriod));
+                out.print(datos);               
+            }
+            if(request.getParameter("openWorkPlanningSE")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                response.setContentType("application/json");
+                JSONObject datos = new JSONObject();
+                datos.put("status", new calificationControl().OpenWorkPlanningByGroupMatterES(fkType, fkMatter, fkGroup, fkPeriod));
+                out.print(datos);               
+            }
+            if(request.getParameter("isCloseWorkPlanningES")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                String closed =  new calificationControl().IsCloseWorkPlanningByGroupMatterES(fkType, fkMatter, fkGroup, fkPeriod);
+                ArrayList<evaluationTypeModel> listItems=new evaluationTypeControl().SelectEvaluationType("all",fkGroup, fkMatter, fkPeriod);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__entityModel","TypeEvaluations"); 
+                for(int i=0;i<listItems.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("displayMember", listItems.get(i).getFL_NAME_TYPE());
+                    datos.put("valueMember", listItems.get(i).getPK_EVALUATION_TYPE());
+                    datos.put("status", listItems.get(i).getFL_STATUS());
+                    content.add(datos);
+                }
+                settings.put("closed", closed);
+                settings.put("items", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();          
             }
             if(request.getParameter("isCloseWorkPlanning")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));

@@ -364,6 +364,24 @@ public class calificationControl {
         }
         return status;
     }
+    public String CloseWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
+        String status = null;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('closeWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    status= res.getString("FL_STATUS");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
     public String CloseWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
@@ -510,10 +528,48 @@ public class calificationControl {
     }
     
     public String OpenWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
-        String status;
+        String status = null;
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
-                status= "Success";
+                if(res!=null && res.next()){
+                    status=res.getString("FL_STATUS");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public String OpenWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
+        String status = null;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                if(res!=null && res.next()){
+                    status=res.getString("FL_STATUS");
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public String IsCloseWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
+        String status = null;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('isCloseWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                if(res!=null && res.next()){
+                    status=res.getString("FL_CLOSED_ES");
+                }
                 res.close();
                 ps.close();
                 conn.close();
