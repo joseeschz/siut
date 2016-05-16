@@ -44,7 +44,7 @@ public class serviceSemester extends HttpServlet {
             int pkUser=0;
             int pkPeriod;
             if(request.getParameter("view")!=null){
-                ArrayList<semesterModel> listSemester;
+                ArrayList<semesterModel> listSemester = null;
                 JSONArray principal = new JSONArray();
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
@@ -69,6 +69,11 @@ public class serviceSemester extends HttpServlet {
                             pkUser = Integer.parseInt(session.getAttribute("pkUser").toString());
                         }
                         listSemester=new semesterControl().SelectSemesterByDirector(pkUser, pkStudyLevel, pkPeriod);
+                    }else if(request.getParameter("currentSemester")!=null){
+                        int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
+                        int pkStudyPlan = Integer.parseInt(request.getParameter("pkStudyPlan"));
+                        pkPeriod=Integer.parseInt(request.getParameter("pkPeriod"));     
+                        listSemester=new semesterControl().SelectCurrentSemester(pkCareer, pkStudyPlan, pkPeriod);
                     }else{
                         listSemester=new semesterControl().SelectSemester(pkStudyLevel);
                     }
@@ -81,7 +86,6 @@ public class serviceSemester extends HttpServlet {
                         content.add(datos); 
                     }
                 }  
-                
                 settings.put("__ENTITIES", content);
                 principal.add(settings);
                 response.setContentType("application/json"); 

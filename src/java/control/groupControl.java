@@ -20,11 +20,33 @@ import model.groupModel;
  */
 public class groupControl {
     public static void main(String[] args) {
-        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(30, 6, 13, 2, null);
+        ArrayList<groupModel> list=new groupControl().SelectGroupByCurrentSemester(1, 2, 13);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_GROUP());
         }
     }
+    
+    public ArrayList<groupModel> SelectGroupByCurrentSemester(int pkCareer, int pkSemeser, int pkPeriod){
+        ArrayList<groupModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('groupByCurrentSemester', "+pkCareer+", null, "+pkSemeser+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    groupModel listGroup=new groupModel();
+                    listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
+                    listGroup.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    list.add(listGroup);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(groupModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public ArrayList<groupModel> SelectGroup(String action, int fkSemester){
         ArrayList<groupModel> list=new ArrayList<>();
         try {

@@ -67,6 +67,12 @@ public class serviceSubjectMatter extends HttpServlet {
                         pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
                         pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
                         listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByGroup(pkCareer, pkSemester, pkGroup, pkPeriod);
+                    }else if(request.getParameter("comboByCurrentSemester")!=null){
+                        pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
+                        pkStudyPlan = Integer.parseInt(request.getParameter("pkStudyPlan"));
+                        pkSemester = Integer.parseInt(request.getParameter("pkSemester"));                        
+                        pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                        listSubjectMatters=new subjectMattersControl().SelectSubjectMattersByCurrentSemester(pkCareer, pkSemester, pkStudyPlan, pkPeriod);
                     }else{
                         pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
                         pkGroup = Integer.parseInt(request.getParameter("pkGroup"));
