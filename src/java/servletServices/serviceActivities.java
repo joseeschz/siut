@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.activitiesToGroupModel;
+import model.workPlanningModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -124,6 +125,28 @@ public class serviceActivities extends HttpServlet {
                 response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
                 response.setContentType("application/json"); 
                 out.print(principal);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("sharedBlocks")!=null){
+                int pkTeacher = Integer.parseInt(request.getParameter("pkTeacher"));
+                ArrayList<workPlanningModel> listActivity=new activitiesToGroupControl().SelectActivitiesShared(pkTeacher);
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__ActivityToWorkModel","ActivityToWork");
+                for(int i=0;i<listActivity.size();i++){
+                    JSONObject data = new JSONObject();
+                    data.put("id", listActivity.get(i).getPK_SHARED_BLOCK());
+                    data.put("dataProgresivNumber", i+1);
+                    data.put("dataUniqueWorkPlannig", listActivity.get(i).getFL_UNIQUE_WORK_PLANNIG());
+                    data.put("dataAlias", listActivity.get(i).getFL_ALIAS_BLOCK());
+                    content.add(data); 
+                }
+                settings.put("__ENTITIES", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(content);
                 out.flush(); 
                 out.close();
             }
