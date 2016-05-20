@@ -446,6 +446,63 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            
+            if(request.getParameter("tableByAllCalificationsAverage")!=null){
+                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
+                int pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));   
+                ArrayList<propetiesTableModel> listColumns=new calificationControl().SelectCalificationBySubjectMattersAverage(fkCareer, pkSemester, fkGroup, fkPeriod);
+                JSONArray contentRowsCal=new calificationControl().SelectCalificationsBySubjectMattersAverageRows(fkCareer, pkSemester, fkGroup, fkPeriod);
+                JSONArray contentColums = new JSONArray();
+                JSONArray contentDataFields = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rowsCal = new JSONObject();
+                JSONObject columns = new JSONObject();
+                JSONObject dataFields = new JSONObject();
+              
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataColums = new JSONObject();
+                    dataColums.put("text", "<div desc='"+listColumns.get(i).getFL_TEXT_EXTENDS()+"'>"+ listColumns.get(i).getFL_TEXT()+"</div>");
+                    dataColums.put("datafield", listColumns.get(i).getFL_DATA_FIELD());
+                    dataColums.put("align", listColumns.get(i).getFL_ALIGN());
+                    dataColums.put("cellsalign", listColumns.get(i).getFL_CELLSALING());
+                    if(listColumns.get(i).getFL_AGGREGATES()!=null){
+                        dataColums.put("aggregates", listColumns.get(i).getFL_AGGREGATES());
+                    }
+                    if(listColumns.get(i).getFL_CELLSRENDERER()!=null){
+                        dataColums.put("cellclassname", listColumns.get(i).getFL_CELLSRENDERER());
+                    }
+                    if(listColumns.get(i).getFL_PINNED()!=null){
+                        dataColums.put("pinned", listColumns.get(i).getFL_PINNED());
+                    }
+                    if(listColumns.get(i).getFL_RENDERED()!=null){
+                        dataColums.put("rendered", listColumns.get(i).getFL_RENDERED());
+                    }
+                    if(listColumns.get(i).getFL_COLUMNGROUP()!=null){
+                        dataColums.put("columngroup", listColumns.get(i).getFL_COLUMNGROUP());
+                    }
+                    dataColums.put("width", listColumns.get(i).getFL_WIDHT());
+                    contentColums.add(dataColums); 
+                }
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject datadataFields = new JSONObject();
+                    datadataFields.put("name", listColumns.get(i).getFL_DATA_FIELD());
+                    datadataFields.put("type", "string");                    
+                    contentDataFields.add(datadataFields); 
+                }
+                rowsCal.put("rowsCal", contentRowsCal);
+                columns.put("columns", contentColums);
+                dataFields.put("dataFields", contentDataFields);
+                bulding.add(columns);
+                bulding.add(dataFields);
+                bulding.add(rowsCal);
+                response.setContentType("application/json"); 
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
+            
             if(request.getParameter("tableByAllActivities")!=null){
                 int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));

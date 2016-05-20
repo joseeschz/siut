@@ -11,6 +11,7 @@ package model;
  */
 public class propetiesTableModel {
     String FL_TEXT=null;
+    String FL_AGGREGATES=null;
     String FL_DATA_FIELD=null;
     String FL_DISPLAY_FIELD=null; 
     String FL_SORTABLE=null;
@@ -44,13 +45,21 @@ public class propetiesTableModel {
     String FL_FILTERTYPE=null;
     String FL_FILTER_CONDITION=null;
     String FL_RESIZABLE = null;
-    
+
     public String getFL_TEXT() {
         return FL_TEXT;
     }
 
     public void setFL_TEXT(String FL_TEXT) {
         this.FL_TEXT = FL_TEXT;
+    }
+
+    public String getFL_AGGREGATES() {
+        return FL_AGGREGATES;
+    }
+
+    public void setFL_AGGREGATES(String FL_AGGREGATES) {
+        this.FL_AGGREGATES = FL_AGGREGATES;
     }
 
     public String getFL_DATA_FIELD() {
