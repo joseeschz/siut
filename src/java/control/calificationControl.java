@@ -214,6 +214,28 @@ public class calificationControl {
         }
         return contentColums;
     }
+    public JSONArray SelectCalificationsBySubjectMattersAverageRows(int pkCareer, int pkSemester, int pkGroup, int pkPeriod){
+        JSONArray contentColums = new JSONArray();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('rowsCal', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                ResultSetMetaData rsmd = res.getMetaData();                
+                JSONObject columns;
+                while(res!=null&&res.next()){
+                    columns = new JSONObject();
+                    for(int col=0; col<rsmd.getColumnCount(); col++){    
+                        columns.put(rsmd.getColumnName(col+1), res.getString(rsmd.getColumnName(col+1)));
+                    }
+                    contentColums.add(columns);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contentColums;
+    }
     public JSONArray SelectCalificationsByActivitiesRows(int pkCareer, int fkMatter, int pkGroup, int pkPeriod){
         JSONArray contentColums = new JSONArray();
         try {
@@ -252,6 +274,35 @@ public class calificationControl {
                     allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
                     allData.setFL_WIDHT(res.getString("FL_WIDHT"));
                     allData.setFL_PINNED(res.getString("FL_PINNED"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<propetiesTableModel> SelectCalificationBySubjectMattersAverage(int pkCareer, int pkSemester, int  pkGroup, int pkPeriod){
+        ArrayList<propetiesTableModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('columsSubjectMatters', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    propetiesTableModel allData=new propetiesTableModel();
+                    allData.setFL_TEXT(res.getString("FL_TEXT"));
+                    allData.setFL_TEXT_EXTENDS(res.getString("FL_TEXT_EXTENDS"));
+                    allData.setFL_DATA_FIELD(res.getString("FL_DATA_FIELD"));
+                    allData.setFL_ALIGN(res.getString("FL_ALIGN"));
+                    allData.setFL_CELLSALING(res.getString("FL_CELLSALING"));
+                    allData.setFL_CELLSRENDERER(res.getString("FL_CELLSRENDERER"));
+                    allData.setFL_RENDERED(res.getString("FL_RENDERED"));
+                    allData.setFL_COLUMNGROUP(res.getString("FL_COLUMNGROUP"));
+                    allData.setFL_WIDHT(res.getString("FL_WIDHT"));
+                    allData.setFL_PINNED(res.getString("FL_PINNED"));
+                    allData.setFL_AGGREGATES(res.getString("FL_AGGREGATES"));
                     list.add(allData);
                 }
                 res.close();

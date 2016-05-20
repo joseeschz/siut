@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.activitiesToGroupModel;
+import model.workPlanningModel;
 
 /**
  *
@@ -28,6 +29,28 @@ public class activitiesToGroupControl {
             System.out.println(list.get(i).getFL_NAME_ACTIVITY());
         }
         //System.out.println(Arrays.toString(new activitiesToGroupControl().SelectWorkPlanning(33, 3, 109, 4, 5)));
+    }
+    public ArrayList<workPlanningModel> SelectActivitiesShared(int pkTeacher){
+        ArrayList<workPlanningModel> list=new ArrayList<>();
+        try {
+            String procedure="CALL `GET_ACTIVITIES`('sharedActivities', null, null, "+pkTeacher+", null, null, null, null)";
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    workPlanningModel listWorkPlannig=new workPlanningModel();
+                    listWorkPlannig.setPK_WORK_PLANNING(res.getInt("PK_WORK_PLANNING"));
+                    listWorkPlannig.setFL_UNIQUE_WORK_PLANNIG(res.getString("FL_UNIQUE_WORK_PLANNIG"));
+                    listWorkPlannig.setFL_ALIAS_BLOCK(res.getString("FL_ALIAS_BLOCK"));
+                    list.add(listWorkPlannig);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        }catch (SQLException ex) {
+            Logger.getLogger(activitiesToGroupModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     public ArrayList<activitiesToGroupModel> SelectActivitiesByScale(int fk_period, int fk_study_level, int fk_subject_matter, int fk_scale_evaluation){
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();

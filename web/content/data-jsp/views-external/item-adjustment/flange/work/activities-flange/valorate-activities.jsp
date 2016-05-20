@@ -99,21 +99,56 @@
         var itemScaleEvaluation = 0;
         var itemSemester = 0;
         var itemSubjectMatter = 0;
-        createDropDownStudyLevelByTeacher("#valorateActivitiesLevelFilter",false);
-        itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
-        if(itemLevel!==undefined){
-            createDropDownCareerByTeacher( itemLevel.value ,"#valorateActivitiesCareerFilter",false);
-            itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
-            createDropDownPeriod("comboActiveYear","#valorateActivitiesPeriodFilter");
-            itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
-            createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#valorateActivitiesSemesterFilter",false);
-            itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
-            createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#valorateActivitiesSubjectMatterFilter", false);
-            itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
-            createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",itemLevel.value,false);
-            itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');     
-            createLitsBoxPeriodByTeacher(itemCareer.value, itemSemester.value, itemSubjectMatter.value, itemScaleEvaluation.value, "#valorateActivitiesPeriodHistoryFilter");
-            $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "yyyy/MM/dd", theme: theme, width: '120px', height: '26px'});
+        createDropDownPeriod("comboActiveYear","#valorateActivitiesPeriodFilter");
+        itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
+        if(itemPeriod!=null || itemPeriod!=undefined){
+            createDropDownStudyLevelByTeacher("#valorateActivitiesLevelFilter",false);
+            itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
+            if(itemLevel!=null || itemLevel!=undefined){
+                createDropDownCareerByTeacher( itemLevel.value ,"#valorateActivitiesCareerFilter",false);
+                itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');                
+                if(itemCareer!=null || itemCareer!=undefined){
+                    createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#valorateActivitiesSemesterFilter",false);
+                    itemSemester = $('#valorateActivitiesSemesterFilter').jqxDropDownList('getSelectedItem');
+                    if(itemSemester!=null || itemSemester!=undefined){
+                        createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#valorateActivitiesSubjectMatterFilter", false);
+                        itemSubjectMatter=$('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                        if(itemSubjectMatter!=null || itemSubjectMatter!=undefined){
+                            createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",itemLevel.value,false);
+                            itemScaleEvaluation = $('#valorateActivitiesScaleEvaluationFilter').jqxDropDownList('getSelectedItem');
+                            if(itemScaleEvaluation!=null || itemScaleEvaluation!=undefined){
+                                createLitsBoxPeriodByTeacher(itemCareer.value, itemSemester.value, itemSubjectMatter.value, itemScaleEvaluation.value, "#valorateActivitiesPeriodHistoryFilter");
+                                
+                                existWorkPlanning();
+                            }
+                        }else{
+                            createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",null, false);
+                            createLitsBoxPeriodByTeacher(null, null, null, null, "#valorateActivitiesPeriodHistoryFilter");
+                            $("#addWorkPlannin").hide();
+                            $(".close").parent().hide(); 
+                        }                        
+                    }else{
+                        createDropDownSubjectMatterByTeacher(null, null, null, null, "#valorateActivitiesSubjectMatterFilter", false);
+                        
+                    }
+                    
+                }else{                    
+                    createDropDownSemesterByTeacher(null, null, null,"#valorateActivitiesSemesterFilter",false);
+                    createDropDownSubjectMatterByTeacher(null, null, null, null, "#valorateActivitiesSubjectMatterFilter", false);
+                    createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",null, false);
+                    createLitsBoxPeriodByTeacher(null, null, null, null, "#valorateActivitiesPeriodHistoryFilter");
+                    $("#addWorkPlannin").hide();
+                    $(".close").parent().hide(); 
+                }
+            }else{                
+                createDropDownCareerByTeacher(null ,"#valorateActivitiesCareerFilter",false);
+                createDropDownSemesterByTeacher(null, null, null,"#valorateActivitiesSemesterFilter",false);
+                createDropDownSubjectMatterByTeacher(null, null, null, null, "#valorateActivitiesSubjectMatterFilter", false);
+                createDropDownScaleEvaluation("#valorateActivitiesScaleEvaluationFilter",null, false);
+                createLitsBoxPeriodByTeacher(null, null, null, null, "#valorateActivitiesPeriodHistoryFilter");
+                $("#addWorkPlannin").hide();
+                $(".close").parent().hide(); 
+            }
             $('#valorateActivitiesLevelFilter').on('change',function (event){  
                 var args = event.args;
                 if(args){
@@ -145,7 +180,7 @@
                     createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, pkSemester, null, "#valorateActivitiesSubjectMatterFilter", true);
                 }
             });
-            
+
             $("#valorateActivitiesSemesterFilter").on('change',function (event){
                 var args = event.args;
                 if(args){
@@ -174,27 +209,11 @@
                 if(args){
                     existWorkPlanning(); 
                 }                
-            });
-            $("#valorateActivitiesPeriodHistoryFilter").on('change',function (event){
-                var args = event.args;
-                if(args){
-                    $('#jqxSplitter').jqxSplitter('collapse'); 
-                    var dataAdapter = new $.jqx.dataAdapter(loadSource("history"));
-                    loadTableRegisterActivitiesHistory(dataAdapter); 
-                    if($("#divHistory").attr("style")!=="float: left;" && $("#divHistory").attr("style")!=="float: left; display: block;"){
-                        $("#contentTRegisterActivitiesHistory").css("width","0px");
-                        $("#divHistory").fadeIn("slow");
-                        $("#contentTRegisterActivitiesHistory").animate({ "width": "585px" }, "fast");
-                    }
-                    if(!existWorkPlanning()){
-                        $("#addWorkPlannin").click();
-                    }
-                }
-            });  
-            existWorkPlanning();
+            }); 
         }else{
             $("#addWorkPlannin").hide();
             $(".close").parent().hide(); 
+            createDropDownStudyLevelByTeacher("#valorateActivitiesLevelFilter",false);
             createDropDownCareerByTeacher(null ,"#valorateActivitiesCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#valorateActivitiesPeriodFilter");
             createDropDownSemesterByTeacher(null, null, null,"#valorateActivitiesSemesterFilter",false);
@@ -224,7 +243,6 @@
                     },
                     success: function (data, textStatus, jqXHR) {                        
                         varMaxValScale = parseFloat(data[0].dataMaxValue);
-                        $("#valMaxScale").text(varMaxValScale+" = 100%");
                     }
                 });
             }
@@ -406,17 +424,20 @@
         var deleteButton = $(buttonTemplate);
         var lockButton = $(buttonTemplate);
         var unlockButton = $(buttonTemplate);
+        var dateContent = $('<div style="float: right; margin-top: 2px; margin-right: 2px;"><div class="calendarInput" id="datePrint" ></div></div>');
         var settingsButton = $(buttonTemplate);
         var showButton = $(buttonTemplate);
+        var shareButton = $(buttonTemplate);
+        var importButton = $(buttonTemplate);
         var exportButton = $(buttonTemplate);
         var infoButton = $(buttonTemplate);
         var rowIndexUnselect = null;
         var rowIndex = null;
         var rowId = null;
         var rowData = null;
+        
         //Tiene un evento que se almacena conforme cambias de pagina por lo que hace cargas por cada ves que hay un click anidado
-        function loadTableRegisterActivities(dataAdapter, metadata){
-            
+        function loadTableRegisterActivities(dataAdapter, metadata){            
             $("#tableRegisterActivities").jqxGrid({
                 width: 590,
                 height:350,
@@ -470,9 +491,12 @@
                         container.append(exportButton);
 
                         //container.append(infoButton);
-                        container.append(showButton);
-                        container.append(settingsButton);
-                    
+                        container.append(shareButton);
+                        
+                        container.append(showButton); 
+                        container.append(importButton);  
+                        container.append(settingsButton);  
+                        container.append(dateContent);  
                         toolBar.append(container);
                         
                         addButton.jqxButton({cursor: "pointer", enableDefault: true,  height: 25, width: 25 });
@@ -516,6 +540,45 @@
                         settingsButton.css({"float":"right","cursor":"pointer"});
                         settingsButton.jqxTooltip({ position: 'bottom', content: "Ajustes"});
                         settingsButton.attr("id","settingsButton");
+                        
+                        importButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 25 });
+                        importButton.find('div:first').addClass(toTheme('jqx-icon-down'));
+                        importButton.css({"float":"right","cursor":"pointer"});
+                        importButton.jqxTooltip({ position: 'bottom', content: "Compartido"});
+                        importButton.attr("id","importButton");
+                        
+                        shareButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 25 });
+                        shareButton.find('div:first').addClass(toTheme('jqx-icon-import'));
+                        shareButton.css({"float":"right","cursor":"pointer"});
+                        shareButton.jqxTooltip({ position: 'bottom', content: "Compartir"});
+                        shareButton.attr("id","shareButton");
+                        
+                        
+                        $("#aliasBlock").jqxInput({placeHolder: "Criterios de la materia...", height: 25, width: 160, minLength: 1 });
+                        $("#shareNow").jqxButton({ cursor: "pointer", disabled: false, enableDefault: true,  height: 25, width: 168 });
+                        $("#shareNow").find('div:first').addClass(toTheme('jqx-icon-import'));
+                        $("#shareNow").css({"cursor":"pointer"});
+                        $("#shareNow").jqxTooltip({ position: 'bottom', content: "Compartir ahora"});
+                        
+                        $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "yyyy/MM/dd", theme: theme, width: '120px', height: '30px'});
+                        $('.calendarInput').off('change');
+                        $('.calendarInput').on('change', function (event) {
+                            if(event.args){
+                                $.ajax({
+                                    url: "../serviceActivities?setPrintDate",
+                                    data: {"fkMatter": itemSubjectMatter.value, "fkPeriod": itemPeriod.value, "fkStudyLevel":itemLevel.value, "flPrintDate": $(this).val() },
+                                    type: 'POST',
+                                    beforeSend: function (xhr) {
+                                    },
+                                    success: function (data, textStatus, jqXHR) {
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+
+                                    }
+                                });          
+                            }
+                        }); 
+        
                         $("#popoverSettings").jqxPopover({
                             offset: {left: -50, top:0}, 
                             arrowOffsetValue: 50, 
@@ -523,6 +586,16 @@
                             showCloseButton: true,
                             selector: settingsButton,
                             width: 150
+                        });
+                        
+                        $("#popoverShare").jqxPopover({
+                            offset: {left:0, top: 63}, 
+                            arrowOffsetValue: -60, 
+                            position: "right",
+                            title: "Compartir", 
+                            showCloseButton: true,
+                            selector: shareButton,
+                            width: 200
                         });
                         if(typeof (Storage) !=="undefined"){
                             if(localStorage.getItem("wayInput")==="typeInput"){                                
@@ -1043,206 +1116,6 @@
             $("#activity_description").val("");
 //            $('#value_activity_slider').off('change');
         }); 
-        function loadTableRegisterActivitiesHistory(dataAdapter){
-//            $("#tableRegisterActivitiesHistory").off('rowSelect');
-//            $("#tableRegisterActivitiesHistory").off('rowUnselect');
-//            $("#tableRegisterActivitiesHistory").jqxDataTable({
-//                width: 585,
-//                height:350,
-//                selectionMode: "multipleRows",
-//                enableHover: false,
-//                localization: getLocalization("es"),
-//                source: dataAdapter,
-//                pageable: true,
-//                editable: false,
-//                filterable: false,
-//                showToolbar: true,
-//                altRows: true,
-//                pagerButtonsCount: 10,
-//                toolbarHeight: 35,
-//                renderToolbar: function(toolBar){
-//                    var theme = "";
-//                    var toTheme = function (className) {
-//                        if (theme === "") return className;
-//                        return className + " " + className + "-" + theme;
-//                    };
-//                    // appends buttons to the status bar.
-//                    itemPeriod = $('#valorateActivitiesPeriodHistoryFilter').jqxListBox('getSelectedItem');
-//                    var period = itemPeriod.label;
-//                    
-//                    var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-//                    var textTitle = $("<div style='position: relative; width: 20px; float: left; color: white; padding: 6px; font-weight: bold;' id='period'></div>");
-//                    var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-//                    var importItem = $(buttonTemplate);
-//                    var importAll = $(buttonTemplate);
-//                    var infoButton = $(buttonTemplate);
-//          
-//                    container.append(infoButton);
-//                    container.append(importItem);
-//                    container.append(importAll);
-//                    container.append(textTitle);
-//                    toolBar.append(container);
-//                    
-//                    infoButton.jqxButton({ cursor: "pointer", disabled: false, enableDefault: false,  height: 25, width: 25 });
-//                    infoButton.find('div:first').addClass(toTheme('jqx-icon-help'));
-//                    infoButton.css({"float":"right","cursor":"pointer"});
-//                    infoButton.jqxTooltip({ position: 'bottom', content: "Ayuda"});
-//                    
-//                    importItem.jqxButton({ cursor: "pointer", disabled: true,  height: 20, width: 25 });
-//                    importItem.find('div:first').addClass(toTheme('jqx-icon-import-item'));
-//                    importItem.css({"float":"right","cursor":"pointer"});
-//                    importItem.jqxTooltip({ position: 'bottom', content: "Importar selección"});
-//                    
-//                    
-//                    importAll.jqxButton({ cursor: "pointer", disabled: false,  height: 20, width: 25 });
-//                    importAll.find('div:first').addClass(toTheme('jqx-icon-import-all'));
-//                    importAll.css({"float":"right","cursor":"pointer"});
-//                    importAll.jqxTooltip({ position: 'bottom', content: "Importar todo"});
-//                                       
-//                    
-//                    $("#period").text("PERIODO: "+period);
-//                    var updateButtons = function (action) {
-//                        switch (action) {
-//                            case "Select":
-//                                importItem.jqxButton({disabled: false});
-//                                break;
-//                            case "Unselect":
-//                                importItem.jqxButton({disabled: true});
-//                                break;
-//                        }
-//                    };
-//                    var rowIndex = null;
-//                    var rowId = null;
-//                    var rowData = null;
-//                    $("#tableRegisterActivitiesHistory").on('rowSelect', function (event) {
-//                        var args = event.args;
-//                        rowIndex = args.index;
-//                        rowId=args.row;
-//                        rowId=rowId.id;
-//                        rowData=args.row;
-//                        updateButtons('Select');
-//                    });
-//                    $("#tableRegisterActivitiesHistory").on('rowUnselect', function (event) {
-//                        updateButtons('Unselect');
-//                    });
-//                    $("#tableRegisterActivitiesHistory").on('rowEndEdit', function (event) {
-//                        updateButtons('End Edit');
-//                    });
-//                    $("#tableRegisterActivitiesHistory").on('rowBeginEdit', function (event) {
-//                        updateButtons('Edit');
-//                    });
-//                    infoButton.click(function () {
-//                        if (!infoButton.jqxButton('disabled')){
-//                            //$(".alert").removeClass("alert-success").addClass("alert-warning");
-//                            //$(".alert").hide();
-//                            $(".alert").fadeIn("slow");
-//                            indicationsImpor = "La tabla de titulo periodo contiene los\n\
-//                                                grupos de actividades que \n\
-//                                                ya  fueron planeadas en periodos pasados. Puedes \n\
-//                                                importar todo el grupo de actividades o bien solo alguna \n\
-//                                                de ellas, pero debes de considerar que al importar al grupo \n\
-//                                                a las nuevas actividades el progreso será remplazado y no podrá ser recuperado.";
-//                            $("#indicationsx").text(indicationsImpor);
-//                            updateButtons('infoButton');
-//                        }
-//                    });
-//                    
-//                    importItem.click(function (){
-//                        var dataExternal;
-//                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
-//                        for (var i = 0; i < selection.length; i++) {
-//                            // get a selected row.
-//                            var rowData = selection[i];
-//                            $("#tableRegisterActivitiesHistory").jqxDataTable('unselectRow', rowData.index);
-//                            $.ajax({
-//                                //Send the paramethers to servelt
-//                                type: "POST",
-//                                async: false,
-//                                url: "../serviceActivities?insertImported",
-//                                data:{
-//                                    "pkWorkPlanning": $("#pkWorkPlannig").val(), 
-//                                    "pkActivity": rowData.id
-//                                },
-//                                beforeSend: function (xhr) {
-//                                },
-//                                error: function (jqXHR, textStatus, errorThrown) {
-//                                    //This is if exits an error with the server internal can do server off, or page not found
-//                                    alert("Error interno del servidor");
-//                                },
-//                                success: function (data, textStatus, jqXHR) {
-//                                    dataExternal = data;
-//                                    if(data==="fail"){
-//                                        $("#titleOk").text("Denegado");
-//                                        $("#pictureOk").removeClass("ok").addClass("fail");
-//                                        $("#messageOk").text("No debes de pasar del valor establecido por cada saber.");
-//                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-//                                        $("#jqxWindowOk").jqxWindow('open');
-//                                    }else if(data==="blocked"){
-//                                        $("#titleOk").text("Denegado");
-//                                        $("#pictureOk").removeClass("ok").addClass("fail");
-//                                        $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
-//                                        $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-//                                        $("#jqxWindowOk").jqxWindow('open');
-//                                    }
-//                                }
-//                            });
-//                        } 
-//                        if(dataExternal!=="fail"&&dataExternal!=="blocked"){
-//                           existWorkPlanning();  
-//                        }
-//                    });
-//                    importAll.click(function (){
-//                        $("#tableRegisterActivitiesHistory").jqxDataTable('selectRow', 0);
-//                        var selection = $("#tableRegisterActivitiesHistory").jqxDataTable('getSelection');
-//                        for (var i = 0; i < selection.length; i++) {
-//                            // get a selected row.
-//                            var rowData = selection[i];
-//                        }
-//                        $.ajax({
-//                            //Send the paramethers to servelt
-//                            type: "POST",
-//                            async: false,
-//                            url: "../serviceActivities?insertImportedAll",
-//                            data:{
-//                                "pkWorkPlanningNew": $("#pkWorkPlannig").val(), 
-//                                "pkWorkPlanningOld": rowData.dataPkWorkPlanning
-//                            },
-//                            beforeSend: function (xhr) {
-//                            },
-//                            error: function (jqXHR, textStatus, errorThrown) {
-//                                //This is if exits an error with the server internal can do server off, or page not found
-//                                alert("Error interno del servidor");
-//                            },
-//                            success: function (data, textStatus, jqXHR) {
-//                                if(data==="blocked"){
-//                                    $("#titleOk").text("Denegado");
-//                                    $("#pictureOk").removeClass("ok").addClass("fail");
-//                                    $("#messageOk").text("No puede realizar cambios miestras las actividades estan bloqueadas.");
-//                                    $("#jqxWindowOk").jqxWindow({height: 130,width: 350}); 
-//                                    $("#jqxWindowOk").jqxWindow('open');
-//                                }else{
-//                                    existWorkPlanning();   
-//                                }
-//                            }
-//                        });
-//                        $("#tableRegisterActivitiesHistory").jqxDataTable('clearSelection');
-//                    });
-//                },
-//                ready: function(){
-//                    
-//                },
-//                columns: [
-//                    { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-//                    { text: 'Actividad', dataField: 'dataNameActivity', width: 180 },
-//                    { text: 'Descripción', dataField: 'dataDescriptionActivity' },
-//                    { text: 'Val.#', dataField: 'dataValueActivity', width: 50 },
-//                    { text: 'Val.%', dataField: 'dataValueActivityPercent', width: 50 }
-//                ]
-//            }); 
-//            $("#tableRegisterActivitiesHistory").jqxGrid('unselectRow', 0);
-//            $("#tableRegisterActivitiesHistory").jqxGrid('clearSelection');
-        }
-        
         $("#ok").click(function (){ 
             if($("#titleOk").text()==="Denegado"){
                 $("#jqxWindowOk").jqxWindow('close');
@@ -1356,22 +1229,6 @@
                 }
             });
         });
-        $('.calendarInput').on('change', function (event) {
-            if(event.args){
-                $.ajax({
-                    url: "../serviceActivities?setPrintDate",
-                    data: {"fkMatter": itemSubjectMatter.value, "fkPeriod": itemPeriod.value, "fkStudyLevel":itemLevel.value, "flPrintDate": $(this).val() },
-                    type: 'POST',
-                    beforeSend: function (xhr) {
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-
-                    }
-                });          
-            }
-        }); 
         $(".close").click(function (){
            $(this).parent().fadeOut(); 
         });
@@ -1379,33 +1236,10 @@
         var addWorkPlannin = $("#addWorkPlannin");
         addWorkPlannin.jqxTooltip({ position: 'bottom', content: "Agregar tabla de actividades"});
         addWorkPlannin.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
-        
-        var addWorkPlannin = $("#importWorkPlanninHitory");
         //addWorkPlannin.jqxTooltip({ position: 'left', content: "Importar grupo de actividades"});
         addWorkPlannin.jqxButton({"height": 20, "width": 20, cursor: "pointer"});
         
         var switchClick = 0;
-        $("#importWorkPlanninHitory").click(function (){
-            switchClick = switchClick+1;
-            $("#contentTRegisterActivitiesHistory").animate({ "width": "0px" }, "slow");
-            $("#divHistory").fadeOut("slow");
-            $("#contentHistoryPeriods").animate({height: "toggle", width: "toggle"}, 500);
-            if(switchClick % 2 === 0){
-                $("#valorateActivitiesLevelFilter").jqxDropDownList({ disabled: false }); 
-                $("#valorateActivitiesCareerFilter").jqxDropDownList({ disabled: false });
-                $("#valorateActivitiesSemesterFilter").jqxDropDownList({ disabled: false }); 
-                $("#valorateActivitiesSubjectMatterFilter").jqxDropDownList({ disabled: false });
-                $("#valorateActivitiesScaleEvaluationFilter").jqxDropDownList({ disabled: false });
-                $('#jqxSplitter').jqxSplitter('expand');
-                switchClick=0;
-            }else{
-                $("#valorateActivitiesLevelFilter").jqxDropDownList({ disabled: true }); 
-                $("#valorateActivitiesCareerFilter").jqxDropDownList({ disabled: true }); 
-                $("#valorateActivitiesSemesterFilter").jqxDropDownList({ disabled: true }); 
-                $("#valorateActivitiesSubjectMatterFilter").jqxDropDownList({ disabled: true }); 
-                $("#valorateActivitiesScaleEvaluationFilter").jqxDropDownList({ disabled: true });
-            }       
-        });
         
         
         $("#name_activity").focusout(function(){
@@ -1488,6 +1322,21 @@
         </label>
     </div>
 </div>
+
+<div id="popoverShare" style="display: none">
+    <div style="color: olive;">
+        <label style="font-size: 12px; font-weight: bold">Ajustes del bloque de actividades</label>
+        <br><br>
+        <label style="font-size: 12px">  
+            Alias del bloque
+            <input id="aliasBlock" type="text"/>            
+        </label>
+        <label style="font-size: 12px">  
+            <button id="shareNow">Compartir ahora</button>           
+        </label>
+    </div>
+</div>
+
 <div id='jqxWindowAddObservations' style="display: none">
     <div id="title">Observaciones</div>
     <div>
@@ -1499,74 +1348,44 @@
         </div>
     </div>
 </div>
-<div style="float: left; margin-right: 5px;">
+<div style="display: none; margin-right: 5px;">
+    Periodo <br>
+    <div id='valorateActivitiesPeriodFilter'></div>
+</div>
+<div style="display: inline-block; margin-right: 5px;">
     Nivel de estudio<br>
     <div id='valorateActivitiesLevelFilter'></div>
 </div>
-<div style="float: left; margin-right: 5px;">
+<div style="display: inline-block; margin-right: 5px;">
     Carrera <br>
     <div id='valorateActivitiesCareerFilter'></div>
-</div>
-<div style="float: right; margin-right: 5px;">
-    Importar<br>
-    <div id="importWorkPlanninHitory" style="height: 28px; margin-left: 15px;">
-        <div class="jqx-icon-import" style="height: 20px; width: 20px;"></div>
-    </div>
 </div>
 <div id="contentHistoryPeriods" style="display: none; float: right; right: 100px; position: absolute; z-index: 10000;">
     Periodo historial <br>
     <div id='valorateActivitiesPeriodHistoryFilter'></div>
 </div>
-<div style="float: right; margin-right: 5px; display: none">
-    Periodo <br>
-    <div id='valorateActivitiesPeriodFilter'></div>
-</div>
-<br><br><br>
-<div style="float: left; margin-right: 5px;">
+<div style="display: inline-block; margin-right: 5px;">
     Cuatrimestre<br>
     <div id='valorateActivitiesSemesterFilter'></div>
 </div>
-<div style="float: left; margin-right: 5px;">
+<div style="display: inline-block; margin-right: 5px;">
     Materia<br>
     <div id='valorateActivitiesSubjectMatterFilter'></div>
 </div>
-<div style="float: left; margin-right: 5px;">
+<div style="display: inline-block; margin-right: 5px;">
     Saber<br>
     <input type="hidden" id="pkWorkPlannig"/>
     <div id='valorateActivitiesScaleEvaluationFilter'></div>
 </div>
-<br><br><br>
-<div style="float: left; margin-right: 5px;">
-    Fecha de impresión<br>
-    <div class="calendarInput" id="datePrint"></div>
-    <span>AAAA-MM-DD</span>
-</div>
-<div style="display: none; float: left; margin-right: 5px; text-align: center;">
-    Valor<br>
-    <div id='valMaxScale' style="font-size: 23px;"></div>
-</div>
-<div style="float: left; margin-right: 5px;">
+<div style="display: inline-block; margin-right: 5px;">
     <br>
     <div id="addWorkPlannin" style="height: 28px; display: none">
         <div class="jqx-icon-list" style="height: 20px; width: 20px;"></div>
     </div>
 </div>
-<br><br><br><br><br>
-<div id="divHistory" style="float: left; display: none">
-    <div id="contentTRegisterActivitiesHistory" style="margin-right: 10px">
-        <div id="tableRegisterActivitiesHistory"></div>
-    </div>
-</div>
-<div id="moveRight" style="float: left; margin-right: 5px;">
+<br>
+<div style="display: inline-block; margin-right: 5px;">
     <div id="contentTRegisterActivities">
         <div id="tableRegisterActivities"></div>
     </div>
 </div>
-<div id="jqxgrid"></div>
-<div style="width: 450px; margin-right: 5px; display: none">
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div id="indicationsx"></div>
-    </div>
-</div>
-<div id="block-activities" style="display: none; height: 160px; width: 450px; display: none; background: #898989; opacity: .3; top: 66px; position: relative; z-index: 100000"></div>

@@ -20,6 +20,11 @@ public class workPlanningModel extends scaleEvaluationModel{
     int FK_GROUP=0;
     int FK_SCALE_EVALUATION=0;
     int FL_REALIZED=0;
+    
+    int PK_SHARED_BLOCK=0;
+    String FL_UNIQUE_WORK_PLANNIG="";
+    String FL_ALIAS_BLOCK="";
+    
 
     public int getPK_WORK_PLANNING() {
         return PK_WORK_PLANNING;
@@ -100,4 +105,29 @@ public class workPlanningModel extends scaleEvaluationModel{
     public void setFL_REALIZED(int FL_REALIZED) {
         this.FL_REALIZED = FL_REALIZED;
     }
+
+    public int getPK_SHARED_BLOCK() {
+        return PK_SHARED_BLOCK;
+    }
+
+    public void setPK_SHARED_BLOCK(int PK_SHARED_BLOCK) {
+        this.PK_SHARED_BLOCK = PK_SHARED_BLOCK;
+    }
+
+    public String getFL_UNIQUE_WORK_PLANNIG() {
+        return FL_UNIQUE_WORK_PLANNIG;
+    }
+
+    public void setFL_UNIQUE_WORK_PLANNIG(String FL_UNIQUE_WORK_PLANNIG) {
+        this.FL_UNIQUE_WORK_PLANNIG = FL_UNIQUE_WORK_PLANNIG;
+    }
+
+    public String getFL_ALIAS_BLOCK() {
+        return FL_ALIAS_BLOCK;
+    }
+
+    public void setFL_ALIAS_BLOCK(String FL_ALIAS_BLOCK) {
+        this.FL_ALIAS_BLOCK = FL_ALIAS_BLOCK;
+    }
+    
 }
