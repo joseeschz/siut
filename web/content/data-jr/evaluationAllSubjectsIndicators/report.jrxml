@@ -1014,7 +1014,7 @@
 							<textElement textAlignment="Center" verticalAlignment="Middle">
 								<font fontName="SansSerif" size="7"/>
 							</textElement>
-							<textFieldExpression><![CDATA[(new java.lang.String($V{FL_NULL} != null ? $V{FL_NULL} : "").equals("")? "--":($V{FL_NULL}.equals("No") ? $V{FL_FINAL_CALIFICATIONMeasure}.toString() : "/" ))]]></textFieldExpression>
+							<textFieldExpression><![CDATA[(new java.lang.String($V{FL_NULL} != null ? $V{FL_NULL} : "").equals("")? "/":($V{FL_NULL}.equals("No") ? $V{FL_FINAL_CALIFICATIONMeasure}.toString() : "/" ))]]></textFieldExpression>
 						</textField>
 					</cellContents>
 				</crosstabCell>

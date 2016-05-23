@@ -607,6 +607,7 @@ function createDropDownStudyPlan(filtrable, selector, update){
 
 function createDropDownRol(selector){
     var sourceRol =[
+        {"dataNameRol":"SISTEMA","dataValueRol":"1"},
         {"dataNameRol":"DIRECTOR","dataValueRol":"2"},
         {"dataNameRol":"MAESTRO","dataValueRol":"3"},
         {"dataNameRol":"SECRETARIA DE CARRERA","dataValueRol":"4"},

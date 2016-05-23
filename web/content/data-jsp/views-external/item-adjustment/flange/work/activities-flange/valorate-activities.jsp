@@ -1378,7 +1378,6 @@
     <div id='valorateActivitiesScaleEvaluationFilter'></div>
 </div>
 <div style="display: inline-block; margin-right: 5px;">
-    <br>
     <div id="addWorkPlannin" style="height: 28px; display: none">
         <div class="jqx-icon-list" style="height: 20px; width: 20px;"></div>
     </div>

@@ -36,12 +36,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             }); 
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#studyLevelTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/studyLevel.jsp");
-            $("#careersTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/career.jsp");
-            $("#studyPlansTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/studyPlan.jsp");
-            $("#subjectMattersTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/subjectMatters.jsp");
-            $("#groupsTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/groups.jsp");            
-            $("#workersTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/workers.jsp");
+            $("#subjectMattersTab").load("../content/data-jsp/views-external/item-catalogs/flange/academic-flange/subjectMatter-item/subjectMatters.jsp");
         });
     </script>
     <div id='jqxWindowWarning'>
@@ -59,41 +54,11 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="studyLevel">Niveles de estudio</li>
-            <li class="jqxTabsTitle" dir="career">Carreras</li>
-            <li class="jqxTabsTitle" dir="studyPlan">Planes de estudio</li>
             <li class="jqxTabsTitle" dir="subjectMatters">Materias</li>
-            <li class="jqxTabsTitle" dir="groups">Grupos</li>            
-            <li class="jqxTabsTitle" dir="workers">Usuarios</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
-                <div id="studyLevelTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="careersTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="studyPlansTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
                 <div id="subjectMattersTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="groupsTab" style="padding: 20px"></div>
-            </div>
-        </div>
-        <div>
-            <div class="hidenTab" style="display: none;">
-                <div id="workersTab" style="padding: 20px"></div>
             </div>
         </div>
     </div>
