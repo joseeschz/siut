@@ -89,8 +89,7 @@ public class serviceSubjectMatter extends HttpServlet {
                         pkStudent = Integer.parseInt(request.getParameter("pkStudent"));
                     }
                     listSubjectMatters=new subjectMattersControl().SelectListSubjectMattersByStudents(pkStudent);
-                }
-                else if(request.getParameter("view").equals("comboWithoutGroup")){
+                }else if(request.getParameter("view").equals("comboWithoutGroup")){
                     pkSemester = Integer.parseInt(request.getParameter("pkSemester"));
                     if(request.getParameter("teacher")!=null){
                         pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
@@ -115,6 +114,7 @@ public class serviceSubjectMatter extends HttpServlet {
                     data.put("dataNameSubjectMatter", listSubjectMatters.get(i).getFL_NAME_SUBJECT_MATTER());
                     data.put("dataNameWorker", listSubjectMatters.get(i).getFL_NAME_WORKER());
                     data.put("dataIntegradora", listSubjectMatters.get(i).getFL_INTEGRADORA());
+                    data.put("dataCantHous", listSubjectMatters.get(i).getFL_CANT_HOURS());
                     data.put("dataFkStudyPlan", listSubjectMatters.get(i).getFK_STUDY_PLAN());
                     data.put("dataNamePlan", listSubjectMatters.get(i).getFL_NAME_PLAN());
                     data.put("dataFkSemester", listSubjectMatters.get(i).getFK_SEMESTER());
@@ -139,6 +139,7 @@ public class serviceSubjectMatter extends HttpServlet {
                     dataSubjectMatters.setFL_INTEGRADORA(request.getParameter("integradora"));
                     dataSubjectMatters.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
                     dataSubjectMatters.setFK_STUDY_PLAN(Integer.parseInt(request.getParameter("fkStudyPlan")));
+                    dataSubjectMatters.setFL_CANT_HOURS(Integer.parseInt(request.getParameter("cantHours")));
                     out.print(new subjectMattersControl().InsertSubjectMatters(dataSubjectMatters));
                 }                
             }
@@ -150,6 +151,7 @@ public class serviceSubjectMatter extends HttpServlet {
                     dataSubjectMatters.setFL_INTEGRADORA(request.getParameter("integradora"));
                     dataSubjectMatters.setFK_SEMESTER(Integer.parseInt(request.getParameter("fkSemester")));
                     dataSubjectMatters.setFK_STUDY_PLAN(Integer.parseInt(request.getParameter("fkStudyPlan")));
+                    dataSubjectMatters.setFL_CANT_HOURS(Integer.parseInt(request.getParameter("cantHours")));
                     out.print(new subjectMattersControl().UpdateSubjectMatters(dataSubjectMatters));
                 }                
             }

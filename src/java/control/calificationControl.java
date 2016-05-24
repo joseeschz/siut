@@ -25,9 +25,10 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-
-        String canPrint =  new calificationControl().CanPrint(3, 506, 11, 13);
-        System.err.println(canPrint);
+        ArrayList<calificationModel> listColumns=new calificationControl().SelectActievementQuartely(0, 13, 1);
+         for(int i=0;i<listColumns.size();i++){
+             System.out.println(listColumns.get(i).getFL_NAME_CAREER());
+        }
     }
     
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -379,11 +380,47 @@ public class calificationControl {
         }
         return status;
     }
+    public String SetDateCloseES(int fkType, int pkMatter, int  pkGroup, int period, String flDateClosed){
+        String status;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDateCloseES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDateClosed+"')"); ResultSet res = ps.executeQuery()) {
+                status= "Success";
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
     public String SetDatePrint(int fkType, int pkMatter, int  pkGroup, int period, String flDatePrint){
         String status;
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDatePrint+"')"); ResultSet res = ps.executeQuery()) {
                 status= "Success";
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return status;
+        } catch (SQLException ex) {
+            status="error";
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return status;
+    }
+    public String GetDateClosedES(int fkType, int pkMatter, int  pkGroup, int period){
+        String status;
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDateClosedES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+                if(res!=null && res.next()){
+                    status=""+res.getString("FL_DATE_CLOSED_ES");   
+                }else{
+                    status="null"; 
+                }
                 res.close();
                 ps.close();
                 conn.close();
@@ -659,6 +696,33 @@ public class calificationControl {
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
                     allData.setFL_TEXT_EXTENDS(res.getString("FL_TEXT_EXTENDS"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<calificationModel> SelectActievementQuartely(int pkRelationShip, int pkPeriod, int pkWorker){
+        ArrayList<calificationModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('academicAchievement', "+pkRelationShip+", "+pkPeriod+", "+pkWorker+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setFL_YEAR(res.getString("FL_YEAR"));
+                    allData.setFL_MONTH(res.getString("FL_MONTH"));
+                    allData.setFL_NAME_CAREER(res.getString("FL_NAME_CAREER"));
+                    allData.setFL_STUDENTS_FINISHED_SEMESTER(res.getInt("FL_STUDENTS_FINISHED_SEMESTER"));
+                    allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_ACUMULATED(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_ACUMULATED"));
+                    allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_REGULARIZATION(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_REGULARIZATION"));
+                    allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL"));
+                    allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED"));
+                    allData.setFL_AVG(res.getString("FL_CAREER_AVERAGE"));
                     list.add(allData);
                 }
                 res.close();

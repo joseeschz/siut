@@ -76,21 +76,22 @@
 		</box>
 	</style>
 	<subDataset name="Dataset1" uuid="76f74540-79aa-4216-a5bf-156d6ead665d">
-		<parameter name="pt_level_1" class="java.lang.Integer">
-			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-		</parameter>
-		<parameter name="pt_career_1" class="java.lang.Integer">
-			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-		</parameter>
-		<parameter name="pt_semester_1" class="java.lang.Integer">
+		<parameter name="pt_relationship_1" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
 		<parameter name="pt_period_1" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
+		<parameter name="pt_worker_1" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
 		<queryString>
-			<![CDATA[CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('academicAchievement', 13)]]>
+			<![CDATA[CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('academicAchievement', $P{pt_relationship_1}, $P{pt_period_1}, $P{pt_worker_1})]]>
 		</queryString>
+		<field name="FL_YEAR" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FL_MONTH" class="java.lang.String"/>
 		<field name="FL_NAME_CAREER" class="java.lang.String">
 			<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
 		</field>
@@ -99,24 +100,29 @@
 		<field name="FL_STUDENTS_FINISHED_SEMESTER_AS_REGULARIZATION" class="java.lang.Long"/>
 		<field name="FL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL" class="java.lang.Long"/>
 		<field name="FL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED" class="java.lang.Long"/>
-		<field name="FL_CAREER_AVERAGE" class="java.lang.Long"/>
+		<field name="SUMA" class="java.lang.Double"/>
+		<field name="FL_CAREER_AVERAGE" class="java.lang.String"/>
 	</subDataset>
-	<parameter name="pt_level" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pt_career" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pt_semester" class="java.lang.Integer">
+	<parameter name="pt_relationship" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="pt_period" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_fk_worker" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT 1;]]>
+		<![CDATA[CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('header', $P{pt_relationship}, $P{pt_period}, $P{pt_fk_worker})]]>
 	</queryString>
-	<field name="1" class="java.lang.Long"/>
+	<field name="FL_NAME_PERIOD" class="java.lang.String"/>
+	<field name="FL_NAME_WORKER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_SEMESTER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_LEGEND" class="java.lang.String"/>
 	<variable name="colum_count" class="java.lang.Integer" incrementType="Column">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
@@ -124,7 +130,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="134" splitType="Stretch">
+		<band height="115" splitType="Stretch">
 			<image hAlign="Center" vAlign="Middle">
 				<reportElement x="0" y="0" width="102" height="89" uuid="728ad1bf-a113-493b-ad5b-b4b51a2effec"/>
 				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
@@ -152,57 +158,111 @@
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<staticText>
-					<reportElement x="0" y="0" width="114" height="20" uuid="42a57cef-315e-45cd-940c-c0b3721bcf4f"/>
-					<box leftPadding="5" rightPadding="5"/>
-					<textElement verticalAlignment="Middle">
-						<font fontName="SansSerif" size="12" isBold="true"/>
-					</textElement>
-					<text><![CDATA[CUATRIMESTRE:]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="514" y="0" width="73" height="20" uuid="28181412-5b76-4218-9518-25e1a27b6cd9"/>
-					<box leftPadding="5" rightPadding="5"/>
+					<reportElement x="470" y="0" width="73" height="20" uuid="28181412-5b76-4218-9518-25e1a27b6cd9"/>
+					<box leftPadding="5" rightPadding="5">
+						<leftPen lineWidth="0.5"/>
+					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="SansSerif" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[PERIODO:]]></text>
 				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="543" y="0" width="209" height="20" uuid="8b003337-9dfc-44d4-bed5-c88c4be75e68"/>
+					<textElement verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_NAME_PERIOD}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="118" height="20" uuid="2b6fc057-3a3d-4a18-a706-5ea864e5d031"/>
+					<box leftPadding="5" rightPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="SansSerif" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CUATRIMESTRES:]]></text>
+				</staticText>
 			</frame>
-			<frame>
-				<reportElement x="0" y="111" width="752" height="20" uuid="2e23976d-e6d0-4d5c-82e3-742221e47e57"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-			</frame>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="118" y="91" width="352" height="20" uuid="535b943f-206b-457d-9299-3351940f4673"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_SEMESTER}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="316">
+		<band height="335">
 			<componentElement>
-				<reportElement key="table 2" style="table 2" x="0" y="0" width="752" height="316" uuid="624b5cc0-c4a7-4048-8141-0149351d7320"/>
+				<reportElement key="table 2" style="table 2" x="0" y="0" width="752" height="335" uuid="624b5cc0-c4a7-4048-8141-0149351d7320"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset1" uuid="ba17addd-916e-4599-8915-9f369e5c6d8c">
-						<datasetParameter name="pt_level_1">
-							<datasetParameterExpression><![CDATA[$P{pt_level}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_career_1">
-							<datasetParameterExpression><![CDATA[$P{pt_career}]]></datasetParameterExpression>
-						</datasetParameter>
-						<datasetParameter name="pt_semester_1">
-							<datasetParameterExpression><![CDATA[$P{pt_semester}]]></datasetParameterExpression>
+					<datasetRun subDataset="Dataset1" uuid="75afdf2a-cf55-4b03-aed0-66e628b55065">
+						<datasetParameter name="pt_relationship_1">
+							<datasetParameterExpression><![CDATA[$P{pt_relationship}]]></datasetParameterExpression>
 						</datasetParameter>
 						<datasetParameter name="pt_period_1">
 							<datasetParameterExpression><![CDATA[$P{pt_period}]]></datasetParameterExpression>
 						</datasetParameter>
+						<datasetParameter name="pt_worker_1">
+							<datasetParameterExpression><![CDATA[$P{pt_fk_worker}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="212" uuid="9dcfcedd-e6bf-45b4-b953-93f04a2ab25a">
+					<jr:column width="36" uuid="8815c720-6171-414c-a228-9e6037db0851">
 						<jr:tableHeader style="table 2_TH" height="30" rowSpan="1">
 							<textField isStretchWithOverflow="true">
-								<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="212" height="30" forecolor="#FFFFFF" uuid="50e2e8e8-40d9-45f2-8a18-d1609512d994"/>
+								<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="36" height="30" forecolor="#FFFFFF" uuid="c15a304a-63d8-4108-9122-ecf023e32b3a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["MES"]]></textFieldExpression>
+							</textField>
+						</jr:tableHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="36" height="20" uuid="17991916-0390-4a63-bdd4-a3cff247e489"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{FL_MONTH}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="35" uuid="b87d2576-74ae-4ce3-8a8d-30e239e33e16">
+						<jr:tableHeader style="table 2_TH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="35" height="30" forecolor="#FFFFFF" uuid="efeb95ac-52c7-479d-9190-f6d2f953ec3a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["AÑO"]]></textFieldExpression>
+							</textField>
+						</jr:tableHeader>
+						<jr:detailCell height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="35" height="20" uuid="2ca064c6-7ded-41c4-b847-4076a253366a"/>
+								<box leftPadding="2" rightPadding="2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{FL_YEAR}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="142" uuid="9dcfcedd-e6bf-45b4-b953-93f04a2ab25a">
+						<jr:tableHeader style="table 2_TH" height="30" rowSpan="1">
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" mode="Transparent" x="0" y="0" width="142" height="30" forecolor="#FFFFFF" uuid="50e2e8e8-40d9-45f2-8a18-d1609512d994"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 									<font size="8" isBold="true"/>
 								</textElement>
@@ -211,7 +271,7 @@
 						</jr:tableHeader>
 						<jr:detailCell style="table 2_TD" height="20" rowSpan="1">
 							<textField isStretchWithOverflow="true">
-								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="212" height="20" uuid="8c626972-2abe-49fd-92f1-512dac329134"/>
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="142" height="20" uuid="8c626972-2abe-49fd-92f1-512dac329134"/>
 								<box leftPadding="2" rightPadding="2"/>
 								<textElement verticalAlignment="Middle">
 									<font size="8"/>
@@ -349,19 +409,10 @@
 	</columnFooter>
 	<pageFooter>
 		<band height="78" splitType="Stretch">
-			<staticText>
-				<reportElement stretchType="RelativeToBandHeight" x="263" y="23" width="207" height="33" uuid="6446d012-603a-4e3a-a547-ee7f6a4050a1"/>
-				<box>
-					<topPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[JEFA DE DEPARTAMENTO DE SERVICIOS ESCOLARES]]></text>
-			</staticText>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="263" y="3" width="207" height="20" uuid="e5902956-78e6-43d3-9fc9-73b16eb21480"/>
-				<textFieldExpression><![CDATA[""]]></textFieldExpression>
+				<reportElement stretchType="RelativeToBandHeight" x="250" y="3" width="222" height="20" uuid="e5902956-78e6-43d3-9fc9-73b16eb21480"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FL_NAME_WORKER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="652" y="58" width="100" height="20" uuid="325975c7-d18a-4583-85d4-d513a04b2e66"/>
@@ -372,6 +423,16 @@
 				<reportElement x="672" y="36" width="80" height="20" uuid="8a41bad0-cd03-45ee-a73b-82e9d916b099"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="250" y="23" width="222" height="20" uuid="2c784108-ddf0-469c-be6b-36aa0399f088"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_LEGEND}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

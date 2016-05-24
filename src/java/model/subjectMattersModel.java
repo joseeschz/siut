@@ -18,6 +18,7 @@ public class subjectMattersModel extends workerModel{
     int FK_SEMESTER = 0;
     String FL_NAME_ALIAS_SUBJECT_MATTER = "";
     String FL_NAME_SEMESTER = "";
+    int FL_CANT_HOURS = 0;
     String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER="";
 
     public int getPK_SUBJECT_MATTER() {
@@ -91,4 +92,13 @@ public class subjectMattersModel extends workerModel{
     public void setFL_QUALIFICATION_TOTAL_SUBJECT_MATTER(String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER) {
         this.FL_QUALIFICATION_TOTAL_SUBJECT_MATTER = FL_QUALIFICATION_TOTAL_SUBJECT_MATTER;
     }
+
+    public int getFL_CANT_HOURS() {
+        return FL_CANT_HOURS;
+    }
+
+    public void setFL_CANT_HOURS(int FL_CANT_HOURS) {
+        this.FL_CANT_HOURS = FL_CANT_HOURS;
+    }
+    
 }

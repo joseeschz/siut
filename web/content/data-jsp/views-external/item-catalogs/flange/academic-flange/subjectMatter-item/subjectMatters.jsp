@@ -10,7 +10,8 @@
                     { name: 'id', type:'int'},
                     { name: 'dataProgresivNumber', type:'int'},
                     { name: 'dataNameSubjectMatter', type: 'string' },
-                    { name: 'dataIntegradora', type: 'string' }                    
+                    { name: 'dataIntegradora', type: 'string' },
+                    { name: 'dataCantHous', type: 'int' } 
                 ],
                 root: "__ENTITIES",
                 dataType: "json",
@@ -29,7 +30,13 @@
                         type: "POST",
                         async: false,
                         url: "../serviceSubjectMatter?insert",
-                        data:{'fkSemester':itemSemester.value,'nameSubjectMatter':"",'integradora':"0",'fkStudyPlan':itemStudyPlan.value},
+                        data:{
+                            'fkSemester':itemSemester.value,
+                            'nameSubjectMatter':"",
+                            'integradora':"0",
+                            'fkStudyPlan':itemStudyPlan.value,
+                            'cantHours': "0"
+                        },
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -52,12 +59,20 @@
                     itemStudyPlan = $('#subjectMattersStudyPlanFilter').jqxDropDownList('getSelectedItem');
                     var nameSubjectMatter = rowData.dataNameSubjectMatter;
                     var integradora = rowData.dataIntegradora;
+                    var cantHours = rowData.dataCantHous;
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
                         url: "../serviceSubjectMatter?update",
-                        data:{'pkSubjectMatter':rowID,'nameSubjectMatter':nameSubjectMatter,'integradora':integradora,'fkSemester':itemSemester.value,'fkStudyPlan':itemStudyPlan.value},
+                        data:{
+                            'pkSubjectMatter':rowID,
+                            'nameSubjectMatter':nameSubjectMatter,
+                            'integradora':integradora,
+                            'fkSemester':itemSemester.value,
+                            'fkStudyPlan':itemStudyPlan.value,
+                            'cantHours':cantHours
+                        },
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -119,7 +134,7 @@
         function loadTable(pkCareer, pkSemester, pkStudyPlan){
             dataAdapter = new $.jqx.dataAdapter(loadSource(pkCareer, pkSemester, pkStudyPlan));
             $("#tableSubjectMatters").jqxDataTable({
-                width: 565,
+                width: 600,
                 height : 300,
                 selectionMode: "singleRow",
                 localization: getLocalization("es"),
@@ -261,7 +276,7 @@
                 },
                 columns: [
                     { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 35 },
-                    { text: 'Materia', dataField: 'dataNameSubjectMatter', width: 380,
+                    { text: 'Materia', dataField: 'dataNameSubjectMatter',
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
                             $(editor).keyup(function() {
@@ -273,7 +288,7 @@
                             return $(editor).val().toUpperCase();
                         }
                     },
-                    { text: 'Integradora', columntype: 'custom', align:'center', cellsAlign:'center', dataField: 'dataIntegradora',
+                    { text: 'Integradora', columntype: 'custom', align:'center', cellsAlign:'center',  width: 130, dataField: 'dataIntegradora',
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
                             if(cellvalue==="No"){
@@ -291,8 +306,8 @@
                             var value = parseInt(cellvalue);
                             if (isNaN(value)) value = 0;
                             editor.jqxSlider('setValue', value);
-                         },
-                         getEditorValue: function (row, cellvalue, editor) {
+                        },
+                        getEditorValue: function (row, cellvalue, editor) {
                             // return the editor's value.
                             var value;
                             if(!editor.val()){
@@ -302,6 +317,17 @@
                             }
                             return value;
                          }
+                    },
+                    { text: 'Cantidad de Horas', columntype: 'custom', align:'center', width: 150, cellsAlign:'center', dataField: 'dataCantHous',
+                        createEditor: function (row, cellvalue, editor, cellText, width, height) {
+                            // construct the editor. 
+                            editor.jqxNumberInput({ decimalDigits: 0, inputMode: 'simple',  width: width, height: height, spinButtons: true });
+                        },
+                        initEditor: function (row, cellvalue, editor, celltext, width, height) {
+                            // set the editor's current value. The callback is called each time the editor is displayed.
+                            //alert(celltext);
+                            editor.jqxNumberInput({ decimal: parseInt(cellvalue)});
+                        }
                     }
                 ]
             });

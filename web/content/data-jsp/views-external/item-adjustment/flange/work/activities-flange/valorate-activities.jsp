@@ -491,10 +491,10 @@
                         container.append(exportButton);
 
                         //container.append(infoButton);
-                        container.append(shareButton);
+//                        container.append(shareButton);
                         
                         container.append(showButton); 
-                        container.append(importButton);  
+//                        container.append(importButton);  
                         container.append(settingsButton);  
                         container.append(dateContent);  
                         toolBar.append(container);
@@ -566,7 +566,12 @@
                             if(event.args){
                                 $.ajax({
                                     url: "../serviceActivities?setPrintDate",
-                                    data: {"fkMatter": itemSubjectMatter.value, "fkPeriod": itemPeriod.value, "fkStudyLevel":itemLevel.value, "flPrintDate": $(this).val() },
+                                    data: {
+                                        "fkMatter": itemSubjectMatter.value, 
+                                        "fkPeriod": itemPeriod.value, 
+                                        "fkStudyLevel":itemLevel.value, 
+                                        "flPrintDate": $(this).val() 
+                                    },
                                     type: 'POST',
                                     beforeSend: function (xhr) {
                                     },

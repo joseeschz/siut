@@ -155,7 +155,7 @@
 		<field name="FL_NAME_SUBJECT_MATTER" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
-		<field name="FL_CANT_HOURS" class="java.lang.Integer">
+		<field name="FL_CANT_HOURS" class="java.lang.String">
 			<fieldDescription><![CDATA[]]></fieldDescription>
 		</field>
 		<field name="FL_NAME_WORKER" class="java.lang.String">
