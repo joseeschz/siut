@@ -186,7 +186,15 @@ public class serviceCalification extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().GetObservations(fkType, fkMatter, fkGroup, fkPeriod));               
             }
-            
+            if(request.getParameter("setDateCloseES")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));  
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                String flDateClosed = request.getParameter("flDateClosed");
+                response.setContentType("text/html;charset=UTF-8"); 
+                out.print(new calificationControl().SetDateCloseES(fkType, fkMatter, fkGroup, fkPeriod, flDateClosed));               
+            }
             if(request.getParameter("setDatePrint")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
                 int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
@@ -195,6 +203,14 @@ public class serviceCalification extends HttpServlet {
                 String flDatePrint = request.getParameter("flDatePrint");
                 response.setContentType("text/html;charset=UTF-8"); 
                 out.print(new calificationControl().SetDatePrint(fkType, fkMatter, fkGroup, fkPeriod, flDatePrint));               
+            }
+            if(request.getParameter("getDateClosedES")!=null){
+                int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
+                int fkGroup = Integer.parseInt(request.getParameter("fkGroup"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod")); 
+                int fkType = Integer.parseInt(request.getParameter("fkType"));  
+                response.setContentType("text/html;charset=UTF-8"); 
+                out.print(new calificationControl().GetDateClosedES(fkType, fkMatter, fkGroup, fkPeriod));               
             }
             if(request.getParameter("getDatePrint")!=null){
                 int fkMatter = Integer.parseInt(request.getParameter("fkMatter"));
@@ -555,6 +571,36 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            
+            if(request.getParameter("actievementQuartely")!=null){
+                response.setContentType("application/json"); 
+                int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));                     
+                ArrayList<calificationModel> listColumns=new calificationControl().SelectActievementQuartely(0, pkPeriod, 0);
+                JSONArray principal = new JSONArray();
+                JSONArray contentRows = new JSONArray();
+                JSONObject rows = new JSONObject();
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataRows = new JSONObject();
+                    dataRows.put("dataProgresivNumber", i+1);
+                    dataRows.put("dataYear", listColumns.get(i).getFL_YEAR());
+                    dataRows.put("dataMonth", listColumns.get(i).getFL_MONTH());
+                    dataRows.put("dataNameCareer", listColumns.get(i).getFL_NAME_CAREER());
+                    dataRows.put("dataStudentsFinishedSemester", listColumns.get(i).getFL_STUDENTS_FINISHED_SEMESTER());
+                    dataRows.put("dataStudentsFinishedSemesterAsAcumulated", listColumns.get(i).getFL_STUDENTS_FINISHED_SEMESTER_AS_ACUMULATED());
+                    dataRows.put("dataStudentsFinishedSemesterAsRegularization", listColumns.get(i).getFL_STUDENTS_FINISHED_SEMESTER_AS_REGULARIZATION());
+                    dataRows.put("dataStudentsFinishedSemesterAsGlobal", listColumns.get(i).getFL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL());
+                    dataRows.put("dataStudentsFinishedSemesterAsRepproved", listColumns.get(i).getFL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED());
+                    dataRows.put("dataAverageCareer", listColumns.get(i).getFL_AVG());
+                    contentRows.add(dataRows); 
+                }
+                rows.put("rows", contentRows);   
+                principal.add(rows);
+                out.print(contentRows);
+                
+                out.flush(); 
+                out.close();
+            }
+            
             if(request.getParameter("tableCalMattersStudent")!=null){
                 int pkStudent = 0;
                 if(session.getAttribute("pkStudent")!=null){

@@ -64,6 +64,7 @@ public class subjectMattersControl {
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
                     listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
                     listSubjectMatters.setFL_INTEGRADORA(res.getString("FL_INTEGRADORA"));
+                    listSubjectMatters.setFL_CANT_HOURS(res.getInt("FL_CANT_HOURS"));
                     list.add(listSubjectMatters);
                 }
                 res.close();
@@ -154,7 +155,7 @@ public class subjectMattersControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('insert', null, '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('insert', null, '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFL_CANT_HOURS()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -170,7 +171,7 @@ public class subjectMattersControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('delete', '"+pkSubjectMatters+"', null, null, null, null)")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('delete', '"+pkSubjectMatters+"', null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
                 ps.close();
@@ -186,7 +187,7 @@ public class subjectMattersControl {
         String request;
         try {
             Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('update', '"+dataSubjectMatters.getPK_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('update', '"+dataSubjectMatters.getPK_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFL_CANT_HOURS()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

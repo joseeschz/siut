@@ -15,7 +15,8 @@
         var showButton = $(buttonTemplate);
         var exportButton = $(buttonTemplate);
         var infoButton = $(buttonTemplate);
-        var infoElaborateDate = $('<div style="float: left; margin-right: 5px;">Fecha de Elaboración<br><div class="calendarInput" id="datePrint"></div><span>DD-MM-AAAA</span></div>');
+        var dateContent = $('<div style="float: right; margin-top: 2px; margin-right: 2px;"><div class="calendarInput" ></div></div>');
+        var infoElaborateDate = $('<div style="float: left; margin-right: 5px;">Fecha de Elaboración<br><div id="datePrint"></div><span>DD-MM-AAAA</span></div>');
         var container = $("<div class='container' style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
         
         createDropDownStudyLevel("#qualificationsLevelFilter",false);
@@ -516,10 +517,13 @@
                 container.append(unlockButton);
                 container.append(exportButton);
                 
+                
                 getDatePrint();
+                getDateClosedES();
                 container.append(infoButton);
                 container.append(lockButton);
                 container.append(infoElaborateDate);
+                container.append(dateContent); 
                 toolbar.append(container);
                 var me = this;    
                 
@@ -549,6 +553,37 @@
                 showButton.css({"float":"right","cursor":"pointer"});
                 showButton.jqxTooltip({ position: 'bottom', content: "Agregar observaciones"});
                 showButton.attr("id","showButton");
+                
+                $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "yyyy/MM/dd", theme: theme, width: '120px', height: '30px'});
+                $('.calendarInput').off('change');
+                $('.calendarInput').on('change', function (event) {
+                    if(event.args){
+                        itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+                        itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                        itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+                        itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+                        var Date = $('.calendarInput').jqxDateTimeInput('getDate').toJSON();
+                        var flDateClosed = Date;
+                        $.ajax({
+                            url: "../serviceCalification?setDateCloseES",
+                            data: {
+                                "fkType": itemTypeEvaluation.value, 
+                                "flDateClosed": flDateClosed, 
+                                "fkMatter": itemSubjectMatter.value,
+                                "fkGroup": itemGroup.value,
+                                "fkPeriod": itemPeriod.value
+                            },
+                            type: 'POST',
+                            beforeSend: function (xhr) {
+                            },
+                            success: function (data, textStatus, jqXHR) {
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("Error interno del servidor");                
+                            }
+                        });    
+                    }
+                }); 
                 
                 lockButton.off("click");
                 lockButton.click(function (){           
@@ -750,7 +785,31 @@
                 beforeSend: function (xhr) {
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $('.calendarInput').text(data);
+                    $('#datePrint').text(data);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");                
+                }
+            });
+        }
+        function getDateClosedES(){
+            itemSubjectMatter= $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
+            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemTypeEvaluation = $("#qualificationsCalEvaluationType").jqxDropDownList('getSelectedItem');
+            $.ajax({
+                url: "../serviceCalification?getDateClosedES",
+                data: {
+                    "fkType": itemTypeEvaluation.value, 
+                    "fkMatter": itemSubjectMatter.value,
+                    "fkGroup": itemGroup.value,
+                    "fkPeriod": itemPeriod.value
+                },
+                type: 'POST',
+                beforeSend: function (xhr) {
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('.calendarInput').val(data);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     alert("Error interno del servidor");                

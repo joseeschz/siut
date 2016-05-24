@@ -651,7 +651,13 @@
             var flDatePrint = Date;
             $.ajax({
                 url: "../serviceCalification?setDatePrint",
-                data: {"fkType": itemTypeEvaluation.value, "flDatePrint": flDatePrint, "fkMatter": itemSubjectMatter.value,"fkGroup": itemGroup.value,"fkPeriod": itemPeriod.value},
+                data: {
+                    "fkType": itemTypeEvaluation.value, 
+                    "flDatePrint": flDatePrint, 
+                    "fkMatter": itemSubjectMatter.value,
+                    "fkGroup": itemGroup.value,
+                    "fkPeriod": itemPeriod.value
+                },
                 type: 'POST',
                 beforeSend: function (xhr) {
                 },
