@@ -188,14 +188,14 @@ $(document).ready(function () {
         $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+$.cookie('itemParentId')+"");
         $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);    
     }else{
-         $("#ContentPanel").load("../content/data-jsp/views-external/item-start/start.jsp?lockPage=false");
+         $("#ContentPanel").load("../content/data-jsp/views-external/item-start/start.jsp");
         $('#jqxTree').jqxTree('selectItem', $("#1")[0]);
     }
     if(isChildren && $.cookie('dir')!==""){
         $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);  
         $('#jqxTree').jqxTree('selectItem', $("#"+$.cookie('itemClickedId')||1)[0]); 
         $.ajax({
-            url:"../content/data-jsp/views-external/"+$.cookie('dir')+"?lockPage=false",
+            url:"../content/data-jsp/views-external/"+$.cookie('dir')+"",
             async: true,
             beforeSend: function (xhr) {
                 $("#load-page-external").jqxWindow('open');
