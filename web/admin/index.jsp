@@ -255,8 +255,6 @@ if(session.getAttribute("logueado") == null){%>
             <!--<script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>-->
             <!--<script type="text/javascript" src="../content/files-jq/jquery //-ui-1.11.1/jquery-ui.js"></script>-->
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
-            
-            
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
             <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
             <script type="text/javascript" src="../content/files-jq/jquery.cookie.js"></script>

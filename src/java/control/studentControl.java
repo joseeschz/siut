@@ -235,6 +235,33 @@ public class studentControl {
         }
         return list;
     }
+    public ArrayList<studentModel> SelectStudentConstancy(String enrollment){
+        ArrayList<studentModel> list=new ArrayList<>();
+        String procedure;
+        procedure = "CALL `GET_STUDENTS`('studentByEnrollmentConstancy', '"+enrollment+"')";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel Student=new studentModel();
+                    Student.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    Student.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    Student.setFL_NAME(res.getString("FL_NAME"));
+                    Student.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_LEVEL"));
+                    Student.setPK_LEVEL_STUDY(res.getInt("PK_LEVEL_STUDY"));
+                    Student.setFL_NAME_CAREER(res.getString("FL_NAME_CAREER"));
+                    Student.setFK_CAREER(res.getInt("FK_CAREER"));                    
+                    list.add(Student);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<studentModel> SelectStudent(String enrollment, String condition){
         ArrayList<studentModel> list=new ArrayList<>();
         String procedure;

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="originalDocuments" pageWidth="612" pageHeight="792" columnWidth="483" leftMargin="63" rightMargin="66" topMargin="42" bottomMargin="14" uuid="c589d7cb-36b0-40de-bd25-6e0badeb34b0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pt_enrollment" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_STUDENTS`('studentByEnrollmentConstancy', $P{pt_enrollment});]]>
+	</queryString>
+	<field name="PK_STUDENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID UNICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PK_LEVEL_STUDY" class="java.lang.Long">
+		<fieldDescription><![CDATA[Este campo es la llave primaria del registro con ella podemos borrar o actualizar algún registro y en su caso podremos realizar con este relaciones externas entre tablas]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_LEVEL" class="java.lang.String">
+		<fieldDescription><![CDATA[Nombre del nivel de estudios]]></fieldDescription>
+	</field>
+	<field name="FK_CAREER" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID CARRERA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|checkedlist|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_SEMESTER" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_SICLO" class="java.lang.String"/>
+	<field name="FL_NAME_PERIOD" class="java.lang.String"/>
+	<field name="EXPEDITION_DATE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="123" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="427" y="0" width="103" height="85" uuid="1567ff9e-7272-4b59-b49d-0c2353294fd6"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="305" y="0" width="119" height="85" uuid="2d29db6a-ca25-42be-be05-720b486ad9b3"/>
+				<box>
+					<rightPen lineWidth="2.0" lineColor="#666666"/>
+				</box>
+				<imageExpression><![CDATA["logo-gob.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Top">
+				<reportElement x="0" y="-12" width="124" height="97" uuid="9cefe62c-ed66-4966-98be-dc81cc84dd9d"/>
+				<imageExpression><![CDATA["logo-edomex.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="0" y="85" width="483" height="23" uuid="59d0094d-103f-45e5-a213-0ca0ec222f6c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA["2016, Año del Centenario de la Instalación del Congreso Constituyente”]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="469" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="483" height="23" uuid="dc7014a6-3f99-4922-986d-62de616b538a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A QUIEN CORRESPONDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="49" width="483" height="43" uuid="2528880c-58cf-480d-a216-c38f12bf02fd"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[El Departamento de Servicios Escolares, de la Universidad Tecnológica del Sur del Estado de México.]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="104" width="483" height="109" uuid="aeaeb786-a8b9-4aea-85be-84cd98262dc3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hace constar que el (la) C. "+$F{FL_NAME}+" es alumno (a) regular de esta Institución Educativa y se encuentra inscrito (a) en la carrera de "+$F{FL_NAME_CAREER}+", con número de matrícula "+$F{FL_ENROLLMENT}+" cursando el CUATRIMESTRE "+$F{FL_NAME_SEMESTER}+", del Ciclo Escolar "+$F{FL_SICLO}+", en el período comprendido "+$F{FL_NAME_PERIOD}+"."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="230" width="483" height="61" uuid="be269c40-2180-4f66-bf8e-db2f59596600"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A petición del interesado (a) y para los fines legales que convengan, se extiende la presente en la Ex-Hacienda de San Miguel Ixtapan, municipio de Tejupilco, México, a los "+$F{EXPEDITION_DATE}+"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="333" width="483" height="43" uuid="9f1b4b83-ba02-4681-babb-5dafc0574991"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[A T E N T A M E N T E]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="415" width="483" height="54" uuid="0ba7c04a-c433-4e7d-88fd-4f728b38afb4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MTRA. TANIA JAZMIN GALAN VENCES
+JEFA DE DEPARTAMENTO
+DE SERVICIOS ESCOLARES
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="144" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement stretchType="RelativeToBandHeight" x="-49" y="0" width="616" height="144" uuid="b9144e2c-bf7a-486e-a1d8-f6fef80c128a"/>
+				<imageExpression><![CDATA["footnote.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageFooter>
+</jasperReport>

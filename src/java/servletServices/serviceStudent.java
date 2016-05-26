@@ -242,6 +242,25 @@ public class serviceStudent extends HttpServlet {
                     out.close();
                 }                
             }
+            if(request.getParameter("selectStudentConstancy")!=null){
+                String enrollment = request.getParameter("enrollment");
+                ArrayList<studentModel> listStudent=new studentControl().SelectStudentConstancy(enrollment);
+                JSONObject datos = new JSONObject();
+                for(int i=0;i<listStudent.size();i++){
+                    datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataPkStudent", listStudent.get(i).getPK_STUDENT());
+                    datos.put("dataEnrollment", listStudent.get(i).getFL_ENROLLMENT());
+                    datos.put("dataName", listStudent.get(i).getFL_NAME());
+                    datos.put("dataPkLevelStudy", listStudent.get(i).getPK_LEVEL_STUDY());
+                    datos.put("dataNameLevel", listStudent.get(i).getFL_NAME_ABBREVIATED());
+                    datos.put("dataPkCareer", listStudent.get(i).getFK_CAREER());
+                    datos.put("dataNameCareer", listStudent.get(i).getFL_NAME_CAREER());
+                    response.setContentType("application/json"); 
+                    out.print(datos);
+                    out.flush(); 
+                    out.close();
+                }                
+            }
             if(request.getParameter("selectStudentExpedient")!=null){
                 int pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
                 ArrayList<requirementsModel> listStudent=new studentControl().SelectStudentExpedient(pk_student);
