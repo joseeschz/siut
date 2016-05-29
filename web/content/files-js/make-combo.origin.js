@@ -334,6 +334,52 @@ function createDropDownPeriodByStudentsCalifications(selector, params, update){
         }).css("display","inline-block");
     }
 }
+function createDropDownSchoolYear(selector){
+    var pkSchoolYearSelected = 0;
+    var sourceSchoolYear ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "dataPkSchoolYear",
+        datafields: [
+            { name: 'dataProgresivNumber', type:'int'},
+            { name: 'dataPkSchoolYear', type: 'string' },
+            { name: 'dataUnique', type: 'string' },
+            { name: 'dataSchoolYearName', type: 'string' } ,
+            { name: 'dataYearBegin', type: 'string' } ,
+            { name: 'dataYearEnd', type: 'string' } ,
+            { name: 'dataActive', type: 'int' } 
+        ],
+        url: "../serviceSchoolYear?view",
+        async: false
+    };
+    var dataAdapterPeriod = new $.jqx.dataAdapter(sourceSchoolYear,{
+        loadComplete: function () {
+            var length = dataAdapterPeriod.records.length;
+            for(var i=0; i<length; i++){
+                if(dataAdapterPeriod.records[i].dataActive==="Activo"){
+                    pkSchoolYearSelected=dataAdapterPeriod.records[i].dataPkSchoolYear;
+                }
+            }
+        }
+    });
+    $(selector).jqxDropDownList({
+        theme: theme, 
+        selectedIndex: 0, 
+        placeHolder: "SELECCIONAR",
+        filterPlaceHolder: "Buscar",
+        filterable: true, 
+        searchMode: 'containsignorecase',
+        source: dataAdapterPeriod, 
+        displayMember: "dataSchoolYearName", 
+        valueMember: "dataPkSchoolYear",
+        height: 26, 
+        width: 240,
+        dropDownHeight: 400
+    }).css("display","inline-block");
+    console.log(pkSchoolYearSelected)
+    var item = $(selector).jqxDropDownList('getItemByValue', pkSchoolYearSelected);
+    $(selector).jqxDropDownList({selectedIndex: item.index}); 
+}
 function createDropDownPeriod(filtrable, selector){
     var periodSelected = 0;
     if(filtrable==="inscription"){
