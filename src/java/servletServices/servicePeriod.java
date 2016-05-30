@@ -71,6 +71,29 @@ public class servicePeriod extends HttpServlet {
                 if(request.getParameter("view").equals("activePeriodInscription")){
                     out.print(new periodControl().SelectPeriodActive("activeInscription"));
                 }
+                if(request.getParameter("view").equals("all")){
+                    int fkSchoolYear = Integer.parseInt(request.getParameter("fkSchoolYear"));
+                    listPeriod=new periodControl().SelectAllPeriods("allBySchoolYear", fkSchoolYear);
+                    for(int i=0;i<listPeriod.size();i++){
+                        JSONObject data = new JSONObject();
+                        data.put("dataPkPeriod", listPeriod.get(i).getPK_PERIOD());
+                        data.put("dataProgresivNumber", i+1);
+                        data.put("dataNamePeriod", listPeriod.get(i).getFL_NAME());                       
+                        data.put("dataNamePeriodAbbreviated", listPeriod.get(i).getFL_NAME_ABBREVIATED());
+                        data.put("dataActive", listPeriod.get(i).getFL_ACTIVE());
+                        data.put("dataYearActive", listPeriod.get(i).getFL_YEAR_ACTIVE());
+                        data.put("dataYear", listPeriod.get(i).getFL_YEAR());
+                        data.put("dataPeriodType", listPeriod.get(i).getFL_PERIOD_TYPE());
+                        data.put("dataFkSchoolYear", listPeriod.get(i).getFK_SCHOOL_YEAR());
+                        content.add(data); 
+                    }
+                    settings.put("__ENTITIES", content);
+                    principal.add(settings);
+                    response.setContentType("application/json"); 
+                    out.print(principal);
+                    out.flush(); 
+                    out.close();
+                }
                 if(request.getParameter("view").equals("comboAll")){
                     listPeriod=new periodControl().SelectPeriod("comboAll");
                     int pkPeriodActive = new periodControl().SelectPeriodActive("activePeriodYear");
@@ -80,7 +103,7 @@ public class servicePeriod extends HttpServlet {
                         data.put("dataProgresivNumber", i+1);
                         data.put("dataPkPeriod", listPeriod.get(i).getPK_PERIOD());
                         data.put("dataNamePeriod", listPeriod.get(i).getFL_NAME());
-                        if(listPeriod.get(i).getFL_YEAR_ACTIVE()!=1){
+                        if(!"1".equals(listPeriod.get(i).getFL_YEAR_ACTIVE())){
                             data.put("dataPkPeriodActive", null);
                         }else{
                             data.put("dataPkPeriodActive", pkPeriodActive);
@@ -183,6 +206,27 @@ public class servicePeriod extends HttpServlet {
                     response.setContentType("application/json"); 
                     out.print(new periodControl().SelectPeriodActive("activePeriodYear"));
                 }
+            }
+            if(request.getParameter("insert")!=null){
+                periodModel dataPeriod=new periodModel();
+                dataPeriod.setFL_YEAR(request.getParameter("pt_year"));
+                dataPeriod.setFL_PERIOD_TYPE(Integer.parseInt(request.getParameter("pt_period_type")));
+                dataPeriod.setFK_SCHOOL_YEAR(Integer.parseInt(request.getParameter("pt_fk_school_year")));
+                out.print(new periodControl().InsertPeriod(dataPeriod));             
+            }
+            if(request.getParameter("update")!=null){      
+                response.setContentType("text/html;charset=UTF-8");
+                if(request.getParameter("pkPeriod") != null){
+                    periodModel dataPeriod=new periodModel();
+                    dataPeriod.setPK_PERIOD(Integer.parseInt(request.getParameter("pkPeriod")));
+                    out.print(new periodControl().UpdatePeriod(dataPeriod));
+                }                
+            }
+            if(request.getParameter("delete")!=null){     
+                response.setContentType("text/html;charset=UTF-8");
+                if(request.getParameter("pt_pkPeriod") != null){
+                    out.print(new periodControl().DeletePeriod(Integer.parseInt(request.getParameter("pt_pkPeriod"))));
+                }                
             }
         }
     }
