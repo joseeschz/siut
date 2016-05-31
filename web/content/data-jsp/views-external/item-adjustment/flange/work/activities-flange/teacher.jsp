@@ -1052,6 +1052,7 @@
                         }
                     });
                     exportButton.click(function (){
+                        itemPeriod = $('#valorateActivitiesPeriodFilter').jqxDropDownList('getSelectedItem');
                         itemCareer = $('#valorateActivitiesCareerFilter').jqxDropDownList('getSelectedItem');
                         itemSubjectMatter= $('#valorateActivitiesSubjectMatterFilter').jqxDropDownList('getSelectedItem'); 
                         itemLevel = $('#valorateActivitiesLevelFilter').jqxDropDownList('getSelectedItem');
@@ -1060,7 +1061,8 @@
                             data: {
                                 "pt_study_level": itemLevel.value,
                                 "pt_career": itemCareer.value,
-                                "pt_matter": itemSubjectMatter.value
+                                "pt_matter": itemSubjectMatter.value,
+                                "pt_period": itemPeriod.value
                             },
                             type: 'POST',
                             beforeSend: function (xhr) {

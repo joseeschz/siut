@@ -69,10 +69,11 @@ public class serviceActivities extends HttpServlet {
             if(request.getParameter("view")!=null){
                 int pkWorkPlanning = Integer.parseInt(request.getParameter("pkWorkPlanning"));
                 int fk_period = Integer.parseInt(request.getParameter("fk_period"));
-                int fk_teacher;
+                int fk_teacher = 0;
                 if(session.getAttribute("pkUser")!=null){
                     fk_teacher = Integer.parseInt(session.getAttribute("pkUser").toString());
-                }else{
+                }
+                if(request.getParameter("fk_teacher")!=null){
                     fk_teacher = Integer.parseInt(request.getParameter("fk_teacher"));
                 }
                 int fk_study_level = Integer.parseInt(request.getParameter("fk_study_level"));

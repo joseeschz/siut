@@ -46,15 +46,16 @@ if(session.getAttribute("logueado") != null){%>
                     $('#okWarning').focus();
                 }
             });
+            var view;
             var tabActive;
             var selectedTab = $.cookie('tabActive');
             $('#jqxTabs').on('selected', function (event) { 
                 selectedTab = event.args.item;
                 $.cookie('tabActive',selectedTab);
             }); 
+            <%out.print("view = '"+request.getParameter("view")+"';");%>
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive || 0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#newActivityTab").load("../content/data-jsp/views-external/item-adjustment/flange/work/activities-flange/valorate-activities.jsp");
-//            $("#stadisticsTab").load("../content/data-jsp/views-external/item-adjustment/flange/work/activities-flange/stadistics-activities.jsp");
+            $("#newActivityTab").load("../content/data-jsp/views-external/item-adjustment/flange/work/activities-flange/"+view+".jsp");
         });
     </script>
     <div id='jqxWindowOk'>

@@ -1505,7 +1505,8 @@ function createDropDownSubjectMatterByCurrentSemester(selector, filtrable, updat
             datatype: "json",
             datafields: [
                 { name: 'dataNameSubjectMatter' },
-                { name: 'dataPkSubjectMatter' }
+                { name: 'dataPkSubjectMatter' },
+                { name: 'dataPkTeacher' }
             ],
             root: "__ENTITIES",
             id: 'id',
