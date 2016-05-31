@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report-criterion" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="742ce619-4a07-475f-8c12-fc49c47cc4dd">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="384"/>
+	<property name="ireport.y" value="192"/>
 	<subDataset name="dataset1" uuid="2335cf58-5532-455c-bebf-7b1b81a3083e">
 		<parameter name="pt_study_level2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -16,8 +16,11 @@
 		<parameter name="pt_teacher2" class="java.lang.Integer">
 			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 		</parameter>
+		<parameter name="pt_period2" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
 		<queryString>
-			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activities', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2}, $P{pt_teacher2});]]>
+			<![CDATA[CALL `GET_EVALUATION_CRITERION`('activities', $P{pt_study_level2}, $P{pt_career2}, $P{pt_matter2}, $P{pt_teacher2}, $P{pt_period2});]]>
 		</queryString>
 		<field name="FL_NAME_ACTIVITY_BE" class="java.lang.String"/>
 		<field name="FL_VALUE_ACTIVITY_BE" class="java.lang.String"/>
@@ -47,8 +50,11 @@
 	<parameter name="pt_teacher" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_period" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_group});]]>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('header', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_group}, $P{pt_period});]]>
 	</queryString>
 	<field name="PK_GROUP" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -57,11 +63,11 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FK_LEVEL" class="java.lang.Long">
-		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
+		<fieldDescription><![CDATA[ID NIVEL DE ESTUDIO]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
-		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_GROUP" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -507,7 +513,7 @@
 			<componentElement>
 				<reportElement key="table 3" mode="Transparent" x="1" y="0" width="583" height="178" uuid="1453f24d-9ea5-4fa2-b2f9-1509954eb500"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="dataset1" uuid="7227b93b-8ecc-4000-b1e9-3b341fefd759">
+					<datasetRun subDataset="dataset1" uuid="eafe9a42-df71-4d5a-8159-d0a0ee8e2143">
 						<datasetParameter name="pt_study_level2">
 							<datasetParameterExpression><![CDATA[$P{pt_study_level}]]></datasetParameterExpression>
 						</datasetParameter>
@@ -519,6 +525,9 @@
 						</datasetParameter>
 						<datasetParameter name="pt_teacher2">
 							<datasetParameterExpression><![CDATA[$P{pt_teacher}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="pt_period2">
+							<datasetParameterExpression><![CDATA[$P{pt_period}]]></datasetParameterExpression>
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
@@ -930,7 +939,7 @@
 			</frame>
 			<elementGroup>
 				<staticText>
-					<reportElement x="0" y="180" width="238" height="32" uuid="c7bb8877-49a5-49ac-a29a-06feb6bb1de8"/>
+					<reportElement x="0" y="180" width="275" height="32" uuid="c7bb8877-49a5-49ac-a29a-06feb6bb1de8"/>
 					<box leftPadding="5" rightPadding="5">
 						<topPen lineWidth="0.5"/>
 					</box>
@@ -940,7 +949,7 @@
 					<text><![CDATA[Nombre y Firma del Profesor]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="321" y="180" width="262" height="32" uuid="6669cf56-53a4-4a9d-be6a-572c6457e7d7"/>
+					<reportElement x="301" y="180" width="282" height="32" uuid="6669cf56-53a4-4a9d-be6a-572c6457e7d7"/>
 					<box>
 						<pen lineWidth="0.5"/>
 						<topPen lineWidth="0.5"/>
@@ -998,15 +1007,15 @@
 				</textElement>
 				<textFieldExpression><![CDATA["Hoja "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="2" y="160" width="236" height="20" uuid="e09052d1-74cb-4a82-a1f7-1df667e6666b"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="160" width="273" height="20" uuid="e09052d1-74cb-4a82-a1f7-1df667e6666b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FL_TEACHER_NAME}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="321" y="160" width="262" height="20" uuid="96f96ec0-cca4-46b6-9819-9ad662d3788b"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="301" y="160" width="282" height="20" uuid="96f96ec0-cca4-46b6-9819-9ad662d3788b"/>
 				<textElement textAlignment="Center" verticalAlignment="Bottom">
 					<font fontName="Calibri" size="12"/>
 				</textElement>
@@ -1092,7 +1101,7 @@
 			<subreport>
 				<reportElement x="9" y="47" width="531" height="697" uuid="e3e6fad8-a3d7-4060-9efa-4409f7d5d969"/>
 				<subreportParameter name="pt_period">
-					<subreportParameterExpression><![CDATA[$F{FK_PERIOD}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$P{pt_period}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pt_group">
 					<subreportParameterExpression><![CDATA[$F{PK_GROUP}]]></subreportParameterExpression>

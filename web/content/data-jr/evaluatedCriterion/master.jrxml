@@ -18,8 +18,11 @@
 	<parameter name="pt_teacher" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_period" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_EVALUATION_CRITERION`('headerMaster', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_teacher})]]>
+		<![CDATA[CALL `GET_EVALUATION_CRITERION`('headerMaster', $P{pt_study_level}, $P{pt_career}, $P{pt_matter}, $P{pt_teacher}, $P{pt_period})]]>
 	</queryString>
 	<field name="PK_GROUP" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -28,11 +31,11 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FK_LEVEL" class="java.lang.Long">
-		<fieldDescription><![CDATA[Nivel de la carrera puede ser ingenieria tsu licenciatura entre otras mas que puedan surgir]]></fieldDescription>
+		<fieldDescription><![CDATA[ID NIVEL DE ESTUDIO]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_PERIDO" class="java.lang.String"/>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
-		<fieldDescription><![CDATA[Este campo hace referencia al nombre de la carrera]]></fieldDescription>
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_GROUP" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -55,6 +58,9 @@
 				<reportElement x="0" y="0" width="612" height="111" uuid="c5cfa784-6734-41c3-a032-991c6fd91c74"/>
 				<subreportParameter name="pt_study_level">
 					<subreportParameterExpression><![CDATA[$P{pt_study_level}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_period">
+					<subreportParameterExpression><![CDATA[$P{pt_period}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="pt_teacher">
 					<subreportParameterExpression><![CDATA[$P{pt_teacher}]]></subreportParameterExpression>

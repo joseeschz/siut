@@ -35,6 +35,7 @@ public class subjectMattersControl {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    listSubjectMatters.setPK_WORKER(res.getInt("PK_WORKER"));
                     listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
                     listSubjectMatters.setFL_INTEGRADORA(res.getString("FL_INTEGRADORA"));
                     list.add(listSubjectMatters);
