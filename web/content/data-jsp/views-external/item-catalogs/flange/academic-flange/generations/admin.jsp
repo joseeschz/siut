@@ -1,28 +1,56 @@
 <script type="text/javascript">
     $(document).ready(function () {  
-        var itemSchoolYear = null;
-        createDropDownSchoolYear("#schoolYearFilter");
-        itemSchoolYear = $('#schoolYearFilter').jqxDropDownList('getSelectedItem');
-        if(itemSchoolYear!=undefined || itemSchoolYear!=null){
-            loadTable();
-            $('#schoolYearFilter').on('change', function (event){     
-                var args = event.args;
-                if (args) {
-                    // index represents the item's index.                      
-                    var index = args.index;
-                    var item = args.item;
-                    // get item's label and value.
-                    var label = item.label;
-                    var value = item.value;
-                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    loadTable();
-                } 
-            });
-        }
-        var windowAddPeriod = $('#jqxWindowAddPeriod').jqxWindow({
+        var ordersSource ={
+            dataFields: [
+                { name: 'id', type:'int'},
+                { name: 'dataProgresivNumber', type:'int'},
+                { name: 'dataPkGenerations', type: 'string' },
+                { name: 'dataUnique', type: 'string' },
+                { name: 'dataGenerationsName', type: 'string' } ,
+                { name: 'dataYearBegin', type: 'string' } ,
+                { name: 'dataYearEnd', type: 'string' } ,
+                { name: 'dataActive', type: 'int' } 
+            ],
+            root: "__ENTITIES",
+            dataType: "json",
+            async: false,
+            id: 'dataPkGenerations',
+            url: '../serviceGenerations?view',
+            deleteRow: function (rowID, commit) {
+                // synchronize with the server - send delete command
+                // call commit with parameter true if the synchronization with the server is successful 
+                // and with parameter false if the synchronization failed.
+                $.ajax({
+                    //Send the paramethers to servelt
+                    type: "POST",
+                    async: false,
+                    url: "../serviceGenerations?delete",
+                    data:{
+                        'pt_pkGenerations':rowID
+                    },
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //This is if exits an error with the server internal can do server off, or page not found
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        if(data.indexOf('foreign')>=0){
+                            $("#ok").hide();
+                            $("#message").text("¡Registros de entidades diferentes dependen de este registro, por lo que no es posible borrarlo!");
+                            $("#jqxWindowWarning").jqxWindow('open');
+                            
+                        }else{
+                            commit(true);
+                        }                        
+                    }
+                });
+            }
+        };
+        var windowAddGenerations = $('#jqxWindowAddGenerations').jqxWindow({
             theme: theme,
-            height: 220,
-            width: 240,
+            height: 200,
+            width: 300,
             resizable: false,
             draggable: true,
             autoOpen: false,
@@ -41,69 +69,16 @@
             }
         });
         function loadTable(){
-            itemSchoolYear = $('#schoolYearFilter').jqxDropDownList('getSelectedItem');
-            var ordersSource ={
-                dataFields: [
-                    { name: 'dataProgresivNumber', type:'int'},
-                    { name: 'dataPkPeriod', type: 'string' },
-                    { name: 'dataUnique', type: 'string' },
-                    { name: 'dataNamePeriod', type: 'string' } ,
-                    { name: 'dataNamePeriodAbbreviated', type: 'string' } ,
-                    { name: 'dataActive', type: 'int' } ,
-                    { name: 'dataYearActive', type: 'int' },
-                    { name: 'dataYear', type: 'string' } ,
-                    { name: 'dataPeriodType', type: 'string' } ,
-                    { name: 'dataFkSchoolYear', type: 'int' }
-                ],
-                root: "__ENTITIES",
-                data : {
-                  fkSchoolYear: itemSchoolYear.value 
-                },
-                dataType: "json",
-                async: false,
-                id: 'dataPkPeriod',
-                url: '../servicePeriod?view=all',
-                deleteRow: function (rowID, commit) {
-                    // synchronize with the server - send delete command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failed.
-                    $.ajax({
-                        //Send the paramethers to servelt
-                        type: "POST",
-                        async: false,
-                        url: "../servicePeriod?delete",
-                        data:{
-                            'pt_pkPeriod':rowID
-                        },
-                        beforeSend: function (xhr) {
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            //This is if exits an error with the server internal can do server off, or page not found
-                            alert("Error interno del servidor");
-                        },
-                        success: function (data, textStatus, jqXHR) {
-                            if(data.indexOf('foreign')>=0){
-                                $("#ok").hide();
-                                $("#message").text("¡Registros de entidades diferentes dependen de este registro, por lo que no es posible borrarlo!");
-                                $("#jqxWindowWarning").jqxWindow('open');
-
-                            }else{
-                                commit(true);
-                            }                        
-                        }
-                    });
-                }
-            };
             var dataAdapter = new $.jqx.dataAdapter(ordersSource);
-            $("#tablePeriod").jqxDataTable({
+            $("#tableGenerations").jqxDataTable({
                 width: 400,
-                height: 152,
+                height : 500,
                 selectionMode: "singleRow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: false,
                 editable: true,
-                filterable: false,
+                filterable: true,
                 showToolbar: true,
                 altRows: true,
                 toolbarHeight: 35,
@@ -150,28 +125,23 @@
                         }
                     };
                     var rowIndex = null;
-                    $("#tablePeriod").on('rowSelect', function (event) {
+                    $("#tableGenerations").on('rowSelect', function (event) {
                         var args = event.args;
                         rowIndex = args.index;
                         updateButtons('Select');
-                        if(args.row.dataActive==="Activo"){
-                            updateButtons('Unselect');
-                        }
                     });
-                    $("#tablePeriod").on('rowUnselect', function (event) {
-                        
+                    $("#tableGenerations").on('rowUnselect', function (event) {
                         updateButtons('Unselect');
                     });
-                    $("#tablePeriod").on('rowEndEdit', function (event) {
+                    $("#tableGenerations").on('rowEndEdit', function (event) {
                         updateButtons('End Edit');
                     });
-                    $("#tablePeriod").on('rowBeginEdit', function (event) {
+                    $("#tableGenerations").on('rowBeginEdit', function (event) {
                         updateButtons('Edit');
                     });
                     addButton.click(function (event) {
                         if (!addButton.jqxButton('disabled')) {
-                            $("#validationStatus").hide();
-                            windowAddPeriod.jqxWindow('open');
+                            windowAddGenerations.jqxWindow('open');
                         }
                     });
                     deleteButton.click(function () {
@@ -182,7 +152,7 @@
                             $("#ok").off("click");
                             $("#ok").on("click", function (){
                                 $("#jqxWindowWarning").jqxWindow('close');
-                                $("#tablePeriod").jqxDataTable('deleteRow', rowIndex);
+                                $("#tableGenerations").jqxDataTable('deleteRow', rowIndex);
                             });
                             updateButtons('delete');
                         }
@@ -190,7 +160,7 @@
                 },
                 columns: [
                     { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Perido Escolar', dataField: 'dataNamePeriod', editable: false},
+                    { text: 'Generación', dataField: 'dataGenerationsName', editable: false},
                     { text: 'Estatus',  columntype: 'custom', align:'center', cellsalign:'center', dataField: 'dataActive', width: 80,
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
@@ -224,7 +194,8 @@
                 ]
             }); 
         }
-        $('#tablePeriod').on('cellValueChanged', function (event) {
+        loadTable();
+        $('#tableGenerations').on('cellValueChanged', function (event) {
             // event args.
             var args = event.args;
             // cell value.
@@ -251,9 +222,9 @@
                 //Send the paramethers to servelt
                 type: "POST",
                 async: false,
-                url: "../servicePeriod?update",
+                url: "../serviceGenerations?update",
                 data:{
-                    'pkPeriod': rowKey,
+                    'pkGenerations': rowKey,
                     'pt_active':status
                 },
                 beforeSend: function (xhr) {
@@ -268,48 +239,58 @@
                 }
             });
         });
-        $("#okAdd").click(function (){
-            var itemSchoolYear = $("#schoolYearFilter").jqxDropDownList('getSelectedItem'); 
-            var itemPeriodType = $("#periodTypeFilter").jqxDropDownList('getSelectedItem'); 
-            var year = parseInt(itemSchoolYear.originalItem.dataYearBegin);
-            
-            if(validate(itemPeriodType.label+" "+year)){
-                var data = {
-                    dataYear : year,
-                    dataPeriodType : itemPeriodType.value,
-                    dataFkSchoolYear : itemSchoolYear.value
-                };
-                insert(data);
-                $("#validationStatus").hide();
-                windowAddPeriod.jqxWindow('close');
-                
-            }else{
-                $("#validationStatus").show();
-            }          
-        });
-        function createDropDownPeriodType(){
+        function createDropDownYear(){
             var sourceYear =[
-                {"dataPeriodType":"Enero-Abril","dataValuePeriodType":"1"},
-                {"dataPeriodType":"Mayo-Agosto","dataValuePeriodType":"2"},
-                {"dataPeriodType":"Septiembre-Diciembre","dataValuePeriodType":"3"}
+                {"dataNameYear":"2000","dataValueYear":"2000"},
+                {"dataNameYear":"2001","dataValueYear":"2001"},
+                {"dataNameYear":"2002","dataValueYear":"2002"},
+                {"dataNameYear":"2003","dataValueYear":"2003"},
+                {"dataNameYear":"2004","dataValueYear":"2004"},
+                {"dataNameYear":"2005","dataValueYear":"2005"},
+                
+                {"dataNameYear":"2006","dataValueYear":"2006"},
+                {"dataNameYear":"2007","dataValueYear":"2007"},
+                {"dataNameYear":"2008","dataValueYear":"2008"},
+                {"dataNameYear":"2009","dataValueYear":"2009"},
+                {"dataNameYear":"2010","dataValueYear":"2010"},
+                {"dataNameYear":"2011","dataValueYear":"2011"},
+                
+                {"dataNameYear":"2012","dataValueYear":"2012"},
+                {"dataNameYear":"2013","dataValueYear":"2013"},
+                {"dataNameYear":"2014","dataValueYear":"2014"},
+                {"dataNameYear":"2015","dataValueYear":"2015"},
+                {"dataNameYear":"2016","dataValueYear":"2016"},
+                {"dataNameYear":"2017","dataValueYear":"2017"},
+                
+                {"dataNameYear":"2018","dataValueYear":"2018"},
+                {"dataNameYear":"2019","dataValueYear":"2019"},
+                {"dataNameYear":"2020","dataValueYear":"2020"},
+                {"dataNameYear":"2021","dataValueYear":"2021"},
+                {"dataNameYear":"2022","dataValueYear":"2022"},
+                {"dataNameYear":"2023","dataValueYear":"2023"},
+                
+                {"dataNameYear":"2024","dataValueYear":"2024"},
+                {"dataNameYear":"2025","dataValueYear":"2025"},
+                {"dataNameYear":"2026","dataValueYear":"2026"},
+                {"dataNameYear":"2027","dataValueYear":"2027"},
+                {"dataNameYear":"2028","dataValueYear":"2028"},
+                {"dataNameYear":"2029","dataValueYear":"2029"}
             ];
-            $("#periodTypeFilter").jqxDropDownList({
+            $("#yearBegin").jqxDropDownList({
                 theme: theme,
                 filterable: false, 
                 autoDropDownHeight: false,
                 placeHolder: "SELECCIONAR",
                 selectedIndex: 0, 
                 source: sourceYear, 
-                displayMember: "dataPeriodType", 
-                valueMember: "dataValuePeriodType",
-                dropDownHeight: 80,
+                displayMember: "dataNameYear", 
+                valueMember: "dataValueYear",
+                dropDownHeight: 123,
                 height: 26, 
-                width: 200                
+                width: 80                
             }).css("display","inline-block");
-            var item = $("#schoolYearFilter").jqxDropDownList('getSelectedItem');
-            var year = item.originalItem.dataYearBegin;
-            $("#year").text(parseInt(year));
-            $('#periodTypeFilter').on('change', function (event){     
+            
+            $('#yearBegin').on('change', function (event){     
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -319,30 +300,53 @@
                     var label = item.label;
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    var item = $("#schoolYearFilter").jqxDropDownList('getSelectedItem');
-                    var year = item.originalItem.dataYearBegin;
-                    $("#year").text(parseInt(year));
-                    if(validate(label+" "+parseInt(year))){
+                    $("#yearEnd").text(parseInt(value)+2);
+                    var item = $("#yearBegin").jqxDropDownList('getSelectedItem'); 
+                    var yearBegin = item.value;
+                    var yearEnd = $("#yearEnd").text();
+                    if(validate(yearBegin+"-"+yearEnd)){
                         $("#validationStatus").hide();
                     }else{
+                        $("#validationStatus").html("El siclo seleccionado ya existe");
                         $("#validationStatus").show();
                     }
                 } 
             });
         };
-        createDropDownPeriodType();
+        createDropDownYear();
+        $("#cancelAdd").click(function (){
+            $("#validationStatus").hide();         
+        });
+        $("#okAdd").click(function (){
+            var item = $("#yearBegin").jqxDropDownList('getSelectedItem'); 
+            var yearBegin = item.value;
+            var yearEnd = $("#yearEnd").text();
+            if(validate(yearBegin+"-"+yearEnd)){
+                var data = {
+                    dataYearBegin : yearBegin,
+                    dataYearEnd : yearEnd
+                };
+                insert(data);
+            }else{
+                $("#validationStatus").html("El siclo seleccionado ya existe");
+                $("#validationStatus").show();
+            }          
+        });
         function validate(compare){
             var result = false;
-            console.log(compare);
-            var rows = $("#tablePeriod").jqxDataTable('getView');            
-            for (var i = 0; i < rows.length; i++) {
-                // get a row.
-                var rowData = rows[i];
-                if(rowData.dataNamePeriod===compare){
-                    result = false;
-                    break;
-                }else{
-                    result = true;
+            var rows = $("#tableGenerations").jqxDataTable('getView');  
+            if(rows.length<=0){
+                result = true;
+            }else{
+                for (var i = 0; i < rows.length; i++) {
+                    // get a row.
+                    var rowData = rows[i];
+                    if(rowData.dataUnique===compare){
+                        result = false;
+                        break;
+                    }else{
+                        result = true;
+                    }
                 }
             }
             return result;
@@ -352,11 +356,10 @@
                 //Send the paramethers to servelt
                 type: "POST",
                 async: false,
-                url: "../servicePeriod?insert",
+                url: "../serviceGenerations?insert",
                 data:{
-                    pt_year: data.dataYearBegin,
-                    pt_period_type: data.dataPeriodType,
-                    pt_fk_school_year : data.dataFkSchoolYear
+                    pt_year_begin: data.dataYearBegin,
+                    pt_year_end: data.dataYearEnd
                 },
                 beforeSend: function (xhr) {
                 },
@@ -365,32 +368,40 @@
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $("#tablePeriod").jqxDataTable('updateBoundData');
+                    if (data.indexOf("1") >= 0){
+                        $("#validationStatus").hide();
+                        windowAddGenerations.jqxWindow('close');
+                        $("#tableGenerations").jqxDataTable('updateBoundData');
+                    }else{
+                        $("#validationStatus").html("No fue posible dar de alta la generación porque no hay periodos que abarquen esta generación");
+                        $("#validationStatus").show();
+                    }
                 }
             });
+            
         }
     });
 </script>
-<div id='jqxWindowAddPeriod'>
+<div id='jqxWindowAddGenerations'>
     <div>Agregar</div>
     <div>
         <div>
             <div style="display: inline-block; margin-right: 5px;">
-                <span>Periodo en</span><br>
-                <div id="periodTypeFilter"></div>
+                <span>Año inicio</span><br>
+                <div id="yearBegin" class="year"></div>
+            </div>
+            <div style="display: inline-block; margin-right: 5px;">
+                <span>Año fin</span><br>
+                <div id="yearEnd" class="year" style="font-size: 28px; color: rgb(150, 216, 101);">2002</div>
             </div>
             <br>
-            <div style="display: inline-block; margin-right: 5px;">
-                <span>Año</span><br>
-                <div id="year" class="year" style="font-size: 28px; color: rgb(150, 216, 101);">2001</div>
-            </div>
             <div style="margin-right: 5px;">
                 <span>Status</span><br>
-                <label>Activo <input type="radio" disabled="" name="status" /></label>
-                <label>Inactivo <input type="radio" disabled="" name="status" checked /></label>
+                <label>Activo <input type="radio" name="status" /></label>
+                <label>Inactivo <input type="radio" name="status" checked /></label>
             </div>
             <div style="margin-right: 5px;">
-                <span id="validationStatus" style="display: none; color: red;">El periodo seleccionado ya existe</span>
+                <span id="validationStatus" style="display: none; color: red;"></span>
             </div>
         </div>
         <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
@@ -399,8 +410,4 @@
         </div>
     </div>
 </div>
-<div style="display: inline-block; margin-right: 5px;">
-    <span>Siclo Escolar</span><br>
-    <div id="schoolYearFilter"></div>
-</div>
-<div id="tablePeriod"></div>
+<div id="tableGenerations"></div>
