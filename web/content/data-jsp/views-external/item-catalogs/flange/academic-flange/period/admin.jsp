@@ -333,16 +333,19 @@
         createDropDownPeriodType();
         function validate(compare){
             var result = false;
-            console.log(compare);
-            var rows = $("#tablePeriod").jqxDataTable('getView');            
-            for (var i = 0; i < rows.length; i++) {
-                // get a row.
-                var rowData = rows[i];
-                if(rowData.dataNamePeriod===compare){
-                    result = false;
-                    break;
-                }else{
-                    result = true;
+            var rows = $("#tablePeriod").jqxDataTable('getView');  
+            if(rows.length<=0){
+                result = true;
+            }else{
+                for (var i = 0; i < rows.length; i++) {
+                    // get a row.
+                    var rowData = rows[i];
+                    if(rowData.dataNamePeriod===compare){
+                        result = false;
+                        break;
+                    }else{
+                        result = true;
+                    }
                 }
             }
             return result;

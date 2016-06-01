@@ -20,7 +20,7 @@
         //Parametros para realizar la conexión// 
         conectionControl connection=new conectionControl();
         //Establecemos la ruta del reporte//
-        File reportFile = new File(application.getRealPath("content/data-jr/constancySimple/report1.jasper")); 
+        File reportFile = new File(application.getRealPath("content/data-jr/constancySimple/report.jasper")); 
         //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 
         //cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf// 
         Map parameters = new HashMap(); 

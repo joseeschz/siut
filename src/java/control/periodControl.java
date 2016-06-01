@@ -25,10 +25,38 @@ public class periodControl {
             System.out.println(list.get(i).getFL_NAME());
         }
     }
+    public ArrayList<periodModel> SelectAllPeriodsByGeneration(String pt_year_begin_generation){
+        ArrayList<periodModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('allByYear', null, "+pt_year_begin_generation+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    periodModel listPeriod=new periodModel();
+                    listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    listPeriod.setFL_UNIQUE(res.getString("FL_UNIQUE"));
+                    listPeriod.setFL_NAME(res.getString("FL_NAME"));
+                    listPeriod.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    listPeriod.setFL_ACTIVE(res.getString("FL_ACTIVE"));
+                    listPeriod.setFL_YEAR_ACTIVE(res.getString("FL_YEAR_ACTIVE"));
+                    listPeriod.setFL_YEAR(res.getString("FL_YEAR"));
+                    listPeriod.setFL_PERIOD_TYPE(res.getInt("FL_PERIOD_TYPE"));
+                    listPeriod.setFK_SCHOOL_YEAR(res.getInt("FK_SCHOOL_YEAR"));
+                    list.add(listPeriod);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(periodModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public ArrayList<periodModel> SelectAllPeriods(String condition, int pt_fk_school_year){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', '"+pt_fk_school_year+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', '"+pt_fk_school_year+"', null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -57,7 +85,7 @@ public class periodControl {
     public ArrayList<periodModel> SelectPeriod(String condition){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -127,7 +155,7 @@ public class periodControl {
     public int SelectPeriodActive(String command){
         int period_active = 0;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+command+"', null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+command+"', null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     period_active = (res.getInt("PK_PERIOD"));
                 }
