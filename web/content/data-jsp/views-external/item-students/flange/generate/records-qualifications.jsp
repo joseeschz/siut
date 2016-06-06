@@ -59,7 +59,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             }); 
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#qualificationsTab").load("../content/data-jsp/views-external/item-generate/flange/records-qualifications/records-qualifications-flange/qualifications-average.jsp");
+            $("#qualificationsTab").load("../content/data-jsp/views-external/item-students/flange/generate/records-qualifications-flange/qualifications-average.jsp");
         });
     </script>
     <div id='jqxWindowWarningCalications'>
