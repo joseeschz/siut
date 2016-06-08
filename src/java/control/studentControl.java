@@ -109,6 +109,31 @@ public class studentControl {
         }
         return list;
     }
+    public ArrayList<studentModel> SelectAllStudents(){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENROLLED`('allStudentsInformativeData', '', null, null)"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel CandidateAll=new studentModel();
+                    CandidateAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    CandidateAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    CandidateAll.setFL_NAME(res.getString("FL_NAME"));
+                    CandidateAll.setFL_NAME_CAREER(res.getString("FL_NAME_CAREER"));
+                    CandidateAll.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    CandidateAll.setFL_NAME_GROUP(res.getString("FL_CRURRENT_GROUP"));
+                    CandidateAll.setFL_DOWN(res.getInt("FL_DOWN"));
+                    list.add(CandidateAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<studentModel> SelectStudents(int pt_period, int pt_career){
         ArrayList<studentModel> list=new ArrayList<>();
         try {

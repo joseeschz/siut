@@ -91,7 +91,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             }); 
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#newRattingsTab").load("../content/data-jsp/views-external/item-students/flange/search/students/tab-new/index.jsp");
+            $("#searchRattingsTab").load("../content/data-jsp/views-external/item-students/flange/search/students/tab-search/generic.jsp");
         });
     </script>
     <div id='jqxWindowOk'>
@@ -155,11 +155,11 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="new-enrollment">Administrar Calificaciones</li>
+            <li class="jqxTabsTitle" dir="search-enrollment">Buscar alumno</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
-                <div id="newRattingsTab" style="padding: 20px"></div>
+                <div id="searchRattingsTab" style="padding: 20px"></div>
             </div>
         </div>
     </div>
