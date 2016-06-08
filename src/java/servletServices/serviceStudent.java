@@ -213,6 +213,25 @@ public class serviceStudent extends HttpServlet {
                 out.flush(); 
                 out.close();         
             }
+            if(request.getParameter("selectAllStudents")!=null){
+                ArrayList<studentModel> listStudent=new studentControl().SelectAllStudents();      
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listStudent.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataPkStudent", listStudent.get(i).getPK_STUDENT());
+                    datos.put("dataName", listStudent.get(i).getFL_NAME());
+                    datos.put("dataEnrollment", listStudent.get(i).getFL_ENROLLMENT());
+                    datos.put("dataNameCareer", listStudent.get(i).getFL_NAME_CAREER());
+                    datos.put("dataNameCareerAbbreviated", listStudent.get(i).getFL_NAME_ABBREVIATED());
+                    datos.put("dataNameGroup", listStudent.get(i).getFL_NAME_GROUP());
+                    content.add(datos);                    
+                }     
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("selectStudent")!=null){
                 String enrollment = request.getParameter("enrollment");
                 ArrayList<studentModel> listStudent=new studentControl().SelectStudent(enrollment, "onlyDataBasic");

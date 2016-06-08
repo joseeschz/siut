@@ -94,7 +94,7 @@
             };
             var dataadapter = new $.jqx.dataAdapter(dataSource,{
                 autoBind: false,
-                autoSort: true,
+                autoSort: false,
                 autoSortField: datafield,
                 async: false,
                 uniqueDataFields: [datafield]
@@ -179,57 +179,24 @@
             $("#jqxGridReport").jqxGrid('clearfilters');
             $(this).hide();
         });
-//        $("#excelExport").jqxButton();
-//        $("#xmlExport").jqxButton();
-//        $("#csvExport").jqxButton();
-//        $("#tsvExport").jqxButton();
-//        $("#htmlExport").jqxButton();
-//        $("#jsonExport").jqxButton();
-//        $("#pdfExport").jqxButton();
-//        $("#excelExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'xls', 'jqxGrid');           
-//        });
-//        $("#xmlExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'xml', 'jqxGrid');
-//        });
-//        $("#csvExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'csv', 'jqxGrid');
-//        });
-//        $("#tsvExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'tsv', 'jqxGrid');
-//        });
-//        $("#htmlExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'html', 'jqxGrid');
-//        });
-//        $("#jsonExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'json', 'jqxGrid');
-//        });
-//        $("#pdfExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'pdf', 'jqxGrid');
-//        });
+        $("#excelExport").jqxButton();
+        
+        
+        
+        $("#excelExport").click(function () {
+            $("#jqxGridReport").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, false, "http://jquerygrid.net/export_server/dataexport.php", "UTF-8");        
+        });
     });
 </script>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">    
     <div id="jqxGridReport"></div>
     <input value="Quitar filtros" id="clearfilteringbutton" type="button" style="display: none" />
-<!--    <div style='margin-top: 20px;'>
+    <div style='margin-top: 20px;'>
         <div style='float: left;'>
             <input type="button" value="Export to Excel" id='excelExport' />
-            <br /><br />
-            <input type="button" value="Export to XML" id='xmlExport' />
         </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to CSV" id='csvExport' />
-            <br /><br />
-            <input type="button" value="Export to TSV" id='tsvExport' />
-        </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to HTML" id='htmlExport' />
-            <br /><br />
-            <input type="button" value="Export to JSON" id='jsonExport' />
-        </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to PDF" id='pdfExport' />
-        </div>
-    </div>-->
+    </div>
 </div>
