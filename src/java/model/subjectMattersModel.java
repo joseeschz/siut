@@ -19,6 +19,7 @@ public class subjectMattersModel extends workerModel{
     String FL_NAME_ALIAS_SUBJECT_MATTER = "";
     String FL_NAME_SEMESTER = "";
     int FL_CANT_HOURS = 0;
+    String FL_BLOCKS = "";
     String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER="";
 
     public int getPK_SUBJECT_MATTER() {
@@ -85,20 +86,28 @@ public class subjectMattersModel extends workerModel{
         this.FL_NAME_SEMESTER = FL_NAME_SEMESTER;
     }
 
-    public String getFL_QUALIFICATION_TOTAL_SUBJECT_MATTER() {
-        return FL_QUALIFICATION_TOTAL_SUBJECT_MATTER;
-    }
-
-    public void setFL_QUALIFICATION_TOTAL_SUBJECT_MATTER(String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER) {
-        this.FL_QUALIFICATION_TOTAL_SUBJECT_MATTER = FL_QUALIFICATION_TOTAL_SUBJECT_MATTER;
-    }
-
     public int getFL_CANT_HOURS() {
         return FL_CANT_HOURS;
     }
 
     public void setFL_CANT_HOURS(int FL_CANT_HOURS) {
         this.FL_CANT_HOURS = FL_CANT_HOURS;
+    }
+
+    public String getFL_BLOCKS() {
+        return FL_BLOCKS;
+    }
+
+    public void setFL_BLOCKS(String FL_BLOCKS) {
+        this.FL_BLOCKS = FL_BLOCKS;
+    }
+
+    public String getFL_QUALIFICATION_TOTAL_SUBJECT_MATTER() {
+        return FL_QUALIFICATION_TOTAL_SUBJECT_MATTER;
+    }
+
+    public void setFL_QUALIFICATION_TOTAL_SUBJECT_MATTER(String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER) {
+        this.FL_QUALIFICATION_TOTAL_SUBJECT_MATTER = FL_QUALIFICATION_TOTAL_SUBJECT_MATTER;
     }
     
 }
