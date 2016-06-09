@@ -9,17 +9,17 @@
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
             itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');   
             $('#qualificationsPeriodFilter').jqxDropDownList({width: 180});
-            createDropDownCareer(itemLevel.value ,"#qualificationsCareerFilter",false);
+            createDropDownCareerByDirector(itemLevel.value ,"#qualificationsCareerFilter",false);
             itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');   
             loadTable();
         }else{
-            createDropDownCareer(null ,"#qualificationsCareerFilter",false);
+            createDropDownCareerByDirector(null ,"#qualificationsCareerFilter",false);
         }
         
         $('#qualificationsLevelFilter').on('change',function (event){  
             itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
             if(itemLevel!=undefined){
-                createDropDownCareer(itemLevel.value ,"#qualificationsCareerFilter",true);
+                createDropDownCareerByDirector(itemLevel.value ,"#qualificationsCareerFilter",true);
                 itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
                 if(itemCareer!=undefined || itemCareer!=null){
                     loadTable();
@@ -27,7 +27,7 @@
                     $("#tableQualifications").parent().hide();
                 }
             }else{
-                createDropDownCareer(null ,"#qualificationsCareerFilter",true);
+                createDropDownCareerByDirector(null ,"#qualificationsCareerFilter",true);
                 $("#tableQualifications").parent().hide();
             }
         });
@@ -42,7 +42,7 @@
                     $("#tableQualifications").parent().hide();
                 }
             }else{
-                createDropDownCareer(null ,"#qualificationsCareerFilter",true);
+                createDropDownCareerByDirector(null ,"#qualificationsCareerFilter",true);
                 $("#tableQualifications").parent().hide();
             }
         });
@@ -70,13 +70,19 @@
                     { name: 'dataNameWorker', type: 'string' },
                     { name: 'dataBlocks', type: 'string' },
                     { name: 'dataFkSemester', type: 'int' },
-                    { name: 'dataNameSemester', type: 'string' }                    
+                    { name: 'dataNameSemester', type: 'string' },
+                    { name: 'dataActivitiesBe', type: 'string' }, 
+                    { name: 'dataClosedBe', type: 'string' }, 
+                    { name: 'dataActivitiesKnow', type: 'string' }, 
+                    { name: 'dataClosedKnow', type: 'string' }, 
+                    { name: 'dataActivitiesDo', type: 'string' },
+                    { name: 'dataClosedDo', type: 'string' }
                 ],
                 root: "__ENTITIES",
                 dataType: "json",
                 async: false,
                 id: 'dataProgresivNumber',
-                url: '../serviceSubjectMatter?subjectMattersMissingWorkPlanning',
+                url: '../serviceSubjectMatter?subjectMattersMissingClose',
                 data : {
                     pkCareer : pkCareer,
                     pkPeriod : pkPeriod
@@ -89,22 +95,30 @@
             itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
             itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem'); 
             dataAdapter = new $.jqx.dataAdapter(loadSource(itemCareer.value, itemPeriod.value));
-            $("#tableQualifications").jqxDataTable({
+            $("#tableQualifications").jqxGrid({
                 width: 850,
                 height : 300,
-                selectionMode: "singleRow",
+                selectionmode: "singleRow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: true,
-                altRows: true,
-                pagerButtonsCount: 10,
-                ready: function(){
-
-                },
+                altrows: true,
+                pagerbuttonscount: 10,
+                columngroups: [
+                    { text: 'Ser', align: 'center', name: 'be' },
+                    { text: 'Saber', align: 'center', name: 'know' },
+                    { text: 'Hacer', align: 'center', name: 'do' }
+                ],
                 columns: [
-                    { text: 'NP', dataField: 'dataProgresivNumber', width: 35, align:"center"},
-                    { text: 'Profesor', dataField: 'dataNameWorker', width: 280, align:"center"},
-                    { text: 'Materia', dataField: 'dataNameSubjectMatter', align:"center" }                    
+                    { text: 'NP', datafield: 'dataProgresivNumber', width: 35, align:"center"},
+                    { text: 'Profesor', datafield: 'dataNameWorker', width: 250, align:"center"},
+                    { text: 'Materia', dataField: 'dataNameSubjectMatter', align:"center" },
+                    { text: 'Act', columngroup: 'be', datafield: 'dataActivitiesBe', align:"center", cellsalign:"center", width: 35 },
+                    { text: 'Estado', columngroup: 'be', datafield: 'dataClosedBe', align:"center", cellsalign:"center", width: 55 },
+                    { text: 'Act', columngroup: 'know', datafield: 'dataActivitiesKnow', align:"center", cellsalign:"center", width: 35 },
+                    { text: 'Estado', columngroup: 'know', datafield: 'dataClosedKnow', align:"center", cellsalign:"center", width: 55 },
+                    { text: 'Act', columngroup: 'do', datafield: 'dataActivitiesDo', align:"center", cellsalign:"center", width: 35 }, 
+                    { text: 'Estado', columngroup: 'do', datafield: 'dataClosedDo', align:"center", cellsalign:"center", width: 55 }
                 ]
             });
         }

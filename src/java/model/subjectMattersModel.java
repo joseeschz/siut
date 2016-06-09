@@ -20,6 +20,12 @@ public class subjectMattersModel extends workerModel{
     String FL_NAME_SEMESTER = "";
     int FL_CANT_HOURS = 0;
     String FL_BLOCKS = "";
+    String FL_ACTIVITIES_BE="";
+    String FL_ACTIVITIES_KNOW="";
+    String FL_ACTIVITIES_DO="";
+    String FL_CLOSED_BE="";
+    String FL_CLOSED_KNOW="";
+    String FL_CLOSED_DO="";
     String FL_QUALIFICATION_TOTAL_SUBJECT_MATTER="";
 
     public int getPK_SUBJECT_MATTER() {
@@ -100,6 +106,54 @@ public class subjectMattersModel extends workerModel{
 
     public void setFL_BLOCKS(String FL_BLOCKS) {
         this.FL_BLOCKS = FL_BLOCKS;
+    }
+
+    public String getFL_ACTIVITIES_BE() {
+        return FL_ACTIVITIES_BE;
+    }
+
+    public void setFL_ACTIVITIES_BE(String FL_ACTIVITIES_BE) {
+        this.FL_ACTIVITIES_BE = FL_ACTIVITIES_BE;
+    }
+
+    public String getFL_ACTIVITIES_KNOW() {
+        return FL_ACTIVITIES_KNOW;
+    }
+
+    public void setFL_ACTIVITIES_KNOW(String FL_ACTIVITIES_KNOW) {
+        this.FL_ACTIVITIES_KNOW = FL_ACTIVITIES_KNOW;
+    }
+
+    public String getFL_ACTIVITIES_DO() {
+        return FL_ACTIVITIES_DO;
+    }
+
+    public void setFL_ACTIVITIES_DO(String FL_ACTIVITIES_DO) {
+        this.FL_ACTIVITIES_DO = FL_ACTIVITIES_DO;
+    }
+
+    public String getFL_CLOSED_BE() {
+        return FL_CLOSED_BE;
+    }
+
+    public void setFL_CLOSED_BE(String FL_CLOSED_BE) {
+        this.FL_CLOSED_BE = FL_CLOSED_BE;
+    }
+
+    public String getFL_CLOSED_KNOW() {
+        return FL_CLOSED_KNOW;
+    }
+
+    public void setFL_CLOSED_KNOW(String FL_CLOSED_KNOW) {
+        this.FL_CLOSED_KNOW = FL_CLOSED_KNOW;
+    }
+
+    public String getFL_CLOSED_DO() {
+        return FL_CLOSED_DO;
+    }
+
+    public void setFL_CLOSED_DO(String FL_CLOSED_DO) {
+        this.FL_CLOSED_DO = FL_CLOSED_DO;
     }
 
     public String getFL_QUALIFICATION_TOTAL_SUBJECT_MATTER() {

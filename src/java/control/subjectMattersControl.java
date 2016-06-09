@@ -26,10 +26,41 @@ public class subjectMattersControl {
             System.out.println(list.get(i).getFL_NAME_SUBJECT_MATTER());
         }
     }
+    public ArrayList<subjectMattersModel> SelectSubjectMattersMissingClose(int pkCareer, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        String procedure;
+        procedure = "CALL `GET_PROGRESS_WORK_REPORT`('missingClose',"+pkCareer+", "+pkPeriod+")";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    subjectMattersModel listSubjectMatters=new subjectMattersModel();
+                    listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    listSubjectMatters.setPK_WORKER(res.getInt("PK_WORKER"));
+                    listSubjectMatters.setFK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    listSubjectMatters.setFL_ACTIVITIES_BE(res.getString("FL_ACTIVITIES_BE"));
+                    listSubjectMatters.setFL_ACTIVITIES_KNOW(res.getString("FL_ACTIVITIES_KNOW"));
+                    listSubjectMatters.setFL_ACTIVITIES_DO(res.getString("FL_ACTIVITIES_DO"));
+                    listSubjectMatters.setFL_CLOSED_BE(res.getString("FL_CLOSED_BE"));
+                    listSubjectMatters.setFL_CLOSED_KNOW(res.getString("FL_CLOSED_KNOW"));
+                    listSubjectMatters.setFL_CLOSED_DO(res.getString("FL_CLOSED_DO"));
+                    list.add(listSubjectMatters);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(subjectMattersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<subjectMattersModel> SelectSubjectMattersMissingWorkingPlanning(int pkCareer, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         String procedure;
-        procedure = "CALL `GET_PROGRESS_WORK_REPORT`("+pkCareer+", "+pkPeriod+")";
+        procedure = "CALL `GET_PROGRESS_WORK_REPORT`('missingAll',"+pkCareer+", "+pkPeriod+")";
         try {
             try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
@@ -40,7 +71,6 @@ public class subjectMattersControl {
                     listSubjectMatters.setPK_WORKER(res.getInt("PK_WORKER"));
                     listSubjectMatters.setFK_SEMESTER(res.getInt("PK_SEMESTER"));
                     listSubjectMatters.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
-                    listSubjectMatters.setFL_BLOCKS(res.getString("FL_BLOCKS"));
                     list.add(listSubjectMatters);
                 }
                 res.close();
