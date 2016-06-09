@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="528" leftMargin="14" rightMargin="70" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="671"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_enrollment" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 1;]]>
+	</queryString>
+	<field name="1" class="java.lang.Long"/>
+	<sortField name="PAGE_COUNT" type="Variable"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="40" width="428" height="20" uuid="21e71b0d-2b81-4ff6-a712-2225ce12d330"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="100" height="76" uuid="b7c70d16-f5a3-4807-a46a-18d8083ab31a"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="688" splitType="Stretch">
+			<elementGroup/>
+			<frame>
+				<reportElement x="0" y="35" width="528" height="28" uuid="4063b987-9fe6-414d-9ff5-9d1e75776693"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="11" width="52" height="15" uuid="379025ce-b235-4fb9-a9ec-51ebf39f9cba"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Folio Num.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="52" y="11" width="48" height="15" uuid="3a7179ef-451e-4f7e-8439-4955b6e8d676"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["2623"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="528" height="11" uuid="8f4514b0-720e-47dd-bde1-05953d920366"/>
+					<box leftPadding="0"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[SERVICIOS ESCOLARES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="135" y="11" width="94" height="15" uuid="f2d0bec2-7336-4652-829a-9166d807d1b6"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Fecha de Autorización:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="229" y="11" width="94" height="15" uuid="f7a25c1c-38a3-466c-a6c1-661740b44616"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["28-11-2014"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="323" y="11" width="117" height="15" uuid="ac2895bc-7ed7-4d7a-a7b5-9def4572667f"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Sello de Servicios Escolares]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="0" width="528" height="16" uuid="2a8d95ab-ecf5-4c07-9b41-56d72e427611"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Double"/>
+					<bottomPen lineWidth="0.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[REGISTRO DE BAJA DEL ALUMNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="16" width="112" height="19" uuid="d5caa210-5ad3-40b8-a98f-0c168eda33aa"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha de solicitud de la baja:]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="112" y="15" width="181" height="20" uuid="442aa07c-7458-4af8-b689-ab237af89342"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="66" width="528" height="38" uuid="ca71465e-5a09-461f-800e-a6e95dd11c43"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="528" height="11" uuid="2ddcd574-7b16-49e1-bb48-6f65e9466a4f"/>
+					<box leftPadding="0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[SERVICIOS ESTUDIANTILES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="11" width="100" height="11" uuid="99751034-1883-44e0-820b-be72a579e4ac"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Cuenta con beca:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="25" width="37" height="11" uuid="f1f3eeb4-1852-4bb3-8a5e-f68b8d3a2c7a"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Tipo:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="37" y="25" width="98" height="11" uuid="961a6c65-d113-4ef1-8ed3-6deeecf3c469"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SOCIOECONÓMICA ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="150" y="25" width="66" height="11" uuid="aff429fd-0131-4b47-8a19-2adf840b63c7"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ACADÉMICA ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="233" y="25" width="60" height="11" uuid="9939457d-9077-48e9-bec6-2c2fa3f2519c"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["PRONABES ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="315" y="25" width="72" height="11" uuid="6be3a556-e09d-46d3-a158-d2ecc1d6d379"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["ALIMENTICIA ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="416" y="25" width="74" height="11" uuid="ea57ffb0-f55f-4456-afbf-b7155058269b"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["TRANSPORTE ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="100" y="11" width="74" height="11" uuid="0e7f1a90-aaa6-491c-8e2e-8e80df3e4f10"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="174" y="11" width="74" height="11" uuid="032d3151-f0f4-4bf0-97be-0011fc447781"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="454" y="11" width="74" height="11" uuid="0118ef89-acc0-442a-bca8-78b928cb5612"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="11" width="74" height="11" uuid="9ff51547-9ef5-4b8d-b224-291a131a1544"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="11" width="100" height="11" uuid="1ece8f09-3c3c-43ea-ae96-49db5265c9f5"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Tiene Adeudos en:]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement x="0" y="107" width="528" height="120" uuid="f0be2998-cc1e-4dcd-b3bc-8c49752f4f0e"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="0" y="0" width="528" height="15" uuid="f47968c6-9583-40b7-b522-ec75b00801fd"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[I.    DATOS GENERALES DEL ALUMNO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="15" width="63" height="11" uuid="c89b9df0-f088-4322-8176-e9373213779e"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Nombre:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="26" width="63" height="11" uuid="2b2d9d38-5753-4a51-8ef1-940f061d1323"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Matrícula]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="37" width="63" height="11" uuid="7deb1a83-ec13-427d-a940-0f6382b8c6f0"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Carrera:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="59" width="248" height="11" uuid="0222ddf7-f128-4b94-8c7a-23c78ffb7c57"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[¿Pertenecía el alumno a algún grupo altamente vulnerable?]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="70" width="490" height="11" uuid="07c61346-fa2f-4f59-afdf-f0969fc8640f"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Si la respuesta es afirmativa, marque en los paréntesis correspondientes en que grupos altamente vulnerables estuvo registrado.]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="63" y="15" width="427" height="11" uuid="e6c5dca4-e45f-400a-b604-e03e3441b820"/>
+					<box leftPadding="30">
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["nombre"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="63" y="26" width="111" height="11" uuid="bbdc352e-0f3a-497f-be90-d2abfaece367"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["matricula"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="63" y="37" width="217" height="22" uuid="faf352d1-e95a-40c1-9108-945df3a3d293"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["carrera"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="26" width="76" height="11" uuid="37360fcc-210b-416e-8a9a-c2ef49ab35f0"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Grupo Escolar:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="356" y="26" width="134" height="11" uuid="b45318b5-7ead-40e2-bf93-8764d1a2541a"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["grupo"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="280" y="37" width="100" height="11" uuid="1f07af8b-568a-42cd-ac57-4bb0d8f4baf6"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Firma del Alumno:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="380" y="37" width="110" height="22" uuid="d227ae3e-ec6f-4c55-b82f-94b436cd6c10"/>
+					<box>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="322" y="59" width="74" height="11" uuid="b3aa194a-1f99-42e5-9f77-d056163ea64b"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="248" y="59" width="74" height="11" uuid="5e62248e-d952-4de7-96b6-46533bf23871"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="19" y="84" width="173" height="11" uuid="c13666d1-73cf-4f61-a737-616fff060ea2"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["a) POR PROBLEMAS ACADÉMICOS ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="19" y="98" width="173" height="11" uuid="d774d06f-1098-4c69-93b0-60c8a1bec8d9"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["d) POR PROBLEMAS PERSONALES ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="317" y="84" width="173" height="11" uuid="6ed6e5b8-3a8f-4cd7-b6f9-f3167094a1c0"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["b) POR PROBLEMAS ECONÓMICOS ( )"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="230" width="528" height="272" uuid="ed006cdb-198d-4efb-95b5-ab472091387e"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<textField>
+					<reportElement x="24" y="71" width="167" height="11" uuid="172af648-eb19-45c2-a4d6-e7fba9931219"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) REPROBACIÓN"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="0" width="528" height="15" uuid="da712640-6d03-48a3-a7bb-08d39b19f433"/>
+					<box leftPadding="5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[II.    INFORMACIÓN SOBRE LA BAJA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="15" width="191" height="11" uuid="edb37755-f045-4a64-9c60-b400eced90bd"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[1.    Indique el tipo de baja que se solicita:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="19" y="26" width="104" height="11" uuid="3f94b138-c56c-4e2d-8fed-321dc80cdc9d"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["BAJA DEFINITIVA ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="160" y="26" width="104" height="11" uuid="b514335a-11fb-4829-ba49-b27a32ab042f"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["BAJA TEMPORAL ( )"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="264" y="26" width="116" height="11" uuid="464fb611-dd7a-437f-b5a8-177e4f32d426"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Periodo de reincorporación:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="380" y="26" width="134" height="11" uuid="264dffc0-7392-49e7-bad0-a243384e7711"/>
+					<box>
+						<bottomPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["periodo"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="37" width="191" height="11" uuid="8890d037-4987-45e7-812d-8e8d441166c0"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[¿LA BAJA FUE SOLICITADA POR EL ALUMNO?]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="338" y="38" width="74" height="11" uuid="566f260f-53b3-4acb-8ed9-b4a580510010"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="264" y="38" width="74" height="11" uuid="dcd768bb-cb0e-4f40-93cc-e5aff7787f32"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="49" width="191" height="11" uuid="5c22c6e9-8f9e-444a-9283-ad30370cdbc3"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[2.    Indique el motivo de la baja:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="60" width="191" height="11" uuid="35e058ab-5ea9-424a-87ad-4c711a15af17"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[    a) FACTORES ACADÉMICOS]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="24" y="82" width="224" height="11" uuid="f64a6cda-2324-4be9-89c4-d78b5f6528b9"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) ANTECEDENTES ACADÉMICOS DEL ESTUDIANTE"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="93" width="224" height="11" uuid="06f8646e-4916-4876-84a7-4dd21a7a48c0"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) LA UTSEM NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="104" width="224" height="11" uuid="588a2bbc-8c7a-4423-9f89-8febe981f933"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) FALTAS AL REGLAMENTO ESCOLAR"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="115" width="296" height="11" uuid="f85b4a31-507f-41dd-98a1-9eda13ba5f17"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) DIFICULTAD EN EL APRENDIZAJE DE ALGUNAS MATERIA(S), ¿CUÁLES?"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="137" width="99" height="11" uuid="7cdac04a-3785-4088-abe0-2a2b0e55908a"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) OTROS, ¿CUÁLES?"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="148" width="191" height="11" uuid="af6914d3-ca28-4801-b234-2d89b33df85e"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[    b) FACTORES ECONÓMICOS]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="123" y="137" width="391" height="11" uuid="4e0b9046-eafd-43be-9cac-9107ce37a634"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["otros"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="159" width="269" height="11" uuid="7505dc96-749b-4f06-9955-89997bf758cc"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) SITUACIÓN ECONÓMICA DESFAVORABLE DEL ALUMNO"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="170" width="269" height="11" uuid="e00e546a-7439-41be-8616-db3745769549"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) EL ALUMNO TRABAJA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="181" width="291" height="11" uuid="b9202a79-7ad5-4e66-bca2-83bbcc31f8d6"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) MATRIMONIO DEL ALIMNO QUE AFECTE SU SITUACIÓN ECONÓMICA"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="192" width="191" height="11" uuid="318d06c9-a1b3-4be1-8004-140ed99de126"/>
+					<box leftPadding="10"/>
+					<textElement verticalAlignment="Top">
+						<font size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[    c) FACTORES PERSONALES]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="24" y="203" width="136" height="11" uuid="c04e028f-aa7e-492c-a422-47afe328de93"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) CAMBIO DE RESIDENCIA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="215" width="240" height="11" uuid="fe71a6a9-9e99-43a9-9991-4d27a2777527"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) CARACTERISTÍCAS SOCIOCULTURALES DEL ALUMNO"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="225" width="240" height="11" uuid="a63fb101-8b03-4b63-8474-1f9a3e96d341"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) FALTA DE MOTIVACIÓN POR PROBLEMAS PERSONALES"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="236" width="136" height="11" uuid="ef3e5367-4716-4958-8a8e-4cf388eccac3"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) DISTANCIA DE LA UTSEM"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="247" width="136" height="11" uuid="b7fd2c6f-67f8-4f56-951a-28a009f5ee43"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PROBLEMAS DE SALUD"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="258" width="136" height="11" uuid="aa713553-1376-4b01-a002-25df1eed5b89"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) OTROS, ¿CUÁLES?"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="24" y="126" width="490" height="11" uuid="5fed5abe-bb6c-4e34-a4b6-032bf031a354"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["otros"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="71" width="192" height="11" uuid="1b822e0b-73ed-4c4b-a776-7f5c1e304f5e"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) INSATISFACCIÓN DE EXPECTATIVAS"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="82" width="192" height="11" uuid="f7eaac31-99d1-4d8e-9200-1bb1dcd9f496"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) DEFICIENTE ORIENTACIÓN VOCACIONAL"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="93" width="192" height="11" uuid="f8b0273c-f351-4bf4-85fb-8e61c00ed45b"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) LA CARRERA NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="159" width="192" height="11" uuid="db4a3b57-072c-451e-b76e-682f94c118c8"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PROBLEMAS DE MALNUTRICIÓN"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="170" width="192" height="11" uuid="c0d903ca-f2ea-4b8f-8068-252b54370f42"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PERDIDA DEL EMPLEO DE QUIEN SOSTIENE AL ALUMNO"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="322" y="181" width="192" height="11" uuid="1cbeb58c-19fa-43d9-86d6-adcc8ac30fd0"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) INCOMPATIBILIDAD DE HORARIOS DE TRABAJO Y ESCUELA"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="203" width="191" height="11" uuid="03a49acb-5af2-4ea6-bccc-ed16777dbe3c"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) NUNCA SE PRESENTÓ A CLASES"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="214" width="191" height="11" uuid="24954c32-a3e8-4857-ac1c-dfe06df362a1"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PROBLEMAS CON LOS COMPAÑEROS DE CLASE"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="225" width="191" height="11" uuid="f4b03b70-3279-4021-a786-6c749bd5d3f8"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PROBLEMAS EMOCIONALES"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="247" width="191" height="11" uuid="830154f5-5703-413c-92d8-74c347ac6ddb"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) PROBLEMAS CON ALGUN(OS) PROFESOR(ES)"]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="323" y="236" width="191" height="11" uuid="a4cbd1f8-0a7f-4d64-a933-3cd4279ebe4a"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["( ) ADICCIONES"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="516" width="264" height="48" uuid="07e52470-7a2e-4b2c-b3c8-c4db207210e7"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="52" y="26" width="164" height="22" uuid="c915111f-96ca-46ce-a333-6f9e66cf5bc9"/>
+					<box leftPadding="40" rightPadding="40">
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[(Nombre y Firma) 
+TUTOR
+]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="52" y="0" width="164" height="26" uuid="9a064e3d-3f02-47a7-8975-b1ebe7d73fed"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="264" y="516" width="264" height="48" uuid="50d7f8ec-bc5b-4544-a971-56d3180431bf"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="62" y="26" width="164" height="22" uuid="8b8e132c-7730-4528-b003-96a6ff041be7"/>
+					<box leftPadding="30" rightPadding="30">
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[(Nombre y Firma) 
+DIRECTOR DE CARRERA
+]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="62" y="0" width="164" height="26" uuid="108ef106-8bd6-45a3-8031-ad76c59a3f39"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="264" y="569" width="264" height="48" uuid="a6655761-9854-42c5-8a30-56e0114cee89"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="62" y="15" width="164" height="33" uuid="242253c0-6abe-4205-b63c-dbbadd59df91"/>
+					<box leftPadding="0" rightPadding="0">
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[(Nombre y Firma) 
+JEFE DEL DEPARTAMENTO DE SERVICIOS ESCOLARES
+]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="62" y="0" width="164" height="15" uuid="909958fe-6a5b-4e68-804c-3ca6c9a44fee"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="569" width="264" height="48" uuid="fdfff7dc-88c7-4a10-8ae0-a2ea957c30e0"/>
+				<box>
+					<topPen lineWidth="2.0"/>
+					<leftPen lineWidth="2.0"/>
+					<bottomPen lineWidth="2.0"/>
+					<rightPen lineWidth="2.0"/>
+				</box>
+				<staticText>
+					<reportElement x="52" y="15" width="164" height="33" uuid="baf6c038-a974-41dd-aee3-71ef8c5c805d"/>
+					<box>
+						<topPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[(Nombre y Firma) 
+JEFE DEL DEPARTAMENTO DE PRESUPUESTO Y CONTABILIDAD
+]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="52" y="0" width="164" height="15" uuid="efbd32f9-a0cd-4afd-9da9-239505a5a8fb"/>
+					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="677" width="100" height="11" uuid="ffeb749a-c085-4488-9653-a6eb4e90205c"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FE: 09/04/2013]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="677" width="100" height="11" uuid="6b842abf-8122-493f-905c-2dbde34f60d8"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FE: 09/04/2013]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

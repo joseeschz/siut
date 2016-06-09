@@ -16,12 +16,12 @@ if(session.getAttribute("logueado") != null){%>
             });             
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
             <%out.print("view = '"+request.getParameter("view")+"';");%>
-            $("#consultStatusWorkTab").load("../content/data-jsp/views-external/item-teachers/progress-work/flange/status-work/"+view+".jsp");
+            $("#consultStatusWorkTab").load("../content/data-jsp/views-external/item-teachers/progress-work/flange/status-work-closed/"+view+".jsp");
         });
     </script>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="rate-consult">Profesores sin criterios de evaluación</li>
+            <li class="jqxTabsTitle" dir="rate-consult">Profesores sin cerrar criterios de evaluación</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

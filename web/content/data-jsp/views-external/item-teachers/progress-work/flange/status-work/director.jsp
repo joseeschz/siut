@@ -103,10 +103,8 @@
                 },
                 columns: [
                     { text: 'NP', dataField: 'dataProgresivNumber', width: 35, align:"center"},
-                    { text: 'Materia', dataField: 'dataNameSubjectMatter', align:"center" },
                     { text: 'Profesor', dataField: 'dataNameWorker', width: 280, align:"center"},
-                    { text: 'Cuatrimestre', dataField: 'dataNameSemester', width: 120, align:"center", cellsalign:"center"},
-                    { text: 'Bloques', dataField: 'dataBlocks', width: 80, align:"center", cellsalign:"center"}
+                    { text: 'Materia', dataField: 'dataNameSubjectMatter', align:"center" }                  
                 ]
             });
         }
