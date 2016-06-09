@@ -132,6 +132,36 @@ public class serviceSubjectMatter extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            if(request.getParameter("subjectMattersMissingWorkPlanning")!=null){
+                if(request.getParameter("pkCareer") != null && request.getParameter("pkPeriod") != null ){
+                    int pkCareer = Integer.parseInt(request.getParameter("pkCareer"));
+                    int pkPeriod = Integer.parseInt(request.getParameter("pkPeriod"));
+                    JSONArray principal = new JSONArray();
+                    JSONObject settings = new JSONObject();
+                    JSONArray content = new JSONArray();
+                    settings.put("__subjetMatterModel","SubjetMatter");
+                    
+                    ArrayList<subjectMattersModel> listSubjectMatters = new subjectMattersControl().SelectSubjectMattersMissingWorkingPlanning(pkCareer, pkPeriod);
+                    for(int i=0;i<listSubjectMatters.size();i++){
+                        JSONObject data = new JSONObject();
+                        data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkTeacher", listSubjectMatters.get(i).getPK_WORKER());
+                        data.put("dataPkSubjectMatter", listSubjectMatters.get(i).getPK_SUBJECT_MATTER());
+                        data.put("dataNameSubjectMatter", listSubjectMatters.get(i).getFL_NAME_SUBJECT_MATTER());
+                        data.put("dataNameWorker", listSubjectMatters.get(i).getFL_NAME_WORKER());
+                        data.put("dataBlocks", listSubjectMatters.get(i).getFL_BLOCKS());
+                        data.put("dataFkSemester", listSubjectMatters.get(i).getFK_SEMESTER());
+                        data.put("dataNameSemester", listSubjectMatters.get(i).getFL_NAME_SEMESTER());
+                        content.add(data); 
+                    }
+                    settings.put("__ENTITIES", content);
+                    principal.add(settings);
+                    response.setContentType("application/json");
+                    out.print(principal);
+                    out.flush(); 
+                    out.close();
+                }                
+            }
             if(request.getParameter("insert")!=null){
                 if(request.getParameter("fkSemester") != null && request.getParameter("fkStudyPlan") != null ){
                     subjectMattersModel dataSubjectMatters=new subjectMattersModel();

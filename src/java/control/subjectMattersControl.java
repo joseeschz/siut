@@ -21,10 +21,37 @@ import model.subjectMattersModel;
  */
 public class subjectMattersControl {
     public static void main(String[] args) {
-        ArrayList<subjectMattersModel> list=new subjectMattersControl().SelectSubjectMattersByTeacher(33, 5, 6, 9, 82);
+        ArrayList<subjectMattersModel> list=new subjectMattersControl().SelectSubjectMattersMissingWorkingPlanning(6, 14);
         for(int i=0;i<list.size();i++){
             System.out.println(list.get(i).getFL_NAME_SUBJECT_MATTER());
         }
+    }
+    public ArrayList<subjectMattersModel> SelectSubjectMattersMissingWorkingPlanning(int pkCareer, int pkPeriod){
+        ArrayList<subjectMattersModel> list=new ArrayList<>();
+        String procedure;
+        procedure = "CALL `GET_PROGRESS_WORK_REPORT`("+pkCareer+", "+pkPeriod+")";
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    subjectMattersModel listSubjectMatters=new subjectMattersModel();
+                    listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    listSubjectMatters.setFL_NAME_WORKER(res.getString("FL_NAME_WORKER"));
+                    listSubjectMatters.setPK_WORKER(res.getInt("PK_WORKER"));
+                    listSubjectMatters.setFK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    listSubjectMatters.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    listSubjectMatters.setFL_BLOCKS(res.getString("FL_BLOCKS"));
+                    list.add(listSubjectMatters);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(subjectMattersModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     public ArrayList<subjectMattersModel> SelectSubjectMattersByCurrentSemester(int pkCareer, int pkSemester, int pkStudyPlan, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
