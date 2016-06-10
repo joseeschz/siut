@@ -250,15 +250,15 @@ if(session.getAttribute("logueado") == null){%>
             <!--En esta parte importo mis archivos de jQuery boostrap y jQuery-UI
             ==================================================-->
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/scripts/get-theme.js" charset="UTF-8"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/localization.js" charset="UTF-8"></script>
             <!--<script type="text/javascript" src="../content/files-bs/bootstrap-3.2.0-dist/js/bootstrap.min.js"></script>-->
             <!--<script type="text/javascript" src="../content/files-jq/jquery //-ui-1.11.1/jquery-ui.js"></script>-->
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js"></script>
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js"></script> 
-            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/jqx-all.js" charset="UTF-8"></script>
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.js" charset="UTF-8"></script> 
+            <script type="text/javascript" src="../content/files-jq/<%out.print(vertion);%>/jqwidgets/globalization/globalize.cultures.js" charset="UTF-8"></script> 
             <script type="text/javascript" src="../content/files-jq/jquery.cookie.js"></script>
-            <script type="text/javascript" src="../content/files-js/make-menu.js" charset="utf-8"></script>
+            <script type="text/javascript" src="../content/files-js/make-menu.js" charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-combo.origin.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-list.js"  charset="UTF-8"></script>
             <script type="text/javascript" src="../content/files-js/make-input.js"  charset="UTF-8"></script>

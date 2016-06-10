@@ -53,7 +53,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             }); 
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'99%',scrollPosition: 'both', position: 'top',  collapsible: false });   
-            $("#all-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/inscriptions/report/report-tab/index.jsp");
+            $("#allPre-IncriptionTab").load("../content/data-jsp/views-external/item-students/flange/candidate/system-register/system-register-tab/index.jsp");
         });
     </script>
     <div id='jqxWindowOk'>
@@ -90,11 +90,11 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="new-pre-inscription">Alumnos Inscritos</li>
+            <li class="jqxTabsTitle" dir="new-pre-inscription">Candidatos registrados en sistema</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
-                <div id="all-IncriptionTab" style="padding: 20px;"></div>
+                <div id="allPre-IncriptionTab" style="padding: 20px;"></div>
             </div>
         </div>
     </div>

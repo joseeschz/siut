@@ -9,69 +9,6 @@
             };
             return ordersSource;
         }
-        
-        var tooltiprenderer = function (element) {
-            $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
-        };
-        var cellsrenderer = function (row, column, value) {
-            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
-        };
-        var createfilterpanel = function (datafield, filterPanel) {
-            buildFilterPanel(filterPanel, datafield );
-        };
-        var adapter;
-        var columns;
-        var dataAdapter = new $.jqx.dataAdapter(loadSource(), {
-            autoBind: true,
-            beforeSend:function (){
-                $("#jqxGridReport").jqxGrid('showloadelement');
-            },
-            beforeLoadComplete:function (){
-                $("#jqxGridReport").jqxGrid('hideloadelement');
-            },
-            downloadComplete: function (data) {
-
-                //dataExternal=data;
-                columns = data[0].columns;
-                var dataFields = data[1].dataFields;
-                var rows = data[2].rowsCal;                
-                var gridAdapter = new $.jqx.dataAdapter({
-                    dataFields: dataFields,
-                    id: 'dataProgresivNumber',
-                    localdata: rows
-                });
-//                var rows.prototype.toUpperCase();
-                
-                adapter = gridAdapter;
-                var arr = columns;
-                var str = JSON.stringify(arr);
-                var newArr = JSON.parse(str);
-                for(var i=0;i<newArr.length; i++){
-                    if(newArr[i].resizable){
-                        newArr[i].resizable = eval(newArr[i].resizable);
-                    }
-                    if(newArr[i].sortable){
-                        newArr[i].sortable = eval(newArr[i].sortable);
-                    }
-                    if(newArr[i].cellsrenderer){
-                        newArr[i].cellsrenderer = eval(newArr[i].cellsrenderer);
-                    }
-                    if(newArr[i].createfilterpanel){
-                        newArr[i].createfilterpanel = eval(newArr[i].createfilterpanel);
-                    }
-                    if(newArr[i].rendered){
-                        newArr[i].rendered = eval(newArr[i].rendered);
-                    }
-                    if(newArr[i].pinned){
-                        newArr[i].pinned = eval(newArr[i].pinned);
-                    }
-                    if(newArr[i].filterable){
-                        newArr[i].filterable = eval(newArr[i].filterable);
-                    }
-                }
-                columns=newArr;
-            }
-        });
         var buildFilterPanel = function (filterPanel, datafield) {
             var textInput = $("<input style='margin:5px;'/>");
             var applyinput = $("<div class='filter' style='height: 25px; margin-left: 20px; margin-top: 7px;'></div>");
@@ -133,6 +70,80 @@
                 textInput.val("");
             });
         };     
+        var tooltiprenderer = function (element) {
+            $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
+        };
+        var cellsrenderer = function (row, column, value) {
+            return "<div style='margin:4px;'>" + (value + 1) + "</div>";
+        };
+        var createfilterpanel = function (datafield, filterPanel) {
+            buildFilterPanel(filterPanel, datafield );
+        };
+        var cellclassname = function (row, columnfield, value) {
+            var data = $('#jqxGridReport').jqxGrid('getrowdata', row);
+            if(data.FL_REGISTER==="0"){
+                return "orange";
+            }
+            
+        };
+        var adapter;
+        var columns;
+        var dataAdapter = new $.jqx.dataAdapter(loadSource(), {
+            autoBind: true,
+            beforeSend:function (){
+                $("#jqxGridReport").jqxGrid('showloadelement');
+            },
+            beforeLoadComplete:function (){
+                $("#jqxGridReport").jqxGrid('hideloadelement');
+            },
+            downloadComplete: function (data) {
+
+                //dataExternal=data;
+                columns = data[0].columns;
+                var dataFields = data[1].dataFields;
+                var rows = data[2].rowsCal;                
+                var gridAdapter = new $.jqx.dataAdapter({
+                    dataFields: dataFields,
+                    id: 'dataProgresivNumber',
+                    localdata: rows
+                });
+//                var rows.prototype.toUpperCase();
+                
+                adapter = gridAdapter;
+                var arr = columns;
+                var str = JSON.stringify(arr);
+                var newArr = JSON.parse(str);
+                for(var i=0;i<newArr.length; i++){
+                    if(newArr[i].cellclassname){
+                        newArr[i].cellclassname = eval(newArr[i].cellclassname);
+                    }
+                    if(newArr[i].resizable){
+                        newArr[i].resizable = eval(newArr[i].resizable);
+                    }
+                    if(newArr[i].sortable){
+                        newArr[i].sortable = eval(newArr[i].sortable);
+                    }
+                    if(newArr[i].cellsrenderer){
+                        newArr[i].cellsrenderer = eval(newArr[i].cellsrenderer);
+                    }
+                    if(newArr[i].createfilterpanel){
+                        newArr[i].createfilterpanel = eval(newArr[i].createfilterpanel);
+                    }
+                    if(newArr[i].rendered){
+                        newArr[i].rendered = eval(newArr[i].rendered);
+                    }
+                    if(newArr[i].pinned){
+                        newArr[i].pinned = eval(newArr[i].pinned);
+                    }
+                    if(newArr[i].filterable){
+                        newArr[i].filterable = eval(newArr[i].filterable);
+                    }
+                }
+                columns=newArr;
+            }
+        });
+        
+        
         $("#jqxGridReport").on('contextmenu', function () {
             return false;
         }); 
@@ -146,13 +157,15 @@
             sortable: true,
             columnsresize: true,
             columnsautoresize: true,
-            pageable: true,
+            pageable: false,
             pagesize: 30,
+            groupable: true,
             enabletooltips: true,
             pagesizeoptions: ['15', '30', '50'],
             localization: getLocalization("es"),
             ready: function () {
-//                $("#jqxGridReport").jqxGrid('autoresizecolumns');
+                $("#jqxGridReport").jqxGrid('autoresizecolumns');
+                $('#jqxGridReport').jqxGrid('hidecolumn', 'FL_REGISTER');
             },
             autoshowfiltericon: false,
             columnmenuopening: function (menu, datafield, height) {
@@ -175,57 +188,51 @@
             $("#jqxGridReport").jqxGrid('clearfilters');
             $(this).hide();
         });
-//        $("#excelExport").jqxButton();
-//        $("#xmlExport").jqxButton();
-//        $("#csvExport").jqxButton();
-//        $("#tsvExport").jqxButton();
-//        $("#htmlExport").jqxButton();
-//        $("#jsonExport").jqxButton();
-//        $("#pdfExport").jqxButton();
-//        $("#excelExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'xls', 'jqxGrid');           
-//        });
-//        $("#xmlExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'xml', 'jqxGrid');
-//        });
-//        $("#csvExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'csv', 'jqxGrid');
-//        });
-//        $("#tsvExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'tsv', 'jqxGrid');
-//        });
-//        $("#htmlExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'html', 'jqxGrid');
-//        });
-//        $("#jsonExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'json', 'jqxGrid');
-//        });
-//        $("#pdfExport").click(function () {
-//            $("#jqxGridReport").jqxGrid('exportdata', 'pdf', 'jqxGrid');
-//        });
+        $("#jqxGridReport").on("groupschanged", function (event)  {
+            // event arguments.
+            var args = event.args;
+            // type of change. Possible values: Add, Remove, Clear, Insert
+            var type = args.type;
+            // group index. The index of the added, removed or inserted group. If the type is "Clear", -1 is passed.
+            var groupIndex = args.index;
+            // groups array.
+            var groups = args.groups;
+            console.log(args)
+            if(type==="Add"){
+                $("#jqxGridReport").jqxGrid({pageable: false});
+            }else{
+                $("#jqxGridReport").jqxGrid({pageable: false});
+            }
+        }); 
     });
 </script>
+<style>    
+    .green {
+        color: black\9;
+        background-color: #b6ff00\9;
+    }
+    .yellow {
+        color: black\9;
+        background-color: yellow\9;
+    }
+    .orange {
+        color: black\9;
+        background-color: #e8c036;
+    }
+    .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .green:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+        color: black;
+        background-color: #b6ff00;
+    }
+    .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .yellow:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+        color: black;
+        background-color: yellow;
+    }
+    .orange:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected), .jqx-widget .orange:not(.jqx-grid-cell-hover):not(.jqx-grid-cell-selected) {
+        color: black;
+        background-color: #e8c036;
+    }
+</style>
 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">    
     <div id="jqxGridReport"></div>
     <input value="Quitar filtros" id="clearfilteringbutton" type="button" style="display: none" />
-<!--    <div style='margin-top: 20px;'>
-        <div style='float: left;'>
-            <input type="button" value="Export to Excel" id='excelExport' />
-            <br /><br />
-            <input type="button" value="Export to XML" id='xmlExport' />
-        </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to CSV" id='csvExport' />
-            <br /><br />
-            <input type="button" value="Export to TSV" id='tsvExport' />
-        </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to HTML" id='htmlExport' />
-            <br /><br />
-            <input type="button" value="Export to JSON" id='jsonExport' />
-        </div>
-        <div style='margin-left: 10px; float: left;'>
-            <input type="button" value="Export to PDF" id='pdfExport' />
-        </div>
-    </div>-->
 </div>

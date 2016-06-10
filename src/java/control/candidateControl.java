@@ -24,9 +24,11 @@ import org.json.simple.JSONObject;
  */
 public class candidateControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> list=new candidateControl().SelectCandidate("folioSystem","20160004");
-        JSONArray contentRowsCal=new candidateControl().SelectMetadataRows();
-        System.err.println(contentRowsCal);
+        ArrayList<studentModel> listCandidate=new candidateControl().SelectCandidatesMissingPreinscription();
+        JSONArray content = new JSONArray();
+        for(int i=0;i<listCandidate.size();i++) {
+            System.out.print(listCandidate.get(i).getFL_FOLIO_TEMP_SYSTEM());
+        }    
     }
     public ArrayList<propetiesTableModel> SelectReportColums(){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
@@ -84,6 +86,31 @@ public class candidateControl {
             Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return contentColums;
+    }
+    public ArrayList<studentModel> SelectCandidatesMissingPreinscription(){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('candidatesMissingPreinscription', '', '', '')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel CandidateAll=new studentModel();
+                    CandidateAll.setPK_STUDENT(res.getInt("PK_CANDIDATE"));
+                    CandidateAll.setFL_FOLIO_TEMP_SYSTEM(res.getString("FL_FOLIO_TEMP_SYSTEM"));
+                    CandidateAll.setFL_REGISTER_DATE(res.getString("FL_REGISTER_DATE"));
+                    CandidateAll.setFL_NAME(res.getString("FL_NAME"));
+                    CandidateAll.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    CandidateAll.setFL_ENROLLMENT(res.getString("FL_USER_NAME"));
+                    CandidateAll.setFL_PASSWORD(res.getString("FL_PASSWORD"));
+                    list.add(CandidateAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     public ArrayList<studentModel> SelectCandidates(){
         ArrayList<studentModel> list=new ArrayList<>();

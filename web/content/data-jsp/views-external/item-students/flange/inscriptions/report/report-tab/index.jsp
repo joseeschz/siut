@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script type="text/javascript" charset="UTF-8">
     $(document).ready(function () {
         function loadSource(){
             var url = "../serviceStudent?tableByAllColumsMetadata";
@@ -152,11 +152,12 @@
             columnsautoresize: true,
             pageable: true,
             pagesize: 30,
+            groupable: true,
             enabletooltips: true,
             pagesizeoptions: ['15', '30', '50'],
             localization: getLocalization("es"),
             ready: function () {
-//                $("#jqxGridReport").jqxGrid('autoresizecolumns');
+                $("#jqxGridReport").jqxGrid('autoresizecolumns');
             },
             autoshowfiltericon: false,
             columnmenuopening: function (menu, datafield, height) {
@@ -179,13 +180,29 @@
             $("#jqxGridReport").jqxGrid('clearfilters');
             $(this).hide();
         });
-        $("#excelExport").jqxButton();
+        $("#jqxGridReport").on("groupschanged", function (event)  {
+            // event arguments.
+            var args = event.args;
+            // type of change. Possible values: Add, Remove, Clear, Insert
+            var type = args.type;
+            // group index. The index of the added, removed or inserted group. If the type is "Clear", -1 is passed.
+            var groupIndex = args.index;
+            // groups array.
+            var groups = args.groups;
+            console.log(args)
+            if(type==="Add"){
+                $("#jqxGridReport").jqxGrid({pageable: false});
+            }else{
+                $("#jqxGridReport").jqxGrid({pageable: true});
+            }
+        }); 
+//        $("#excelExport").jqxButton();
         
         
         
-        $("#excelExport").click(function () {
-            $("#jqxGridReport").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, false, "http://jquerygrid.net/export_server/dataexport.php", "UTF-8");        
-        });
+//        $("#excelExport").click(function () {
+//            $("#jqxGridReport").jqxGrid('exportdata', 'xls', 'jqxGrid', true, null, false, "http://jquerygrid.net/export_server/dataexport.php", "UTF-8");        
+//        });
     });
 </script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -194,9 +211,9 @@
 <div id='jqxWidget' style="font-size: 13px; font-family: Verdana; float: left;">    
     <div id="jqxGridReport"></div>
     <input value="Quitar filtros" id="clearfilteringbutton" type="button" style="display: none" />
-    <div style='margin-top: 20px;'>
+<!--    <div style='margin-top: 20px;'>
         <div style='float: left;'>
             <input type="button" value="Export to Excel" id='excelExport' />
         </div>
-    </div>
+    </div>-->
 </div>

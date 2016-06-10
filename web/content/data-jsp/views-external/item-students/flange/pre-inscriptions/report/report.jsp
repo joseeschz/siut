@@ -90,7 +90,7 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="new-pre-inscription">Registrados</li>
+            <li class="jqxTabsTitle" dir="new-pre-inscription">Candidatos Preinscritos</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

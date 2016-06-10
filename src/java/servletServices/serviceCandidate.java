@@ -53,6 +53,7 @@ public class serviceCandidate extends HttpServlet {
               
                 for(int i=0;i<listColumns.size();i++){
                     JSONObject dataColums = new JSONObject();
+                    dataColums.put("cellclassname", "cellclassname");
                     if(listColumns.get(i).getFL_TEXT()!=null){
                         dataColums.put("text", listColumns.get(i).getFL_TEXT());
                     }
@@ -195,6 +196,26 @@ public class serviceCandidate extends HttpServlet {
                 if (request.getParameter("dataEmail")!=null) {
                     out.print(new candidateControl().ValidateEmail(request.getParameter("dataEmail")));
                 }
+            }
+            if(request.getParameter("selectCandidatesMissingInscription")!=null){
+                ArrayList<studentModel> listCandidate=new candidateControl().SelectCandidatesMissingPreinscription();
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listCandidate.size();i++) {
+                    JSONObject datos = new JSONObject();
+                    datos.put("fl_progressiv_number", i+1);
+                    datos.put("id", listCandidate.get(i).getPK_STUDENT());
+                    datos.put("fl_folioSystem_temp_system", listCandidate.get(i).getFL_FOLIO_TEMP_SYSTEM());
+                    datos.put("fl_register_date", listCandidate.get(i).getFL_REGISTER_DATE());
+                    datos.put("fl_name", listCandidate.get(i).getFL_NAME());
+                    datos.put("fl_user_name", listCandidate.get(i).getFL_ENROLLMENT());
+                    datos.put("fl_password", listCandidate.get(i).getFL_PASSWORD());
+                    datos.put("fl_career", listCandidate.get(i).getFL_NAME_ABBREVIATED());
+                    content.add(datos); 
+                }                
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();
             }
             if(request.getParameter("selectCandidatesInscription")!=null){
                 ArrayList<studentModel> listCandidate=new candidateControl().SelectCandidates();
