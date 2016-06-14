@@ -352,12 +352,12 @@ function createDropDownSchoolYear(selector){
         url: "../serviceSchoolYear?view",
         async: false
     };
-    var dataAdapterPeriod = new $.jqx.dataAdapter(sourceSchoolYear,{
+    var dataAdapterSchoolYear = new $.jqx.dataAdapter(sourceSchoolYear,{
         loadComplete: function () {
-            var length = dataAdapterPeriod.records.length;
+            var length = dataAdapterSchoolYear.records.length;
             for(var i=0; i<length; i++){
-                if(dataAdapterPeriod.records[i].dataActive==="Activo"){
-                    pkSchoolYearSelected=dataAdapterPeriod.records[i].dataPkSchoolYear;
+                if(dataAdapterSchoolYear.records[i].dataActive==="Activo"){
+                    pkSchoolYearSelected=dataAdapterSchoolYear.records[i].dataPkSchoolYear;
                 }
             }
         }
@@ -369,17 +369,102 @@ function createDropDownSchoolYear(selector){
         filterPlaceHolder: "Buscar",
         filterable: true, 
         searchMode: 'containsignorecase',
-        source: dataAdapterPeriod, 
+        source: dataAdapterSchoolYear, 
         displayMember: "dataSchoolYearName", 
         valueMember: "dataPkSchoolYear",
         height: 26, 
         width: 240,
         dropDownHeight: 400
     }).css("display","inline-block");
-    console.log(pkSchoolYearSelected)
     var item = $(selector).jqxDropDownList('getItemByValue', pkSchoolYearSelected);
     $(selector).jqxDropDownList({selectedIndex: item.index}); 
 }
+function createDropDownPeriodBySchoolYear(selector, params, update){
+    var pkPeriodSelected = 0;
+    var sourceSchoolYear ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "dataPkPeriod",
+        datafields: [
+            { name: 'dataProgresivNumber', type:'int'},
+            { name: 'dataPkPeriod', type: 'string' },
+            { name: 'dataUnique', type: 'string' },
+            { name: 'dataNamePeriod', type: 'string' } ,
+            { name: 'dataNamePeriodAbbreviated', type: 'string' } ,
+            { name: 'dataActive', type: 'int' } ,
+            { name: 'dataYearActive', type: 'int' },
+            { name: 'dataYear', type: 'string' } ,
+            { name: 'dataPeriodType', type: 'string' } ,
+            { name: 'dataFkSchoolYear', type: 'int' }
+        ],
+        url: "../servicePeriod?view=all",
+        data : {
+            fkSchoolYear: params.fkSchoolYear 
+        },
+        async: false
+    };
+    var dataAdapterPeriod = new $.jqx.dataAdapter(sourceSchoolYear, {
+        loadComplete: function () {
+            var length = dataAdapterPeriod.records.length;
+            for(var i=0; i<length; i++){
+                if(dataAdapterPeriod.records[i].dataActive==="Activo"){
+                    pkPeriodSelected=dataAdapterPeriod.records[i].dataPkPeriod;
+                }
+            }
+        }
+    });
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        var item = $(selector).jqxDropDownList('getItemByValue', pkPeriodSelected);
+        console.log(pkPeriodSelected)
+        if(item!=undefined){
+            $(selector).jqxDropDownList({selectedIndex: item.index});
+        }else{
+            $(selector).jqxDropDownList({source: dataAdapterPeriod, selectedIndex: 0});
+        }        
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme, 
+            selectedIndex: 0, 
+            placeHolder: "SELECCIONAR",
+            filterPlaceHolder: "Buscar",
+            filterable: false, 
+            searchMode: 'containsignorecase',
+            source: dataAdapterPeriod, 
+            displayMember: "dataNamePeriod", 
+            valueMember: "dataPkPeriod",
+            height: 26, 
+            width: 240,
+            dropDownHeight: 200
+        }).css("display","inline-block");
+        var item = $(selector).jqxDropDownList('getItemByValue', pkPeriodSelected);
+        if(item!=undefined){
+            $(selector).jqxDropDownList({selectedIndex: item.index});
+        }
+    }
+    
+    
+}
+function createDropDownCategoryPayment(selector){
+    var sourceRol =[
+        {"dataName":"GOBIERNO","dataValue":"1"},
+        {"dataName":"UNIVERSIDAD","dataValue":"2"},
+        {"dataName":"OTROS","dataValue":"3"}
+    ];
+    $(selector).jqxDropDownList({
+        theme: theme,
+        filterable: false, 
+        autoDropDownHeight: true,
+        placeHolder: "SELECCIONAR",
+        selectedIndex: 0, 
+        source: sourceRol, 
+        displayMember: "dataName", 
+        valueMember: "dataValue",
+        height: 26, 
+        width: 180                
+    }).css("display","inline-block");
+}
+
 function createDropDownPeriod(filtrable, selector){
     var periodSelected = 0;
     if(filtrable==="inscription"){
@@ -657,7 +742,11 @@ function createDropDownRol(selector){
         {"dataNameRol":"DIRECTOR","dataValueRol":"2"},
         {"dataNameRol":"MAESTRO","dataValueRol":"3"},
         {"dataNameRol":"SECRETARIA DE CARRERA","dataValueRol":"4"},
-        {"dataNameRol":"ADMINISTRATIVO","dataValueRol":"5"}
+        {"dataNameRol":"ADMINISTRATIVO","dataValueRol":"5"},
+        {"dataNameRol":"BECAS","dataValueRol":"8"},
+        {"dataNameRol":"ESTADIA","dataValueRol":"9"},
+        {"dataNameRol":"FINANZAS","dataValueRol":"10"},
+        {"dataNameRol":"ESTADISTICA","dataValueRol":"11"}
     ];
     $(selector).jqxDropDownList({
         theme: theme,
