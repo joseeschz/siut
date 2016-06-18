@@ -24,17 +24,16 @@ import model.studyLevelModel;
  */
 public class paymentsPenaltyTypesControl {
     public static void main(String[] args) {
-        model.paymentsPenaltyTypesModel obj=new paymentsPenaltyTypesModel();
-        ArrayList<paymentsPenaltyTypesModel> list=new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypes(1, 1, 1, 12);
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getFL_NAME_PENALTY());
-        }
         paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
+        categoryPaymentsModel categoryModel = new categoryPaymentsModel();
 
-        allPaymentsPenaltyType.setPK_PAYMENT_PENALTY_TYPE(1);
-        allPaymentsPenaltyType.setFL_NAME_PENALTY("");
-        allPaymentsPenaltyType.setFL_TARIFF("1000");
-        System.out.println(new paymentsPenaltyTypesControl().UpdatePaymentsPenaltyType(allPaymentsPenaltyType));
+        allPaymentsPenaltyType.setFL_NAME_PENALTY("pt_name_penalty");
+        allPaymentsPenaltyType.setFL_TARIFF("pt_tariff");
+        allPaymentsPenaltyType.setFL_STATUS_PREPAI(2);
+
+        categoryModel.setPK_CATEGORY_PAYMENT(1);
+        allPaymentsPenaltyType.setCategory(categoryModel);
+        System.out.print(new paymentsPenaltyTypesControl().InsertPaymentsPenaltyTypeServices(allPaymentsPenaltyType));
     }
     private String procedure;
     public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyType(int pk){
@@ -55,16 +54,95 @@ public class paymentsPenaltyTypesControl {
         }
         return list;
     }
-    public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyTypes(int pt_fk_level_study, int pt_fk_semester, int pt_fk_category_payment, int pt_fk_period){
+    public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyTypesNotPrepai(int pt_fk_level_study, int pt_fk_semester, int pt_fk_category_payment, int pt_fk_period){
         ArrayList<paymentsPenaltyTypesModel> list=new ArrayList<>();
-        procedure = "CALL `GET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `GET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");
             ps.setInt(2, 0);
             ps.setInt(3, pt_fk_level_study);
             ps.setInt(4, pt_fk_semester);
             ps.setInt(5, pt_fk_category_payment);
-            ps.setInt(6, pt_fk_period);            
+            ps.setInt(6, 0);    
+            ps.setInt(7, pt_fk_period);            
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
+                    studyLevelModel studyLevelModel =  new studyLevelModel();
+                    semesterModel semesterModel =  new semesterModel();
+                    categoryPaymentsModel categoryModel = new categoryPaymentsModel();
+                    periodModel periodModel =  new periodModel();
+                    
+                    allPaymentsPenaltyType.setPK_PAYMENT_PENALTY_TYPE(res.getInt("PK_PAYMENT_PENALTY_TYPE"));
+                    allPaymentsPenaltyType.setFL_NAME_PENALTY(res.getString("FL_NAME_PENALTY"));
+                    allPaymentsPenaltyType.setFL_TARIFF(res.getString("FL_TARIFF"));
+                    studyLevelModel.setPK_LEVEL_STUDY(res.getInt("PK_LEVEL_STUDY"));
+                    allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
+                    
+                    semesterModel.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    allPaymentsPenaltyType.setSemester(semesterModel);
+                    
+                    categoryModel.setPK_CATEGORY_PAYMENT(res.getInt("PK_CATEGORY_PAYMENT"));
+                    allPaymentsPenaltyType.setCategory(categoryModel);
+                    periodModel.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    allPaymentsPenaltyType.setPeriod(periodModel);
+                    list.add(allPaymentsPenaltyType);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return list;
+    }
+    public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyTypesPrepai(int pt_fk_level_study, int pt_fk_semester, int pt_fk_category_payment, int pt_fk_period){
+        ArrayList<paymentsPenaltyTypesModel> list=new ArrayList<>();
+        procedure = "CALL `GET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "all");
+            ps.setInt(2, 0);
+            ps.setInt(3, pt_fk_level_study);
+            ps.setInt(4, pt_fk_semester);
+            ps.setInt(5, pt_fk_category_payment);
+            ps.setInt(6, 1);    
+            ps.setInt(7, pt_fk_period);            
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
+                    studyLevelModel studyLevelModel =  new studyLevelModel();
+                    semesterModel semesterModel =  new semesterModel();
+                    categoryPaymentsModel categoryModel = new categoryPaymentsModel();
+                    periodModel periodModel =  new periodModel();
+                    
+                    allPaymentsPenaltyType.setPK_PAYMENT_PENALTY_TYPE(res.getInt("PK_PAYMENT_PENALTY_TYPE"));
+                    allPaymentsPenaltyType.setFL_NAME_PENALTY(res.getString("FL_NAME_PENALTY"));
+                    allPaymentsPenaltyType.setFL_TARIFF(res.getString("FL_TARIFF"));
+                    studyLevelModel.setPK_LEVEL_STUDY(res.getInt("PK_LEVEL_STUDY"));
+                    allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
+                    
+                    semesterModel.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    allPaymentsPenaltyType.setSemester(semesterModel);
+                    
+                    categoryModel.setPK_CATEGORY_PAYMENT(res.getInt("PK_CATEGORY_PAYMENT"));
+                    allPaymentsPenaltyType.setCategory(categoryModel);
+                    periodModel.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    allPaymentsPenaltyType.setPeriod(periodModel);
+                    list.add(allPaymentsPenaltyType);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return list;
+    }
+    public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyTypesServices(int pt_fk_category_payment, int pt_fk_period){
+        ArrayList<paymentsPenaltyTypesModel> list=new ArrayList<>();
+        procedure = "CALL `GET_PAYMENTS_PENALITY_TYPE`(?, ?, null, null, ?, ?, ?)";
+        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "allServices");
+            ps.setInt(2, 0);
+            ps.setInt(3, pt_fk_category_payment);
+            ps.setInt(4, 2);    
+            ps.setInt(5, pt_fk_period);            
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
@@ -96,7 +174,7 @@ public class paymentsPenaltyTypesControl {
     }
     public String InsertPaymentsPenaltyType(paymentsPenaltyTypesModel dataPaymentsPenaltyType){
         String request;
-        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
@@ -107,7 +185,32 @@ public class paymentsPenaltyTypesControl {
                 ps.setInt(5, dataPaymentsPenaltyType.getStudyLevel().getPK_LEVEL_STUDY());
                 ps.setInt(6, dataPaymentsPenaltyType.getSemester().getPK_SEMESTER());
                 ps.setInt(7, dataPaymentsPenaltyType.getCategory().getPK_CATEGORY_PAYMENT());
-                ps.setInt(8, dataPaymentsPenaltyType.getPeriod().getPK_PERIOD());
+                ps.setInt(8, dataPaymentsPenaltyType.getFL_STATUS_PREPAI());
+                ps.setInt(9, dataPaymentsPenaltyType.getPeriod().getPK_PERIOD());
+                ps.executeUpdate();
+                request="Inserted";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }
+    public String InsertPaymentsPenaltyTypeServices(paymentsPenaltyTypesModel dataPaymentsPenaltyType){
+        String request;
+        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, null, null, ?, ?, ?)";
+        try {
+            Connection conn=new conectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.setString(1, "insert");
+                ps.setInt(2, 0);
+                ps.setString(3, dataPaymentsPenaltyType.getFL_NAME_PENALTY());
+                ps.setString(4, dataPaymentsPenaltyType.getFL_TARIFF());
+                ps.setInt(5, dataPaymentsPenaltyType.getCategory().getPK_CATEGORY_PAYMENT());
+                ps.setInt(6, dataPaymentsPenaltyType.getFL_STATUS_PREPAI());
+                ps.setInt(7, dataPaymentsPenaltyType.getPeriod().getPK_PERIOD());
                 ps.executeUpdate();
                 request="Inserted";
                 ps.close();
@@ -121,7 +224,7 @@ public class paymentsPenaltyTypesControl {
     }
     public String UpdatePaymentsPenaltyType(paymentsPenaltyTypesModel dataPaymentsPenaltyType){
         String request;
-        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, null, null, null, null)";
+        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, null, null, null, null, null)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
@@ -146,7 +249,7 @@ public class paymentsPenaltyTypesControl {
     }
     public String DeletePaymentsPenaltyType(int pkPaymentsPenaltyType){
         String request;
-        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, null, null, null, null, null, null)";
+        procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, null, null, null, null, null, null, null)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {

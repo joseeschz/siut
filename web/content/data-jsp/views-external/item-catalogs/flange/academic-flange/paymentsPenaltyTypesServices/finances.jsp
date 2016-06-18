@@ -86,129 +86,79 @@
         var itemPeriod= null;
         var itemCategoryPayment = null;
         
-        createDropDownStudyLevel("#paymentsPenaltyTypeLevelFilter",false);
-        itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
-        
-        if(itemLevel!=null || itemLevel!= undefined){
-            createDropDownSemester(itemLevel.value, '#paymentsPenaltyTypeSemesterFilter', false);
-            itemSemester = $('#paymentsPenaltyTypeSemesterFilter').jqxDropDownList('getSelectedItem');
-            if(itemSemester!=null || itemSemester!= undefined){
-                createDropDownSchoolYear("#paymentsPenaltyTypeSchoolYearFilter");
-                itemSchoolYear = $('#paymentsPenaltyTypeSchoolYearFilter').jqxDropDownList('getSelectedItem');
-                if(itemSchoolYear!=null || itemSchoolYear!= undefined){
-                    var params = {
-                        fkSchoolYear : itemSchoolYear.value   
-                    };
-                    createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', params, false);
-                    itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem'); 
-                    if(itemPeriod!=null || itemPeriod!= undefined){
-                        createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
+        createDropDownSchoolYear("#schoolYearFilter");
+        itemSchoolYear = $('#schoolYearFilter').jqxDropDownList('getSelectedItem');
+        if(itemSchoolYear!=null || itemSchoolYear!= undefined){
+            var params = {
+                fkSchoolYear : itemSchoolYear.value   
+            };
+            createDropDownPeriodBySchoolYear('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter', params, false);
+            itemPeriod = $('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter').jqxDropDownList('getSelectedItem'); 
+            if(itemPeriod!=null || itemPeriod!= undefined){
+                createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
 //                        var item = $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList('getItemByValue', 2);
 //                        $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList('disableItem', item ); 
-                        itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
-                        $("#paymentsPenaltyTypeLevelFilter").on('change',function (event){  
-                            var args = event.args;
-                            if (args){
-                                // index represents the item's index.                      
-                                var index = args.index;
-                                var item = args.item;
-                                // get item's label and value.
-                                var label = item.label;
-                                var value = item.value;
-                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                                itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
-                                createDropDownSemester(itemLevel.value, '#paymentsPenaltyTypeSemesterFilter', true);
-                                itemSemester = $('#paymentsPenaltyTypeSemesterFilter').jqxDropDownList('getSelectedItem');
-                                loadTable();
-                            }                
-                        });
-                        $("#paymentsPenaltyTypeSemesterFilter").on('change',function (event){  
-                            var args = event.args;
-                            if (args){
-                                // index represents the item's index.                      
-                                var index = args.index;
-                                var item = args.item;
-                                // get item's label and value.
-                                var label = item.label;
-                                var value = item.value;
-                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                                loadTable();
-                            }                
-                        });
-                        $("#paymentsPenaltyTypeSchoolYearFilter").on('change',function (event){  
-                            var args = event.args;
-                            if (args){
-                                // index represents the item's index.                      
-                                var index = args.index;
-                                var item = args.item;
-                                // get item's label and value.
-                                var label = item.label;
-                                var value = item.value;
-                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                                itemSchoolYear = $('#paymentsPenaltyTypeSchoolYearFilter').jqxDropDownList('getSelectedItem');
-                                var params = {
-                                    fkSchoolYear : itemSchoolYear.value   
-                                };
-                                createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', params, true);
-                                itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem'); 
-                            }                
-                        });
-                        
-                        $("#paymentsPenaltyTypePeriodFilter").on('change',function (event){  
-                            var args = event.args;
-                            if (args){
-                                // index represents the item's index.                      
-                                var index = args.index;
-                                var item = args.item;
-                                // get item's label and value.
-                                var label = item.label;
-                                var value = item.value;
-                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                                loadTable();
-                            }                
-                        });
-                        
-                        $("#paymentsPenaltyTypeCategoryFilter").on('change',function (event){  
-                            var args = event.args;
-                            if (args){
-                                // index represents the item's index.                      
-                                var index = args.index;
-                                var item = args.item;
-                                // get item's label and value.
-                                var label = item.label;
-                                var value = item.value;
-                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                                loadTable();
-                            }                
-                        });
-                        
+                itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
+                
+                $("#schoolYearFilter").on('change',function (event){  
+                    var args = event.args;
+                    if (args){
+                        // index represents the item's index.                      
+                        var index = args.index;
+                        var item = args.item;
+                        // get item's label and value.
+                        var label = item.label;
+                        var value = item.value;
+                        var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                        itemSchoolYear = $('#schoolYearFilter').jqxDropDownList('getSelectedItem');
+                        var params = {
+                            fkSchoolYear : itemSchoolYear.value   
+                        };
+                        createDropDownPeriodBySchoolYear('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter', params, true);
+                        itemPeriod = $('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter').jqxDropDownList('getSelectedItem'); 
+                    }                
+                });
+
+                $("#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter").on('change',function (event){  
+                    var args = event.args;
+                    if (args){
+                        // index represents the item's index.                      
+                        var index = args.index;
+                        var item = args.item;
+                        // get item's label and value.
+                        var label = item.label;
+                        var value = item.value;
+                        var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
                         loadTable();
-                    }else{
-                        createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
-                        $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList("clear");
-                    }
-                }else{
-                    createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', {}, false);
-                    createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
-                    $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList("clear");
-                }
+                    }                
+                });
+
+                $("#paymentsPenaltyTypeCategoryFilter").on('change',function (event){  
+                    var args = event.args;
+                    if (args){
+                        // index represents the item's index.                      
+                        var index = args.index;
+                        var item = args.item;
+                        // get item's label and value.
+                        var label = item.label;
+                        var value = item.value;
+                        var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                        loadTable();
+                    }                
+                });
+
+                loadTable();
             }else{
-                createDropDownSchoolYear("#paymentsPenaltyTypeSchoolYearFilter");
-                $("#paymentsPenaltyTypeSchoolYearFilter").jqxDropDownList("clear");
-                createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', {}, false);
                 createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
                 $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList("clear");
             }
         }else{
-            createDropDownSemester(null, '#paymentsPenaltyTypeSemesterFilter', false);
-            createDropDownSchoolYear("#paymentsPenaltyTypeSchoolYearFilter");
-            $("#paymentsPenaltyTypeSchoolYearFilter").jqxDropDownList("clear");
-            createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', {}, false);
+            createDropDownPeriodBySchoolYear('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter', {}, false);
             createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
             $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList("clear");
         }
         
-        var windowAddPaymentsPenaltyTypes = $('#jqxWindowAddPaymentsPenaltyTypes').jqxWindow({
+        var windowAddpaymentsPenaltyTypesPrepai = $('#jqxWindowAddpaymentsPenaltyTypesPrepai').jqxWindow({
             theme: theme,
             height: 280,
             width: 350,
@@ -246,10 +196,8 @@
             }
         });
         function loadTable(){
-            itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
-            itemSemester = $('#paymentsPenaltyTypeSemesterFilter').jqxDropDownList('getSelectedItem');
             itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
-            itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem'); 
+            itemPeriod = $('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter').jqxDropDownList('getSelectedItem'); 
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type:'int'},
@@ -263,15 +211,13 @@
                 ],
                 root: "__ENTITIES",
                 data : {
-                  pt_pk_level_study : itemLevel.value,
-                  pt_pk_semester : itemSemester.value,
                   pt_pk_category : itemCategoryPayment.value,
                   pt_pk_period : itemPeriod.value
                 },
                 dataType: "json",
                 async: false,
                 id: 'dataPkPaymentPenaltyType',
-                url: '../servicePaymentsPenaltyType?view=NotPrepai',
+                url: '../servicePaymentsPenaltyType?view=services',
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
@@ -296,7 +242,7 @@
                                 $("#message").text("¡Registros de entidades diferentes dependen de este registro, por lo que no es posible borrarlo!");
                                 $("#jqxWindowWarning").jqxWindow('open');
                             }else if(data.indexOf('Deleted')>=0){
-                                $("#tablePaymentsPenaltyTypes").jqxDataTable('updateBoundData');
+                                $("#tablepaymentsPenaltyTypesPrepai").jqxDataTable('updateBoundData');
                             }else{
                                 commit(false);
                             }                        
@@ -305,7 +251,7 @@
                 }
             };
             var dataAdapter = new $.jqx.dataAdapter(ordersSource);
-            $("#tablePaymentsPenaltyTypes").jqxDataTable({
+            $("#tablepaymentsPenaltyTypesPrepai").jqxDataTable({
                 width: 600,
                 height: 400,
                 selectionMode: "singleRow",
@@ -360,7 +306,7 @@
                         }
                     };
                     var rowIndex = null;
-                    $("#tablePaymentsPenaltyTypes").on('rowSelect', function (event) {
+                    $("#tablepaymentsPenaltyTypesPrepai").on('rowSelect', function (event) {
                         var args = event.args;
                         rowIndex = args.index;
                         updateButtons('Select');
@@ -368,14 +314,14 @@
                             updateButtons('Unselect');
                         }
                     });
-                    $("#tablePaymentsPenaltyTypes").on('rowUnselect', function (event) {
+                    $("#tablepaymentsPenaltyTypesPrepai").on('rowUnselect', function (event) {
                         
                         updateButtons('Unselect');
                     });
-                    $("#tablePaymentsPenaltyTypes").on('rowEndEdit', function (event) {
+                    $("#tablepaymentsPenaltyTypesPrepai").on('rowEndEdit', function (event) {
                         updateButtons('End Edit');
                     });
-                    $("#tablePaymentsPenaltyTypes").on('rowBeginEdit', function (event) {
+                    $("#tablepaymentsPenaltyTypesPrepai").on('rowBeginEdit', function (event) {
                         updateButtons('Edit');
                     });
                     addButton.click(function (event) {
@@ -383,7 +329,7 @@
                             $("#validationStatus").hide();
                             $('#name_penalty').val("");
                             $("#tariff").val(0);
-                            windowAddPaymentsPenaltyTypes.jqxWindow('open');
+                            windowAddpaymentsPenaltyTypesPrepai.jqxWindow('open');
                         }
                     });
                     deleteButton.click(function () {
@@ -394,7 +340,7 @@
                             $("#ok").off("click");
                             $("#ok").on("click", function (){
                                 $("#jqxWindowWarning").jqxWindow('close');
-                                $("#tablePaymentsPenaltyTypes").jqxDataTable('deleteRow', rowIndex);
+                                $("#tablepaymentsPenaltyTypesPrepai").jqxDataTable('deleteRow', rowIndex);
                             });
                             updateButtons('delete');
                         }
@@ -427,8 +373,8 @@
                 ]
             }); 
         }
-        $('#tablePaymentsPenaltyTypes').off('cellValueChanged');
-        $('#tablePaymentsPenaltyTypes').on('cellValueChanged', function (event) {
+        $('#tablepaymentsPenaltyTypesPrepai').off('cellValueChanged');
+        $('#tablepaymentsPenaltyTypesPrepai').on('cellValueChanged', function (event) {
             // event args.
             var args = event.args;
             // cell value.
@@ -454,8 +400,7 @@
                 data:{
                     'pt_pk_payment_penalty': row.dataPkPaymentPenaltyType,
                     'pt_name_penalty': row.dataNamePenalty,
-                    'pt_tariff': row.dataTariff,
-                    'pt_prepai' : 0
+                    'pt_tariff': row.dataTariff
                 },
                 beforeSend: function (xhr) {
                 },
@@ -470,10 +415,8 @@
             });
         });
         $("#okAdd").click(function (){
-            itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
-            itemSemester = $('#paymentsPenaltyTypeSemesterFilter').jqxDropDownList('getSelectedItem');
             itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
-            itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter').jqxDropDownList('getSelectedItem');
             var name_penalty = $('#name_penalty').jqxTextArea('val');
             var tariff = $("#tariff").jqxNumberInput('val');
             if(name_penalty.length>0){
@@ -481,14 +424,12 @@
                     var data = {
                         pt_name_penalty : name_penalty,
                         pt_tariff : tariff,
-                        pt_pk_level_study : itemLevel.value,
-                        pt_pk_semester : itemSemester.value,
                         pt_pk_category : itemCategoryPayment.value,
                         pt_pk_period : itemPeriod.value
                     };
                     insert(data);
                     $("#validationStatus").hide();
-                    windowAddPaymentsPenaltyTypes.jqxWindow('close');
+                    windowAddpaymentsPenaltyTypesPrepai.jqxWindow('close');
                 }else{
                     $("#validationStatus").show();
                     $("#validationStatus").text("Debes de establecer un monto...");
@@ -505,16 +446,14 @@
                 //Send the paramethers to servelt
                 type: "POST",
                 async: false,
-                url: "../servicePaymentsPenaltyType?insert",
+                url: "../servicePaymentsPenaltyType?insertServices",
                 data:{
                     'pt_pk_payment_penalty': data.pt_pk_payment_penalty,
                     'pt_name_penalty': data.pt_name_penalty,
                     'pt_tariff': data.pt_tariff,
-                    'pt_prepai': 0,
-                    'pt_pk_level_study': data.pt_pk_level_study,
-                    'pt_pk_semester': data.pt_pk_semester,
                     'pt_pk_category': data.pt_pk_category,
-                    'pt_pk_period': data.pt_pk_period
+                    'pt_pk_period': data.pt_pk_period,
+                    'pt_prepai' : 2
                 },
                 beforeSend: function (xhr) {
                 },
@@ -523,13 +462,13 @@
                     alert("Error interno del servidor");
                 },
                 success: function (data, textStatus, jqXHR) {
-                    $("#tablePaymentsPenaltyTypes").jqxDataTable('updateBoundData');
+                    $("#tablepaymentsPenaltyTypesPrepai").jqxDataTable('updateBoundData');
                 }
             });
         }
     });
 </script>
-<div id='jqxWindowAddPaymentsPenaltyTypes'>
+<div id='jqxWindowAddpaymentsPenaltyTypesPrepai'>
     <div>Agregar nuevo concepto</div>
     <div>
         <div>
@@ -554,23 +493,15 @@
     </div>
 </div>
 <div style="display: inline-block; margin-right: 5px;">
-    Nivel de estudio<br>
-    <div id='paymentsPenaltyTypeLevelFilter'></div>
-</div>
-<div style="display: inline-block; margin-right: 5px;">
-    Cuatrimestre<br>
-    <div id='paymentsPenaltyTypeSemesterFilter'></div>
-</div>
-<div style="display: inline-block; margin-right: 5px;">
     <span>Siclo Escolar</span><br>
-    <div id="paymentsPenaltyTypeSchoolYearFilter"></div>
+    <div id="schoolYearFilter"></div>
 </div>
 <div style="display: inline-block; margin-right: 5px;">
     Periodo <br>
-    <div id='paymentsPenaltyTypePeriodFilter'></div>
+    <div id='paymentsPenaltyTypepaymentsPenaltyTypesPrepaiFilter'></div>
 </div>
 <div style="display: inline-block; margin-right: 5px;">
     Categoría <br>
     <div id='paymentsPenaltyTypeCategoryFilter'></div>
 </div>
-<div id="tablePaymentsPenaltyTypes"></div>
+<div id="tablepaymentsPenaltyTypesPrepai"></div>

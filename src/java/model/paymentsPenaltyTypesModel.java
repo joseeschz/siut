@@ -13,10 +13,11 @@ public class paymentsPenaltyTypesModel {
     int PK_PAYMENT_PENALTY_TYPE=0;
     String FL_NAME_PENALTY="";
     String FL_TARIFF="";
-    studyLevelModel studyLevel;
-    semesterModel semester;
-    categoryPaymentsModel category;
-    periodModel period;
+    studyLevelModel studyLevel = null;
+    semesterModel semester = null;
+    categoryPaymentsModel category = null;
+    periodModel period = null;
+    int FL_STATUS_PREPAI=0;
 
     public int getPK_PAYMENT_PENALTY_TYPE() {
         return PK_PAYMENT_PENALTY_TYPE;
@@ -72,6 +73,14 @@ public class paymentsPenaltyTypesModel {
 
     public void setPeriod(periodModel period) {
         this.period = period;
+    }
+
+    public int getFL_STATUS_PREPAI() {
+        return FL_STATUS_PREPAI;
+    }
+
+    public void setFL_STATUS_PREPAI(int FL_STATUS_PREPAI) {
+        this.FL_STATUS_PREPAI = FL_STATUS_PREPAI;
     }
     
 }

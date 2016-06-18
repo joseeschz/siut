@@ -49,12 +49,21 @@ public class servicePaymentsPenalityType extends HttpServlet {
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 settings.put("__paymentsPenaltyTypesModel","PaymentsPenaltyType");
-                int pt_pk_level_study = Integer.parseInt(request.getParameter("pt_pk_level_study"));
-                int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
                 int pt_pk_category = Integer.parseInt(request.getParameter("pt_pk_category"));
-                int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));
+                int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));                  
+                if(request.getParameter("view").equals("NotPrepai")){
+                    int pt_pk_level_study = Integer.parseInt(request.getParameter("pt_pk_level_study"));
+                    int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
+                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesNotPrepai(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_period);
+                }else if(request.getParameter("view").equals("Prepai")){
+                    int pt_pk_level_study = Integer.parseInt(request.getParameter("pt_pk_level_study"));
+                    int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
+                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesPrepai(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_period);
+                }else{
+                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesServices(pt_pk_category, pt_pk_period);
+                }
                 
-                listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypes(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_period);
+                
                 for(int i=0;i<listPaymentsPenaltyType.size();i++){
                     JSONObject data = new JSONObject();
                     data.put("dataProgresivNumber", i+1);
@@ -83,6 +92,7 @@ public class servicePaymentsPenalityType extends HttpServlet {
 
                 allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
                 allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
+                allPaymentsPenaltyType.setFL_STATUS_PREPAI(Integer.parseInt(request.getParameter("pt_prepai")));
                 studyLevelModel.setPK_LEVEL_STUDY(Integer.parseInt(request.getParameter("pt_pk_level_study")));
                 allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
 
@@ -94,6 +104,28 @@ public class servicePaymentsPenalityType extends HttpServlet {
                 periodModel.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
                 allPaymentsPenaltyType.setPeriod(periodModel);
                 out.print(new paymentsPenaltyTypesControl().InsertPaymentsPenaltyType(allPaymentsPenaltyType));             
+            }
+            if(request.getParameter("insertServices")!=null){
+                paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
+                studyLevelModel studyLevelModel =  new studyLevelModel();
+                semesterModel semesterModel =  new semesterModel();
+                categoryPaymentsModel categoryModel = new categoryPaymentsModel();
+                periodModel periodModel =  new periodModel();
+
+                allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
+                allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
+                allPaymentsPenaltyType.setFL_STATUS_PREPAI(Integer.parseInt(request.getParameter("pt_prepai")));
+                studyLevelModel.setPK_LEVEL_STUDY(0);
+                allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
+
+                semesterModel.setPK_SEMESTER(0);
+                allPaymentsPenaltyType.setSemester(semesterModel);
+
+                categoryModel.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_pk_category")));
+                allPaymentsPenaltyType.setCategory(categoryModel);
+                periodModel.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
+                allPaymentsPenaltyType.setPeriod(periodModel);     
+                out.print(new paymentsPenaltyTypesControl().InsertPaymentsPenaltyTypeServices(allPaymentsPenaltyType));             
             }
             if(request.getParameter("update")!=null){      
                 response.setContentType("text/html;charset=UTF-8");
