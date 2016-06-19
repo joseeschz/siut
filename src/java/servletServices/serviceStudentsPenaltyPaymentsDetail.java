@@ -46,49 +46,51 @@ public class serviceStudentsPenaltyPaymentsDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
-            if(request.getParameter("view")!=null){                
-                ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPayments;
-                JSONArray principal = new JSONArray();
-                JSONObject settings = new JSONObject();
-                JSONArray content = new JSONArray();
-                int fkPeriod=Integer.parseInt(request.getParameter("pt_fkPeriod"));
-                int fkSemester=Integer.parseInt(request.getParameter("pt_fkSemester"));
-                int fkCategory=Integer.parseInt(request.getParameter("pt_fkCategory"));
-                int fkStudent=Integer.parseInt(request.getParameter("pt_fkStudent"));
-                settings.put("__studentsPenaltyPaymentsDetailModel","StudentsPenalityPayments");
-                if(request.getParameter("view").equals("studentsAllStatusPaymentNotPrepaid")){
-                    listStudentsPenalityPayments = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentNotPrepaid(fkPeriod, fkSemester, fkCategory, fkStudent);
-                }else{
-                    listStudentsPenalityPayments = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentNotPrepaid(fkPeriod, fkPeriod, fkPeriod,  fkPeriod);
-                }
-                for(int i=0;i<listStudentsPenalityPayments.size();i++){
-                    JSONObject data = new JSONObject();
-                    data.put("dataProgresivNumber", i+1);
-                    data.put("dataPkStudentPenaltyPaymentDetail", listStudentsPenalityPayments.get(i).getPK_STUDENT_PENALTY_PAYMENT_DETAIL());
-                    data.put("dataAmountPenalty", listStudentsPenalityPayments.get(i).getFL_AMOUNT_PENALITY());
-                    data.put("dataMotiveJustify", listStudentsPenalityPayments.get(i).getFL_MOTIVE_JUSTIFY());
-                    data.put("dataReferenceNumber", listStudentsPenalityPayments.get(i).getFL_REFERENCE_NUMBER());
-                    data.put("dataStatusJustify", listStudentsPenalityPayments.get(i).getFL_STATUS_JUSTIFY());
-                    data.put("dataStatusPay", listStudentsPenalityPayments.get(i).getFL_STATUS_PAY());
-                    data.put("dataUnique", listStudentsPenalityPayments.get(i).getFL_UNIQUE());
-                    data.put("dataPkStudent", listStudentsPenalityPayments.get(i).getStudent().getPK_STUDENT());
-                    data.put("dataPkSemester", listStudentsPenalityPayments.get(i).getSemester().getPK_SEMESTER());
-                    data.put("dataNameSemester", listStudentsPenalityPayments.get(i).getSemester().getFL_NAME_SEMESTER());
-                    data.put("dataPkPeriod", listStudentsPenalityPayments.get(i).getPeriod().getPK_PERIOD());
-                    data.put("dataNamePeriod", listStudentsPenalityPayments.get(i).getPeriod().getFL_NAME());
-                    data.put("dataPkStudentPaymentPenalty", listStudentsPenalityPayments.get(i).getStudentPenalityPayment().getPK_STUDENT_PAYMENT_PENALTY());
-                    data.put("dataPkPaymentPenaltyType", listStudentsPenalityPayments.get(i).getPaymentTypes().getPK_PAYMENT_PENALTY_TYPE());
-                    data.put("dataPkCategory", listStudentsPenalityPayments.get(i).getCategoryPayments().getPK_CATEGORY_PAYMENT());
-                    data.put("dataNamePenalty", listStudentsPenalityPayments.get(i).getPaymentTypes().getFL_NAME_PENALTY());
-                    data.put("dataTariff", listStudentsPenalityPayments.get(i).getPaymentTypes().getFL_TARIFF());
-                    content.add(data); 
-                }
-                settings.put("__ENTITIES", content);
-                principal.add(settings);
-                response.setContentType("application/json"); 
-                out.print(principal);
-                out.flush(); 
-                out.close();
+            if(request.getParameter("view")!=null){
+                JSONObject message = new JSONObject();
+                try {
+                    ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPayments;
+                    JSONArray principal = new JSONArray();
+                    JSONObject settings = new JSONObject();
+                    JSONArray content = new JSONArray();
+                    int fkPeriod=Integer.parseInt(request.getParameter("pt_fkPeriod"));
+                    int fkSemester=Integer.parseInt(request.getParameter("pt_fkSemester"));
+                    int fkCategory=Integer.parseInt(request.getParameter("pt_fkCategory"));
+                    int fkStatusPrepaid=Integer.parseInt(request.getParameter("pt_statusPrepaid"));
+                    int fkStudent=Integer.parseInt(request.getParameter("pt_fkStudent"));
+                    settings.put("__studentsPenaltyPaymentsDetailModel","StudentsPenalityPayments");
+                    listStudentsPenalityPayments = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentHeader(fkPeriod, fkSemester, fkCategory, fkStatusPrepaid, fkStudent);
+                    for(int i=0;i<listStudentsPenalityPayments.size();i++){
+                        JSONObject data = new JSONObject();
+                        data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkStudentPenaltyPaymentDetail", listStudentsPenalityPayments.get(i).getPK_STUDENT_PENALTY_PAYMENT_DETAIL());
+                        data.put("dataAmountPenalty", listStudentsPenalityPayments.get(i).getFL_AMOUNT_PENALITY());
+                        data.put("dataMotiveJustify", listStudentsPenalityPayments.get(i).getFL_MOTIVE_JUSTIFY());
+                        data.put("dataReferenceNumber", listStudentsPenalityPayments.get(i).getFL_REFERENCE_NUMBER());
+                        data.put("dataStatusJustify", listStudentsPenalityPayments.get(i).getFL_STATUS_JUSTIFY());
+                        data.put("dataStatusPay", listStudentsPenalityPayments.get(i).getFL_STATUS_PAY());
+                        data.put("dataUnique", listStudentsPenalityPayments.get(i).getFL_UNIQUE());
+                        data.put("dataPkStudent", listStudentsPenalityPayments.get(i).getStudent().getPK_STUDENT());
+                        data.put("dataPkSemester", listStudentsPenalityPayments.get(i).getSemester().getPK_SEMESTER());
+                        data.put("dataNameSemester", listStudentsPenalityPayments.get(i).getSemester().getFL_NAME_SEMESTER());
+                        data.put("dataPkPeriod", listStudentsPenalityPayments.get(i).getPeriod().getPK_PERIOD());
+                        data.put("dataNamePeriod", listStudentsPenalityPayments.get(i).getPeriod().getFL_NAME());
+                        data.put("dataPkStudentPaymentPenalty", listStudentsPenalityPayments.get(i).getStudentPenalityPayment().getPK_STUDENT_PAYMENT_PENALTY());
+                        data.put("dataPkPaymentPenaltyType", listStudentsPenalityPayments.get(i).getPaymentTypes().getPK_PAYMENT_PENALTY_TYPE());
+                        data.put("dataPkCategory", listStudentsPenalityPayments.get(i).getCategoryPayments().getPK_CATEGORY_PAYMENT());
+                        data.put("dataNamePenalty", listStudentsPenalityPayments.get(i).getPaymentTypes().getFL_NAME_PENALTY());
+                        data.put("dataTariff", listStudentsPenalityPayments.get(i).getPaymentTypes().getFL_TARIFF());
+                        content.add(data); 
+                    }
+                    settings.put("__ENTITIES", content);
+                    principal.add(settings);
+                    response.setContentType("application/json"); 
+                    out.print(principal);
+                    out.flush(); 
+                    out.close();
+                } catch (Exception e) {
+                    message.put("request", e);
+                } 
             }
             if(request.getParameter("insert")!=null){
                 response.setContentType("application/json"); 
@@ -114,13 +116,13 @@ public class serviceStudentsPenaltyPaymentsDetail extends HttpServlet {
                     studentPenalityPayment.setPK_STUDENT_PAYMENT_PENALTY(Integer.parseInt(request.getParameter("pt_pk_student_payment_penality")));
                     dataStudentsPenalityPayments.setStudentPenalityPayment(studentPenalityPayment);
                     
-                    paymentTypes.setPK_PAYMENT_PENALTY_TYPE(Integer.parseInt(request.getParameter("pt_payment_penality_type")));
+                    paymentTypes.setPK_PAYMENT_PENALTY_TYPE(Integer.parseInt(request.getParameter("pt_pk_payment_penality_type")));
                     dataStudentsPenalityPayments.setPaymentTypes(paymentTypes);
                     
-                    categoryPayments.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_category_payment")));
+                    categoryPayments.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_pk_category_payment")));
                     dataStudentsPenalityPayments.setCategoryPayments(categoryPayments);
                     
-                    dataStudentsPenalityPayments.setFL_AMOUNT_PENALITY("");
+                    dataStudentsPenalityPayments.setFL_AMOUNT_PENALITY("0");
                     dataStudentsPenalityPayments.setFL_REFERENCE_NUMBER(request.getParameter("pt_reference_number"));
                     dataStudentsPenalityPayments.setFL_STATUS_PAY("1");                  
                     
@@ -128,7 +130,7 @@ public class serviceStudentsPenaltyPaymentsDetail extends HttpServlet {
                     if(result.equals("Inserted")) {
                         data.put("status", "Success");
                     }else{
-                        data.put("status", "Success");
+                        data.put("status", result);
                     }
                 } catch (Exception e) {
                     data.put("Fail", "paramsEmpty");

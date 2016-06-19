@@ -72,7 +72,8 @@
             });
             dataAdapter.dataBind();            
             if(records){
-                loadDataToForm(records[0]);                
+                loadDataToForm(records[0]);
+                popupWindowPay.jqxWindow('open');
             }            
         }
         function checkBoxesConcepts(params){
@@ -84,63 +85,58 @@
                     records = dataAdapter.records;
                 }
             });
-            dataAdapter.dataBind();      
-            if(records){
-                popupWindowPay.jqxWindow('open');
-                if(records.length>0){                
-                    $(".conditionalHiden").show();
-                    $("#conceptsTitle").text("CONCEPTOS");
-                    $("#messageValidation").text("");
-                    var checkBox = "";
-                    $("#contentCheckBoxes").html("");
-                    $("#toPayment").text("$0.00");
-                    for(var i=0; i<records.length; i++){
-                        checkBox = "<tr><td colspan='2' style='width: 70%;'> <div id='checkBox"+records[i].dataPkPaymentPenaltyType+"' class='checkBox'>"+records[i].dataNamePenalty+"</div></td><td colspan='2'>$<span id='mount"+records[i].dataPkPaymentPenaltyType+"'>"+parseFloat(records[i].dataTariff).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');+"</span></td></tr>";
-                        $("#contentCheckBoxes").append(checkBox);
-                        if(records[i].dataStatusPay==="Yes"){
-                            $('#mount'+records[i].dataPkPaymentPenaltyType).addClass("checkBoxChecked");
-                            $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ disabled:true, checked:true });
-                        }else{
-
-                            $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ width: 'auto' });
-                        }                    
-                    }
-                    var totalPaid = 0;
-                    var totalChecked = 0;
-                    $(".checkBoxChecked").each(function (){
-                        totalChecked = totalChecked+1;
-                        totalPaid = totalPaid + parseFloat($(this).text().replace(",",""));
-                    });
-                    if(totalChecked==records.length){
-                        $("#conceptsTitle").text("TODOS LOS CONCEPTOS PAGADOS PARA LAS CONDICIONES SELECCIONADAS");
-                        $("#payButton").jqxButton({disabled: true});
-                        $('#referenceNumber').jqxInput({disabled: true});
+            dataAdapter.dataBind();            
+            if(records.length>0){                
+                $(".conditionalHiden").show();
+                $("#conceptsTitle").text("CONCEPTOS");
+                $("#messageValidation").text("");
+                var checkBox = "";
+                $("#contentCheckBoxes").html("");
+                $("#toPayment").text("$0.00");
+                for(var i=0; i<records.length; i++){
+                    checkBox = "<tr><td colspan='2' style='width: 70%;'> <div id='checkBox"+records[i].dataPkPaymentPenaltyType+"' class='checkBox'>"+records[i].dataNamePenalty+"</div></td><td colspan='2'>$<span id='mount"+records[i].dataPkPaymentPenaltyType+"'>"+parseFloat(records[i].dataTariff).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');+"</span></td></tr>";
+                    $("#contentCheckBoxes").append(checkBox);
+                    if(records[i].dataStatusPay==="Yes"){
+                        $('#mount'+records[i].dataPkPaymentPenaltyType).addClass("checkBoxChecked");
+                        $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ disabled:true, checked:true });
                     }else{
-                        $("#conceptsTitle").text("CONCEPTOS");
-                        $("#payButton").jqxButton({disabled: false});
-                        $('#referenceNumber').jqxInput({disabled: false});
-                    }
-                    $("#totalPaid").text("$"+parseFloat(totalPaid).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-                    var toPayment = 0;
-                    $('.checkBox').off('change');
-                    $('.checkBox').on('change', function (event) {                     
-                        var checked = event.args.checked; 
-                        var thisID = $(this).attr("id").replace("checkBox","");
-                        if(checked){
-                            toPayment = toPayment + parseFloat($("#mount"+thisID).text().replace(",",""));
-                        }else{
-                            toPayment = toPayment - parseFloat($("#mount"+thisID).text().replace(",",""));
-                        }
-                        $("#toPayment").text("$"+parseFloat(toPayment).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
-                    });
+                        
+                        $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ width: 'auto' });
+                    }                    
+                }
+                var totalPaid = 0;
+                var totalChecked = 0;
+                $(".checkBoxChecked").each(function (){
+                    totalChecked = totalChecked+1;
+                    totalPaid = totalPaid + parseFloat($(this).text().replace(",",""));
+                });
+                if(totalChecked==records.length){
+                    $("#conceptsTitle").text("TODOS LOS CONCEPTOS PAGADOS PARA LAS CONDICIONES SELECCIONADAS");
+                    $("#payButton").jqxButton({disabled: true});
+                    $('#referenceNumber').jqxInput({disabled: true});
                 }else{
-                    $(".conditionalHiden").hide();
-                    $("#conceptsTitle").text("NO HAY CONCEPTOS QUE PAGAR PARA LAS CONDICIONES SELECCIONADAS");
-                    $("#messageValidation").text("");
-                }   
+                    $("#conceptsTitle").text("CONCEPTOS");
+                    $("#payButton").jqxButton({disabled: false});
+                    $('#referenceNumber').jqxInput({disabled: false});
+                }
+                $("#totalPaid").text("$"+parseFloat(totalPaid).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                var toPayment = 0;
+                $('.checkBox').off('change');
+                $('.checkBox').on('change', function (event) {                     
+                    var checked = event.args.checked; 
+                    var thisID = $(this).attr("id").replace("checkBox","");
+                    if(checked){
+                        toPayment = toPayment + parseFloat($("#mount"+thisID).text().replace(",",""));
+                    }else{
+                        toPayment = toPayment - parseFloat($("#mount"+thisID).text().replace(",",""));
+                    }
+                    $("#toPayment").text("$"+parseFloat(toPayment).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                });
             }else{
-                console.log("Problems in the server to process request...");
-            }
+                $(".conditionalHiden").hide();
+                $("#conceptsTitle").text("NO HAY CONCEPTOS QUE PAGAR PARA LAS CONDICIONES SELECCIONADAS");
+                $("#messageValidation").text("");
+            }           
         }
         function loadDataToForm(data){
             $("#labelEnrollment").text(data.dataEnrollment);
@@ -282,7 +278,7 @@
                     pt_fkSemester : pt_fkSemester,
                     pt_fkStudent : pt_fkStudent,
                     pt_fkCategory : pt_fkCategory,
-                    pt_statusPrepaid : 0
+                    pt_statusPrepaid : 2
                 },
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
@@ -352,7 +348,7 @@
                     pt_fkSemester : pt_fkSemester,
                     pt_fkStudent : pt_fkStudent,
                     pt_fkCategory : pt_fkCategory,
-                    pt_statusPrepaid : 0
+                    pt_statusPrepaid : 2
                 }
             };
             return ordersSource;
@@ -410,7 +406,7 @@
                 url: '../serviceStudentsPenaltyPayments?view',
                 data : {
                     pt_fkPeriod : itemPeriod.value,
-                    pt_status_prepaid : 0
+                    pt_status_prepaid : 2
                 }
             };
             return ordersSource;
@@ -864,7 +860,7 @@
                 pt_pk_period : itemPeriodTemp.value,
                 pt_pk_semester : itemSemester.value,
                 pt_pk_student : $("#hidenPkStudent").val(),
-                pt_status_prepaid : 0,
+                pt_status_prepaid : 2,
                 pt_status_payment : 1
             };
             $.ajax({

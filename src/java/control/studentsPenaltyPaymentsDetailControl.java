@@ -24,22 +24,22 @@ import model.studentsPenaltyPaymentsModel;
 public class studentsPenaltyPaymentsDetailControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPaymentsDetail;
-        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentNotPrepaid(14, 7, 1, 819);
+        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentHeader(14, 7, 1, 0, 819);
         for(int i=0;i<listStudentsPenalityPaymentsDetail.size();i++){
             System.out.println(listStudentsPenalityPaymentsDetail.get(i).getFL_REFERENCE_NUMBER());
         }
     }
     private String procedure;
-
-    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentNotPrepaid(int pt_fk_period, int pt_fk_semester, int pt_fkCategory, int pt_fk_student){
+    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentHeader(int pt_fk_period, int pt_fk_semester, int pt_fk_category, int pt_status_prepaid, int pt_fk_student){
         ArrayList<studentsPenaltyPaymentsDetailModel> list=new ArrayList<>();
-        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, null, ?)";
+        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?)";
         try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
-            ps.setString(1, "allNotPrepaid");
+            ps.setString(1, "all");
             ps.setInt(2, pt_fk_period);      
             ps.setInt(3, pt_fk_semester);
-            ps.setInt(4, pt_fkCategory);
-            ps.setInt(5, pt_fk_student);
+            ps.setInt(4, pt_fk_category);
+            ps.setInt(5, pt_status_prepaid);
+            ps.setInt(6, pt_fk_student);
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentsPenaltyPaymentsDetailModel allStudentsPenaltyPaymentDetail=new studentsPenaltyPaymentsDetailModel();

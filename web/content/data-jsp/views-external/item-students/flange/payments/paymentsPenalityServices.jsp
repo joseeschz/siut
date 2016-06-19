@@ -36,7 +36,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             });             
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#paymentsPenalityTab").load("../content/data-jsp/views-external/item-students/flange/payments/paymentsPenality-flange/admin.jsp");
+            $("#paymentsPenaltyTypesServicesTab").load("../content/data-jsp/views-external/item-students/flange/payments/paymentsPenaltyTypesServices-flange/admin.jsp");
         });
     </script>
     <div id='jqxWindowWarning'>
@@ -54,11 +54,11 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="payment">Pago de cuotas que son estrictamente requeridas</li>
+            <li class="jqxTabsTitle" dir="payment">Pago de servicios y sanciones</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">
-                <div id="paymentsPenalityTab" style="padding: 20px;"></div>
+                <div id="paymentsPenaltyTypesServicesTab" style="padding: 20px;"></div>
             </div>
         </div>
     </div>
