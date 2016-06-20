@@ -6,6 +6,7 @@
 package servletServices;
 
 import control.studentControl;
+import control.tempReportPaymentsGobControl;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
