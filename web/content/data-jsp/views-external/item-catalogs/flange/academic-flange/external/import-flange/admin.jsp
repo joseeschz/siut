@@ -47,8 +47,8 @@
             var fileName = args.file;
             var serverResponce = args.response;
             // Your code here.
-            var responce = JSON.parse(serverResponce.replace("<pre>","").replace("</pre>",""));
-            
+            var responce = JSON.parse(serverResponce.replace("<pre>","").replace("</pre>","").replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">', ""));
+            console.log(responce)
             setTimeout(function (){
                 $("#loading").hide();
                 if(responce.status==="Inserted"){
@@ -202,8 +202,7 @@
                         cellsalign: 'center', 
                         dataField: 'dataStatusLoad', 
                         aggregates: [
-                            {
-                                '<b>Total</b>' : function (aggregatedValue, currentValue, column, record){
+                            { '<b>Total</b>' : function (aggregatedValue, currentValue, column, record){
                                     if (currentValue) {
                                         return aggregatedValue + 1;
                                     }

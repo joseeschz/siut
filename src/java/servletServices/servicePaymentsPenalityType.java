@@ -43,105 +43,100 @@ public class servicePaymentsPenalityType extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         try (PrintWriter out = response.getWriter()) {
-            if(request.getParameter("view")!=null){
-                ArrayList<paymentsPenaltyTypesModel> listPaymentsPenaltyType;
-                JSONArray principal = new JSONArray();
-                JSONObject settings = new JSONObject();
-                JSONArray content = new JSONArray();
-                settings.put("__paymentsPenaltyTypesModel","PaymentsPenaltyType");
-                int pt_pk_category = Integer.parseInt(request.getParameter("pt_pk_category"));
-                int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));                  
-                if(request.getParameter("view").equals("NotPrepai")){
+            response.setContentType("application/json"); 
+            JSONObject message = new JSONObject();
+            if(request.getParameter("view")!=null){       
+                try {
+                    ArrayList<paymentsPenaltyTypesModel> listPaymentsPenaltyType;
+                    JSONArray principal = new JSONArray();
+                    JSONObject settings = new JSONObject();
+                    JSONArray content = new JSONArray();
+                    settings.put("__paymentsPenaltyTypesModel","PaymentsPenaltyType");
+                    int pt_pk_category = Integer.parseInt(request.getParameter("pt_pk_category"));
+                    int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));                  
                     int pt_pk_level_study = Integer.parseInt(request.getParameter("pt_pk_level_study"));
                     int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
-                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesNotPrepai(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_period);
-                }else if(request.getParameter("view").equals("Prepai")){
-                    int pt_pk_level_study = Integer.parseInt(request.getParameter("pt_pk_level_study"));
-                    int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
-                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesPrepai(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_period);
-                }else{
-                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypesServices(pt_pk_category, pt_pk_period);
-                }
-                
-                
-                for(int i=0;i<listPaymentsPenaltyType.size();i++){
-                    JSONObject data = new JSONObject();
-                    data.put("dataProgresivNumber", i+1);
-                    data.put("dataPkPaymentPenaltyType", listPaymentsPenaltyType.get(i).getPK_PAYMENT_PENALTY_TYPE());
-                    data.put("dataNamePenalty", listPaymentsPenaltyType.get(i).getFL_NAME_PENALTY());
-                    data.put("dataTariff", listPaymentsPenaltyType.get(i).getFL_TARIFF());
-                    data.put("dataPkLevelStudy", listPaymentsPenaltyType.get(i).getStudyLevel().getPK_LEVEL_STUDY());
-                    data.put("dataPkSemester", listPaymentsPenaltyType.get(i).getSemester().getPK_SEMESTER());
-                    data.put("dataPkCategory", listPaymentsPenaltyType.get(i).getCategory().getPK_CATEGORY_PAYMENT());
-                    data.put("dataPkPeriod", listPaymentsPenaltyType.get(i).getPeriod().getPK_PERIOD());
-                    content.add(data); 
-                }
-                settings.put("__ENTITIES", content);
-                principal.add(settings);
-                response.setContentType("application/json"); 
-                out.print(principal);
-                out.flush(); 
-                out.close();
+                    int pt_pk_type_concept = Integer.parseInt(request.getParameter("pt_pk_type_concept"));
+                    int pt_pk_type_format = Integer.parseInt(request.getParameter("pt_pk_type_format"));
+                    listPaymentsPenaltyType = new paymentsPenaltyTypesControl().SelectPaymentsPenaltyTypes(pt_pk_level_study, pt_pk_semester, pt_pk_category, pt_pk_type_concept, pt_pk_type_format, pt_pk_period);
+
+
+                    for(int i=0;i<listPaymentsPenaltyType.size();i++){
+                        JSONObject data = new JSONObject();
+                        data.put("dataProgresivNumber", i+1);
+                        data.put("dataPkPaymentPenaltyType", listPaymentsPenaltyType.get(i).getPK_PAYMENT_PENALTY_TYPE());
+                        data.put("dataNamePenalty", listPaymentsPenaltyType.get(i).getFL_NAME_PENALTY());
+                        data.put("dataTariff", listPaymentsPenaltyType.get(i).getFL_TARIFF());
+                        data.put("dataPkLevelStudy", listPaymentsPenaltyType.get(i).getStudyLevel().getPK_LEVEL_STUDY());
+                        data.put("dataPkSemester", listPaymentsPenaltyType.get(i).getSemester().getPK_SEMESTER());
+                        data.put("dataPkCategory", listPaymentsPenaltyType.get(i).getCategory().getPK_CATEGORY_PAYMENT());
+                        data.put("dataPkPeriod", listPaymentsPenaltyType.get(i).getPeriod().getPK_PERIOD());
+                        content.add(data); 
+                    }
+                    settings.put("__ENTITIES", content);
+                    principal.add(settings);                    
+                    out.print(principal);
+                    out.flush(); 
+                    out.close();
+                } catch (Exception e) {
+                    message.put("status", "'"+e+"'");
+                    out.print(message);
+                }               
             }
             if(request.getParameter("insert")!=null){
-                paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
-                studyLevelModel studyLevelModel =  new studyLevelModel();
-                semesterModel semesterModel =  new semesterModel();
-                categoryPaymentsModel categoryModel = new categoryPaymentsModel();
-                periodModel periodModel =  new periodModel();
-
-                allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
-                allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
-                allPaymentsPenaltyType.setFL_STATUS_PREPAI(Integer.parseInt(request.getParameter("pt_prepai")));
-                studyLevelModel.setPK_LEVEL_STUDY(Integer.parseInt(request.getParameter("pt_pk_level_study")));
-                allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
-
-                semesterModel.setPK_SEMESTER(Integer.parseInt(request.getParameter("pt_pk_semester")));
-                allPaymentsPenaltyType.setSemester(semesterModel);
-
-                categoryModel.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_pk_category")));
-                allPaymentsPenaltyType.setCategory(categoryModel);
-                periodModel.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
-                allPaymentsPenaltyType.setPeriod(periodModel);
-                out.print(new paymentsPenaltyTypesControl().InsertPaymentsPenaltyType(allPaymentsPenaltyType));             
-            }
-            if(request.getParameter("insertServices")!=null){
-                paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
-                studyLevelModel studyLevelModel =  new studyLevelModel();
-                semesterModel semesterModel =  new semesterModel();
-                categoryPaymentsModel categoryModel = new categoryPaymentsModel();
-                periodModel periodModel =  new periodModel();
-
-                allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
-                allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
-                allPaymentsPenaltyType.setFL_STATUS_PREPAI(Integer.parseInt(request.getParameter("pt_prepai")));
-                studyLevelModel.setPK_LEVEL_STUDY(0);
-                allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
-
-                semesterModel.setPK_SEMESTER(0);
-                allPaymentsPenaltyType.setSemester(semesterModel);
-
-                categoryModel.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_pk_category")));
-                allPaymentsPenaltyType.setCategory(categoryModel);
-                periodModel.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
-                allPaymentsPenaltyType.setPeriod(periodModel);     
-                out.print(new paymentsPenaltyTypesControl().InsertPaymentsPenaltyTypeServices(allPaymentsPenaltyType));             
-            }
-            if(request.getParameter("update")!=null){      
-                response.setContentType("text/html;charset=UTF-8");
-                if(request.getParameter("pt_pk_payment_penalty") != null){
+                try {
                     paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
-                    allPaymentsPenaltyType.setPK_PAYMENT_PENALTY_TYPE(Integer.parseInt(request.getParameter("pt_pk_payment_penalty")));
+                    studyLevelModel studyLevelModel =  new studyLevelModel();
+                    semesterModel semesterModel =  new semesterModel();
+                    categoryPaymentsModel categoryModel = new categoryPaymentsModel();
+                    periodModel periodModel =  new periodModel();
+
                     allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
                     allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
-                    out.print(new paymentsPenaltyTypesControl().UpdatePaymentsPenaltyType(allPaymentsPenaltyType));
-                }                
+                    allPaymentsPenaltyType.setFK_TYPE_CONCEPT(Integer.parseInt(request.getParameter("pt_pk_type_concept")));
+                    allPaymentsPenaltyType.setFK_TYPE_FORMAT(Integer.parseInt(request.getParameter("pt_pk_type_format")));
+                    studyLevelModel.setPK_LEVEL_STUDY(Integer.parseInt(request.getParameter("pt_pk_level_study")));
+                    allPaymentsPenaltyType.setStudyLevel(studyLevelModel);
+
+                    semesterModel.setPK_SEMESTER(Integer.parseInt(request.getParameter("pt_pk_semester")));
+                    allPaymentsPenaltyType.setSemester(semesterModel);
+
+                    categoryModel.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_pk_category")));
+                    allPaymentsPenaltyType.setCategory(categoryModel);
+                    periodModel.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
+                    allPaymentsPenaltyType.setPeriod(periodModel);
+                    String statusInserted = new paymentsPenaltyTypesControl().InsertPaymentsPenaltyType(allPaymentsPenaltyType);
+                    message.put("status", statusInserted);
+                } catch (Exception e) {
+                    message.put("status", "'"+e+"'");
+                }           
+                out.print(message);   
             }
-            if(request.getParameter("delete")!=null){     
-                response.setContentType("text/html;charset=UTF-8");
-                if(request.getParameter("pt_pkPaymentsPenaltyType") != null){
-                    out.print(new paymentsPenaltyTypesControl().DeletePaymentsPenaltyType(Integer.parseInt(request.getParameter("pt_pkPaymentsPenaltyType"))));
-                }                
+            if(request.getParameter("update")!=null){      
+                try {
+                    if(request.getParameter("pt_pk_payment_penalty") != null){
+                        paymentsPenaltyTypesModel allPaymentsPenaltyType=new paymentsPenaltyTypesModel();
+                        allPaymentsPenaltyType.setPK_PAYMENT_PENALTY_TYPE(Integer.parseInt(request.getParameter("pt_pk_payment_penalty")));
+                        allPaymentsPenaltyType.setFL_NAME_PENALTY(request.getParameter("pt_name_penalty"));
+                        allPaymentsPenaltyType.setFL_TARIFF(request.getParameter("pt_tariff"));
+                        String statusInserted = new paymentsPenaltyTypesControl().UpdatePaymentsPenaltyType(allPaymentsPenaltyType);
+                        message.put("status", statusInserted);
+                    } 
+                } catch (Exception e) {
+                    message.put("status", "'"+e+"'");
+                }
+                out.print(message);            
+            }
+            if(request.getParameter("delete")!=null){   
+                try {
+                    if(request.getParameter("pt_pkPaymentsPenaltyType") != null){
+                        String statusInserted = new paymentsPenaltyTypesControl().DeletePaymentsPenaltyType(Integer.parseInt(request.getParameter("pt_pkPaymentsPenaltyType")));
+                        message.put("status", statusInserted);
+                    }    
+                } catch (Exception e) {
+                    message.put("status", "'"+e+"'");
+                }
+                out.print(message);
             }
         }
     }

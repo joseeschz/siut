@@ -447,9 +447,9 @@ function createDropDownPeriodBySchoolYear(selector, params, update){
 }
 function createDropDownCategoryPayment(selector){
     var sourceRol =[
-        {"dataName":"GOBIERNO","dataValue":"1"},
-        {"dataName":"UNIVERSIDAD","dataValue":"2"},
-        {"dataName":"OTROS","dataValue":"3"}
+        {"dataName":"SIIGEM ABIERTOS","dataValue":"1"},        
+        {"dataName":"SIIGEM RESTRINGIDOS","dataValue":"4"},
+        {"dataName":"CAJA GENERAL RESTRINGIDOS","dataValue":"5"}
     ];
     $(selector).jqxDropDownList({
         theme: theme,
@@ -462,6 +462,44 @@ function createDropDownCategoryPayment(selector){
         valueMember: "dataValue",
         height: 26, 
         width: 180                
+    }).css("display","inline-block");
+}
+function createDropDownConceptTypePayment(selector){
+    var sourceRol =[
+        {"dataName":"OBLIGATORIOS","dataValue":"1"},
+        {"dataName":"DIVERSOS","dataValue":"2"},
+        {"dataName":"SERV. Y SANC.","dataValue":"3"},
+        {"dataName":"OBLIGATORIOS EVENTUALES","dataValue":"4"}
+    ];
+    $(selector).jqxDropDownList({
+        theme: theme,
+        filterable: false, 
+        autoDropDownHeight: true,
+        placeHolder: "SELECCIONAR",
+        selectedIndex: 0, 
+        source: sourceRol, 
+        displayMember: "dataName", 
+        valueMember: "dataValue",
+        height: 26, 
+        width: 230                
+    }).css("display","inline-block");
+}
+function createDropDownFormatPayment(selector){
+    var sourceRol =[
+        {"dataName":"UNIVERSAL DE PAGO","dataValue":"1"},
+        {"dataName":"CAJA GENERAL","dataValue":"2"}
+    ];
+    $(selector).jqxDropDownList({
+        theme: theme,
+        filterable: false, 
+        autoDropDownHeight: true,
+        placeHolder: "SELECCIONAR",
+        selectedIndex: 0, 
+        source: sourceRol, 
+        displayMember: "dataName", 
+        valueMember: "dataValue",
+        height: 26, 
+        width: 230                
     }).css("display","inline-block");
 }
 

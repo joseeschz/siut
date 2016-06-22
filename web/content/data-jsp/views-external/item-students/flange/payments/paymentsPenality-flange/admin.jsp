@@ -28,16 +28,20 @@
 <script>
     $(document).ready(function () {
         var itemSemester = null;
+        var itemCategoryPaymenttHeader = null;
+        var itemConceptHeader = null;
+        var itemFormatHeader = null;
         var itemPeriod= null;
         var itemPeriodTemp= null;
         var itemCategoryPayment = null;
-        var itemCategoryPaymentDetail = null;
+        var itemConceptPayment = null;
+        var itemFormatPayment = null;
         function loadGridStudentsPaid(){
             var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentsPenalityPaymentsHeader());  
             var tooltiprenderer = function (element) {
                 $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
             };
-            $("#tablePaymentsPenality").jqxDataTable({
+            $("#tablePaymentsPenalityHeader").jqxDataTable({
                 width: 900,
                 height: 350,
                 selectionMode: "singlerow",
@@ -48,7 +52,7 @@
                 altRows: true,
                 filterable: true,
                 ready: function(){
-                    $("#tablePaymentsPenality").jqxGrid('focus');
+                    $("#tablePaymentsPenalityHeader").jqxGrid('focus');
                 },
                 columns: [
                     { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
@@ -78,7 +82,7 @@
         function checkBoxesConcepts(params){
             console.log("Making checkBoxes...");
             var records = undefined;
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsDetail(params.dataPkPeriod, params.dataFkSemester, params.dataFkCategory, params.dataFkStudent), {
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsDetail(params.dataPkPeriod, params.dataFkSemester, params.dataFkCategory, params.dataFkConceptType, params.dataFkFormatType, params.dataFkStudent), {
                 loadComplete: function () {
                     // get data records.
                     records = dataAdapter.records;
@@ -92,18 +96,22 @@
                     $("#conceptsTitle").text("CONCEPTOS");
                     $("#messageValidation").text("");
                     var checkBox = "";
-                    $("#contentCheckBoxes").html("");
+                    $("#contentDinamic").html("");
+                    $("#contentDinamic").removeClass("contentInputs").addClass("contentCheckBoxes");
                     $("#toPayment").text("$0.00");
                     for(var i=0; i<records.length; i++){
                         checkBox = "<tr><td colspan='2' style='width: 70%;'> <div id='checkBox"+records[i].dataPkPaymentPenaltyType+"' class='checkBox'>"+records[i].dataNamePenalty+"</div></td><td colspan='2'>$<span id='mount"+records[i].dataPkPaymentPenaltyType+"'>"+parseFloat(records[i].dataTariff).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');+"</span></td></tr>";
-                        $("#contentCheckBoxes").append(checkBox);
-                        if(records[i].dataStatusPay==="Yes"){
-                            $('#mount'+records[i].dataPkPaymentPenaltyType).addClass("checkBoxChecked");
-                            $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ disabled:true, checked:true });
-                        }else{
-
+                        $(".contentCheckBoxes").append(checkBox);
+                        if(params.dataFkConceptType==2 || params.dataFkConceptType==3){
                             $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ width: 'auto' });
-                        }                    
+                        }else{
+                            if(records[i].dataStatusPay==="Yes"){
+                                $('#mount'+records[i].dataPkPaymentPenaltyType).addClass("checkBoxChecked");
+                                $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ disabled:true, checked:true });
+                            }else{
+                                $('#checkBox'+records[i].dataPkPaymentPenaltyType).jqxCheckBox({ width: 'auto' });
+                            }   
+                        }              
                     }
                     var totalPaid = 0;
                     var totalChecked = 0;
@@ -142,6 +150,75 @@
                 console.log("Problems in the server to process request...");
             }
         }
+        function inputConceptsOld(params){
+            console.log("Making Inputs...");
+            var records = undefined;
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsDetail(params.dataPkPeriod, params.dataFkSemester, params.dataFkCategory, params.dataFkConceptType, params.dataFkFormatType, params.dataFkStudent), {
+                loadComplete: function () {
+                    // get data records.
+                    records = dataAdapter.records;
+                }
+            });
+            dataAdapter.dataBind();      
+            if(records){
+                popupWindowPay.jqxWindow('open');
+                if(records.length>0){                
+                    $(".conditionalHiden").show();
+                    $("#conceptsTitle").text("CONCEPTOS");
+                    $("#messageValidation").text("");
+                    var input = "";
+                    $("#contentDinamic").html("");
+                    $("#contentDinamic").removeClass("contentCheckBoxes").addClass("contentInputs");
+                    $("#toPayment").text("$0.00");
+                    for(var i=0; i<records.length; i++){
+                        input = "<tr><td style='width: 10%;'> <div id='inputConcept"+records[i].dataPkPaymentPenaltyType+"' class='inputConcept'></div></td><td style='width: 60%;'><div>"+records[i].dataNamePenalty+"</div></td><td colspan='2'>$<span id='mount"+records[i].dataPkPaymentPenaltyType+"'>"+parseFloat(records[i].dataTariff).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');+"</span></td></tr>";
+                        $(".contentInputs").append(input);
+                        $('#mount'+records[i].dataPkPaymentPenaltyType).addClass("inputConceptChecked");
+                        $('#inputConcept'+records[i].dataPkPaymentPenaltyType).jqxNumberInput({
+                            width: '45px',
+                            height: '25px',
+                            theme: theme,
+                            decimal: 0,
+                            inputMode: 'simple',
+                            decimalDigits: 0,
+                            min: 0,
+                            max: 50,
+                            spinButtons: true,
+                            digits:2
+                        });                
+                    }
+                    var totalPaid = 0;
+                    var totalChecked = 0;
+                    $(".inputConceptChecked").each(function (){
+                        totalChecked = totalChecked+1;
+                        totalPaid = totalPaid + parseFloat($(this).text().replace(",",""));
+                    });
+                    if(totalChecked==records.length){
+                        $("#conceptsTitle").text("TODOS LOS CONCEPTOS PAGADOS PARA LAS CONDICIONES SELECCIONADAS");
+                        $("#payButton").jqxButton({disabled: true});
+                        $('#referenceNumber').jqxInput({disabled: true});
+                    }else{
+                        $("#conceptsTitle").text("CONCEPTOS");
+                        $("#payButton").jqxButton({disabled: false});
+                        $('#referenceNumber').jqxInput({disabled: false});
+                    }
+                    $("#totalPaid").text("$"+parseFloat(totalPaid).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    var toPayment = 0;
+                    $('.inputConcept').off('change');
+                    $('.inputConcept').on('change', function (event) {    
+                        var thisID = $(this).attr("id").replace("inputConcept","");
+                        toPayment = toPayment + parseFloat($("#mount"+thisID).text().replace(",",""));
+                        $("#toPayment").text("$"+parseFloat(toPayment).toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,'));
+                    });
+                }else{
+                    $(".conditionalHiden").hide();
+                    $("#conceptsTitle").text("NO HAY CONCEPTOS QUE PAGAR PARA LAS CONDICIONES SELECCIONADAS");
+                    $("#messageValidation").text("");
+                }   
+            }else{
+                console.log("Problems in the server to process request...");
+            }
+        }
         function loadDataToForm(data){
             $("#labelEnrollment").text(data.dataEnrollment);
             $("#hidenPkStudent").val(data.dataPkStudent);
@@ -159,11 +236,18 @@
             createDropDownCategoryPayment("#categoryFilter");
             itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
             
+            createDropDownConceptTypePayment("#paymentsPenaltytypeConceptHeaderFilter");
+            itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+            createDropDownFormatPayment("#paymentsPenaltytypeFormatHeaderFilter");
+            itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
+            
             var params = {
                 dataPkPeriod:itemPeriodTemp.value,
                 dataFkSemester:itemSemester.value,
                 dataFkStudent : data.dataPkStudent,
-                dataFkCategory : itemCategoryPayment.value
+                dataFkCategory : itemCategoryPayment.value,
+                dataFkConceptType : itemConceptPayment.value,
+                dataFkFormatType : itemFormatPayment.value
             };
             checkBoxesConcepts(params);
             
@@ -181,11 +265,15 @@
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
                     itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
+                    itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
-                        dataFkCategory : itemCategoryPayment.value
+                        dataFkCategory : itemCategoryPayment.value,
+                        dataFkConceptType : itemConceptPayment.value,
+                        dataFkFormatType : itemFormatPayment.value
                     };
                     checkBoxesConcepts(params);
                 }                
@@ -204,11 +292,15 @@
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
                     itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
+                    itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
-                        dataFkCategory : itemCategoryPayment.value
+                        dataFkCategory : itemCategoryPayment.value,
+                        dataFkConceptType : itemConceptPayment.value,
+                        dataFkFormatType : itemFormatPayment.value
                     };
                     checkBoxesConcepts(params);
                 }                
@@ -228,11 +320,71 @@
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
                     itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
+                    itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
-                        dataFkCategory : itemCategoryPayment.value
+                        dataFkCategory : itemCategoryPayment.value,
+                        dataFkConceptType : itemConceptPayment.value,
+                        dataFkFormatType : itemFormatPayment.value
+                    };
+                    checkBoxesConcepts(params);
+                }                
+            });
+            
+            $("#paymentsPenaltytypeConceptHeaderFilter").off('change');
+            $("#paymentsPenaltytypeConceptHeaderFilter").on('change', function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
+                    itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
+                    itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
+                    var params = {
+                        dataPkPeriod:itemPeriodTemp.value,
+                        dataFkSemester:itemSemester.value,
+                        dataFkStudent : data.dataPkStudent,
+                        dataFkCategory : itemCategoryPayment.value,
+                        dataFkConceptType : itemConceptPayment.value,
+                        dataFkFormatType : itemFormatPayment.value
+                    };
+                    checkBoxesConcepts(params);
+                }                
+            });
+            
+            $("#paymentsPenaltytypeFormatHeaderFilter").off('change');
+            $("#paymentsPenaltytypeFormatHeaderFilter").on('change', function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
+                    itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
+                    itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
+                    var params = {
+                        dataPkPeriod:itemPeriodTemp.value,
+                        dataFkSemester:itemSemester.value,
+                        dataFkStudent : data.dataPkStudent,
+                        dataFkCategory : itemCategoryPayment.value,
+                        dataFkConceptType : itemConceptPayment.value,
+                        dataFkFormatType : itemFormatPayment.value
                     };
                     checkBoxesConcepts(params);
                     if(value!=1){
@@ -250,7 +402,7 @@
             $("#labelCareer").text("");
         }
         
-        function loadSourceStudentPenaltyPaymentsPaidDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategory, pt_fkStudent){            
+        function loadSourceStudentPenaltyPaymentsPaidDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryPayment, pt_fkTypeConcept, pt_fkTypeFormat, pt_fkStudent){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
@@ -260,6 +412,8 @@
                     { name: 'dataReferenceNumber', type: 'string' },
                     { name: 'dataStatusJustify', type: 'string' },
                     { name: 'dataStatusPay', type: 'string' },
+                    { name: 'dataPkTypeConcept', type: 'string' },
+                    { name: 'dataPkTypeFormat', type: 'string' },
                     { name: 'dataUnique', type: 'string' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataPkSemester', type: 'int' },
@@ -281,8 +435,9 @@
                     pt_fkPeriod : pt_fkPeriod ,
                     pt_fkSemester : pt_fkSemester,
                     pt_fkStudent : pt_fkStudent,
-                    pt_fkCategory : pt_fkCategory,
-                    pt_statusPrepaid : 0
+                    pt_fkCategory : pt_fkCategoryPayment,
+                    pt_fkTypeConcept : pt_fkTypeConcept,
+                    pt_fkTypeFormat : pt_fkTypeFormat                    
                 },
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
@@ -305,7 +460,7 @@
                         success: function (data, textStatus, jqXHR) {
                             var rows = $("#gridPaymentDetail").jqxDataTable('getRows');
                             if(rows.length==1){
-                                $("#tablePaymentsPenality").jqxDataTable('updateBoundData');
+                                $("#tablePaymentsPenalityHeader").jqxDataTable('updateBoundData');
                                 commit(true);
                                 $("#gridPaymentDetail").jqxDataTable('updateBoundData');
                                 popupWindowPaymentDetail.jqxWindow('close');
@@ -320,7 +475,7 @@
             return ordersSource;
         }
         
-        function loadSourceStudentPenaltyPaymentsDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategory, pt_fkStudent){            
+        function loadSourceStudentPenaltyPaymentsDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryPayment, pt_fkTypeConcept, pt_fkTypeFormat, pt_fkStudent){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
@@ -330,6 +485,8 @@
                     { name: 'dataReferenceNumber', type: 'string' },
                     { name: 'dataStatusJustify', type: 'string' },
                     { name: 'dataStatusPay', type: 'string' },
+                    { name: 'dataPkTypeConcept', type: 'string' },
+                    { name: 'dataPkTypeFormat', type: 'string' },
                     { name: 'dataUnique', type: 'string' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataPkSemester', type: 'int' },
@@ -351,8 +508,9 @@
                     pt_fkPeriod : pt_fkPeriod ,
                     pt_fkSemester : pt_fkSemester,
                     pt_fkStudent : pt_fkStudent,
-                    pt_fkCategory : pt_fkCategory,
-                    pt_statusPrepaid : 0
+                    pt_fkCategory : pt_fkCategoryPayment,
+                    pt_fkTypeConcept : pt_fkTypeConcept,
+                    pt_fkTypeFormat : pt_fkTypeFormat
                 }
             };
             return ordersSource;
@@ -382,13 +540,19 @@
         }
         
         function loadSourceStudentsPenalityPaymentsHeader(){      
-            itemPeriod = $('#payPeriodFilter').jqxDropDownList('getSelectedItem'); 
+            itemPeriod = $('#payPeriodHeaderFilter').jqxDropDownList('getSelectedItem'); 
+            itemCategoryPaymenttHeader = $('#categoryHeaderFilter').jqxDropDownList('getSelectedItem');  
+            itemConceptHeader = $('#typeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+            itemFormatHeader = $('#typeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
                     { name: 'dataPkPaymentPanalty', type: 'int' },
                     { name: 'dataDatePayment', type: 'string' },
                     { name: 'dataUnique', type: 'string' },
+                    { name: 'dataPkCaregoryPayment', type: 'int' },
+                    { name: 'dataPkTypeConcept', type: 'int' },
+                    { name: 'dataPkTypeFormat', type: 'int' },
                     { name: 'dataStatusPayment', type: 'string' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataNameStudent', type: 'string' },
@@ -410,7 +574,9 @@
                 url: '../serviceStudentsPenaltyPayments?view',
                 data : {
                     pt_fkPeriod : itemPeriod.value,
-                    pt_status_prepaid : 0
+                    pt_fkCategoryPayment : itemCategoryPaymenttHeader.value,
+                    pt_fkTypeConept : itemConceptHeader.value,
+                    pt_fkTypeFormat : itemFormatHeader.value                    
                 }
             };
             return ordersSource;
@@ -418,11 +584,59 @@
         createDropDownSemester(1, '#paySemesterFilter', false);
         itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
 
-        createDropDownPeriodActive('comboActiveYear', '#payPeriodFilter');
-        itemPeriod = $('#payPeriodFilter').jqxDropDownList('getSelectedItem'); 
+        createDropDownPeriodActive('comboActiveYear', '#payPeriodHeaderFilter');
+        itemPeriod = $('#payPeriodHeaderFilter').jqxDropDownList('getSelectedItem'); 
+        
+        createDropDownCategoryPayment("#categoryHeaderFilter");
+        itemCategoryPaymenttHeader = $('#categoryHeaderFilter').jqxDropDownList('getSelectedItem');
+        
+        createDropDownConceptTypePayment("#typeConceptHeaderFilter");
+        itemConceptPayment = $('#typeConceptHeaderFilter').jqxDropDownList('getSelectedItem'); 
+        
+        createDropDownFormatPayment("#typeFormatHeaderFilter");
+        itemFormatPayment = $('#typeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
         
         if(itemPeriod!=null || itemPeriod!= undefined){
-            $("#payPeriodFilter").on('change',function (event){  
+            $("#payPeriodHeaderFilter").on('change',function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    loadGridStudentsPaid();
+                }                
+            });
+            $("#categoryHeaderFilter").on('change',function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    loadGridStudentsPaid();
+                }                
+            });
+            $("#typeConceptHeaderFilter").on('change',function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    loadGridStudentsPaid();
+                }                
+            });
+            $("#typeFormatHeaderFilter").on('change',function (event){  
                 var args = event.args;
                 if (args){
                     // index represents the item's index.                      
@@ -439,42 +653,18 @@
         }
         
         function loadDataWindowDetailPayment(dataHeader){
-            itemPeriod = $('#payPeriodFilter').jqxDropDownList('getSelectedItem'); 
+            itemPeriod = $('#payPeriodHeaderFilter').jqxDropDownList('getSelectedItem'); 
             $("#labelEnrollmentDetail").text(dataHeader.dataEnrollment);
             $("#paySemesterFilterDetail").text(dataHeader.dataNameSemester);
             $("#payPeriodTempFilterDetail").text(itemPeriod.label);
             $("#datePayment").text(dataHeader.dataDatePayment);
-            createDropDownCategoryPayment("#categoryDetailFilter");
-            itemCategoryPaymentDetail = $('#categoryDetailFilter').jqxDropDownList('getSelectedItem');   
-            
-            if(itemCategoryPaymentDetail.value==1){
-                loadGridDetailGobPayment(dataHeader);
-            }else if(itemCategoryPaymentDetail.value==2){
-                loadGridDetailUniPayment(dataHeader);
+           
+            console.log(dataHeader);    
+            if(dataHeader.dataPkTypeFormat==1){
+               loadGridDetailFUDPPayment(dataHeader);
             }else{
-                loadGridDetailOthersPayment(dataHeader);
+                loadGridDetailFCGPayment(dataHeader);
             }
-            
-            $("#categoryDetailFilter").off('change');
-            $("#categoryDetailFilter").on('change',function (event){  
-                var args = event.args;
-                if (args){
-                    // index represents the item's index.                      
-                    var index = args.index;
-                    var item = args.item;
-                    // get item's label and value.
-                    var label = item.label;
-                    var value = item.value;
-                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                    if(value==1){
-                        loadGridDetailGobPayment(dataHeader);
-                    }else if(value==2){
-                        loadGridDetailUniPayment(dataHeader);
-                    }else{
-                        loadGridDetailOthersPayment(dataHeader);
-                    }
-                }                
-            });     
             popupWindowPaymentDetail.jqxWindow('open'); 
         }
         var rendertoolbar = function(toolBar){
@@ -538,8 +728,8 @@
                 }
             });
         };
-        function loadGridDetailGobPayment(dataHeader){            
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetail(itemPeriod.value, dataHeader.dataPkSemester, 1, dataHeader.dataPkStudent),{
+        function loadGridDetailFUDPPayment(dataHeader){            
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetail(itemPeriod.value, dataHeader.dataPkSemester, dataHeader.dataPkCaregoryPayment, dataHeader.dataPkTypeConcept, dataHeader.dataPkTypeFormat, dataHeader.dataPkStudent),{
                 beforeLoadComplete: function (records) {
                     var recordsR = new Array();
                     for(var i=0; i<records.length; i++){
@@ -555,8 +745,8 @@
             };
             $("#gridPaymentDetail").jqxDataTable('clear');
             $("#gridPaymentDetail").jqxDataTable({
-                width: "auto",
-                height: 180,
+                width: 710,
+                height: 250,
                 selectionMode: "singlerow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
@@ -568,19 +758,19 @@
                 altRows: true,
                 filterable: false,
                 ready: function(){
-                    $("#tablePaymentsPenality").jqxGrid('focus');
+                    $("#tablePaymentsPenalityHeader").jqxGrid('focus');
                 },
                 columns: [
                     { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
                     { text: 'REFERENCIA', align: 'center', dataField: 'dataReferenceNumber', width: 260, rendered: tooltiprenderer },
-                    { text: 'DESCRIPCIÓN', align: 'center', dataField: 'dataNamePenalty', width: 300, rendered: tooltiprenderer},
-                    { text: 'MONTO', align: 'center', dataField: 'dataTariff', cellsformat: 'C2', cellsalign: 'right', width: 110, rendered: tooltiprenderer}
+                    { text: 'DESCRIPCIÓN', align: 'center', dataField: 'dataNamePenalty', rendered: tooltiprenderer},
+                    { text: 'MONTO', align: 'center', dataField: 'dataTariff', cellsformat: 'C2', cellsalign: 'right', width: 80, rendered: tooltiprenderer}
                 ],
                 columnsResize: false
             });
         }
-        function loadGridDetailUniPayment(dataHeader){            
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetail(itemPeriod.value, dataHeader.dataPkSemester, 2, dataHeader.dataPkStudent),{
+        function loadGridDetailFCGPayment(dataHeader){            
+           var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetail(itemPeriod.value, dataHeader.dataPkSemester, dataHeader.dataPkCaregoryPayment, dataHeader.dataPkTypeConcept, dataHeader.dataPkTypeFormat, dataHeader.dataPkStudent),{
                 beforeLoadComplete: function (records) {
                     var recordsR = new Array();
                     for(var i=0; i<records.length; i++){
@@ -609,47 +799,7 @@
                 altRows: true,
                 filterable: false,
                 ready: function(){
-                    $("#tablePaymentsPenality").jqxGrid('focus');
-                },
-                columns: [
-                    { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
-                    { text: 'DESCRIPCIÓN', align: 'center', dataField: 'dataNamePenalty', width: 560, rendered: tooltiprenderer},
-                    { text: 'MONTO', align: 'center', dataField: 'dataTariff', cellsformat: 'C2', cellsalign: 'right', width: 110, rendered: tooltiprenderer}
-                ],
-                columnsResize: false
-            });
-        }
-        function loadGridDetailOthersPayment(dataHeader){            
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetail(itemPeriod.value, dataHeader.dataPkSemester, 3, dataHeader.dataPkStudent),{
-                beforeLoadComplete: function (records) {
-                    var recordsR = new Array();
-                    for(var i=0; i<records.length; i++){
-                        if(records[i].dataStatusPay==="Yes"){
-                            recordsR.push(records[i]);
-                        }
-                    }
-                    return recordsR;
-                }
-            });  
-            var tooltiprenderer = function (element) {
-                $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
-            };
-            $("#gridPaymentDetail").jqxDataTable('clear');
-            $("#gridPaymentDetail").jqxDataTable({
-                width: "auto",
-                height: 180,
-                selectionMode: "singlerow",
-                localization: getLocalization("es"),
-                source: dataAdapter,
-                renderToolbar : rendertoolbar,
-                showToolbar: true,
-                toolbarHeight: 35,
-                pageable: true,
-                editable: false,
-                altRows: true,
-                filterable: false,
-                ready: function(){
-                    $("#tablePaymentsPenality").jqxGrid('focus');
+                    $("#tablePaymentsPenalityHeader").jqxGrid('focus');
                 },
                 columns: [
                     { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
@@ -738,7 +888,7 @@
         }); 
         
         var contextMenu = $("#contextMenu").jqxMenu({ width: 200, autoOpenPopup: false, mode: 'popup'});
-        $("#tablePaymentsPenality").on('contextmenu', function (event) {           
+        $("#tablePaymentsPenalityHeader").on('contextmenu', function (event) {           
             return false;
         });
         // handle context menu clicks.
@@ -746,7 +896,7 @@
             var args = event.args;
             if ($.trim($(args).text()) === "Detalle de pago"){
                 var rowData = null;
-                var selection = $("#tablePaymentsPenality").jqxDataTable('getSelection');
+                var selection = $("#tablePaymentsPenalityHeader").jqxDataTable('getSelection');
                 for (var i = 0; i < selection.length; i++) {
                     // get a selected row.
                     rowData = selection[i];
@@ -754,7 +904,7 @@
                 loadDataWindowDetailPayment(rowData);      
             }
         });
-        $("#tablePaymentsPenality").on('rowDoubleClick', function (event) {            
+        $("#tablePaymentsPenalityHeader").on('rowDoubleClick', function (event) {            
             // event args.
             var args = event.args;
             // row data.
@@ -771,7 +921,7 @@
             var clickEvent = args.originalEvent;
             loadDataWindowDetailPayment(row);            
         });
-        $("#tablePaymentsPenality").on('rowClick', function (event) {
+        $("#tablePaymentsPenalityHeader").on('rowClick', function (event) {
             // event args.
             var args = event.args;
             // row data.
@@ -859,12 +1009,17 @@
         
         function registerPaymentsHeader(){            
             itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
-            itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');            
+            itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem'); 
+            itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');  
+            itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+            itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
             var dataParams = {
                 pt_pk_period : itemPeriodTemp.value,
                 pt_pk_semester : itemSemester.value,
                 pt_pk_student : $("#hidenPkStudent").val(),
-                pt_status_prepaid : 0,
+                pt_fk_category_payment : itemCategoryPayment.value,
+                pt_fk_concept: itemConceptPayment.value,
+                pt_fk_type_format :  itemFormatPayment.value,       
                 pt_status_payment : 1
             };
             $.ajax({
@@ -924,7 +1079,6 @@
                 });
                 return statusInsert;
             };
-                
             $(".checkBox").each(function (){
                 if(!$(this).jqxCheckBox('disabled')){
                     if($(this).jqxCheckBox('checked')){
@@ -944,12 +1098,15 @@
             itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
             itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
             itemCategoryPayment = $('#categoryFilter').jqxDropDownList('getSelectedItem');
-            
+            itemConceptPayment = $('#paymentsPenaltytypeConceptHeaderFilter').jqxDropDownList('getSelectedItem');  
+            itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
             var params = {
                 dataPkPeriod:itemPeriodTemp.value,
                 dataFkSemester:itemSemester.value,
                 dataFkStudent : dataParams.pt_pk_student,
-                dataFkCategory : itemCategoryPayment.value
+                dataFkCategory : itemCategoryPayment.value,
+                dataFkConceptType : itemConceptPayment.value,
+                dataFkFormatType : itemFormatPayment.value
             };
             checkBoxesConcepts(params);
             $("#referenceNumber").val("");
@@ -977,10 +1134,22 @@
     <div>
         <div style="display: inline-block; margin-right: 5px;">
             Periodo <br>
-            <div id='payPeriodFilter'></div>
+            <div id='payPeriodHeaderFilter'></div>
         </div>
         <div style="display: inline-block; margin-right: 5px;">
-            <div id="tablePaymentsPenality"></div>
+            Categoría <br>
+            <div id='categoryHeaderFilter'></div>
+        </div>
+        <div style="display: inline-block; margin-right: 5px;">
+            Tipo <br>
+            <div id='typeConceptHeaderFilter'></div>
+        </div>
+        <div style="display: inline-block; margin-right: 5px;">
+            Formato <br>
+            <div id='typeFormatHeaderFilter'></div>
+        </div>
+        <div style="display: inline-block; margin-right: 5px;">
+            <div id="tablePaymentsPenalityHeader"></div>
         </div>
     </div>
 </div>
@@ -1043,6 +1212,22 @@
                             </div>
                         </td>
                     </tr>
+                    <tr>
+                        <td><label>TIPO:</label></td>
+                        <td>
+                            <div style="display: inline-block; margin-right: 5px;">
+                                <div id='paymentsPenaltytypeConceptHeaderFilter'></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>FORMATO</label></td>
+                        <td>
+                            <div style="display: inline-block; margin-right: 5px;">
+                                <div id='paymentsPenaltytypeFormatHeaderFilter'></div>
+                            </div>
+                        </td>
+                    </tr>
                     <tr style="height: 52px;">           
                         <td class="referenceNumber"><label>REFERENCIA:</label></td>
                         <td colspan="2" class="referenceNumber"><input type="text" id="referenceNumber"/></td>
@@ -1057,7 +1242,7 @@
                                     <td colspan="2" align="center"><b>DESCRIPCIÓN</b></td>
                                     <td colspan="2" align="center"><b>MONTO</b></td>
                                 </thead>
-                                <tbody id="contentCheckBoxes"></tbody>
+                                <tbody id="contentDinamic"></tbody>
                                 <thead>
                                     <td align="right"><b>PAGADO</b></td>
                                     <td align="left"><b id="totalPaid"></b></td>
@@ -1099,17 +1284,9 @@
                 <td><b id="payPeriodTempFilterDetail"></b></td>
             </tr>
             <tr>
-                <td><label>FECHA DE PAGO:</label></td>
+                <td><label>FECHA DE RECIBIDO:</label></td>
                 <td><b id="datePayment"></b></td>
-            </tr>            
-            <tr>
-                <td><label>CATEGORÍA:</label></td>
-                <td>
-                    <div style="display: inline-block; margin-right: 5px;">
-                        <div id='categoryDetailFilter'></div>
-                    </div>
-                </td>
-            </tr>
+            </tr>          
             <tr>
                 <td colspan="2" align="center"><label style="font-size: 18px"><b>CONCEPTOS</b></label></td>
             </tr>

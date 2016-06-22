@@ -85,6 +85,8 @@
         var itemSemester = null;
         var itemPeriod= null;
         var itemCategoryPayment = null;
+        var itemConceptPayment = null;
+        var itemFormatPayment = null;
         
         createDropDownStudyLevel("#paymentsPenaltyTypeLevelFilter",false);
         itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
@@ -101,11 +103,16 @@
                     };
                     createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', params, false);
                     itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem'); 
+                    
                     if(itemPeriod!=null || itemPeriod!= undefined){
                         createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
 //                        var item = $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList('getItemByValue', 2);
 //                        $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList('disableItem', item ); 
                         itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
+                        createDropDownConceptTypePayment("#paymentsPenaltyTypeConceptFilter");
+                        itemConceptPayment = $('#paymentsPenaltyTypeConceptFilter').jqxDropDownList('getSelectedItem');  
+                        createDropDownFormatPayment("#paymentsPenaltyTypeFormatFilter");
+                        itemFormatPayment = $('#paymentsPenaltyTypeFormatFilter').jqxDropDownList('getSelectedItem'); 
                         $("#paymentsPenaltyTypeLevelFilter").on('change',function (event){  
                             var args = event.args;
                             if (args){
@@ -182,10 +189,40 @@
                             }                
                         });
                         
+                        $("#paymentsPenaltyTypeConceptFilter").on('change',function (event){  
+                            var args = event.args;
+                            if (args){
+                                // index represents the item's index.                      
+                                var index = args.index;
+                                var item = args.item;
+                                // get item's label and value.
+                                var label = item.label;
+                                var value = item.value;
+                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                                loadTable();
+                            }                
+                        });
+                        
+                        $("#paymentsPenaltyTypeFormatFilter").on('change',function (event){  
+                            var args = event.args;
+                            if (args){
+                                // index represents the item's index.                      
+                                var index = args.index;
+                                var item = args.item;
+                                // get item's label and value.
+                                var label = item.label;
+                                var value = item.value;
+                                var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                                loadTable();
+                            }                
+                        });
+                        
                         loadTable();
                     }else{
                         createDropDownCategoryPayment("#paymentsPenaltyTypeCategoryFilter");
                         $("#paymentsPenaltyTypeCategoryFilter").jqxDropDownList("clear");
+                        createDropDownFormatPayment("#paymentsPenaltyTypeFormatFilter");
+                        $("#paymentsPenaltyTypeFormatFilter").jqxDropDownList("clear");
                     }
                 }else{
                     createDropDownPeriodBySchoolYear('#paymentsPenaltyTypePeriodFilter', {}, false);
@@ -249,7 +286,10 @@
             itemLevel = $('#paymentsPenaltyTypeLevelFilter').jqxDropDownList('getSelectedItem');
             itemSemester = $('#paymentsPenaltyTypeSemesterFilter').jqxDropDownList('getSelectedItem');
             itemCategoryPayment = $('#paymentsPenaltyTypeCategoryFilter').jqxDropDownList('getSelectedItem');
-            itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem'); 
+            itemConceptPayment = $('#paymentsPenaltyTypeConceptFilter').jqxDropDownList('getSelectedItem');  
+            itemFormatPayment = $('#paymentsPenaltyTypeFormatFilter').jqxDropDownList('getSelectedItem'); 
+            itemPeriod = $('#paymentsPenaltyTypePeriodFilter').jqxDropDownList('getSelectedItem');            
+            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type:'int'},
@@ -266,12 +306,14 @@
                   pt_pk_level_study : itemLevel.value,
                   pt_pk_semester : itemSemester.value,
                   pt_pk_category : itemCategoryPayment.value,
-                  pt_pk_period : itemPeriod.value
+                  pt_pk_period : itemPeriod.value,
+                  pt_pk_type_concept : itemConceptPayment.value,
+                  pt_pk_type_format : itemFormatPayment.value         
                 },
                 dataType: "json",
                 async: false,
                 id: 'dataPkPaymentPenaltyType',
-                url: '../servicePaymentsPenaltyType?view=NotPrepai',
+                url: '../servicePaymentsPenaltyType?view',
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
@@ -291,11 +333,11 @@
                             alert("Error interno del servidor");
                         },
                         success: function (data, textStatus, jqXHR) {
-                            if(data.indexOf('foreign')>=0){
+                            if(data.status.indexOf('foreign')>=0){
                                 $("#ok").hide();
                                 $("#message").text("¡Registros de entidades diferentes dependen de este registro, por lo que no es posible borrarlo!");
                                 $("#jqxWindowWarning").jqxWindow('open');
-                            }else if(data.indexOf('Deleted')>=0){
+                            }else if(data.status.indexOf('Deleted')>=0){
                                 $("#tablePaymentsPenaltyTypes").jqxDataTable('updateBoundData');
                             }else{
                                 commit(false);
@@ -454,8 +496,7 @@
                 data:{
                     'pt_pk_payment_penalty': row.dataPkPaymentPenaltyType,
                     'pt_name_penalty': row.dataNamePenalty,
-                    'pt_tariff': row.dataTariff,
-                    'pt_prepai' : 0
+                    'pt_tariff': row.dataTariff
                 },
                 beforeSend: function (xhr) {
                 },
@@ -484,6 +525,8 @@
                         pt_pk_level_study : itemLevel.value,
                         pt_pk_semester : itemSemester.value,
                         pt_pk_category : itemCategoryPayment.value,
+                        pt_pk_type_concept : itemConceptPayment.value,
+                        pt_pk_type_format : itemFormatPayment.value,
                         pt_pk_period : itemPeriod.value
                     };
                     insert(data);
@@ -510,7 +553,8 @@
                     'pt_pk_payment_penalty': data.pt_pk_payment_penalty,
                     'pt_name_penalty': data.pt_name_penalty,
                     'pt_tariff': data.pt_tariff,
-                    'pt_prepai': 0,
+                    'pt_pk_type_concept': data.pt_pk_type_concept,
+                    'pt_pk_type_format': data.pt_pk_type_format,
                     'pt_pk_level_study': data.pt_pk_level_study,
                     'pt_pk_semester': data.pt_pk_semester,
                     'pt_pk_category': data.pt_pk_category,
@@ -572,5 +616,13 @@
 <div style="display: inline-block; margin-right: 5px;">
     Categoría <br>
     <div id='paymentsPenaltyTypeCategoryFilter'></div>
+</div>
+<div style="display: inline-block; margin-right: 5px;">
+    Tipo <br>
+    <div id='paymentsPenaltyTypeConceptFilter'></div>
+</div>
+<div style="display: inline-block; margin-right: 5px;">
+    Formato <br>
+    <div id='paymentsPenaltyTypeFormatFilter'></div>
 </div>
 <div id="tablePaymentsPenaltyTypes"></div>
