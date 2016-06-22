@@ -17,7 +17,8 @@ public class paymentsPenaltyTypesModel {
     semesterModel semester = null;
     categoryPaymentsModel category = null;
     periodModel period = null;
-    int FL_STATUS_PREPAI=0;
+    int FK_TYPE_CONCEPT=0;
+    int FK_TYPE_FORMAT=0;
 
     public int getPK_PAYMENT_PENALTY_TYPE() {
         return PK_PAYMENT_PENALTY_TYPE;
@@ -75,12 +76,19 @@ public class paymentsPenaltyTypesModel {
         this.period = period;
     }
 
-    public int getFL_STATUS_PREPAI() {
-        return FL_STATUS_PREPAI;
+    public int getFK_TYPE_CONCEPT() {
+        return FK_TYPE_CONCEPT;
     }
 
-    public void setFL_STATUS_PREPAI(int FL_STATUS_PREPAI) {
-        this.FL_STATUS_PREPAI = FL_STATUS_PREPAI;
+    public void setFK_TYPE_CONCEPT(int FK_TYPE_CONCEPT) {
+        this.FK_TYPE_CONCEPT = FK_TYPE_CONCEPT;
     }
-    
+
+    public int getFK_TYPE_FORMAT() {
+        return FK_TYPE_FORMAT;
+    }
+
+    public void setFK_TYPE_FORMAT(int FK_TYPE_FORMAT) {
+        this.FK_TYPE_FORMAT = FK_TYPE_FORMAT;
+    }
 }

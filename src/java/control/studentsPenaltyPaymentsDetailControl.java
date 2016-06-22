@@ -24,22 +24,23 @@ import model.studentsPenaltyPaymentsModel;
 public class studentsPenaltyPaymentsDetailControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPaymentsDetail;
-        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentHeader(14, 7, 1, 0, 819);
+        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0, 0, 0);
         for(int i=0;i<listStudentsPenalityPaymentsDetail.size();i++){
             System.out.println(listStudentsPenalityPaymentsDetail.get(i).getFL_REFERENCE_NUMBER());
         }
     }
     private String procedure;
-    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentHeader(int pt_fk_period, int pt_fk_semester, int pt_fk_category, int pt_status_prepaid, int pt_fk_student){
+    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetail(int pt_fk_period, int pt_fk_semester, int pt_fk_category, int pt_fk_type_concept, int pt_type_format, int pt_fk_student){
         ArrayList<studentsPenaltyPaymentsDetailModel> list=new ArrayList<>();
-        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");
             ps.setInt(2, pt_fk_period);      
             ps.setInt(3, pt_fk_semester);
             ps.setInt(4, pt_fk_category);
-            ps.setInt(5, pt_status_prepaid);
-            ps.setInt(6, pt_fk_student);
+            ps.setInt(5, pt_fk_type_concept);
+            ps.setInt(6, pt_type_format);
+            ps.setInt(7, pt_fk_student);
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentsPenaltyPaymentsDetailModel allStudentsPenaltyPaymentDetail=new studentsPenaltyPaymentsDetailModel();
@@ -57,6 +58,8 @@ public class studentsPenaltyPaymentsDetailControl {
                     allStudentsPenaltyPaymentDetail.setFL_STATUS_JUSTIFY(res.getInt("FL_STATUS_JUSTIFY"));
                     allStudentsPenaltyPaymentDetail.setFL_UNIQUE(res.getString("FL_UNIQUE"));
                     allStudentsPenaltyPaymentDetail.setFL_STATUS_PAY(res.getString("FL_STATUS_PAY"));
+                    allStudentsPenaltyPaymentDetail.setFK_TYPE_CONCEPT(res.getString("FK_TYPE_CONCEPT"));
+                    allStudentsPenaltyPaymentDetail.setFK_TYPE_FORMAT(res.getString("FK_TYPE_FORMAT"));
                     student.setPK_STUDENT(res.getInt("PK_STUDENT"));
                     allStudentsPenaltyPaymentDetail.setStudent(student);
                     
@@ -104,7 +107,7 @@ public class studentsPenaltyPaymentsDetailControl {
                 ps.setInt(8, dataStudentsPenaltyPayment.getCategoryPayments().getPK_CATEGORY_PAYMENT());
                 ps.setString(9, dataStudentsPenaltyPayment.getFL_AMOUNT_PENALITY());
                 ps.setString(10, dataStudentsPenaltyPayment.getFL_REFERENCE_NUMBER());
-                ps.setString(11, dataStudentsPenaltyPayment.getFL_STATUS_PAY());                
+                ps.setString(11, dataStudentsPenaltyPayment.getFK_TYPE_CONCEPT());                
                 ps.executeUpdate();
                 request="Inserted";
                 ps.close();
@@ -134,7 +137,7 @@ public class studentsPenaltyPaymentsDetailControl {
                 ps.setString(10, dataStudentsPenaltyPayment.getFL_REFERENCE_NUMBER());
                 ps.setInt(11, dataStudentsPenaltyPayment.getFL_STATUS_JUSTIFY());
                 ps.setString(12, dataStudentsPenaltyPayment.getFL_MOTIVE_JUSTIFY());
-                ps.setString(13, dataStudentsPenaltyPayment.getFL_STATUS_PAY());     
+                ps.setString(13, dataStudentsPenaltyPayment.getFK_TYPE_CONCEPT());     
                 ps.executeUpdate();
                 request="Updated";
                 ps.close();

@@ -18,7 +18,9 @@ public class studentsPenaltyPaymentsModel {
     studentModel student = null;
     careerModel career = null;
     studyLevelModel studyLevel = null;
-    int FL_STATUS_PREPAID=0;
+    categoryPaymentsModel categoryPayment = null;
+    int FK_TYPE_CONCEPT=0;
+    int FK_TYPE_FORMAT=0;
     String FL_STATUS_PAYMENT="";
 
     public int getPK_STUDENT_PAYMENT_PENALTY() {
@@ -85,12 +87,28 @@ public class studentsPenaltyPaymentsModel {
         this.studyLevel = studyLevel;
     }
 
-    public int getFL_STATUS_PREPAID() {
-        return FL_STATUS_PREPAID;
+    public categoryPaymentsModel getCategoryPayment() {
+        return categoryPayment;
     }
 
-    public void setFL_STATUS_PREPAID(int FL_STATUS_PREPAID) {
-        this.FL_STATUS_PREPAID = FL_STATUS_PREPAID;
+    public void setCategoryPayment(categoryPaymentsModel categoryPayment) {
+        this.categoryPayment = categoryPayment;
+    }
+
+    public int getFK_TYPE_CONCEPT() {
+        return FK_TYPE_CONCEPT;
+    }
+
+    public void setFK_TYPE_CONCEPT(int FK_TYPE_CONCEPT) {
+        this.FK_TYPE_CONCEPT = FK_TYPE_CONCEPT;
+    }
+
+    public int getFK_TYPE_FORMAT() {
+        return FK_TYPE_FORMAT;
+    }
+
+    public void setFK_TYPE_FORMAT(int FK_TYPE_FORMAT) {
+        this.FK_TYPE_FORMAT = FK_TYPE_FORMAT;
     }
 
     public String getFL_STATUS_PAYMENT() {
