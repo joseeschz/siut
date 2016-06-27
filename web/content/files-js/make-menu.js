@@ -194,26 +194,30 @@ $(document).ready(function () {
     if(isChildren && $.cookie('dir')!==""){
         $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);  
         $('#jqxTree').jqxTree('selectItem', $("#"+$.cookie('itemClickedId')||1)[0]); 
-        $.ajax({
-            url:"../content/data-jsp/views-external/"+$.cookie('dir')+"",
-            async: true,
-            beforeSend: function (xhr) {
-                $("#load-page-external").jqxWindow('open');
-            },
-            success: function (data, textStatus, jqXHR) {
-                $("#ContentPanel").html(data);
-                setTimeout(function (){
-                    $(".hidenTab").show();
-                    $("#load-page-external").jqxWindow('close');
-                },'1000');
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                setTimeout(function (){
-                    $(".hidenTab").show();
-                    $("#load-page-external").jqxWindow('close');
-                },'1000');
-            }
-        });
+        console.log("e")
+        setTimeout(function (){
+            $.ajax({
+                url:"../content/data-jsp/views-external/"+$.cookie('dir')+"",
+                async: true,
+                beforeSend: function (xhr) {
+                    $("#load-page-external").jqxWindow('open');
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $("#ContentPanel").html(data);
+                    setTimeout(function (){
+                        $(".hidenTab").show();
+                        $("#load-page-external").jqxWindow('close');
+                    },'1000');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    setTimeout(function (){
+                        $(".hidenTab").show();
+                        $("#load-page-external").jqxWindow('close');
+                    },'1000');
+                }
+            });
+        }, 500);       
+        
     }   
     
     $('#jqxTree').on('select',function (event){
@@ -225,7 +229,7 @@ $(document).ready(function () {
             itemChildrenId=$(args.element).children().children("span").attr("parent");
             itemClickedId=$(args.element).attr("id");
             itemNew = $(args.element).text();
-            dir = $(args.element).children().children("span").attr("dir");            
+            dir = $(args.element).children().children("span").attr("dir");     
             $("#ContentPanel").load("../content/data-jsp/loadItemsMenuOnPanel/itemsPanelMenu.jsp?pkParent="+itemClickedId+"");     
             $.cookie('isParent',isParent);
             $.cookie('dir',dir);
