@@ -54,7 +54,7 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="payment">Pago de cuotas que son estrictamente requeridas</li>
+            <li class="jqxTabsTitle" dir="payment">Realizar algún pago</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

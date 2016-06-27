@@ -160,7 +160,7 @@
                 },
                 columns: [
                     { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Siclo Escolar', dataField: 'dataSchoolYearName', editable: false},
+                    { text: 'Ciclo Escolar', dataField: 'dataSchoolYearName', editable: false},
                     { text: 'Estatus',  columntype: 'custom', align:'center', cellsalign:'center', dataField: 'dataActive', width: 80,
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
@@ -389,7 +389,7 @@
                 <label>Inactivo <input type="radio" name="status" checked /></label>
             </div>
             <div style="margin-right: 5px;">
-                <span id="validationStatus" style="display: none; color: red;">El siclo seleccionado ya existe</span>
+                <span id="validationStatus" style="display: none; color: red;">El Ciclo seleccionado ya existe</span>
             </div>
         </div>
         <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">

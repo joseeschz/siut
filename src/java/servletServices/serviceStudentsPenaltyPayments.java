@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.categoryPaymentsModel;
 import model.periodModel;
 import model.semesterModel;
 import model.studentModel;
 import model.studentsPenaltyPaymentsModel;
+import model.typeFormatModel;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,21 +49,18 @@ public class serviceStudentsPenaltyPayments extends HttpServlet {
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 int fkPeriod=Integer.parseInt(request.getParameter("pt_fkPeriod"));
-                int fkCategoryPayment=Integer.parseInt(request.getParameter("pt_fkCategoryPayment"));
-                int fkTypeConcept=Integer.parseInt(request.getParameter("pt_fkTypeConept"));
                 int fkTypeFormat=Integer.parseInt(request.getParameter("pt_fkTypeFormat"));
                 settings.put("__studentsPenaltyPaymentsModel","StudentsPenalityPayments");
-                listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(fkCategoryPayment, fkTypeConcept, fkTypeFormat, fkPeriod);
+                listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(fkTypeFormat, fkPeriod);
                 for(int i=0;i<listStudentsPenalityPayments.size();i++){
                     JSONObject data = new JSONObject();
                     data.put("dataProgresivNumber", i+1);
                     data.put("dataPkPaymentPanalty", listStudentsPenalityPayments.get(i).getPK_STUDENT_PAYMENT_PENALTY());
                     data.put("dataDatePayment", listStudentsPenalityPayments.get(i).getFL_DATE_PAYMENT());
                     data.put("dataUnique", listStudentsPenalityPayments.get(i).getFL_UNIQUE());
-                    data.put("dataPkCaregoryPayment", listStudentsPenalityPayments.get(i).getCategoryPayment().getPK_CATEGORY_PAYMENT());
-                    data.put("dataPkTypeConcept", listStudentsPenalityPayments.get(i).getFK_TYPE_CONCEPT());
-                    data.put("dataPkTypeFormat", listStudentsPenalityPayments.get(i).getFK_TYPE_FORMAT());
-                    data.put("dataStatusPayment", listStudentsPenalityPayments.get(i).getFL_STATUS_PAYMENT());
+                    data.put("dataPkTypeFormat", listStudentsPenalityPayments.get(i).getTypeFormat().getPK_TYPE_FORMAT());
+                    data.put("dataNameTypeFormat", listStudentsPenalityPayments.get(i).getTypeFormat().getFL_NAME_FORMAT());
+                    data.put("dataTotal", listStudentsPenalityPayments.get(i).getFL_TOTAL());
                     data.put("dataPkStudent", listStudentsPenalityPayments.get(i).getStudent().getPK_STUDENT());
                     data.put("dataNameStudent", listStudentsPenalityPayments.get(i).getStudent().getFL_NAME());
                     data.put("dataEnrollment", listStudentsPenalityPayments.get(i).getStudent().getFL_ENROLLMENT());
@@ -88,31 +85,44 @@ public class serviceStudentsPenaltyPayments extends HttpServlet {
             if(request.getParameter("insert")!=null){
                 response.setContentType("application/json"); 
                 JSONObject data = new JSONObject();
-                try {
-                    studentsPenaltyPaymentsModel dataStudentsPenalityPayments=new studentsPenaltyPaymentsModel();
-                    periodModel period = new periodModel();
-                    semesterModel semester = new semesterModel();
-                    studentModel student = new studentModel();
-                    categoryPaymentsModel categoryPayment =  new categoryPaymentsModel();
-                    period.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
-                    dataStudentsPenalityPayments.setPeriod(period);
-                    semester.setPK_SEMESTER(Integer.parseInt(request.getParameter("pt_pk_semester")));
-                    dataStudentsPenalityPayments.setSemester(semester);
-                    student.setPK_STUDENT(Integer.parseInt(request.getParameter("pt_pk_student")));
-                    dataStudentsPenalityPayments.setStudent(student);
-                    categoryPayment.setPK_CATEGORY_PAYMENT(Integer.parseInt(request.getParameter("pt_fk_category_payment")));
-                    dataStudentsPenalityPayments.setCategoryPayment(categoryPayment);
-                    dataStudentsPenalityPayments.setFK_TYPE_CONCEPT(Integer.parseInt(request.getParameter("pt_fk_concept")));
-                    dataStudentsPenalityPayments.setFK_TYPE_FORMAT(Integer.parseInt(request.getParameter("pt_fk_type_format")));
-                    dataStudentsPenalityPayments.setFL_STATUS_PAYMENT(request.getParameter("pt_status_payment"));
-                    String[] result =  new studentsPenaltyPaymentsControl().InsertStudentsPenaltyPayment(dataStudentsPenalityPayments);
-                    if(result[0].equals("Inserted")) {
-                        data.put(result[0], result[1]);
-                    }else{
-                        data.put("Fail", result[0]);
+                if(request.getParameter("commit").equals("false")){                    
+                    try {               
+                        int pt_pk_students_penalty_payment = Integer.parseInt(request.getParameter("pt_pk_students_penalty_payment"));
+                        String result =  new studentsPenaltyPaymentsControl().CommitFalseStudentsPenaltyPayment(pt_pk_students_penalty_payment);
+                        if(result.equals("Commited")) {
+                            data.put("Success", result);
+                        }else{
+                            data.put("Fail", result);
+                        }
+                    } catch (Exception e) {
+                        data.put("Fail", "paramsEmpty");
                     }
-                } catch (Exception e) {
-                    data.put("Fail", "paramsEmpty");
+                }else{
+                    try {
+                        studentsPenaltyPaymentsModel dataStudentsPenalityPayments=new studentsPenaltyPaymentsModel();
+                        periodModel period = new periodModel();
+                        semesterModel semester = new semesterModel();
+                        studentModel student = new studentModel();
+                        typeFormatModel typeFormat = new typeFormatModel();
+                        period.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
+                        dataStudentsPenalityPayments.setPeriod(period);
+                        semester.setPK_SEMESTER(Integer.parseInt(request.getParameter("pt_pk_semester")));
+                        dataStudentsPenalityPayments.setSemester(semester);
+                        student.setPK_STUDENT(Integer.parseInt(request.getParameter("pt_pk_student")));
+                        dataStudentsPenalityPayments.setStudent(student);
+
+                        typeFormat.setPK_TYPE_FORMAT(Integer.parseInt(request.getParameter("pt_fk_type_format")));
+                        dataStudentsPenalityPayments.setTypeFormat(typeFormat);
+                        dataStudentsPenalityPayments.setFL_TOTAL(request.getParameter("pt_total"));
+                        String[] result =  new studentsPenaltyPaymentsControl().InsertStudentsPenaltyPayment(dataStudentsPenalityPayments);
+                        if(result[0].equals("Inserted")) {
+                            data.put(result[0], ""+result[1]+"");
+                        }else{
+                            data.put("Fail", ""+result[0]+"");
+                        }
+                    } catch (Exception e) {
+                        data.put("Fail", "paramsEmpty");
+                    }
                 }
                 out.print(data);
             }

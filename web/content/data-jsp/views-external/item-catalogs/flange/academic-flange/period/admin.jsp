@@ -403,7 +403,7 @@
     </div>
 </div>
 <div style="display: inline-block; margin-right: 5px;">
-    <span>Siclo Escolar</span><br>
+    <span>Ciclo Escolar</span><br>
     <div id="schoolYearFilter"></div>
 </div>
 <div id="tablePeriod"></div>

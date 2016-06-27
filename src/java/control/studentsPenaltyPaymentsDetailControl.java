@@ -17,6 +17,8 @@ import model.semesterModel;
 import model.studentModel;
 import model.studentsPenaltyPaymentsDetailModel;
 import model.studentsPenaltyPaymentsModel;
+import model.typeConceptModel;
+import model.typeFormatModel;
 /**
  *
  * @author Lab5-E
@@ -24,23 +26,18 @@ import model.studentsPenaltyPaymentsModel;
 public class studentsPenaltyPaymentsDetailControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPaymentsDetail;
-        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0, 0, 0);
+        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0);
         for(int i=0;i<listStudentsPenalityPaymentsDetail.size();i++){
             System.out.println(listStudentsPenalityPaymentsDetail.get(i).getFL_REFERENCE_NUMBER());
         }
     }
     private String procedure;
-    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetail(int pt_fk_period, int pt_fk_semester, int pt_fk_category, int pt_fk_type_concept, int pt_type_format, int pt_fk_student){
+    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetailByHeader(int pt_pk_student_payment_penality_header){
         ArrayList<studentsPenaltyPaymentsDetailModel> list=new ArrayList<>();
-        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, null, null, null, null, null, null)";
         try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
-            ps.setString(1, "all");
-            ps.setInt(2, pt_fk_period);      
-            ps.setInt(3, pt_fk_semester);
-            ps.setInt(4, pt_fk_category);
-            ps.setInt(5, pt_fk_type_concept);
-            ps.setInt(6, pt_type_format);
-            ps.setInt(7, pt_fk_student);
+            ps.setString(1, "allByHeader");
+            ps.setInt(2, pt_pk_student_payment_penality_header);      
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentsPenaltyPaymentsDetailModel allStudentsPenaltyPaymentDetail=new studentsPenaltyPaymentsDetailModel();
@@ -50,16 +47,89 @@ public class studentsPenaltyPaymentsDetailControl {
                     studentsPenaltyPaymentsModel studentPenalityPayment = new studentsPenaltyPaymentsModel();
                     paymentsPenaltyTypesModel paymentTypes = new paymentsPenaltyTypesModel();
                     categoryPaymentsModel category =  new categoryPaymentsModel();
+                    typeConceptModel typeConcept = new typeConceptModel();
+                    typeFormatModel typeFormat = new typeFormatModel();
                     
                     allStudentsPenaltyPaymentDetail.setPK_STUDENT_PENALTY_PAYMENT_DETAIL(res.getInt("PK_STUDENT_PENALTY_PAYMENT_DETAIL"));
                     allStudentsPenaltyPaymentDetail.setFL_AMOUNT_PENALITY(res.getString("FL_AMOUNT_PENALITY"));
-                    allStudentsPenaltyPaymentDetail.setFL_MOTIVE_JUSTIFY(res.getString("FL_MOTIVE_JUSTIFY"));
                     allStudentsPenaltyPaymentDetail.setFL_REFERENCE_NUMBER(res.getString("FL_REFERENCE_NUMBER"));
-                    allStudentsPenaltyPaymentDetail.setFL_STATUS_JUSTIFY(res.getInt("FL_STATUS_JUSTIFY"));
                     allStudentsPenaltyPaymentDetail.setFL_UNIQUE(res.getString("FL_UNIQUE"));
                     allStudentsPenaltyPaymentDetail.setFL_STATUS_PAY(res.getString("FL_STATUS_PAY"));
-                    allStudentsPenaltyPaymentDetail.setFK_TYPE_CONCEPT(res.getString("FK_TYPE_CONCEPT"));
-                    allStudentsPenaltyPaymentDetail.setFK_TYPE_FORMAT(res.getString("FK_TYPE_FORMAT"));
+                    
+                    typeConcept.setPK_TYPE_CONCEPT(res.getInt("PK_TYPE_CONCEPT"));
+                    typeConcept.setFL_NAME_CONCEPT(res.getString("FL_NAME_CONCEPT"));
+                    allStudentsPenaltyPaymentDetail.setTypeConcept(typeConcept);
+                    
+                    typeFormat.setPK_TYPE_FORMAT(res.getInt("PK_TYPE_FORMAT"));
+                    typeFormat.setFL_NAME_FORMAT(res.getString("FL_NAME_FORMAT"));
+                    allStudentsPenaltyPaymentDetail.setTypeFormat(typeFormat);
+                    student.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    allStudentsPenaltyPaymentDetail.setStudent(student);
+                    
+                    semester.setPK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    semester.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    allStudentsPenaltyPaymentDetail.setSemester(semester);
+                    
+                    period.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    period.setFL_NAME(res.getString("FL_NAME"));
+                    allStudentsPenaltyPaymentDetail.setPeriod(period);
+                    
+                    studentPenalityPayment.setPK_STUDENT_PAYMENT_PENALTY(res.getInt("PK_STUDENT_PAYMENT_PENALTY"));
+                    allStudentsPenaltyPaymentDetail.setStudentPenalityPayment(studentPenalityPayment);
+                    
+                    paymentTypes.setPK_PAYMENT_PENALTY_TYPE(res.getInt("PK_PAYMENT_PENALTY_TYPE"));
+                    paymentTypes.setFL_NAME_PENALTY(res.getString("FL_NAME_PENALTY"));
+                    paymentTypes.setFL_TARIFF(res.getString("FL_TARIFF"));
+                    allStudentsPenaltyPaymentDetail.setPaymentTypes(paymentTypes);
+                    
+                    category.setPK_CATEGORY_PAYMENT(res.getInt("PK_CATEGORY_PAYMENT"));
+                    allStudentsPenaltyPaymentDetail.setCategoryPayments(category);                    
+                    
+                    list.add(allStudentsPenaltyPaymentDetail);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println(ex);
+        }
+        return list;
+    }
+    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetail(int pt_fk_period, int pt_fk_semester, int pt_type_format, int pt_fk_student){
+        ArrayList<studentsPenaltyPaymentsDetailModel> list=new ArrayList<>();
+        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "all");
+            ps.setInt(2, 0);      
+            ps.setInt(3, pt_fk_period);      
+            ps.setInt(4, pt_fk_semester);
+            ps.setInt(5, 0);
+            ps.setInt(6, 0);
+            ps.setInt(7, pt_type_format);
+            ps.setInt(8, pt_fk_student);
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentsPenaltyPaymentsDetailModel allStudentsPenaltyPaymentDetail=new studentsPenaltyPaymentsDetailModel();
+                    studentModel student= new studentModel();
+                    semesterModel semester = new semesterModel();
+                    periodModel period = new periodModel();
+                    studentsPenaltyPaymentsModel studentPenalityPayment = new studentsPenaltyPaymentsModel();
+                    paymentsPenaltyTypesModel paymentTypes = new paymentsPenaltyTypesModel();
+                    categoryPaymentsModel category =  new categoryPaymentsModel();
+                    typeConceptModel typeConcept = new typeConceptModel();
+                    typeFormatModel typeFormat = new typeFormatModel();
+                    
+                    allStudentsPenaltyPaymentDetail.setPK_STUDENT_PENALTY_PAYMENT_DETAIL(res.getInt("PK_STUDENT_PENALTY_PAYMENT_DETAIL"));
+                    allStudentsPenaltyPaymentDetail.setFL_AMOUNT_PENALITY(res.getString("FL_AMOUNT_PENALITY"));
+                    allStudentsPenaltyPaymentDetail.setFL_REFERENCE_NUMBER(res.getString("FL_REFERENCE_NUMBER"));
+                    allStudentsPenaltyPaymentDetail.setFL_UNIQUE(res.getString("FL_UNIQUE"));
+                    allStudentsPenaltyPaymentDetail.setFL_STATUS_PAY(res.getString("FL_STATUS_PAY"));
+                    
+                    typeConcept.setPK_TYPE_CONCEPT(res.getInt("PK_TYPE_CONCEPT"));
+                    typeConcept.setFL_NAME_CONCEPT(res.getString("FL_NAME_CONCEPT"));
+                    allStudentsPenaltyPaymentDetail.setTypeConcept(typeConcept);
+                    
+                    typeFormat.setPK_TYPE_FORMAT(res.getInt("PK_TYPE_FORMAT"));
+                    typeFormat.setFL_NAME_FORMAT(res.getString("FL_NAME_FORMAT"));
+                    allStudentsPenaltyPaymentDetail.setTypeFormat(typeFormat);
                     student.setPK_STUDENT(res.getInt("PK_STUDENT"));
                     allStudentsPenaltyPaymentDetail.setStudent(student);
                     
@@ -93,7 +163,7 @@ public class studentsPenaltyPaymentsDetailControl {
     
     public String InsertStudentsPenaltyPaymentDetail(studentsPenaltyPaymentsDetailModel dataStudentsPenaltyPayment){
         String request;
-        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, null, ?)";
+        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
@@ -105,9 +175,10 @@ public class studentsPenaltyPaymentsDetailControl {
                 ps.setInt(6, dataStudentsPenaltyPayment.getStudentPenalityPayment().getPK_STUDENT_PAYMENT_PENALTY());
                 ps.setInt(7, dataStudentsPenaltyPayment.getPaymentTypes().getPK_PAYMENT_PENALTY_TYPE());
                 ps.setInt(8, dataStudentsPenaltyPayment.getCategoryPayments().getPK_CATEGORY_PAYMENT());
-                ps.setString(9, dataStudentsPenaltyPayment.getFL_AMOUNT_PENALITY());
-                ps.setString(10, dataStudentsPenaltyPayment.getFL_REFERENCE_NUMBER());
-                ps.setString(11, dataStudentsPenaltyPayment.getFK_TYPE_CONCEPT());                
+                ps.setInt(9, dataStudentsPenaltyPayment.getTypeConcept().getPK_TYPE_CONCEPT());
+                ps.setInt(10, dataStudentsPenaltyPayment.getTypeFormat().getPK_TYPE_FORMAT());
+                ps.setString(11, dataStudentsPenaltyPayment.getFL_AMOUNT_PENALITY());
+                ps.setString(12, dataStudentsPenaltyPayment.getFL_REFERENCE_NUMBER());             
                 ps.executeUpdate();
                 request="Inserted";
                 ps.close();
@@ -121,23 +192,11 @@ public class studentsPenaltyPaymentsDetailControl {
     }
     public String UpdateStudentsPenaltyPaymentDetail(studentsPenaltyPaymentsDetailModel dataStudentsPenaltyPayment){
         String request;
-        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
-                ps.setString(1, "update");
-                ps.setInt(2, dataStudentsPenaltyPayment.getPK_STUDENT_PENALTY_PAYMENT_DETAIL());
-                ps.setInt(3, dataStudentsPenaltyPayment.getStudent().getPK_STUDENT());
-                ps.setInt(4, dataStudentsPenaltyPayment.getSemester().getPK_SEMESTER());
-                ps.setInt(5, dataStudentsPenaltyPayment.getPeriod().getPK_PERIOD());
-                ps.setInt(6, dataStudentsPenaltyPayment.getStudentPenalityPayment().getPK_STUDENT_PAYMENT_PENALTY());
-                ps.setInt(7, dataStudentsPenaltyPayment.getPaymentTypes().getPK_PAYMENT_PENALTY_TYPE());
-                ps.setInt(8, dataStudentsPenaltyPayment.getCategoryPayments().getPK_CATEGORY_PAYMENT());
-                ps.setString(9, dataStudentsPenaltyPayment.getFL_AMOUNT_PENALITY());
-                ps.setString(10, dataStudentsPenaltyPayment.getFL_REFERENCE_NUMBER());
-                ps.setInt(11, dataStudentsPenaltyPayment.getFL_STATUS_JUSTIFY());
-                ps.setString(12, dataStudentsPenaltyPayment.getFL_MOTIVE_JUSTIFY());
-                ps.setString(13, dataStudentsPenaltyPayment.getFK_TYPE_CONCEPT());     
+                ps.setString(1, "update");     
                 ps.executeUpdate();
                 request="Updated";
                 ps.close();
@@ -151,7 +210,7 @@ public class studentsPenaltyPaymentsDetailControl {
     }
     public String DeleteStudentsPenaltyPaymentDetail(int pkStudentsPenaltyPayment){
         String request;
-        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, null, null, null, null, null, null, null, null, null, null, null)";
+        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, null, null, null, null, null, null, null, null, null, null)";
         try {
             Connection conn=new conectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {

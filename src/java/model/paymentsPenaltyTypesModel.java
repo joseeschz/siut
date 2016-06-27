@@ -13,6 +13,8 @@ public class paymentsPenaltyTypesModel {
     int PK_PAYMENT_PENALTY_TYPE=0;
     String FL_NAME_PENALTY="";
     String FL_TARIFF="";
+    typeConceptModel typeConcept = null;
+    typeFormatModel typeFormat = null;
     studyLevelModel studyLevel = null;
     semesterModel semester = null;
     categoryPaymentsModel category = null;
@@ -42,6 +44,22 @@ public class paymentsPenaltyTypesModel {
 
     public void setFL_TARIFF(String FL_TARIFF) {
         this.FL_TARIFF = FL_TARIFF;
+    }
+
+    public typeConceptModel getTypeConcept() {
+        return typeConcept;
+    }
+
+    public void setTypeConcept(typeConceptModel typeConcept) {
+        this.typeConcept = typeConcept;
+    }
+
+    public typeFormatModel getTypeFormat() {
+        return typeFormat;
+    }
+
+    public void setTypeFormat(typeFormatModel typeFormat) {
+        this.typeFormat = typeFormat;
     }
 
     public studyLevelModel getStudyLevel() {
