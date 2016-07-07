@@ -39,7 +39,7 @@ public class municipalityControl {
         }
         ArrayList<municipalityModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     municipalityModel allMunicipality=new municipalityModel();
                     allMunicipality.setPK_MUNICIPALITY(res.getInt("PK_MUNICIPALITY"));
@@ -61,7 +61,7 @@ public class municipalityControl {
     public ArrayList<municipalityModel> SelectMunicipality(){
         ArrayList<municipalityModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_MUNICIPALITY`('all', null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_MUNICIPALITY`('all', null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     municipalityModel allMunicipality=new municipalityModel();
                     allMunicipality.setPK_MUNICIPALITY(res.getInt("PK_MUNICIPALITY"));
@@ -83,7 +83,7 @@ public class municipalityControl {
     public String InsertMunicipality(municipalityModel dataMunicipality){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_MUNICIPALITY`('insert', null, '"+dataMunicipality.getFL_NAME()+"', '"+dataMunicipality.getFK_ENTITY()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -99,7 +99,7 @@ public class municipalityControl {
     public String DeleteMunicipality(int pkMunicipality){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_MUNICIPALITY`('delete', '"+pkMunicipality+"', null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -115,7 +115,7 @@ public class municipalityControl {
     public String UpdateMunicipality(municipalityModel dataMunicipality){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_MUNICIPALITY`('update', '"+dataMunicipality.getPK_MUNICIPALITY()+"', '"+dataMunicipality.getFL_NAME()+"', '"+dataMunicipality.getFK_ENTITY()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

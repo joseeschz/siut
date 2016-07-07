@@ -29,7 +29,7 @@ public class groupControl {
     public ArrayList<groupModel> SelectGroupByCurrentSemester(int pkCareer, int pkSemeser, int pkPeriod){
         ArrayList<groupModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('groupByCurrentSemester', "+pkCareer+", null, "+pkSemeser+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('groupByCurrentSemester', "+pkCareer+", null, "+pkSemeser+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupModel listGroup=new groupModel();
                     listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
@@ -50,7 +50,7 @@ public class groupControl {
     public ArrayList<groupModel> SelectGroup(String action, int fkSemester){
         ArrayList<groupModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP`('"+action+"', '"+fkSemester+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP`('"+action+"', '"+fkSemester+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupModel listGroup=new groupModel();
                     listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
@@ -77,7 +77,7 @@ public class groupControl {
             procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacher', "+pkTeacher+", null, "+pkCareer+", "+fkPeriod+", "+fkSemester+", null, null)";
         }
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupModel listGroup=new groupModel();
                     listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
@@ -99,7 +99,7 @@ public class groupControl {
         ArrayList<groupModel> list=new ArrayList<>();
         String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByTeacherTutor', "+pkTeacher+", null, null, "+fkPeriod+", "+fkSemester+", null, null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupModel listGroup=new groupModel();
                     listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
@@ -121,7 +121,7 @@ public class groupControl {
         ArrayList<groupModel> list=new ArrayList<>();
         String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('groupByDirector', "+pkTeacher+", null, null, "+fkPeriod+", "+fkSemester+", null, null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupModel listGroup=new groupModel();
                     listGroup.setPK_GROUP(res.getInt("PK_GROUP"));
@@ -142,7 +142,7 @@ public class groupControl {
     public String InsertGroup(groupModel dataGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP`('insert', null, '"+dataGroup.getFL_NAME_GROUP()+"', '"+dataGroup.getFK_SEMESTER()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -158,7 +158,7 @@ public class groupControl {
     public String DeleteGroup(int pkGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP`('delete', '"+pkGroup+"', null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -174,7 +174,7 @@ public class groupControl {
     public String UpdateGroup(groupModel dataGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP`('update', '"+dataGroup.getPK_GROUP()+"','"+dataGroup.getFL_NAME_GROUP()+"', '"+dataGroup.getFK_SEMESTER()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

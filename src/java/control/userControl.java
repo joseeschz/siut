@@ -33,7 +33,7 @@ public class userControl {
     public ArrayList<userModel> SelectUserLogin(userModel dataUser){
         ArrayList<userModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_LOGIN`('worker', '"+dataUser.getFL_MAIL()+"', '"+dataUser.getFL_PASSWORD()+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_LOGIN`('worker', '"+dataUser.getFL_MAIL()+"', '"+dataUser.getFL_PASSWORD()+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     userModel userLogin=new userModel();
                     userLogin.setPK_USER(res.getInt("PK_USER"));
@@ -57,7 +57,7 @@ public class userControl {
     public ArrayList<userModel> SelectUsers(){
         ArrayList<userModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(""); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(""); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     userModel userAll=new userModel();
                     userAll.setPK_USER(res.getInt("PK_USER"));
@@ -77,7 +77,7 @@ public class userControl {
     public String InsertUser(userModel dataUser){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -93,7 +93,7 @@ public class userControl {
     public String DeleteUser(int pkUser){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -109,7 +109,7 @@ public class userControl {
     public String UpdateUser(userModel dataUser){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

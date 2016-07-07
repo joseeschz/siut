@@ -28,7 +28,29 @@ public class careerControl {
     public ArrayList<careerModel> SelectCareer(String condition, int fkLevel){
         ArrayList<careerModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER`('"+condition+"','"+fkLevel+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER`('"+condition+"','"+fkLevel+"')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    careerModel listCareer=new careerModel();
+                    listCareer.setPK_CAREER(res.getInt("PK_CAREER"));
+                    listCareer.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    listCareer.setFL_NAME_CAREER(res.getString("FL_NAME_CAREER"));
+                    listCareer.setFL_STATUS(res.getString("FL_STATUS"));
+                    list.add(listCareer);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(careerModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<careerModel> SelectCareerING(String condition, int fkLevel){
+        ArrayList<careerModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CAREER`('"+condition+"','"+fkLevel+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
                     listCareer.setPK_CAREER(res.getInt("PK_CAREER"));
@@ -51,7 +73,7 @@ public class careerControl {
         ArrayList<careerModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacher', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
                     listCareer.setPK_CAREER(res.getInt("PK_CAREER"));
@@ -75,7 +97,7 @@ public class careerControl {
         ArrayList<careerModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByTeacherTutor', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
                     listCareer.setPK_CAREER(res.getInt("PK_CAREER"));
@@ -99,7 +121,7 @@ public class careerControl {
         ArrayList<careerModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('careerByDirector', "+pk_teacher+", "+fkLevel+", null, null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     careerModel listCareer=new careerModel();
                     listCareer.setPK_CAREER(res.getInt("PK_CAREER"));
@@ -122,7 +144,7 @@ public class careerControl {
     public String InsertCareer(careerModel dataCareer){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CAREER`('insert', null, '"+dataCareer.getFL_NAME_CAREER()+"', '"+dataCareer.getFL_NAME_ABBREVIATED()+"','"+dataCareer.getFL_STATUS()+"', '"+dataCareer.getFK_LEVEL()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -138,7 +160,7 @@ public class careerControl {
     public String DeleteCareer(int pkCareer){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CAREER`('delete', '"+pkCareer+"', null, null,null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -154,7 +176,7 @@ public class careerControl {
     public String UpdateCareer(careerModel dataCareer){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CAREER`('update', '"+dataCareer.getPK_CAREER()+"', '"+dataCareer.getFL_NAME_CAREER()+"', '"+dataCareer.getFL_NAME_ABBREVIATED()+"','"+dataCareer.getFL_STATUS()+"', '"+dataCareer.getFK_LEVEL()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

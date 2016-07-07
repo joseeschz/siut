@@ -28,7 +28,7 @@ public class workerControl {
     public ArrayList<workerModel> SelectWorker(int pkWorker){
         ArrayList<workerModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byPkWorker', '"+pkWorker+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byPkWorker', '"+pkWorker+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     workerModel listWorker=new workerModel();
                     listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -61,7 +61,7 @@ public class workerControl {
         if(comand!=null){
             if(comand.equals("byTeacherTutor")){
                 try {
-                    try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byTeacherTutor', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
+                    try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byTeacherTutor', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
                         while(res!=null&&res.next()){
                             workerModel listWorker=new workerModel();
                             listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -81,7 +81,7 @@ public class workerControl {
             }
             if(comand.equals("byTeacherWorker")){
                 try {
-                    try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byTeacherWorker', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
+                    try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byTeacherWorker', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
                         while(res!=null&&res.next()){
                             workerModel listWorker=new workerModel();
                             listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -101,7 +101,7 @@ public class workerControl {
             }
         }else{
             try {
-                try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byRol', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
+                try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_WORKERS`('byRol', '"+fkRol+"')"); ResultSet res = ps.executeQuery()) {
                     while(res!=null&&res.next()){
                         workerModel listWorker=new workerModel();
                         listWorker.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -132,7 +132,7 @@ public class workerControl {
     public String GenerateWorker(workerModel dataWorker){
         String request = "";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('generateUser','worker', null, '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('generateUser','worker', null, '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }
@@ -150,7 +150,7 @@ public class workerControl {
     public String CheckKpWorker(String kp){
         String request = "";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('checkKp', null, null, '', '', '', '', '"+kp+"', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('checkKp', null, null, '', '', '', '', '"+kp+"', '', '', '', null,'','')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }
@@ -168,7 +168,7 @@ public class workerControl {
     public String InsertWorker(workerModel dataWorker){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('insert','worker', null, '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEPHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','','')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -184,7 +184,7 @@ public class workerControl {
     public String DeleteWorker(int pkWorker){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('delete', null, '"+pkWorker+"', null, null, null, null, null, null, null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -200,7 +200,7 @@ public class workerControl {
     public String UpdateWorker(String comand, workerModel dataWorker){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_WORKER`('update','"+comand+"', '"+dataWorker.getPK_WORKER()+"', '"+dataWorker.getFL_PROFESSION()+"', '"+dataWorker.getFL_NAME_WORKER()+"', '"+dataWorker.getFL_PATERN_NAME()+"', '"+dataWorker.getFL_MATERN_NAME()+"', '"+dataWorker.getFL_KEY_SP()+"', '"+dataWorker.getFL_TELEPHONE_NUMBER()+"', '"+dataWorker.getFL_ADDRES()+"', '"+dataWorker.getFL_PHOTO()+"', '"+dataWorker.getFK_ROL()+"','"+dataWorker.getFL_TUTOR()+"','"+dataWorker.getFL_JOB_FUNCTIONAL()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
@@ -216,7 +216,7 @@ public class workerControl {
     public String UpdateWorker(int pk_worker, String field_name, String field_value){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GERNERIC_WORKER`('update', '"+field_name+"', '"+field_value+"', "+pk_worker+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

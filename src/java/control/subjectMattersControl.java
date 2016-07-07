@@ -31,7 +31,7 @@ public class subjectMattersControl {
         String procedure;
         procedure = "CALL `GET_PROGRESS_WORK_REPORT`('missingClose',"+pkCareer+", "+pkPeriod+")";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -62,7 +62,7 @@ public class subjectMattersControl {
         String procedure;
         procedure = "CALL `GET_PROGRESS_WORK_REPORT`('missingAll',"+pkCareer+", "+pkPeriod+")";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -88,7 +88,7 @@ public class subjectMattersControl {
         String procedure;
         procedure = "CALL `GET_SUBJECT_MATTERS`('subjectMattersByCurrentSemester', "+pkCareer+", "+pkSemester+", null , "+pkStudyPlan+", null, "+pkPeriod+")";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -116,7 +116,7 @@ public class subjectMattersControl {
             procedure = "CALL `GET_SUBJECT_MATTERS`('matterToGroup', "+pkCareer+", "+pkSemester+", "+pkGroup+" ,"+pkStudyPlan+", null, "+pkPeriod+")";
         }        
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -140,7 +140,7 @@ public class subjectMattersControl {
         String procedure;
         procedure = "CALL `GET_SUBJECT_MATTERS`('mattersByGroup', "+pkCareer+", "+pkSemester+", "+pkGroup+" , null, null, "+pkPeriod+")";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -162,7 +162,7 @@ public class subjectMattersControl {
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         String procedure="CALL `GET_SUBJECT_MATTERS`('byStudentPeriodNow', null, null, null, null, "+pkStudent+", null)";        
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -190,7 +190,7 @@ public class subjectMattersControl {
             procedure="CALL `GET_CAREER_SEMESTER_GROUP_MATTER_BY_TEACHER`('matterByTeacher', "+pkTeacher+", null, "+pkCareer+","+pkPeriod+", "+pkSemester+", "+pkGroup+", null)";
         }
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     subjectMattersModel listSubjectMatters=new subjectMattersModel();
                     listSubjectMatters.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -212,7 +212,7 @@ public class subjectMattersControl {
     public String InsertSubjectMatters(subjectMattersModel dataSubjectMatters){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('insert', null, '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFL_CANT_HOURS()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -228,7 +228,7 @@ public class subjectMattersControl {
     public String DeleteSubjectMatters(int pkSubjectMatters){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('delete', '"+pkSubjectMatters+"', null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -244,7 +244,7 @@ public class subjectMattersControl {
     public String UpdateSubjectMatters(subjectMattersModel dataSubjectMatters){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SUBJECT_MATTERS`('update', '"+dataSubjectMatters.getPK_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_NAME_SUBJECT_MATTER()+"', '"+dataSubjectMatters.getFL_INTEGRADORA()+"', '"+dataSubjectMatters.getFL_CANT_HOURS()+"', '"+dataSubjectMatters.getFK_SEMESTER()+"', '"+dataSubjectMatters.getFK_STUDY_PLAN()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

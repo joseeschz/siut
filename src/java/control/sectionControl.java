@@ -32,7 +32,7 @@ public class sectionControl {
     }
     public ArrayList<sectionModel> SelectSections(int pt_pk_user, int pt_rol){
         ArrayList<sectionModel> list=new ArrayList<>();
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('menuPrincipal',"+pt_pk_user+", "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('menuPrincipal',"+pt_pk_user+", "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
             while(res!=null&&res.next()){
                 sectionModel section=new sectionModel();
                 section.setPK_SECTION_MENU_PRINCIPAL(res.getInt("PK_SECTION_MENU_PRINCIPAL"));
@@ -54,7 +54,7 @@ public class sectionControl {
     }
     public ArrayList<sectionModel> SelectSectionsAmissiblenessByRol(int pt_rol){
         ArrayList<sectionModel> list=new ArrayList<>();
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('amissibleness', null, "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SECTION_MENU_BY_ROL`('amissibleness', null, "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
             while(res!=null&&res.next()){
                 sectionModel section=new sectionModel();
                 section.setPK_SECTION_MENU_PRINCIPAL(res.getInt("PK_SECTION_MENU_PRINCIPAL"));
@@ -77,7 +77,7 @@ public class sectionControl {
     }
     public ArrayList<sectionModel> SelectSection(int pk_item, int pt_rol){
         ArrayList<sectionModel> list=new ArrayList<>();
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ITEMS_MENU`('byPkPatent',"+pk_item+", "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ITEMS_MENU`('byPkPatent',"+pk_item+", "+pt_rol+")"); ResultSet res = ps.executeQuery()) {
             while(res!=null&&res.next()){
                 sectionModel section=new sectionModel();
                 section.setPK_SECTION_MENU_PRINCIPAL(res.getInt("PK_SECTION_MENU_PRINCIPAL"));
@@ -99,7 +99,7 @@ public class sectionControl {
     }
     public ArrayList<sectionModel> SelectItem(int pk_item){
         ArrayList<sectionModel> list=new ArrayList<>();
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ITEMS_MENU`('item',"+pk_item+", null)"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ITEMS_MENU`('item',"+pk_item+", null)"); ResultSet res = ps.executeQuery()) {
             while(res!=null&&res.next()){
                 sectionModel section=new sectionModel();
                 section.setPK_SECTION_MENU_PRINCIPAL(res.getInt("PK_SECTION_MENU_PRINCIPAL"));

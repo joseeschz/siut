@@ -30,7 +30,7 @@ public class generationsControl {
         ArrayList<generationsModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_GENERATIONS`('"+condition+"')";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     generationsModel listGenerations=new generationsModel();
                     listGenerations.setPK_GENERATION(res.getInt("PK_GENERATION"));
@@ -56,7 +56,7 @@ public class generationsControl {
         String request = null;
         try {
             String procedure="CALL `SET_GENERATIONS`('insert', null, null, null, '"+dataGenerations.getFL_YEAR_BEGIN()+"', '"+dataGenerations.getFL_YEAR_END()+"')";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("FL_RESULT");
                 }
@@ -73,7 +73,7 @@ public class generationsControl {
     public String DeleteGenerations(int pkGenerations){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GENERATIONS`('delete', "+pkGenerations+", null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -89,7 +89,7 @@ public class generationsControl {
     public String UpdateGenerations(generationsModel dataGenerations){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GENERATIONS`('update', "+dataGenerations.getPK_GENERATION()+", null, "+dataGenerations.getFL_STATUS_ACTIVE()+", null, null)")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

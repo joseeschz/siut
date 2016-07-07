@@ -28,7 +28,7 @@ public class entityControl {
     public ArrayList<entityModel> SelectEntity(String action){
         ArrayList<entityModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENTITY`('"+action+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENTITY`('"+action+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     entityModel allStates=new entityModel();
                     allStates.setPK_ENTITY(res.getInt("PK_ENTITY"));
@@ -49,7 +49,7 @@ public class entityControl {
     public String InsertEntity(entityModel dataEntity){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ENTITY`('insert',null,'"+dataEntity.getFL_NAME_ENTITY()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -65,7 +65,7 @@ public class entityControl {
     public String DeleteEntity(int pkEntity){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ENTITY`('delete','"+pkEntity+"','')")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -81,7 +81,7 @@ public class entityControl {
     public String UpdateEntity(entityModel dataEntity){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ENTITY`('update','"+dataEntity.getPK_ENTITY()+"','"+dataEntity.getFL_NAME_ENTITY()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

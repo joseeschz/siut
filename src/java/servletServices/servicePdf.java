@@ -5,7 +5,7 @@
  */
 package servletServices;
 
-import control.conectionControl;
+import control.connectionControl;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -46,7 +46,7 @@ public class servicePdf extends HttpServlet {
         if(request.getParameter("cedule")==null){
             if(session.getAttribute("logueadoCandidate") != null){
                 //Parametros para realizar la conexión// 
-                conectionControl connection=new conectionControl();
+                connectionControl connection=new connectionControl();
                 //Establecemos la ruta del reporte//
                 File reportFile = new File(application.getRealPath("content/data-jr/documentPreregister/preregisterPDF.jasper")); 
                 //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 
@@ -76,7 +76,7 @@ public class servicePdf extends HttpServlet {
             if(request.getParameter("cedule").equals("print")){
                 if(session.getAttribute("folioSystem") != null){
                     //Parametros para realizar la conexión// 
-                    conectionControl connection=new conectionControl();
+                    connectionControl connection=new connectionControl();
                     //Establecemos la ruta del reporte//
                     File reportFile = new File(application.getRealPath("content/data-jr/documentPreregister/preregister-cedulePDF.jasper")); 
                     //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 

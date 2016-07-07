@@ -33,7 +33,7 @@ public class candidateControl {
     public ArrayList<propetiesTableModel> SelectReportColums(){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('columsMetadata', '', '', '')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('columsMetadata', '', '', '')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
@@ -67,7 +67,7 @@ public class candidateControl {
     public JSONArray SelectMetadataRows(){
         JSONArray contentColums = new JSONArray();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('rowsMetadata', '', '', '')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('rowsMetadata', '', '', '')"); ResultSet res = ps.executeQuery()) {
                 ResultSetMetaData rsmd = res.getMetaData();
                 JSONObject columns;
                 while(res!=null&&res.next()){
@@ -90,7 +90,7 @@ public class candidateControl {
     public ArrayList<studentModel> SelectCandidatesMissingPreinscription(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('candidatesMissingPreinscription', '', '', '')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('candidatesMissingPreinscription', '', '', '')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setPK_STUDENT(res.getInt("PK_CANDIDATE"));
@@ -115,7 +115,7 @@ public class candidateControl {
     public ArrayList<studentModel> SelectCandidates(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('candidatesPreinscription', '', '', '')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('candidatesPreinscription', '', '', '')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setPK_STUDENT(res.getInt("PK_CANDIDATE"));
@@ -139,7 +139,7 @@ public class candidateControl {
     public String GenerateFolioUtsem(String period, String type){
         String request="";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT `FN_GENERATE_FOLIO_UTSEM`('"+period+"', '"+type+"') AS new_temp_folio_utsem"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT `FN_GENERATE_FOLIO_UTSEM`('"+period+"', '"+type+"') AS new_temp_folio_utsem"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request = res.getString("new_temp_folio_utsem");
                 }
@@ -155,7 +155,7 @@ public class candidateControl {
     public ArrayList<studentModel> SelectFoliosSystem(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('foliosSystem', null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('foliosSystem', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setFL_FOLIO_TEMP_SYSTEM(res.getString("FL_FOLIO_TEMP_SYSTEM"));
@@ -174,7 +174,7 @@ public class candidateControl {
     public ArrayList<studentModel> SelectFoliosSystemAll(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosSystem', null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosSystem', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setFL_FOLIO_TEMP_SYSTEM(res.getString("FL_FOLIO_TEMP_SYSTEM"));
@@ -193,7 +193,7 @@ public class candidateControl {
     public ArrayList<studentModel> SelectFoliosUtsem(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosUtsem', null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CANDIDATE`('allFoliosUtsem', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
@@ -213,7 +213,7 @@ public class candidateControl {
         ArrayList<studentModel> list=new ArrayList<>();
         String procedure = "CALL `GET_CANDIDATE`('login', null, '"+userName+"', '"+password+"')";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel userLogin=new studentModel();
                     userLogin.setFL_NAME(res.getString("FL_NAME"));
@@ -235,7 +235,7 @@ public class candidateControl {
         int status = 0;
         String procedure = "CALL `GET_CANDIDATE`('status', null, '"+userName+"', '"+password+"')";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     status = (res.getInt("FL_STATUS_ACOUNT"));
                 }
@@ -253,7 +253,7 @@ public class candidateControl {
         String request;
         String procedure = "CALL `SET_CANDITATE_ACTIVATE_ACOUNT`('activateAcount', '"+userName+"', '"+mail+"', '"+password+"')";
        try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
                 request="Actived";
@@ -270,7 +270,7 @@ public class candidateControl {
         boolean validate = false;
         String procedure = "CALL `GET_CANDIDATE`('validateUserName', null, '"+userName+"', null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 validate = !(res!=null&&res.next());
                 res.close();
                 ps.close();
@@ -285,7 +285,7 @@ public class candidateControl {
         boolean validate = false;
         String procedure = "CALL `GET_CANDIDATE`('validateEmail', null, '"+email+"', null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 validate = !(res!=null&&res.next());
                 res.close();
                 ps.close();
@@ -305,7 +305,7 @@ public class candidateControl {
             procedure = "CALL `GET_CANDIDATE`('candidateByFolioUtsem', '"+folio+"', null, null)";
         }
             try {
-                try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+                try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                     while(res!=null&&res.next()){
                         studentModel Candidate=new studentModel();
                         Candidate.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
@@ -464,7 +464,7 @@ public class candidateControl {
         String request = null;
         String procedure="CALL `SET_NEW_CANDIDATE`('generateCandidate', '"+userName+"', '"+email+"', '"+password+"')";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request=res.getString("FL_FOLIO_TEMP_SYSTEM");
                 }
@@ -481,7 +481,7 @@ public class candidateControl {
     public String UpdateCandidate(String folioTemp, String field_name, String field_value){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CANDIDATE`('update', '"+folioTemp+"', '"+field_name+"', '"+field_value+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
@@ -501,7 +501,7 @@ public class candidateControl {
         procedure1="CALL `SET_CANDIDATE`('update', '"+folioTemp+"', 'FL_UTSEM_FOLIO', '"+folioUtsem+"')";
         procedure2="CALL `SET_CANDIDATE`('update', '"+folioTemp+"', 'FK_PERIOD_INSCRIPTION', '"+period+"')";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure1)) {
                 ps.executeUpdate();
                 ps.close();

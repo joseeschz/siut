@@ -52,7 +52,7 @@ public class studentsPenaltyPaymentsControl {
     public ArrayList<studentsPenaltyPaymentsModel> SelectStudentsPenaltyPayments(int pt_fk_type_format, int pt_fk_period){
         ArrayList<studentsPenaltyPaymentsModel> list=new ArrayList<>();
         procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?)";
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");   
             ps.setInt(2, pt_fk_type_format);      
             ps.setInt(3, pt_fk_period);      
@@ -110,7 +110,7 @@ public class studentsPenaltyPaymentsControl {
         String key = null;
         procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
-        Connection conn=new conectionControl().getConexion();
+        Connection conn=new connectionControl().getConexion();
         try {
             ps = conn.prepareStatement(procedure);
             ps.setString(1, "insert");
@@ -140,7 +140,7 @@ public class studentsPenaltyPaymentsControl {
         String request;
         procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, null, null, null, null, null)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "commitBack");
                 ps.setInt(2, pkStudentsPenaltyPayment);
@@ -159,7 +159,7 @@ public class studentsPenaltyPaymentsControl {
         String request;
         procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "update");
                 ps.executeUpdate();
@@ -177,7 +177,7 @@ public class studentsPenaltyPaymentsControl {
         String request;
         procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, null, null, null, null, null)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "delete");
                 ps.setInt(2, pkStudentsPenaltyPayment);

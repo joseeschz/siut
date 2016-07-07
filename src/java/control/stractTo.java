@@ -25,7 +25,7 @@ public class stractTo {
         obj.bajar_archivo();
     }
     public void bajar_archivo() throws SQLException, IOException {
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_FILES`()"); ResultSet res = ps.executeQuery()) {
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_FILES`()"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     try {
                         File directory = new File("c:/temp/"+res.getString("FL_ENROLLMENT")+"");

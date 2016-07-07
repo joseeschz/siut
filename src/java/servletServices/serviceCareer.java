@@ -63,6 +63,8 @@ public class serviceCareer extends HttpServlet {
                         listCareer=new careerControl().SelectCareerByDirector(fkTeacher, fkLevel);
                     }else if(request.getParameter("statusInscription") != null){
                         listCareer=new careerControl().SelectCareer("byStatusInscription",0);
+                    }else if(request.getParameter("statusInscriptionING") != null){
+                        listCareer=new careerControl().SelectCareer("byStatusInscriptionING",0);
                     }else{
                         listCareer=new careerControl().SelectCareer("byStatus",fkLevel);
                     }

@@ -21,7 +21,7 @@
         }
         var windowAddPeriod = $('#jqxWindowAddPeriod').jqxWindow({
             theme: theme,
-            height: 220,
+            height: 300,
             width: 240,
             resizable: false,
             draggable: true,
@@ -40,13 +40,15 @@
                 $('#okAdd').focus();
             }
         });
-        function loadTable(){
+        function ordersSource(){
             itemSchoolYear = $('#schoolYearFilter').jqxDropDownList('getSelectedItem');
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type:'int'},
                     { name: 'dataPkPeriod', type: 'string' },
                     { name: 'dataUnique', type: 'string' },
+                    { name: 'dataDayBegin', type: 'string' },
+                    { name: 'dataDayEnd', type: 'string' },
                     { name: 'dataNamePeriod', type: 'string' } ,
                     { name: 'dataNamePeriodAbbreviated', type: 'string' } ,
                     { name: 'dataActive', type: 'int' } ,
@@ -63,6 +65,42 @@
                 async: false,
                 id: 'dataPkPeriod',
                 url: '../servicePeriod?view=all',
+                updateRow: function (rowId, rowData, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server is successful 
+                    // and with parameter false if the synchronization failder.
+                    var status = rowData.dataActive;
+                    if(status==="Inactivo"){
+                        status=0;
+                    }else{
+                        status=1;
+                    }
+                    $.ajax({
+                        //Send the paramethers to servelt
+                        type: "POST",
+                        async: false,
+                        url: "../servicePeriod?update",
+                        data:{
+                            'pkPeriod' : rowId,
+                            'pt_active' : status,
+                            'pt_day_begin' : rowData.dataDayBegin,
+                            'pt_day_end' : rowData.dataDayEnd
+                        },
+                        beforeSend: function (xhr) {
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //This is if exits an error with the server internal can do server off, or page not found
+                            alert("Error interno del servidor");
+                        },
+                        success: function (data, textStatus, jqXHR) { 
+                            //If is updated rechange the drowdown in the other flange...
+                            setTimeout(function (){
+                                commit(true);
+                                loadTable();
+                            }, 100);
+                        }
+                    });
+                },
                 deleteRow: function (rowID, commit) {
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
@@ -94,20 +132,28 @@
                     });
                 }
             };
-            var dataAdapter = new $.jqx.dataAdapter(ordersSource);
-            $("#tablePeriod").jqxDataTable({
-                width: 400,
-                height: 152,
-                selectionMode: "singleRow",
+            return ordersSource;
+        }
+        function loadTable(){
+            var cellbeginedit = function (row, datafield, columntype, value) {
+                if(value==="Activo"){
+                    return false;
+                }
+            };
+            var dataAdapter = new $.jqx.dataAdapter(ordersSource());
+            $("#tablePeriod").jqxGrid({
+                width: 600,
+                height: 138,
+                selectionmode: "singlerow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: false,
                 editable: true,
                 filterable: false,
-                showToolbar: true,
+                showtoolbar: true,
                 altRows: true,
-                toolbarHeight: 35,
-                renderToolbar: function(toolBar){
+                toolbarheight: 35,
+                rendertoolbar: function(toolBar){
                     var theme = "";
                     var toTheme = function (className) {
                         if (theme === "") return className;
@@ -191,7 +237,7 @@
                 columns: [
                     { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
                     { text: 'Perido Escolar', dataField: 'dataNamePeriod', editable: false},
-                    { text: 'Estatus',  columntype: 'custom', align:'center', cellsalign:'center', dataField: 'dataActive', width: 80,
+                    { text: 'Estatus', cellbeginedit: cellbeginedit,  columntype: 'custom', align:'center', cellsalign:'center', dataField: 'dataActive', width: 80,
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
                             if(cellvalue==="Inactivo"){
@@ -220,64 +266,87 @@
                             }
                             return value;
                          }
+                    },
+                    {
+                        text: 'Dia Inicio Periodo', 
+                        align:'center', cellsalign:'center', 
+                        dataField: 'dataDayBegin', 
+                        width: 140,
+                        columntype: 'custom', 
+                        createEditor: function (row, cellvalue, editor, cellText, width, height) {
+                            // construct the editor. 
+                            var source = [
+                                "01","02","03","04","05","06","07","08","09","10",
+                                "11","12","13","14","15","16","17","18","19","20",
+                                "21","22","23","24","25","26","27","28","29","30",
+                                "31","32"
+                            ];
+                            editor.jqxDropDownList({
+                                placeHolder: "SELECCIONAR",
+                                source: source, 
+                                width: width, 
+                                height: height
+                            });
+                        },
+                        initEditor: function (row, cellvalue, editor, celltext, width, height) {
+                            // set the editor's current value. The callback is called each time the editor is displayed.
+                            editor.jqxDropDownList({ width: width, height: height });
+                            editor.val(cellvalue);
+                        },
+                        getEditorValue: function (row, cellvalue, editor) {
+                            // return the editor's value.
+                            return editor.val();
+                        }
+                    },
+                    {
+                        text: 'Dia Fin Periodo', 
+                        align:'center', cellsalign:'center', 
+                        dataField: 'dataDayEnd', 
+                        width: 140,
+                        columntype: 'custom', 
+                        createEditor: function (row, cellvalue, editor, cellText, width, height) {
+                            // construct the editor. 
+                            var source = [
+                                "01","02","03","04","05","06","07","08","09","10",
+                                "11","12","13","14","15","16","17","18","19","20",
+                                "21","22","23","24","25","26","27","28","29","30",
+                                "31","32"
+                            ];
+                            editor.jqxDropDownList({
+                                placeHolder: "SELECCIONAR",
+                                source: source, 
+                                width: width, 
+                                height: height
+                            });
+                        },
+                        initEditor: function (row, cellvalue, editor, celltext, width, height) {
+                            // set the editor's current value. The callback is called each time the editor is displayed.
+                            editor.jqxDropDownList({ width: width, height: height });
+                            var item = editor.jqxDropDownList('getItemByValue', cellvalue);
+                            editor.jqxDropDownList('selectItem', item ); 
+                        },
+                        getEditorValue: function (row, cellvalue, editor) {
+                            // return the editor's value.
+                            return editor.val();
+                        }
                     }
                 ]
             }); 
         }
-        $('#tablePeriod').on('cellValueChanged', function (event) {
-            // event args.
-            var args = event.args;
-            // cell value.
-            var value = args.value;
-            // old cell value.
-            var oldValue = args.oldValue;
-            // row data.
-            var row = args.row;
-            // row index.
-            var index = args.index;
-            // row's data bound index.
-            var boundIndex = args.boundIndex;
-            // row key.
-            var rowKey = args.key;
-            // column data field.
-            var dataField = args.dataField;
-            var status = value;
-            if(status==="Inactivo"){
-                status=0;
-            }else{
-                status=1;
-            }
-            $.ajax({
-                //Send the paramethers to servelt
-                type: "POST",
-                async: false,
-                url: "../servicePeriod?update",
-                data:{
-                    'pkPeriod': rowKey,
-                    'pt_active':status
-                },
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    //This is if exits an error with the server internal can do server off, or page not found
-                    alert("Error interno del servidor");
-                },
-                success: function (data, textStatus, jqXHR) { 
-                    //If is updated rechange the drowdown in the other flange...
-                    loadTable();
-                }
-            });
-        });
         $("#okAdd").click(function (){
             var itemSchoolYear = $("#schoolYearFilter").jqxDropDownList('getSelectedItem'); 
             var itemPeriodType = $("#periodTypeFilter").jqxDropDownList('getSelectedItem'); 
+            var itemDayBegin = $("#dayBegin").jqxDropDownList('getSelectedItem'); 
+            var itemDayEnd = $("#dayEnd").jqxDropDownList('getSelectedItem'); 
             var year = parseInt(itemSchoolYear.originalItem.dataYearBegin);
             
             if(validate(itemPeriodType.label+" "+year)){
                 var data = {
                     dataYear : year,
                     dataPeriodType : itemPeriodType.value,
-                    dataFkSchoolYear : itemSchoolYear.value
+                    dataFkSchoolYear : itemSchoolYear.value,
+                    dataDayBegin : itemDayBegin.value,
+                    dataDayEnd : itemDayEnd.value
                 };
                 insert(data);
                 $("#validationStatus").hide();
@@ -287,6 +356,36 @@
                 $("#validationStatus").show();
             }          
         });
+        function createDropDownDayBegin(){
+            var source = [
+                "01","02","03","04","05","06","07","08","09","10",
+                "11","12","13","14","15","16","17","18","19","20",
+                "21","22","23","24","25","26","27","28","29","30",
+                "31","32"
+            ];
+            // Create a jqxDropDownList
+            $("#dayBegin").jqxDropDownList({ 
+                source: source, 
+                selectedIndex: 0, 
+                width: '60', 
+                height: '25'
+            });
+        }
+         function createDropDownDayEnd(){
+            var source = [
+                "01","02","03","04","05","06","07","08","09","10",
+                "11","12","13","14","15","16","17","18","19","20",
+                "21","22","23","24","25","26","27","28","29","30",
+                "31","32"
+            ];
+            // Create a jqxDropDownList
+            $("#dayEnd").jqxDropDownList({ 
+                source: source, 
+                selectedIndex: 0, 
+                width: '60', 
+                height: '25'
+            });
+        }
         function createDropDownPeriodType(){
             var sourceYear =[
                 {"dataPeriodType":"Enero-Abril","dataValuePeriodType":"1"},
@@ -331,6 +430,8 @@
             });
         };
         createDropDownPeriodType();
+        createDropDownDayBegin();
+        createDropDownDayEnd();
         function validate(compare){
             var result = false;
             var rows = $("#tablePeriod").jqxDataTable('getView');  
@@ -359,7 +460,9 @@
                 data:{
                     pt_year: data.dataYearBegin,
                     pt_period_type: data.dataPeriodType,
-                    pt_fk_school_year : data.dataFkSchoolYear
+                    pt_fk_school_year : data.dataFkSchoolYear,
+                    pt_day_begin : data.dataDayBegin,
+                    pt_day_end : data.dataDayEnd
                 },
                 beforeSend: function (xhr) {
                 },
@@ -386,6 +489,14 @@
             <div style="display: inline-block; margin-right: 5px;">
                 <span>Año</span><br>
                 <div id="year" class="year" style="font-size: 28px; color: rgb(150, 216, 101);">2001</div>
+            </div>            
+            <div style="margin-right: 5px;">
+                <span>Dia inicio del periodo</span><br>
+                <div id="dayBegin"></div>
+            </div>
+            <div style="margin-right: 5px;">
+                <span>Dia fin del periodo</span><br>
+                <div id="dayEnd"></div>
             </div>
             <div style="margin-right: 5px;">
                 <span>Status</span><br>

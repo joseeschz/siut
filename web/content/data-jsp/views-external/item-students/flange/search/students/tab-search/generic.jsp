@@ -20,24 +20,27 @@
                     { name: 'dataEnrollment', type: 'string' },
                     { name: 'dataNameCareer', type: 'string' },
                     { name: 'dataNameCareerAbbreviated', type: 'string' },
-                    { name: 'dataNameGroup', type: 'string' }
+                    { name: 'dataNameGroup', type: 'string' },
+                    { name: 'dataNameSemester', type: 'string' }
                 ],
                 id: 'dataPkStudent',
                 url: url
             };
             var dataAdapter = new $.jqx.dataAdapter(source);
             $("#jqxDataTableSearch").jqxDataTable({
-                width: 848,
+                width: 900,
                 height: 500, 
                 pageable: false,
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 filterable: true,
+                sortable: true,
                 columns: [
-                    { text: 'N.P', datafield: 'dataProgresivNumber', width: 40, align: "center", cellsalign: "center", resizable: false, filterable: false },
-                    { text: 'Matrícula', datafield: 'dataEnrollment', width: 150, align: "center", cellsalign: "center", resizable: false },
+                    { text: 'N.P', datafield: 'dataProgresivNumber', width: 40, align: "center", cellsalign: "center", resizable: false, sortable: false,  filterable: false },
+                    { text: 'Matrícula', datafield: 'dataEnrollment', width: 130, align: "center", cellsalign: "center", resizable: false },
                     { text: 'Nombre', datafield: 'dataName', width: 'auto'}, 
                     { text: 'Carrera', datafield: 'dataNameCareer', width: 'auto', align: "center", filterable: false}, 
+                    { text: 'Cuatrimestre Actual', datafield: 'dataNameSemester', width: 150, align: "center", cellsalign: "center", filterable: false},
                     { text: 'Grupo Actual', datafield: 'dataNameGroup', width: 100, align: "center", cellsalign: "center", filterable: false}
                 ]
             });
