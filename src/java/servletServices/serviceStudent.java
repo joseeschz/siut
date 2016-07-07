@@ -225,6 +225,7 @@ public class serviceStudent extends HttpServlet {
                     datos.put("dataNameCareer", listStudent.get(i).getFL_NAME_CAREER());
                     datos.put("dataNameCareerAbbreviated", listStudent.get(i).getFL_NAME_ABBREVIATED());
                     datos.put("dataNameGroup", listStudent.get(i).getFL_NAME_GROUP());
+                    datos.put("dataNameSemester", listStudent.get(i).getSemesterMl().getFL_NAME_SEMESTER());
                     content.add(datos);                    
                 }     
                 response.setContentType("application/json"); 

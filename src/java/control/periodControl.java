@@ -28,7 +28,7 @@ public class periodControl {
     public ArrayList<periodModel> SelectAllPeriodsByGeneration(String pt_year_begin_generation){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('allByYear', null, "+pt_year_begin_generation+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('allByYear', null, "+pt_year_begin_generation+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -56,11 +56,13 @@ public class periodControl {
     public ArrayList<periodModel> SelectAllPeriods(String condition, int pt_fk_school_year){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', '"+pt_fk_school_year+"', null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', '"+pt_fk_school_year+"', null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
                     listPeriod.setFL_UNIQUE(res.getString("FL_UNIQUE"));
+                    listPeriod.setFL_DAY_BEGIN(res.getString("FL_DAY_BEGIN"));
+                    listPeriod.setFL_DAY_END(res.getString("FL_DAY_END"));
                     listPeriod.setFL_NAME(res.getString("FL_NAME"));
                     listPeriod.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
                     listPeriod.setFL_ACTIVE(res.getString("FL_ACTIVE"));
@@ -85,7 +87,7 @@ public class periodControl {
     public ArrayList<periodModel> SelectPeriod(String condition){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+condition+"', null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -108,7 +110,7 @@ public class periodControl {
     public ArrayList<periodModel> SelectPeriodByStudentsAdjustmentCalifications(int pkStudent, int fkSemester){
         ArrayList<periodModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD_BY_STUDENT_CALIFICATIONS`("+pkStudent+", "+fkSemester+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD_BY_STUDENT_CALIFICATIONS`("+pkStudent+", "+fkSemester+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -132,7 +134,7 @@ public class periodControl {
         ArrayList<periodModel> list=new ArrayList<>();
         String procedure = "CALL `GET_PERIOD_BY_TEACHER`('periodByTeacherByMatterHistory', "+pkTeacher+", "+pkCareer+", "+pkSemester+", "+pkMatter+", "+pkTypeEval+")";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     periodModel listPeriod=new periodModel();
                     listPeriod.setPK_PERIOD(res.getInt("PK_PERIOD"));
@@ -155,7 +157,7 @@ public class periodControl {
     public int SelectPeriodActive(String command){
         int period_active = 0;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+command+"', null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_PERIOD`('"+command+"', null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     period_active = (res.getInt("PK_PERIOD"));
                 }
@@ -172,8 +174,8 @@ public class periodControl {
     public String InsertPeriod(periodModel dataPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('insert', null, null, null, null, null, '"+dataPeriod.getFL_YEAR()+"', "+dataPeriod.getFL_PERIOD_TYPE()+", "+dataPeriod.getFK_SCHOOL_YEAR()+")")) {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('insert', null, null, null, null, null, '"+dataPeriod.getFL_YEAR()+"', "+dataPeriod.getFL_PERIOD_TYPE()+", "+dataPeriod.getFK_SCHOOL_YEAR()+", '"+dataPeriod.getFL_DAY_BEGIN()+"', '"+dataPeriod.getFL_DAY_END()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
                 ps.close();
@@ -188,8 +190,8 @@ public class periodControl {
     public String DeletePeriod(int pkPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('delete', "+pkPeriod+", null, null, null, null, null, null, null)")) {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('delete', "+pkPeriod+", null, null, null, null, null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
                 ps.close();
@@ -204,8 +206,8 @@ public class periodControl {
     public String UpdatePeriod(periodModel dataPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
-            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('update', "+dataPeriod.getPK_PERIOD()+", null, null, null, null, null, null, null)")) {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PERIOD`('update', "+dataPeriod.getPK_PERIOD()+", null, null, "+dataPeriod.getFL_ACTIVE()+", null, null, null, null, '"+dataPeriod.getFL_DAY_BEGIN()+"', '"+dataPeriod.getFL_DAY_END()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
                 ps.close();

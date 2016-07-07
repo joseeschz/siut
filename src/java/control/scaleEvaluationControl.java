@@ -29,7 +29,7 @@ public class scaleEvaluationControl {
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_SCALE_EVALUATION`('allByLevel', "+pkLevel+", null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
@@ -52,7 +52,7 @@ public class scaleEvaluationControl {
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_SCALE_EVALUATION`('allByLevelBloqued', "+pkPeriod+", "+pkTeacher+", "+pkSubjectMatter+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
@@ -75,7 +75,7 @@ public class scaleEvaluationControl {
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_ACTIVITIES`('valueByScale', null, null, null, null, null, null, '"+pkScale+"')";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
@@ -98,7 +98,7 @@ public class scaleEvaluationControl {
         ArrayList<scaleEvaluationModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_SCALE_EVALUATION`('allByLevelBloquedStudent',null, "+pkTeacher+", "+pkMatter+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     scaleEvaluationModel listStudyLevel=new scaleEvaluationModel();
                     listStudyLevel.setPK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));

@@ -39,7 +39,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudents(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilter', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){                    
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     
@@ -67,7 +67,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectAnyActivityEvaluated(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('statusAnyEvaluated', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('statusAnyEvaluated', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkActivity+" ,"+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setFL_REALIZED(res.getInt("FL_REALIZED"));
@@ -86,7 +86,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsRegularization(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterRegularization', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterRegularization', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setPK_CALIFICATIONS_OF_STUDEN_BY_MATTER(res.getString("PK_CALIFICATIONS_OF_STUDEN_BY_MATTER"));
@@ -116,7 +116,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectActivitiesByStudentsGlobal(int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterGlobal', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('allFilterGlobal', "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setPK_CALIFICATIONS_OF_STUDEN_BY_MATTER(res.getString("PK_CALIFICATIONS_OF_STUDEN_BY_MATTER"));
@@ -156,7 +156,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectListActivitiesByStudents(int pkStudent,int pkMatter, int pkScale, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatter', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatter', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
                     listActivitiesByStudents.setFK_SCALE_EVALUATION(res.getInt("PK_SCALE_EVALUATION"));
@@ -181,7 +181,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectListActivitiesByStudent(int pkStudent,int pkMatter, int pkScale, int pkPeriod){
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatterByStudent', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('byMatterByStudent', "+pkStudent+","+pkMatter+" ,"+pkScale+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     if(res.getString("FL_VALUE_OBTANIED")!=null){                        
                         activitiesByStudentsModel listActivitiesByStudents=new activitiesByStudentsModel();
@@ -210,7 +210,7 @@ public class activitiesByStudentsControl {
     public String InsertActivitiesByStudent(int pkStudent, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, double valueOptanied, double valueOptaniedEquivalent, int pkPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insertByStudent', "+pkStudent+", "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+valueOptanied+", '"+valueOptaniedEquivalent+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -226,7 +226,7 @@ public class activitiesByStudentsControl {
     public String InsertActivitiesByStudents(int pt_value, int pkCareer, int pkSemester, int pkGroup, int pkMatter, int pkActivity, int pkPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('insert', null, "+pkCareer+", "+pkSemester+", "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkActivity+", "+pt_value+", null)")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -242,7 +242,7 @@ public class activitiesByStudentsControl {
     public String UpdateActivitiesByStudents(int updateType, int pkActivityByStudent, double valueOptanied , double valueOptaniedEquivalent){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('update"+updateType+"', "+pkActivityByStudent+", null, null, null, null, null, null, '"+valueOptanied+"', '"+valueOptaniedEquivalent+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
@@ -258,7 +258,7 @@ public class activitiesByStudentsControl {
     public String DeleteActivitiesByStudents(int pkGroup, int pkActivity, int pkPeriod){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES_CAL_BY_STUDENTS`('delete', null, null, null, "+pkGroup+", null, "+pkPeriod+", "+pkActivity+", null, null)")) {
                 ps.executeUpdate();
                 request="Datos Borrados";
@@ -274,7 +274,7 @@ public class activitiesByStudentsControl {
     public ArrayList<activitiesByStudentsModel> SelectWorkPlanning() throws InterruptedException{
         ArrayList<activitiesByStudentsModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT PK_WORK_PLANNING FROM tb_work_planning WHERE FL_DELETED=0"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT PK_WORK_PLANNING FROM tb_work_planning WHERE FL_DELETED=0"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     System.out.println(res.getInt("PK_WORK_PLANNING"));
                     Thread.sleep(1000);
@@ -294,7 +294,7 @@ public class activitiesByStudentsControl {
     public String WorkPlanning(int pkWorkPlanning) throws InterruptedException{
         String request = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT FN_NUM_ACTIVITIES("+pkWorkPlanning+") AS FL_RESULT"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("SELECT FN_NUM_ACTIVITIES("+pkWorkPlanning+") AS FL_RESULT"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     Thread.sleep(1000);
                     System.out.println(res.getInt("FL_RESULT"));

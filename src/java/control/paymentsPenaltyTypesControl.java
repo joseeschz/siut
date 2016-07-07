@@ -41,7 +41,7 @@ public class paymentsPenaltyTypesControl {
 
         ArrayList<paymentsPenaltyTypesModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                 }
                 res.close();
@@ -57,7 +57,7 @@ public class paymentsPenaltyTypesControl {
     public ArrayList<paymentsPenaltyTypesModel> SelectPaymentsPenaltyTypes(int pt_fk_level_study, int pt_fk_semester, int pt_fk_category_payment, int pt_fk_type_concept, int pt_fk_type_format, int pt_fk_period){
         ArrayList<paymentsPenaltyTypesModel> list=new ArrayList<>();
         procedure = "CALL `GET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");
             ps.setInt(2, 0);
             ps.setInt(3, pt_fk_level_study);
@@ -99,7 +99,7 @@ public class paymentsPenaltyTypesControl {
         String request;
         procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "insert");
                 ps.setInt(2, 0);
@@ -126,7 +126,7 @@ public class paymentsPenaltyTypesControl {
         String request;
         procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, null, null, ?, ?, ?, ?)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "insert");
                 ps.setInt(2, 0);
@@ -151,7 +151,7 @@ public class paymentsPenaltyTypesControl {
         String request;
         procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, ?, ?, null, null, null, null, null, null)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "update");
                 ps.setInt(2, dataPaymentsPenaltyType.getPK_PAYMENT_PENALTY_TYPE());
@@ -172,7 +172,7 @@ public class paymentsPenaltyTypesControl {
         String request;
         procedure = "CALL `SET_PAYMENTS_PENALITY_TYPE`(?, ?, null, null, null, null, null, null, null, null)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "delete");
                 ps.setInt(2, pkPaymentsPenaltyType);

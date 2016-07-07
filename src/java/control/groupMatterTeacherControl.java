@@ -29,7 +29,7 @@ public class groupMatterTeacherControl {
     public ArrayList<groupMatterTeacherModel> SelectGroupMatterTecher(String command, int pk_career, int pk_study_plan, int pk_semester, int pk_group, int pk_period){
         ArrayList<groupMatterTeacherModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('"+command+"','"+pk_career+"','"+pk_study_plan+"','"+pk_semester+"', '"+pk_group+"', '"+pk_period+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_MATTER_TEACHER`('"+command+"','"+pk_career+"','"+pk_study_plan+"','"+pk_semester+"', '"+pk_group+"', '"+pk_period+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     groupMatterTeacherModel allGroupMatterTecher=new groupMatterTeacherModel();                    
                     allGroupMatterTecher.setFK_TEACHER(res.getInt("PK_WORKER"));
@@ -53,7 +53,7 @@ public class groupMatterTeacherControl {
     public String InsertGroupMatterTeacher(groupMatterTeacherModel dataGroupMatterTecher){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_MATTER_TEACHER`('insert', null,'"+dataGroupMatterTecher.getFK_CAREER()+"', '"+dataGroupMatterTecher.getFK_SEMESTER()+"', '"+dataGroupMatterTecher.getFK_GROUP()+"', '"+dataGroupMatterTecher.getFK_SUBJECT_MATTER()+"', '"+dataGroupMatterTecher.getFK_TEACHER()+"', '"+dataGroupMatterTecher.getFK_PERIOD()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -69,7 +69,7 @@ public class groupMatterTeacherControl {
     public String DeleteGroupMatterTeacher(int pkGroupMatterTecher){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_MATTER_TEACHER`('delete', '"+pkGroupMatterTecher+"', null, null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -85,7 +85,7 @@ public class groupMatterTeacherControl {
     public String UpdateGroupMatterTeacher(groupMatterTeacherModel dataGroupMatterTecher){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_GROUP_MATTER_TEACHER`('update', '"+dataGroupMatterTecher.getPK_GROUP_MATTER_TEACHER()+"', '"+dataGroupMatterTecher.getFK_SEMESTER()+"', '"+dataGroupMatterTecher.getFK_GROUP()+"', '"+dataGroupMatterTecher.getFK_SUBJECT_MATTER()+"', '"+dataGroupMatterTecher.getFK_TEACHER()+"', '"+dataGroupMatterTecher.getFK_PERIOD()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

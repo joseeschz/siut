@@ -237,6 +237,37 @@ function createDropDownCareerPreregistro(selector, update){
     }
 }
 
+function createDropDownCareerPreregistroING(selector, update){
+    var sourceCareer ={
+        datatype: "json",
+        root: "__ENTITIES",
+        id: "id",
+        datafields: [
+            { name: 'dataPkCareer' },
+            { name: 'dataNameCareer' }
+        ],
+        url: "../serviceCareer?view=combo&&statusInscriptionING",
+        async: false
+    };
+    var dataAdapterCareer = new $.jqx.dataAdapter(sourceCareer);
+    if(update){
+        $(selector).jqxDropDownList('clearSelection');
+        $(selector).jqxDropDownList({source: dataAdapterCareer, selectedIndex: 0});
+    }else{
+        $(selector).jqxDropDownList({
+            theme: theme,
+            selectedIndex: 0, 
+            autoDropDownHeight: true,
+            filterPlaceHolder: "Buscar",
+            placeHolder: "SELECCIONAR",
+            source: dataAdapterCareer, 
+            displayMember: "dataNameCareer", 
+            valueMember: "dataPkCareer",
+            width: 310                
+        }).css("display","inline-block");
+    }
+}
+
 function createDropDownGruop(filtrable, selector, update){
     var sourceGroup ={
         datatype: "json",

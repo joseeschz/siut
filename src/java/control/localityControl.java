@@ -45,7 +45,7 @@ public class localityControl {
         }
         ArrayList<localityModel> list = new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while (res != null && res.next()) {
                     localityModel allLocality = new localityModel();
                     allLocality.setPK_LOCALITY(res.getInt("PK_LOCALITY"));
@@ -69,7 +69,7 @@ public class localityControl {
     public String InsertLocality(localityModel dataLocality) {
         String request;
         try {
-            Connection conn = new conectionControl().getConexion();
+            Connection conn = new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_LOCALITY`('insert', null, '" + dataLocality.getFL_NAME() + "', '" + dataLocality.getFK_MUNICIPALITY() + "')")) {
                 ps.executeUpdate();
                 request = "Datos Guardados";
@@ -86,7 +86,7 @@ public class localityControl {
     public String DeleteLocality(int pkLocality) {
         String request;
         try {
-            Connection conn = new conectionControl().getConexion();
+            Connection conn = new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_LOCALITY`('delete', " + pkLocality + ", null, null)")) {
                 ps.executeUpdate();
                 request = "Dato Eliminado";
@@ -103,7 +103,7 @@ public class localityControl {
     public String UpdateLocality(localityModel dataLocality) {
         String request;
         try {
-            Connection conn = new conectionControl().getConexion();
+            Connection conn = new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_LOCALITY`('update', " + dataLocality.getPK_LOCALITY() + ", '" + dataLocality.getFL_NAME() + "', '" + dataLocality.getFK_MUNICIPALITY() + "')")) {
                 ps.executeUpdate();
                 request = "Datos Modificados";

@@ -34,7 +34,7 @@ public class activitiesToGroupControl {
         ArrayList<workPlanningModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_ACTIVITIES`('sharedActivities', null, null, "+pkTeacher+", null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     workPlanningModel listWorkPlannig=new workPlanningModel();
                     listWorkPlannig.setPK_WORK_PLANNING(res.getInt("PK_WORK_PLANNING"));
@@ -56,7 +56,7 @@ public class activitiesToGroupControl {
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_ACTIVITIES`('byScale', null, "+fk_period+", null, "+fk_study_level+", "+fk_subject_matter+", null, "+fk_scale_evaluation+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
@@ -79,7 +79,7 @@ public class activitiesToGroupControl {
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_ACTIVITIES`('byScale', "+fk_work_planning+", "+fk_period+", "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_group+", "+fk_scale_evaluation+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
@@ -111,7 +111,7 @@ public class activitiesToGroupControl {
         ArrayList<activitiesToGroupModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('byPk', null, null, null, null, "+pkActivity+", null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     activitiesToGroupModel listActivitiesToGroup=new activitiesToGroupModel();
                     listActivitiesToGroup.setPK_ACTIVITY(res.getString("PK_ACTIVITY"));
@@ -136,7 +136,7 @@ public class activitiesToGroupControl {
         String[] result = new String[7];
         try {
             String procedure="CALL `GET_WORK_PLANNING`('exist?', "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_scale_evaluation+", "+fk_period+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=res.getString("PK_WORK_PLANNING");
@@ -161,7 +161,7 @@ public class activitiesToGroupControl {
         String[] result = new String[2];
         try {
             String procedure="CALL `SET_WORK_PLANNING`('insert', null, "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", "+fk_scale_evaluation+", "+fk_period+", null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=res.getString("pkWorkPlanning");
@@ -181,7 +181,7 @@ public class activitiesToGroupControl {
     public String SetObservations(int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_period, String fl_observations){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             String procedure="CALL `SET_WORK_PLANNING`('setObservations', null, "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", null, "+fk_period+", '"+fl_observations+"')";
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
@@ -198,7 +198,7 @@ public class activitiesToGroupControl {
     public String SetPrintDate(int fk_teacher, int fk_study_level, int fk_subject_matter, int fk_period, String fl_date_print){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             String procedure="CALL `SET_WORK_PLANNING`('setPrintDate', null, "+fk_teacher+", "+fk_study_level+", "+fk_subject_matter+", null, "+fk_period+", '"+fl_date_print+"')";
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
@@ -216,7 +216,7 @@ public class activitiesToGroupControl {
         String[] result = new String[2];
         try {
             String procedure="CALL `SET_ACTIVITIES`('valueByActivity', null, null, null, null, "+fk_work_planning+", "+fk_scale_evaluation+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=null;
@@ -238,7 +238,7 @@ public class activitiesToGroupControl {
         String[] result = new String[2];
         try {
             String procedure="CALL `SET_WORK_PLANNING`('blockWorkPlanning', "+fk_work_planning+", null, null, null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=res.getString("resultStatus");
@@ -260,7 +260,7 @@ public class activitiesToGroupControl {
         String[] result = new String[2];
         try {
             String procedure="CALL `SET_WORK_PLANNING`('unblockWorkPlanning', "+fk_work_planning+", null, null, null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=res.getString("resultStatus");
@@ -282,7 +282,7 @@ public class activitiesToGroupControl {
         String[] result = new String[2];
         try {
             String procedure="CALL `SET_ACTIVITIES`('valueByActivity', null, null, null, '"+value_activity+"', "+fk_work_planning+", "+fk_scale_evaluation+")";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     result[0]=res.getString("result");
                     result[1]=null;
@@ -303,7 +303,7 @@ public class activitiesToGroupControl {
     public String InsertActivitiesToGroup(activitiesToGroupModel dataActivitiesToGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES`('insert', null, '"+dataActivitiesToGroup.getFL_NAME_ACTIVITY()+"', '"+dataActivitiesToGroup.getFL_DESCRIPTION()+"','"+dataActivitiesToGroup.getFL_VALUE_ACTIVITY()+"', "+dataActivitiesToGroup.getPK_WORK_PLANNING()+", "+dataActivitiesToGroup.getFK_SCALE_EVALUATION()+")")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -321,7 +321,7 @@ public class activitiesToGroupControl {
         String request="";
         String procedure="CALL `SET_ACTIVITIES`('insertImported', "+dataActivitiesToGroup.getPK_ACTIVITY()+", null, null, null, "+dataActivitiesToGroup.getPK_WORK_PLANNING()+", null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request=res.getString("result");
                 }
@@ -340,7 +340,7 @@ public class activitiesToGroupControl {
         String request="";
         String procedure="CALL `SET_ACTIVITIES`('insertImportedAll', "+pkWorkPlanningOld+", null, null, null, "+pkWorkPlanningNew+", null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     request=res.getString("result");
                 }
@@ -358,7 +358,7 @@ public class activitiesToGroupControl {
     public String DeleteActivitiesToGroup(int pkActivitiesToGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES`('delete', "+pkActivitiesToGroup+", null, null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -374,7 +374,7 @@ public class activitiesToGroupControl {
     public String UpdateActivitiesToGroup(activitiesToGroupModel dataActivitiesToGroup){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ACTIVITIES`('update', "+dataActivitiesToGroup.getPK_ACTIVITY()+", '"+dataActivitiesToGroup.getFL_NAME_ACTIVITY()+"', '"+dataActivitiesToGroup.getFL_DESCRIPTION()+"', '"+dataActivitiesToGroup.getFL_VALUE_ACTIVITY()+"', "+dataActivitiesToGroup.getPK_WORK_PLANNING()+", null)")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

@@ -30,7 +30,7 @@ public class schoolYearControl {
         ArrayList<schoolYearModel> list=new ArrayList<>();
         try {
             String procedure="CALL `GET_SCHOOL_YEAR`('"+condition+"', null, null, null, null)";
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     schoolYearModel listSchoolYear=new schoolYearModel();
                     listSchoolYear.setPK_SCHOOL_YEAR(res.getInt("PK_SCHOOL_YEAR"));
@@ -55,7 +55,7 @@ public class schoolYearControl {
     public String InsertSchoolYear(schoolYearModel dataSchoolYear){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SCHOOL_YEAR`('insert', null, null, '"+dataSchoolYear.getFL_YEAR_BEGIN()+"', '"+dataSchoolYear.getFL_YEAR_END()+"', null)")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -71,7 +71,7 @@ public class schoolYearControl {
     public String DeleteSchoolYear(int pkSchoolYear){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SCHOOL_YEAR`('delete', "+pkSchoolYear+", null, null, null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -87,7 +87,7 @@ public class schoolYearControl {
     public String UpdateSchoolYear(schoolYearModel dataSchoolYear){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_SCHOOL_YEAR`('update', "+dataSchoolYear.getPK_SCHOOL_YEAR()+", '', '', '', "+dataSchoolYear.getFL_ACTIVE()+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

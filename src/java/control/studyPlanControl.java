@@ -29,7 +29,7 @@ public class studyPlanControl {
     public ArrayList<studyPlanModel> SelectStudyPlan(int fkCareer){
         ArrayList<studyPlanModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDY_PLANS`('byCareer', '"+fkCareer+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDY_PLANS`('byCareer', '"+fkCareer+"')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studyPlanModel listStudyPlan=new studyPlanModel();
                     listStudyPlan.setPK_STUDY_PLAN(res.getInt("PK_STUDY_PLAN"));
@@ -50,7 +50,7 @@ public class studyPlanControl {
     public String InsertStudyPlan(studyPlanModel dataStudyPlan){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_STUDY_PLANS`('insert', null, '"+dataStudyPlan.getFL_NAME_PLAN()+"', '"+dataStudyPlan.getFK_CAREER()+"')")) {
                 ps.executeUpdate();
                 request="Datos Guardados";
@@ -66,7 +66,7 @@ public class studyPlanControl {
     public String DeleteStudyPlan(int pkStudyPlan){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_STUDY_PLANS`('delete', '"+pkStudyPlan+"', null, null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -82,7 +82,7 @@ public class studyPlanControl {
     public String UpdateStudyPlan(studyPlanModel dataStudyPlan){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_STUDY_PLANS`('update', '"+dataStudyPlan.getPK_STUDY_PLAN()+"', '"+dataStudyPlan.getFL_NAME_PLAN()+"', '"+dataStudyPlan.getFK_CAREER()+"')")) {
                 ps.executeUpdate();
                 request="Datos Modificados";

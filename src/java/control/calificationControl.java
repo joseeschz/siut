@@ -34,7 +34,7 @@ public class calificationControl {
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_CALIFICATION`('update', "+pt_pk_calification_student+", null, null, "+updateTypeEval+", "+pt_scale_evaluation+", "+pt_value+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
@@ -51,7 +51,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationNow(int  pkGroup, int pkMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatter', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatter', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -76,7 +76,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationRecordsAverage(int  pkGroup, int pkMatter, int pkPeriod, int pkTypeEvaluation){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalifications', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkTypeEvaluation+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalifications', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", "+pkTypeEvaluation+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -102,7 +102,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationRecordsRegularization(int  pkGroup, int pkMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsRegularization', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsRegularization', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -128,7 +128,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationRecordsGlobal(int  pkGroup, int pkMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsGlobal', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsGlobal', null, "+pkGroup+", "+pkMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -154,7 +154,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationRecordsDescription(){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsDescription', null, null, null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byMatterRecordsCalificationsDescription', null, null, null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();  
                     allData.setFL_NAME_DESCRIPTION_INTEGRADORAS(res.getString("FL_NAME_DESCRIPTION_INTEGRADORAS"));
@@ -174,7 +174,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationNowTutoring(int pkCareer, int  pkGroup, int pkSubjectMatter, int pkPeriod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byTutor', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('byTutor', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
@@ -196,7 +196,7 @@ public class calificationControl {
     public JSONArray SelectCalificationRows(int pkCareer, int  pkGroup, int pkSubjectMatter, int pkEvaluationType, int pkPeriod){
         JSONArray contentColums = new JSONArray();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('rowsCal', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", "+pkEvaluationType+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('rowsCal', "+pkCareer+", "+pkGroup+", "+pkSubjectMatter+", "+pkPeriod+", "+pkEvaluationType+")"); ResultSet res = ps.executeQuery()) {
                 ResultSetMetaData rsmd = res.getMetaData();                
                 JSONObject columns;
                 while(res!=null&&res.next()){
@@ -218,7 +218,7 @@ public class calificationControl {
     public JSONArray SelectCalificationsBySubjectMattersAverageRows(int pkCareer, int pkSemester, int pkGroup, int pkPeriod){
         JSONArray contentColums = new JSONArray();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('rowsCal', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('rowsCal', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 ResultSetMetaData rsmd = res.getMetaData();                
                 JSONObject columns;
                 while(res!=null&&res.next()){
@@ -240,7 +240,7 @@ public class calificationControl {
     public JSONArray SelectCalificationsByActivitiesRows(int pkCareer, int fkMatter, int pkGroup, int pkPeriod){
         JSONArray contentColums = new JSONArray();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('rowsCal', "+pkCareer+", "+fkMatter+", "+pkGroup+", "+fkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('rowsCal', "+pkCareer+", "+fkMatter+", "+pkGroup+", "+fkMatter+", null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 ResultSetMetaData rsmd = res.getMetaData();                
                 JSONObject columns;
                 while(res!=null&&res.next()){
@@ -262,7 +262,7 @@ public class calificationControl {
     public ArrayList<propetiesTableModel> SelectCalificationNowTutoringColumns(int pkCareer, int  pkGroup, int fkSubjectMatter, int period){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('colums', "+pkCareer+", "+pkGroup+", "+fkSubjectMatter+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('colums', "+pkCareer+", "+pkGroup+", "+fkSubjectMatter+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
@@ -290,7 +290,7 @@ public class calificationControl {
     public ArrayList<propetiesTableModel> SelectCalificationBySubjectMattersAverage(int pkCareer, int pkSemester, int  pkGroup, int pkPeriod){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('columsSubjectMatters', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_EVALUATION_BY_MATTERS_INTICATORS`('columsSubjectMatters', null, null, "+pkCareer+", "+pkSemester+", "+pkGroup+", null, null, "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
@@ -319,7 +319,7 @@ public class calificationControl {
     public ArrayList<propetiesTableModel> SelectCalificationByActivitiesColums(int pkCareer, int  pkGroup, int pkMatter, int period){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('columsActivities', "+pkCareer+", "+pkMatter+", "+pkGroup+", "+pkMatter+", null, "+period+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ACTIVITIES_CAL_BY_STUDENTS`('columsActivities', "+pkCareer+", "+pkMatter+", "+pkGroup+", "+pkMatter+", null, "+period+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
@@ -347,7 +347,7 @@ public class calificationControl {
     public String SetObservations(int fkType, int pkMatter, int  pkGroup, int period, String observation){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateObservations', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+observation+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateObservations', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+observation+"')"); ResultSet res = ps.executeQuery()) {
                 status= "Success";
                 res.close();
                 ps.close();
@@ -363,7 +363,7 @@ public class calificationControl {
     public String GetObservations(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getObservations', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getObservations', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=""+res.getString("FL_OBSERVATIONS");   
                 }else{
@@ -383,7 +383,7 @@ public class calificationControl {
     public String SetDateCloseES(int fkType, int pkMatter, int  pkGroup, int period, String flDateClosed){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDateCloseES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDateClosed+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDateCloseES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDateClosed+"')"); ResultSet res = ps.executeQuery()) {
                 status= "Success";
                 res.close();
                 ps.close();
@@ -399,7 +399,7 @@ public class calificationControl {
     public String SetDatePrint(int fkType, int pkMatter, int  pkGroup, int period, String flDatePrint){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDatePrint+"')"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('updateDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", '"+flDatePrint+"')"); ResultSet res = ps.executeQuery()) {
                 status= "Success";
                 res.close();
                 ps.close();
@@ -415,7 +415,7 @@ public class calificationControl {
     public String GetDateClosedES(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDateClosedES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDateClosedES', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=""+res.getString("FL_DATE_CLOSED_ES");   
                 }else{
@@ -435,7 +435,7 @@ public class calificationControl {
     public String GetDatePrint(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('getDatePrint', "+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=""+res.getString("FL_DATE_PRINT");   
                 }else{
@@ -455,7 +455,7 @@ public class calificationControl {
     public String CloseWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('closeWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('closeWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     status= res.getString("FL_STATUS");
                 }
@@ -473,7 +473,7 @@ public class calificationControl {
     public String CloseWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('closeWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('closeWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 status= "Success";
                 res.close();
                 ps.close();
@@ -489,7 +489,7 @@ public class calificationControl {
     public String CanPrint(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('canPrint',3, 506, 11, 13, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('canPrint',3, 506, 11, 13, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     status= res.getString("FL_RESULT");
                 }
@@ -507,7 +507,7 @@ public class calificationControl {
     public ArrayList<subjectMattersModel> SubjectsMattersMissingCloseAcumulatedByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('teacherMissingCloseAcumulatedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('teacherMissingCloseAcumulatedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -529,7 +529,7 @@ public class calificationControl {
     public ArrayList<subjectMattersModel> SubjectsMattersMissingCloseRegularizationAndRepprovedByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('teacherMissingCloseRegularizationAndRepprovedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('teacherMissingCloseRegularizationAndRepprovedByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -551,7 +551,7 @@ public class calificationControl {
     public ArrayList<subjectMattersModel> SubjectsMattersRepprovedRegularizationByStudent(int pkStudent, int fkType, int  pkGroup, int pkPeriod){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('subjectsRepprovedRegularizationByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_SUBJECTS_MATTERS_BY_STUDENT_FAIL`('subjectsRepprovedRegularizationByStudent', "+pkStudent+", "+fkType+", "+pkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_WORKER(res.getInt("PK_WORKER"));
@@ -573,7 +573,7 @@ public class calificationControl {
     public ArrayList<subjectMattersModel> TeacherMissingCloseByStudent(int fkType, int pkMatter, int  pkGroup, int period){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingCloseByStudent',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingCloseByStudent',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_WORKER(res.getInt("FK_TEACHER"));
@@ -595,7 +595,7 @@ public class calificationControl {
     public ArrayList<subjectMattersModel> TeacherMissingClose(int fkType, int pkMatter, int  pkGroup, int period){
         ArrayList<subjectMattersModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingClose',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('teacherMissingClose',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_WORKER(res.getInt("FK_TEACHER"));
@@ -618,7 +618,7 @@ public class calificationControl {
     public String OpenWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=res.getString("FL_STATUS");
                 }
@@ -636,7 +636,7 @@ public class calificationControl {
     public String OpenWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('openWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=res.getString("FL_STATUS");
                 }
@@ -654,7 +654,7 @@ public class calificationControl {
     public String IsCloseWorkPlanningByGroupMatterES(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('isCloseWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('isCloseWorkPlanningByGroupMatterES',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=res.getString("FL_CLOSED_ES");
                 }
@@ -672,7 +672,7 @@ public class calificationControl {
     public String IsCloseWorkPlanningByGroupMatter(int fkType, int pkMatter, int  pkGroup, int period){
         String status = null;
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('isCloseWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `SET_WORK_PLANNING_BY_GROUP_MATTER`('isCloseWorkPlanningByGroupMatter',"+fkType+", "+pkMatter+", "+pkGroup+", "+period+", null)"); ResultSet res = ps.executeQuery()) {
                 if(res!=null && res.next()){
                     status=res.getString("FL_CLOSED");
                 }
@@ -691,7 +691,7 @@ public class calificationControl {
     public ArrayList<propetiesTableModel> SelectCalificationNowTutoringColumnsDescription(int pkCareer, int  pkGroup, int pkPeriod){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('columsDescription', "+pkCareer+", "+pkGroup+", null, "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_TEACHER`('columsDescription', "+pkCareer+", "+pkGroup+", null, "+pkPeriod+", null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     propetiesTableModel allData=new propetiesTableModel();
                     allData.setFL_TEXT(res.getString("FL_TEXT"));
@@ -711,7 +711,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectActievementQuartely(int pkRelationShip, int pkPeriod, int pkWorker){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('academicAchievement', "+pkRelationShip+", "+pkPeriod+", "+pkWorker+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_REPORT_QUARTELY_ACADEMIC_ACHIEVEMENT`('academicAchievement', "+pkRelationShip+", "+pkPeriod+", "+pkWorker+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFL_YEAR(res.getString("FL_YEAR"));
@@ -738,7 +738,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationNowStudent(int pkStudent){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('columsDescription', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('columsDescription', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
@@ -760,7 +760,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationMattersStudent(int pkStudent){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('sumjectMatersPercentEvalautedAndCurrentValue', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('sumjectMatersPercentEvalautedAndCurrentValue', "+pkStudent+", null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     allData.setPK_SUBJECT_MATTER(res.getInt("PK_SUBJECT_MATTER"));
@@ -783,7 +783,7 @@ public class calificationControl {
     public ArrayList<calificationModel> SelectCalificationHistoryStudent(int pkStudent, int pkPerdiod){
         ArrayList<calificationModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('columsDescriptionHistory', "+pkStudent+", null, null, "+pkPerdiod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_CALIFICATIONS_BY_STUDENTS`('columsDescriptionHistory', "+pkStudent+", null, null, "+pkPerdiod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     calificationModel allData=new calificationModel();
                     if(res.getString("FL_NAME_SUBJECT_MATTER")!=null && res.getString("FL_AVG")!=null){

@@ -159,6 +159,7 @@ public class studentModel extends careerModel{
     String FL_HIGH_SCHOOL_CERTIFICATE="";
     int FL_DOWN=0;
     int FL_MODIFY=0;
+    semesterModel semesterMl;
 
     public int getPK_STUDENT() {
         return PK_STUDENT;
@@ -1350,6 +1351,14 @@ public class studentModel extends careerModel{
 
     public void setFL_DOWN(int FL_DOWN) {
         this.FL_DOWN = FL_DOWN;
+    }
+
+    public semesterModel getSemesterMl() {
+        return semesterMl;
+    }
+
+    public void setSemesterMl(semesterModel semesterMl) {
+        this.semesterMl = semesterMl;
     }
     
 }

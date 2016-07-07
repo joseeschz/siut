@@ -4,7 +4,7 @@
     Author     : Unknown
 --%>
 
-<%@page import="control.connectionControl"%>
+<%@page import="control.conectionControl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="net.sf.jasperreports.engine.*" %> 
 <%@ page import="java.util.*" %> 
@@ -12,19 +12,19 @@
 <%@ page import="java.sql.*" %> 
 <% 
  if(session.getAttribute("logueado") != null){
-    if(request.getParameter("SessionDocumentsAgreement")!=null){
-        int pt_pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
-        session.setAttribute("pt_pk_student", pt_pk_student);
-    }else{
+    if(request.getParameter("constancySimple")!=null){
+        String pt_enrollment =  request.getParameter("pt_enrollment");
+        session.setAttribute("pt_enrollment", pt_enrollment);
+        out.print("success");
+    }else{        
         //Parametros para realizar la conexión// 
-        connectionControl connection=new connectionControl();
+        conectionControl connection=new conectionControl();
         //Establecemos la ruta del reporte//
-        File reportFile = new File(application.getRealPath("content/data-jr/documentsAgreement/documentsAgreement.jasper")); 
+        File reportFile = new File(application.getRealPath("content/data-jr/constancySimple/report.jasper")); 
         //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 
         //cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf// 
         Map parameters = new HashMap(); 
-        parameters.put("pt_pk_student", session.getAttribute("pt_pk_student")); 
-        parameters.put("pt_pk_user", session.getAttribute("pkUser")); 
+        parameters.put("pt_enrollment", session.getAttribute("pt_enrollment")); 
         //Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)//
 //        
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, connection.getConexion()); 

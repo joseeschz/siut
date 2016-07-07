@@ -35,7 +35,7 @@ public class prepararoryControl {
         }
         ArrayList<preparatoryModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     preparatoryModel allPreparatory=new preparatoryModel();
                     allPreparatory.setPK_PREPARATORY(res.getInt("PK_PREPARATORY"));
@@ -72,7 +72,7 @@ public class prepararoryControl {
     public String InsertPreparatory(preparatoryModel dataPreparatory){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PREPARATORY`('insert', null, '"+dataPreparatory.getFL_CCT()+"',"
                     + "'"+dataPreparatory.getFL_NAME_PREPARATORY()+"', '"+dataPreparatory.getFL_CONTROL()+"', '"+dataPreparatory.getFL_DOMICILE()+"', "
                     + "'"+dataPreparatory.getFL_BETWEEN_STREET()+"', '"+dataPreparatory.getFL_AND_STREET()+"', 'altitude', '"+dataPreparatory.getFL_LONGITUDE()+"', "
@@ -91,7 +91,7 @@ public class prepararoryControl {
     public String DeletePreparatory(int pkPreparatory){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PREPARATORY`('delete', "+pkPreparatory+", '', '', '', '', '', '', '', '', '', '', '', null)")) {
                 ps.executeUpdate();
                 request="Dato Eliminado";
@@ -107,7 +107,7 @@ public class prepararoryControl {
     public String UpdatePreparatory(preparatoryModel dataPreparatory){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_PREPARATORY`('update', '"+dataPreparatory.getPK_PREPARATORY()+"', '"+dataPreparatory.getFL_CCT()+"',"
                     + "'"+dataPreparatory.getFL_NAME_PREPARATORY()+"', '"+dataPreparatory.getFL_CONTROL()+"', '"+dataPreparatory.getFL_DOMICILE()+"', "
                     + "'"+dataPreparatory.getFL_BETWEEN_STREET()+"', '"+dataPreparatory.getFL_AND_STREET()+"', 'altitude', '"+dataPreparatory.getFL_LONGITUDE()+"', "

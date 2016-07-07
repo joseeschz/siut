@@ -25,7 +25,7 @@ public class tempReportPaymentsGobControl {
     public ArrayList<tempReportPaymentsGobModel> SelectReportPaymentsGob(){
         ArrayList<tempReportPaymentsGobModel> list=new ArrayList<>();
         procedure="CALL `GET_TEMP_REPORT_PAYMENT_GOB`(?)";
-        try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");     
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
@@ -56,7 +56,7 @@ public class tempReportPaymentsGobControl {
         DeleteReportPaymentsGob();
         String query="LOAD DATA LOW_PRIORITY LOCAL INFILE '"+file+"' REPLACE INTO TABLE tb_temp_report_payments_gob CHARACTER SET latin2 FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' ESCAPED BY '\"' LINES TERMINATED BY '\\r\\n' IGNORE 1 LINES (FL_ORGANISM, FL_STATUS_LOAD, FL_REFERENCE, FL_IMPORT, FL_DATE_PAYMENT, FL_DATE_LOADED, FL_BANK, FL_PAYMENT_METHOD, FL_FORM_TO_PAY, FL_DAY_TERM, FL_COMMISSION, FL_SUBTOTAL);";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(query)) {
                 ps.executeUpdate();
                 request="Inserted";
@@ -74,7 +74,7 @@ public class tempReportPaymentsGobControl {
         String request;
         procedure="";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "insert");
                 ps.executeUpdate();
@@ -92,7 +92,7 @@ public class tempReportPaymentsGobControl {
         String request;
         procedure="CALL `SET_TEMP_REPORT_PAYMENT_GOB`('delete')";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.executeUpdate();
                 request="Deleted";
@@ -109,7 +109,7 @@ public class tempReportPaymentsGobControl {
         String request;
         procedure="CALL `SET_TEMP_REPORT_PAYMENT_GOB`(?)";
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement(procedure)) {
                 ps.setString(1, "update");
                 ps.executeUpdate();

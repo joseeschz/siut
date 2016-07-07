@@ -80,6 +80,8 @@ public class servicePeriod extends HttpServlet {
                         data.put("dataProgresivNumber", i+1);
                         data.put("dataNamePeriod", listPeriod.get(i).getFL_NAME());                       
                         data.put("dataNamePeriodAbbreviated", listPeriod.get(i).getFL_NAME_ABBREVIATED());
+                        data.put("dataDayBegin", listPeriod.get(i).getFL_DAY_BEGIN());
+                        data.put("dataDayEnd", listPeriod.get(i).getFL_DAY_END());
                         data.put("dataActive", listPeriod.get(i).getFL_ACTIVE());
                         data.put("dataYearActive", listPeriod.get(i).getFL_YEAR_ACTIVE());
                         data.put("dataYear", listPeriod.get(i).getFL_YEAR());
@@ -212,6 +214,8 @@ public class servicePeriod extends HttpServlet {
                 dataPeriod.setFL_YEAR(request.getParameter("pt_year"));
                 dataPeriod.setFL_PERIOD_TYPE(Integer.parseInt(request.getParameter("pt_period_type")));
                 dataPeriod.setFK_SCHOOL_YEAR(Integer.parseInt(request.getParameter("pt_fk_school_year")));
+                dataPeriod.setFL_DAY_BEGIN(request.getParameter("pt_day_begin"));
+                dataPeriod.setFL_DAY_END(request.getParameter("pt_day_end"));
                 out.print(new periodControl().InsertPeriod(dataPeriod));             
             }
             if(request.getParameter("update")!=null){      
@@ -219,6 +223,9 @@ public class servicePeriod extends HttpServlet {
                 if(request.getParameter("pkPeriod") != null){
                     periodModel dataPeriod=new periodModel();
                     dataPeriod.setPK_PERIOD(Integer.parseInt(request.getParameter("pkPeriod")));
+                    dataPeriod.setFL_ACTIVE(request.getParameter("pt_active"));
+                    dataPeriod.setFL_DAY_BEGIN(request.getParameter("pt_day_begin"));
+                    dataPeriod.setFL_DAY_END(request.getParameter("pt_day_end"));
                     out.print(new periodControl().UpdatePeriod(dataPeriod));
                 }                
             }

@@ -12,6 +12,8 @@ package model;
 public class periodModel extends semesterModel{
     int PK_PERIOD = 0;
     String FL_UNIQUE="";
+    String FL_DAY_BEGIN="";
+    String FL_DAY_END="";
     String FL_NAME = "";
     String FL_NAME_ABBREVIATED = "";
     String FL_ACTIVE = "";
@@ -35,6 +37,22 @@ public class periodModel extends semesterModel{
 
     public void setFL_UNIQUE(String FL_UNIQUE) {
         this.FL_UNIQUE = FL_UNIQUE;
+    }
+
+    public String getFL_DAY_BEGIN() {
+        return FL_DAY_BEGIN;
+    }
+
+    public void setFL_DAY_BEGIN(String FL_DAY_BEGIN) {
+        this.FL_DAY_BEGIN = FL_DAY_BEGIN;
+    }
+
+    public String getFL_DAY_END() {
+        return FL_DAY_END;
+    }
+
+    public void setFL_DAY_END(String FL_DAY_END) {
+        this.FL_DAY_END = FL_DAY_END;
     }
 
     public String getFL_NAME() {

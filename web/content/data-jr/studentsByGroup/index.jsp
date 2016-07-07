@@ -4,7 +4,7 @@
     Author     : Unknown
 --%>
 
-<%@page import="control.conectionControl"%>
+<%@page import="control.connectionControl"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="net.sf.jasperreports.engine.*" %> 
 <%@ page import="java.util.*" %> 
@@ -24,7 +24,7 @@
         session.setAttribute("pt_period", pt_period);
     }else{
         //Parametros para realizar la conexión// 
-        conectionControl connection=new conectionControl();
+        connectionControl connection=new connectionControl();
         //Establecemos la ruta del reporte//
         File reportFile = new File(application.getRealPath("content/data-jr/studentsByGroup/report-group-by-students.jasper")); 
         //No enviamos parámetros porque nuestro reporte no los necesita asi que escriba 

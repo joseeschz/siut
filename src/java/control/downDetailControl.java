@@ -26,7 +26,7 @@ public class downDetailControl {
         ArrayList<downDetailModel> list=new ArrayList<>();
         String procedure = "CALL `GET_STUDENTS_DOWN`('downDetails', null, null, null, null)";
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     downDetailModel Detail=new downDetailModel();
                     Detail.setPK_DOWN_DETAIL(res.getInt("PK_DOWN_DETAIL"));

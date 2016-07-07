@@ -24,7 +24,7 @@ public class evaluationTypeControl {
     public ArrayList<evaluationTypeModel> SelectEvaluationTypeAll(){
         ArrayList<evaluationTypeModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_TYPE_EVALUATION`('allUnlocked', null, null, null)"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_TYPE_EVALUATION`('allUnlocked', null, null, null)"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     evaluationTypeModel Items=new evaluationTypeModel();
                     Items.setPK_EVALUATION_TYPE(res.getInt("PK_EVALUATION_TYPE"));
@@ -44,7 +44,7 @@ public class evaluationTypeControl {
     public ArrayList<evaluationTypeModel> SelectEvaluationType(String action, int fkGroup, int fkMatter, int fkPeriod){
         ArrayList<evaluationTypeModel> list=new ArrayList<>();
         try {
-            try (Connection conn = new conectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_TYPE_EVALUATION`('"+action+"', "+fkMatter+", "+fkGroup+","+fkPeriod+")"); ResultSet res = ps.executeQuery()) {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_TYPE_EVALUATION`('"+action+"', "+fkMatter+", "+fkGroup+","+fkPeriod+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     evaluationTypeModel Items=new evaluationTypeModel();
                     Items.setPK_EVALUATION_TYPE(res.getInt("PK_EVALUATION_TYPE"));

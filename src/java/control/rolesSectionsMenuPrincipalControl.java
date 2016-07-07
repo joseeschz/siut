@@ -17,7 +17,7 @@ public class rolesSectionsMenuPrincipalControl {
     public String UpdateRolesSectionsMenuPrincipalControl(int pkRol, int pkSection, int access){
         String request;
         try {
-            Connection conn=new conectionControl().getConexion();
+            Connection conn=new connectionControl().getConexion();
             try (PreparedStatement ps = conn.prepareStatement("CALL `SET_ROLES_SECTION_MENU_PRINCIPAL`('update', "+pkRol+", "+pkSection+", "+access+")")) {
                 ps.executeUpdate();
                 request="Datos Modificados";
