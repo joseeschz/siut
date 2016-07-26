@@ -4,7 +4,7 @@ if(session.getAttribute("logueado") == null){
     response.sendRedirect("/admin/login.jsp");
 }else{%>
     <!DOCTYPE html>
-    <html lang="es" manifest="file.manifest">
+    <html lang="es">
         <head>
         <title>Bienvenido a SIUT</title>
             <meta charset="UTF-8"/>

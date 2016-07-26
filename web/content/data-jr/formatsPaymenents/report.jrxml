@@ -84,10 +84,10 @@
 	<field name="FL_YEAR" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_UNIQUE" class="java.sql.Timestamp">
+	<field name="FL_UNIQUE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_PROGRESSIV_NUMBER" class="java.lang.Integer">
+	<field name="FL_PROGRESSIVE_NUMBER" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_DOMICILE" class="java.lang.String">
@@ -97,6 +97,9 @@
 	<field name="FL_STUDENT_NAME" class="java.lang.String"/>
 	<field name="FL_ENROLLMENT" class="java.lang.String">
 		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CURP" class="java.lang.String">
+		<fieldDescription><![CDATA[CURP|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
 	</field>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
 		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
@@ -259,7 +262,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="10"/>
 					</textElement>
-					<textFieldExpression><![CDATA["No. "+$F{FL_PROGRESSIV_NUMBER}]]></textFieldExpression>
+					<textFieldExpression><![CDATA["No. "+$F{FL_PROGRESSIVE_NUMBER}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -361,7 +364,7 @@
 					<textElement textAlignment="Justified" verticalAlignment="Middle">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[""]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_CURP}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
