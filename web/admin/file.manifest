@@ -584,6 +584,8 @@ CACHE:
 /content/files-jq/jqwidgets-ver4.0.0/jqwidgets/jqxvalidator.js
 /content/files-jq/jqwidgets-ver4.0.0/jqwidgets/jqxwindow.js
 /content/files-jq/jqwidgets-ver4.0.0/jqwidgets/localization.js
+/content/files-jq/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.js
+/content/files-jq/jqwidgets-ver4.0.0/jqwidgets/globalization/globalize.cultures.js
 
 /content/files-jq/jqwidgets-ver4.0.0/scripts/angular.min.js
 /content/files-jq/jqwidgets-ver4.0.0/scripts/angular.min.js.map
@@ -654,6 +656,7 @@ CACHE:
 /content/files-js/make-list.js
 /content/files-js/make-list.origin.js
 /content/files-js/make-menu.js    
+/content/files-js/js-wizard/jquery.smartWizard.js
 
 
 NETWORK:
