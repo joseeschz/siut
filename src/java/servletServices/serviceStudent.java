@@ -652,7 +652,17 @@ public class serviceStudent extends HttpServlet {
                     response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
                     response.setContentType("application/json"); 
                     out.print(data);
-                }else if(statusLogin.equals("out")){
+                }else if(statusLogin.equals("logged")){
+                    JSONObject status = new JSONObject();
+                    response.setContentType("application/json");
+                    if(session.getAttribute("logueadoStudent")!=null){
+                        status.put("status", true);
+                    }else{
+                        status.put("status", false);                     
+                    }
+                    out.print(status);   
+                }
+                else if(statusLogin.equals("out")){
                     session.removeAttribute("pkStudent");
                     session.removeAttribute("logueadoStudent");
                     session.removeAttribute("mailStudent");

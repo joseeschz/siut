@@ -1,5 +1,10 @@
 CACHE MANIFEST
-# 2012-02-21 v1.0.01
+#13/07/2016 v1.0.0
+
+FALLBACK:
+##
+
+CACHE:
 /alumnos/bootstrap/css/bootstrap.min.css
 /alumnos/res-dist/css/AdminLTE.min.css
 /alumnos/plugins/iCheck/square/grey.css
@@ -47,13 +52,4 @@ CACHE MANIFEST
 /alumnos/img/loading.GIF
 
 NETWORK:
-/serviceCalification
-/alumnos/pages/qualifications-activities.html
-/servicePeriod
-/serviceSubjectMatter
-/serviceScaleEvaluation
-/alumnos/pages/qualifications-criterion.html
-/alumnos/pages/about.html
-/alumnos/pages/qualifications-report.html
-/alumnos/pages/qualifications-matters.html
-/serviceMail
+*
