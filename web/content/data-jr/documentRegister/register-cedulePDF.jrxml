@@ -403,7 +403,7 @@
 				<text><![CDATA[FECHA Y LUGAR DE NACIMIENTO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="250" y="124" width="125" height="15" uuid="eb1c853d-6de9-48d5-800c-04a2cc105d8c"/>
+				<reportElement x="260" y="124" width="115" height="15" uuid="eb1c853d-6de9-48d5-800c-04a2cc105d8c"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -416,7 +416,7 @@
 				<textFieldExpression><![CDATA[$F{FL_NAME_BORN_ENTITY}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="250" y="110" width="125" height="14" uuid="1b81b21d-2936-4981-a030-6c11fa3f320a"/>
+				<reportElement x="260" y="110" width="115" height="14" uuid="1b81b21d-2936-4981-a030-6c11fa3f320a"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -429,7 +429,7 @@
 				<text><![CDATA[Entidad Federativa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="110" width="122" height="14" uuid="935d8c5e-5434-4e15-aff6-4d39e82d0a2c"/>
+				<reportElement x="0" y="110" width="110" height="14" uuid="935d8c5e-5434-4e15-aff6-4d39e82d0a2c"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -442,7 +442,7 @@
 				<text><![CDATA[Fecha de Nacimiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="122" y="110" width="128" height="14" uuid="e8740205-37f3-4630-b0f8-a6302116c0eb"/>
+				<reportElement x="110" y="110" width="150" height="14" uuid="e8740205-37f3-4630-b0f8-a6302116c0eb"/>
 				<box>
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -455,7 +455,7 @@
 				<text><![CDATA[CURP:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="122" y="124" width="128" height="15" uuid="9da7efa5-30d9-4708-b959-6f7b9eed4b96"/>
+				<reportElement x="110" y="124" width="150" height="15" uuid="9da7efa5-30d9-4708-b959-6f7b9eed4b96"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>
@@ -468,7 +468,7 @@
 				<textFieldExpression><![CDATA[$F{FL_CURP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="124" width="122" height="15" uuid="135a3162-ae35-454e-b006-e53a368ee1cc"/>
+				<reportElement x="0" y="124" width="110" height="15" uuid="135a3162-ae35-454e-b006-e53a368ee1cc"/>
 				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
 					<topPen lineWidth="0.5"/>
 					<leftPen lineWidth="0.5"/>

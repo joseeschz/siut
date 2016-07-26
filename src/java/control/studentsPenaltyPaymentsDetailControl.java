@@ -26,7 +26,7 @@ import model.typeFormatModel;
 public class studentsPenaltyPaymentsDetailControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPaymentsDetail;
-        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0, 0);
+        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(14, 1, 1, 1, 1);
         for(int i=0;i<listStudentsPenalityPaymentsDetail.size();i++){
             System.out.println(listStudentsPenalityPaymentsDetail.get(i).getFL_REFERENCE_NUMBER());
         }
