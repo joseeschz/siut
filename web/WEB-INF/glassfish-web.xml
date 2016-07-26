@@ -7,5 +7,9 @@
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
+    <mime-mapping>
+        <extension>manifest</extension>
+        <mime-type>text/cache-manifest</mime-type>
+    </mime-mapping>
   </jsp-config>
 </glassfish-web-app>

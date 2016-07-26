@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.userModel;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -74,13 +75,24 @@ public class login extends HttpServlet {
                     }
                 }
             }
+        }else if(statusLogin.equals("logged")){
+            JSONObject status = new JSONObject();
+            try (PrintWriter out = response.getWriter()) {
+                response.setContentType("application/json");
+                if(session.getAttribute("logueado")!=null){
+                    status.put("status", true);
+                }else{
+                    status.put("status", false);                     
+                }
+                out.print(status);   
+            }
         }else{
             session.removeAttribute("pkUser");
             session.removeAttribute("logueado");
             session.removeAttribute("userRol");
             session.removeAttribute("userRolName");
             session.removeAttribute("userName");
-            response.sendRedirect("/admin");
+            response.sendRedirect("/admin/login.jsp");
         }
     }
 

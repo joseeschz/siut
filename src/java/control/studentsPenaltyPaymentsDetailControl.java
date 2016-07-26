@@ -26,7 +26,7 @@ import model.typeFormatModel;
 public class studentsPenaltyPaymentsDetailControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsDetailModel> listStudentsPenalityPaymentsDetail;
-        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0);
+        listStudentsPenalityPaymentsDetail = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(0, 0, 0, 0, 0);
         for(int i=0;i<listStudentsPenalityPaymentsDetail.size();i++){
             System.out.println(listStudentsPenalityPaymentsDetail.get(i).getFL_REFERENCE_NUMBER());
         }
@@ -93,7 +93,7 @@ public class studentsPenaltyPaymentsDetailControl {
         }
         return list;
     }
-    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetail(int pt_fk_period, int pt_fk_semester, int pt_type_format, int pt_fk_student){
+    public ArrayList<studentsPenaltyPaymentsDetailModel> SelectStudentsAllStatusPaymentDetail(int pt_fk_period, int pt_fk_semester, int pt_fk_category_master, int pt_type_format, int pt_fk_student){
         ArrayList<studentsPenaltyPaymentsDetailModel> list=new ArrayList<>();
         procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS_DETAIL`(?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
@@ -101,7 +101,7 @@ public class studentsPenaltyPaymentsDetailControl {
             ps.setInt(2, 0);      
             ps.setInt(3, pt_fk_period);      
             ps.setInt(4, pt_fk_semester);
-            ps.setInt(5, 0);
+            ps.setInt(5, pt_fk_category_master);
             ps.setInt(6, 0);
             ps.setInt(7, pt_type_format);
             ps.setInt(8, pt_fk_student);

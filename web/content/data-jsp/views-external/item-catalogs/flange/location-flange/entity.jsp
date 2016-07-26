@@ -36,7 +36,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             }); 
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#preparatoryTab").load("../content/data-jsp/views-external/item-catalogs/flange/location-flange/entity-item/entity.jsp");
+            $("#entityTab").load("../content/data-jsp/views-external/item-catalogs/flange/location-flange/entity-item/entity.jsp");
         });
     </script>
     <div id='jqxWindowWarning'>

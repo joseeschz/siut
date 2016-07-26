@@ -476,6 +476,24 @@ function createDropDownPeriodBySchoolYear(selector, params, update){
     
     
 }
+function createDropDownCategoryMasterPayment(selector){
+    var sourceRol =[
+        {"dataName":"SIIGEM","dataValue":"1"},        
+        {"dataName":"CAJA GENERAL","dataValue":"2"}
+    ];
+    $(selector).jqxDropDownList({
+        theme: theme,
+        filterable: false, 
+        autoDropDownHeight: true,
+        placeHolder: "SELECCIONAR",
+        selectedIndex: 0, 
+        source: sourceRol, 
+        displayMember: "dataName", 
+        valueMember: "dataValue",
+        height: 26, 
+        width: 180                
+    }).css("display","inline-block");
+}
 function createDropDownCategoryPayment(selector){
     var sourceRol =[
         {"dataName":"SIIGEM ABIERTOS","dataValue":"1"},        
