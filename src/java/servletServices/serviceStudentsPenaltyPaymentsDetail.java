@@ -63,9 +63,10 @@ public class serviceStudentsPenaltyPaymentsDetail extends HttpServlet {
                     }else{
                         int fkPeriod=Integer.parseInt(request.getParameter("pt_fkPeriod"));
                         int fkSemester=Integer.parseInt(request.getParameter("pt_fkSemester"));
+                        int fkCategoryMaster=Integer.parseInt(request.getParameter("pt_fkCategoryMaster"));
                         int fkTypeFormat=Integer.parseInt(request.getParameter("pt_fkTypeFormat"));
                         int fkStudent=Integer.parseInt(request.getParameter("pt_fkStudent"));                        
-                        listStudentsPenalityPayments = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(fkPeriod, fkSemester, fkTypeFormat, fkStudent);
+                        listStudentsPenalityPayments = new studentsPenaltyPaymentsDetailControl().SelectStudentsAllStatusPaymentDetail(fkPeriod, fkSemester, fkCategoryMaster, fkTypeFormat, fkStudent);
                     }
                     
                     for(int i=0;i<listStudentsPenalityPayments.size();i++){

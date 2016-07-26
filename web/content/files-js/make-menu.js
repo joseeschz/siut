@@ -195,8 +195,8 @@ $(document).ready(function () {
         $("#jqxTree").jqxTree('expandItem', $("#"+$.cookie('itemParentId')||1)[0]);  
         $('#jqxTree').jqxTree('selectItem', $("#"+$.cookie('itemClickedId')||1)[0]); 
         console.log("e")
-        setTimeout(function (){
-            $.ajax({
+        console.log($.cookie('dir'))
+         $.ajax({
                 url:"../content/data-jsp/views-external/"+$.cookie('dir')+"",
                 async: true,
                 beforeSend: function (xhr) {
@@ -216,6 +216,8 @@ $(document).ready(function () {
                     },'1000');
                 }
             });
+        setTimeout(function (){
+           
         }, 500);       
         
     }   

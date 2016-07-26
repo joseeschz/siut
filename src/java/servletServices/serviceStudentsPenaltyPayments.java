@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.categoryPaymentsModel;
 import model.periodModel;
 import model.semesterModel;
 import model.studentModel;
@@ -49,9 +50,11 @@ public class serviceStudentsPenaltyPayments extends HttpServlet {
                 JSONObject settings = new JSONObject();
                 JSONArray content = new JSONArray();
                 int fkPeriod=Integer.parseInt(request.getParameter("pt_fkPeriod"));
+                int fkCategoryMaster=Integer.parseInt(request.getParameter("pt_fkCategoryMaster"));
                 int fkTypeFormat=Integer.parseInt(request.getParameter("pt_fkTypeFormat"));
+                
                 settings.put("__studentsPenaltyPaymentsModel","StudentsPenalityPayments");
-                listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(fkTypeFormat, fkPeriod);
+                listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(fkCategoryMaster, fkTypeFormat, fkPeriod);
                 for(int i=0;i<listStudentsPenalityPayments.size();i++){
                     JSONObject data = new JSONObject();
                     data.put("dataProgresivNumber", i+1);
@@ -103,6 +106,7 @@ public class serviceStudentsPenaltyPayments extends HttpServlet {
                         periodModel period = new periodModel();
                         semesterModel semester = new semesterModel();
                         studentModel student = new studentModel();
+                        categoryPaymentsModel category = new categoryPaymentsModel();
                         typeFormatModel typeFormat = new typeFormatModel();
                         period.setPK_PERIOD(Integer.parseInt(request.getParameter("pt_pk_period")));
                         dataStudentsPenalityPayments.setPeriod(period);
@@ -111,8 +115,12 @@ public class serviceStudentsPenaltyPayments extends HttpServlet {
                         student.setPK_STUDENT(Integer.parseInt(request.getParameter("pt_pk_student")));
                         dataStudentsPenalityPayments.setStudent(student);
 
+                        category.setFK_CATEGORY_MASTER(Integer.parseInt(request.getParameter("pt_pk_category_master")));
+                        dataStudentsPenalityPayments.setCategory(category);
+                        
                         typeFormat.setPK_TYPE_FORMAT(Integer.parseInt(request.getParameter("pt_fk_type_format")));
                         dataStudentsPenalityPayments.setTypeFormat(typeFormat);
+                        
                         dataStudentsPenalityPayments.setFL_TOTAL(request.getParameter("pt_total"));
                         String[] result =  new studentsPenaltyPaymentsControl().InsertStudentsPenaltyPayment(dataStudentsPenalityPayments);
                         if(result[0].equals("Inserted")) {

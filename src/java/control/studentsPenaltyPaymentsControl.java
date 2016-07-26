@@ -25,7 +25,7 @@ import model.typeFormatModel;
 public class studentsPenaltyPaymentsControl {
     public static void main(String[] args) {
         ArrayList<studentsPenaltyPaymentsModel> listStudentsPenalityPayments;
-        listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(1,14);
+        listStudentsPenalityPayments = new studentsPenaltyPaymentsControl().SelectStudentsPenaltyPayments(1, 1,14);
         for(int i=0;i<listStudentsPenalityPayments.size();i++){
             System.out.println(listStudentsPenalityPayments.get(i).getPK_STUDENT_PAYMENT_PENALTY());
         }
@@ -49,13 +49,14 @@ public class studentsPenaltyPaymentsControl {
     }
     private String procedure;
 
-    public ArrayList<studentsPenaltyPaymentsModel> SelectStudentsPenaltyPayments(int pt_fk_type_format, int pt_fk_period){
+    public ArrayList<studentsPenaltyPaymentsModel> SelectStudentsPenaltyPayments(int pt_fk_category_master, int pt_fk_type_format, int pt_fk_period){
         ArrayList<studentsPenaltyPaymentsModel> list=new ArrayList<>();
-        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?)";
+        procedure = "CALL `GET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?, ?)";
         try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
             ps.setString(1, "all");   
-            ps.setInt(2, pt_fk_type_format);      
-            ps.setInt(3, pt_fk_period);      
+            ps.setInt(2, pt_fk_category_master);  
+            ps.setInt(3, pt_fk_type_format);      
+            ps.setInt(4, pt_fk_period);      
             try (ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentsPenaltyPaymentsModel allStudentsPenaltyPayment=new studentsPenaltyPaymentsModel();
@@ -108,7 +109,7 @@ public class studentsPenaltyPaymentsControl {
     public String[] InsertStudentsPenaltyPayment(studentsPenaltyPaymentsModel dataStudentsPenaltyPayment){
         String[] request = new String[2];
         String key = null;
-        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?, ?, ?, ?, ?)";
+        procedure = "CALL `SET_STUDENT_PENALTY_PAYMENTS`(?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         Connection conn=new connectionControl().getConexion();
         try {
@@ -117,9 +118,10 @@ public class studentsPenaltyPaymentsControl {
             ps.setInt(2, 0);
             ps.setInt(3, dataStudentsPenaltyPayment.getPeriod().getPK_PERIOD());
             ps.setInt(4, dataStudentsPenaltyPayment.getSemester().getPK_SEMESTER());
-            ps.setInt(5, dataStudentsPenaltyPayment.getStudent().getPK_STUDENT());;
-            ps.setInt(6, dataStudentsPenaltyPayment.getTypeFormat().getPK_TYPE_FORMAT());
-            ps.setString(7, dataStudentsPenaltyPayment.getFL_TOTAL());
+            ps.setInt(5, dataStudentsPenaltyPayment.getStudent().getPK_STUDENT());
+            ps.setInt(6, dataStudentsPenaltyPayment.getCategory().getFK_CATEGORY_MASTER());            
+            ps.setInt(7, dataStudentsPenaltyPayment.getTypeFormat().getPK_TYPE_FORMAT());
+            ps.setString(8, dataStudentsPenaltyPayment.getFL_TOTAL());
             ps.executeUpdate();
             ResultSet rs = ps.getResultSet(); 
             while (rs.next()) {  

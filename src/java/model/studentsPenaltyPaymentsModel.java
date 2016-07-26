@@ -18,6 +18,7 @@ public class studentsPenaltyPaymentsModel {
     studentModel student = null;
     careerModel career = null;
     studyLevelModel studyLevel = null;
+    categoryPaymentsModel category = null;
     typeFormatModel typeFormat = null;
     String FL_TOTAL="";
 
@@ -83,6 +84,14 @@ public class studentsPenaltyPaymentsModel {
 
     public void setStudyLevel(studyLevelModel studyLevel) {
         this.studyLevel = studyLevel;
+    }
+
+    public categoryPaymentsModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(categoryPaymentsModel category) {
+        this.category = category;
     }
 
     public typeFormatModel getTypeFormat() {

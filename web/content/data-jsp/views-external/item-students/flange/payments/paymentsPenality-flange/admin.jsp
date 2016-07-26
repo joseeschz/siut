@@ -28,9 +28,11 @@
 <script>
     $(document).ready(function () {
         var itemSemester = null;
+        var itemCategoryMasterHeader = null;
         var itemFormatHeader = null;
         var itemPeriod= null;
         var itemPeriodTemp= null;
+        var itemCategoryMaster = null;
         var itemFormatPayment = null;
         function loadGridStudentsPaid(){
             var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentsPenalityPaymentsHeader());  
@@ -79,7 +81,7 @@
         function createGridConcepts(params){
             console.log("Making Grid Concepts...");
             var records = undefined;
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsDetail(params.dataPkPeriod, params.dataFkSemester, params.dataFkFormatType, params.dataFkStudent), {
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsDetail(params.dataPkPeriod, params.dataFkSemester, params.dataFkCategoryMaster, params.dataFkFormatType, params.dataFkStudent), {
                 loadComplete: function () {
                     // get data records.
                     records = dataAdapter.records;
@@ -483,6 +485,8 @@
             
             $("#dateInput").jqxDateTimeInput({ width: '200px', height: '27px', disabled: true });
             
+            createDropDownCategoryMasterPayment("#paymentsPenaltyCategoryMasterHeaderFilter");
+            itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
             
             createDropDownFormatPayment("#paymentsPenaltytypeFormatHeaderFilter");
             itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
@@ -491,6 +495,7 @@
                 dataPkPeriod:itemPeriodTemp.value,
                 dataFkSemester:itemSemester.value,
                 dataFkStudent : data.dataPkStudent,
+                dataFkCategoryMaster : itemCategoryMaster.value,
                 dataFkFormatType : itemFormatPayment.value
             };
             createGridConcepts(params);
@@ -508,11 +513,13 @@
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
-                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
+                    itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
+                        dataFkCategoryMaster : itemCategoryMaster.value,
                         dataFkFormatType : itemFormatPayment.value
                     };
                     createGridConcepts(params);
@@ -531,11 +538,39 @@
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
+                    itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
                     itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
+                        dataFkCategoryMaster : itemCategoryMaster.value,
+                        dataFkFormatType : itemFormatPayment.value
+                    };
+                    createGridConcepts(params);
+                }                
+            });
+            
+            $("#paymentsPenaltyCategoryMasterHeaderFilter").off('change');
+            $("#paymentsPenaltyCategoryMasterHeaderFilter").on('change', function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
+                    itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
+                    itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
+                    var params = {
+                        dataPkPeriod:itemPeriodTemp.value,
+                        dataFkSemester:itemSemester.value,
+                        dataFkStudent : data.dataPkStudent,
+                        dataFkCategoryMaster : itemCategoryMaster.value,
                         dataFkFormatType : itemFormatPayment.value
                     };
                     createGridConcepts(params);
@@ -554,12 +589,14 @@
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
                     itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');  
-                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
+                    itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');
+                    itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
+                    itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem');
                     var params = {
                         dataPkPeriod:itemPeriodTemp.value,
                         dataFkSemester:itemSemester.value,
                         dataFkStudent : data.dataPkStudent,
+                        dataFkCategoryMaster : itemCategoryMaster.value,
                         dataFkFormatType : itemFormatPayment.value
                     };
                     createGridConcepts(params);
@@ -641,7 +678,7 @@
             return ordersSource;
         }
         
-        function loadSourceStudentPenaltyPaymentsDetail(pt_fkPeriod, pt_fkSemester, pt_fkTypeFormat, pt_fkStudent){            
+        function loadSourceStudentPenaltyPaymentsDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryMaster, pt_fkTypeFormat, pt_fkStudent){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
@@ -679,6 +716,7 @@
                     pt_fkPeriod : pt_fkPeriod ,
                     pt_fkSemester : pt_fkSemester,
                     pt_fkStudent : pt_fkStudent,
+                    pt_fkCategoryMaster : pt_fkCategoryMaster,
                     pt_fkTypeFormat : pt_fkTypeFormat
                 }
             };
@@ -710,6 +748,7 @@
         
         function loadSourceStudentsPenalityPaymentsHeader(){      
             itemPeriod = $('#payPeriodHeaderFilter').jqxDropDownList('getSelectedItem'); 
+            itemCategoryMasterHeader = $('#categoryMasterHeaderFilter').jqxDropDownList('getSelectedItem'); 
             itemFormatHeader = $('#typeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
             var ordersSource ={
                 dataFields: [
@@ -741,7 +780,8 @@
                 url: '../serviceStudentsPenaltyPayments?view',
                 data : {
                     pt_fkPeriod : itemPeriod.value,
-                    pt_fkTypeFormat : itemFormatHeader.value                    
+                    pt_fkTypeFormat : itemFormatHeader.value,
+                    pt_fkCategoryMaster : itemCategoryMasterHeader.value
                 }
             };
             return ordersSource;
@@ -751,6 +791,9 @@
 
         createDropDownPeriodActive('comboActiveYear', '#payPeriodHeaderFilter');
         itemPeriod = $('#payPeriodHeaderFilter').jqxDropDownList('getSelectedItem'); 
+        
+        createDropDownCategoryMasterPayment("#categoryMasterHeaderFilter");
+        itemCategoryMasterHeader = $('#categoryMasterHeaderFilter').jqxDropDownList('getSelectedItem'); 
         
         createDropDownFormatPayment("#typeFormatHeaderFilter");
         itemFormatPayment = $('#typeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
@@ -771,6 +814,25 @@
             });
             
             $("#typeFormatHeaderFilter").on('change',function (event){  
+                var args = event.args;
+                if (args){
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.                      
+                    if(value==1){
+                        $("#contextMenu").jqxMenu('disable', 'printDetail', true);
+                    }else{
+                        $("#contextMenu").jqxMenu('disable', 'printDetail', false);
+                    }
+                    loadGridStudentsPaid();
+                }                
+            });
+            
+            $("#categoryMasterHeaderFilter").on('change',function (event){  
                 var args = event.args;
                 if (args){
                     // index represents the item's index.                      
@@ -1096,6 +1158,7 @@
         function registerPaymentsHeader(){            
             itemSemester = $('#paySemesterFilter').jqxDropDownList('getSelectedItem');
             itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem'); 
+            itemCategoryMaster = $('#paymentsPenaltyCategoryMasterHeaderFilter').jqxDropDownList('getSelectedItem');
             itemFormatPayment = $('#paymentsPenaltytypeFormatHeaderFilter').jqxDropDownList('getSelectedItem'); 
             var totalToPayment = $("#totalToPay").text().replace("$","");
             var totalToPayment =  totalToPayment.replace(",","");
@@ -1103,6 +1166,7 @@
                 pt_pk_period : itemPeriodTemp.value,
                 pt_pk_semester : itemSemester.value,
                 pt_pk_student : $("#hidenPkStudent").val(),
+                pt_pk_category_master : itemCategoryMaster.value,
                 pt_fk_type_format :  itemFormatPayment.value,       
                 pt_total : totalToPayment
             };
@@ -1288,6 +1352,10 @@
             <div id='payPeriodHeaderFilter'></div>
         </div>
         <div style="display: inline-block; margin-right: 5px;">
+            Categoría Principal <br>
+            <div id='categoryMasterHeaderFilter'></div>
+        </div>
+        <div style="display: inline-block; margin-right: 5px;">
             Formato <br>
             <div id='typeFormatHeaderFilter'></div>
         </div>
@@ -1333,13 +1401,17 @@
                 <div style="display: inline-block; margin-right: 5px;">
                     <b><label>PERIODO:</label></b><br>
                     <div id='payPeriodTempFilter'></div>
-                </div>                  
+                </div>       
+                <div style="display: inline-block; margin-right: 5px;">
+                    <b><label>CATEGORIA PRINCIPAL:</label></b><br>
+                    <div id='paymentsPenaltyCategoryMasterHeaderFilter'></div>
+                </div>
                 <div style="display: inline-block; margin-right: 5px;">
                     <b><label>FORMATO:</label></b><br>
                     <div id='paymentsPenaltytypeFormatHeaderFilter'></div>
                 </div>
                 <div style="display: inline-block; margin-right: 5px;">
-                    <b><label id="labelDate">FECHA DE RECIBIDO</label></b><br>
+                    <b><label id="labelDate">FECHA DE RECIBIDO:</label></b><br>
                     <div id='dateInput'></div>
                 </div>  
                 <br>

@@ -108,7 +108,11 @@ $(document).ready(function () {
 </script>
 <div style="padding: 20px">
     <%
-        ArrayList<sectionModel> list=new sectionControl().SelectItem(Integer.parseInt(request.getParameter("pkParent")));
+        String pkParent = request.getParameter("pkParent");
+        if(pkParent.equals("null")){
+            pkParent="0";
+        }
+        ArrayList<sectionModel> list=new sectionControl().SelectItem(Integer.parseInt(pkParent));
         for(int i=0;i<list.size();i++){
             %>
             <h3 style="color: rgb(72, 72, 72); margin-bottom: 5px;">

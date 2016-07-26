@@ -84,6 +84,12 @@
 	<field name="FL_YEAR" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="FL_UNIQUE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROGRESSIV_NUMBER" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<field name="FL_DOMICILE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
@@ -160,16 +166,6 @@
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[RECIBO DE PAGO]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="0" y="15" width="218" height="15" uuid="4a835b72-882d-4419-bff7-d379964735d7"/>
-					<box leftPadding="10">
-						<bottomPen lineWidth="1.0"/>
-					</box>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true"/>
-					</textElement>
-					<text><![CDATA[No.]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="30" width="218" height="12" uuid="3fd61db3-ec3a-44fd-82f9-33e31ed5d63a"/>
@@ -257,6 +253,13 @@
 						<font size="8"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{FL_TIME}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="15" width="218" height="15" uuid="1764abc5-dcc2-4cc4-a3ba-1aa7c43ad6d6"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA["No. "+$F{FL_PROGRESSIV_NUMBER}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>

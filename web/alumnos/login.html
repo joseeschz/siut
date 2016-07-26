@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html manifest="file.manifest">
     <head>
         <meta charset="UTF-8">
         <title>SIUT Iniciar Sesión</title>
@@ -14,6 +14,23 @@
         <link href="plugins/iCheck/square/grey.css" rel="stylesheet" type="text/css" />
         <link href="res-me/css/main.css" rel="stylesheet" type="text/css" />
         <link type="text/css" rel="Stylesheet" href="res-me/jqwidgets/jqwidgets-ver4.0.0/jqwidgets/styles/jqx.base.css" />
+        <script>
+            // Check if a new cache is available on page load.
+            window.addEventListener('load', function(e) {
+                window.applicationCache.addEventListener('updateready', function(e) {
+
+                    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+                        // Browser downloaded a new app cache.
+                        // Swap it in and reload the page to get the new hotness.
+                        window.applicationCache.swapCache();
+                        window.location.reload();
+                    } else {
+                        // Manifest didn't changed. Nothing new to server.
+                    }
+                }, false);
+
+            }, false);
+        </script>
         <script>
             window.location.hash="";
             window.location.hash=""; //chrome
@@ -187,7 +204,7 @@
                         crossDomain: true,
                         type: "POST",
                         datatype: "json",
-                        url: "http://10.10.10.23/serviceStudent?descryptUrl",
+                        url: "http://10.10.25.5/serviceStudent?descryptUrl",
                         data: {
                             "ac" : $.url().param('ac')
                         },
@@ -256,7 +273,7 @@
                         async: true,
                         crossDomain: true,
                         type: "POST",
-                        url: "http://10.10.10.23/serviceStudent?selectLoginStudent",
+                        url: "http://10.10.25.5/serviceStudent?selectLoginStudent",
                         datatype: "json",
                         data: data,
                         beforeSend: function (xhr) {
@@ -361,7 +378,7 @@
                         crossDomain: true,
                         type: "POST",
                         datatype: "json",
-                        url: "http://10.10.10.23/serviceMail?validateMail",
+                        url: "http://10.10.25.5/serviceMail?validateMail",
                         data: {
                             "pkStudent" : $("#pkStudent").val(),
                             "enrollment": $("#userNameActive").val(),

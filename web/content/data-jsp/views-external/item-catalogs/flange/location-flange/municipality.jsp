@@ -56,7 +56,6 @@ if(session.getAttribute("logueado") != null){%>
         <ul>
             <li class="jqxTabsTitle" dir="municipality">Municipios</li>
         </ul>
-        </div>
         <div>
             <div class="hidenTab" style="display: none;">
                 <div id="municipalityTab" style="padding: 20px"></div>
