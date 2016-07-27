@@ -4,7 +4,7 @@
         response.sendRedirect("/preregistro/login.jsp");
     }else{%>
         <!DOCTYPE>
-        <html xmlns="http://www.w3.org/1999/xhtml">
+        <html xmlns="http://www.w3.org/1999/xhtml" manifest="file.manifest">
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
                 <title>Inicio</title>
