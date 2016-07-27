@@ -2,7 +2,7 @@
     String vertion = "jqwidgets-ver4.0.0";
     if(session.getAttribute("logueadoCandidate") == null){%>
         <!DOCTYPE html>
-        <html xmlns="http://www.w3.org/1999/xhtml" manifest="file.manifest">
+        <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
             <title>Login SIUT</title>
                 <meta name="viewport" content="width=device-width"/>
