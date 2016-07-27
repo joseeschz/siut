@@ -85,11 +85,7 @@
             data:{
                 "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
             },
-<<<<<<< HEAD
             url: 'http://148.223.215.19/serviceCalification?calMattersStudentChart'
-=======
-            url: 'http://10.10.25.5/serviceCalification?calMattersStudentChart'
->>>>>>> develop
         };
         var data = null;
         var dataAdapter = new $.jqx.dataAdapter(source, {
@@ -234,11 +230,7 @@
                 type:"POST",
                 dataType: "json",
                 async: false,
-<<<<<<< HEAD
                 url: "http://148.223.215.19/serviceActivitiesCalByStudents?listActivities",
-=======
-                url: "http://10.10.25.5/serviceActivitiesCalByStudents?listActivities",
->>>>>>> develop
                 data: {
                     "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
                 },
