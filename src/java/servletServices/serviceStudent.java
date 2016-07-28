@@ -133,6 +133,43 @@ public class serviceStudent extends HttpServlet {
                 String period = request.getParameter("period");
                 out.print(new studentControl().GenerateEnrollment(period));   
             }
+            if(request.getParameter("consultAllEnrollmentsPreregisterING")!=null){
+                ArrayList<studentModel> listStudent=new studentControl().SelectEnrollmentsPreregisterING();
+                JSONArray principal = new JSONArray();
+                JSONObject settings = new JSONObject();
+                JSONArray content = new JSONArray();
+                settings.put("__entityModel","Matriculas");
+                for(int i=0;i<listStudent.size();i++){
+                    JSONObject datos = new JSONObject();
+                    datos.put("id", listStudent.get(i).getPK_STUDENT());
+                    datos.put("dataProgresivNumber", i+1);
+                    datos.put("dataNameEnrollment", listStudent.get(i).getFL_ENROLLMENT());
+                    content.add(datos); 
+                }
+                settings.put("__ENTITIES", content);
+                principal.add(settings);
+                response.setContentType("application/json"); 
+                out.print(principal);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("selectCandidatesInscriptionING")!=null){
+                ArrayList<studentModel> listCandidateING=new studentControl().SelectCandidatesING();
+                JSONArray content = new JSONArray();
+                for(int i=0;i<listCandidateING.size();i++) {
+                    JSONObject datos = new JSONObject();
+                    datos.put("id", listCandidateING.get(i).getPK_STUDENT());
+                    datos.put("fl_enrollment", listCandidateING.get(i).getFL_ENROLLMENT());
+                    datos.put("fl_register_date", listCandidateING.get(i).getFL_REGISTER_DATE());
+                    datos.put("fl_name", listCandidateING.get(i).getFL_NAME());
+                    datos.put("fl_career", listCandidateING.get(i).getFL_NAME_ABBREVIATED());
+                    content.add(datos); 
+                }                
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();
+            }     
             if(request.getParameter("consultAllEnrollments")!=null){
                 ArrayList<studentModel> listStudent=new studentControl().SelectEnrollments();
                 JSONArray principal = new JSONArray();
@@ -341,6 +378,27 @@ public class serviceStudent extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
+            if(request.getParameter("selectStudentsING")!=null){
+                if(request.getParameter("pt_period")!=null && request.getParameter("pt_career")!=null){
+                    int pt_period = Integer.parseInt(request.getParameter("pt_period"));
+                    int pt_career = Integer.parseInt(request.getParameter("pt_career")); 
+                    ArrayList<studentModel> listStudents=new studentControl().SelectStudentsING(pt_period, pt_career);
+                    JSONArray content = new JSONArray();
+                    for(int i=0;i<listStudents.size();i++) {
+                        JSONObject datos = new JSONObject();
+                        datos.put("id", listStudents.get(i).getPK_STUDENT());
+                        datos.put("pk_student", listStudents.get(i).getPK_STUDENT());
+                        datos.put("fl_enrollment", listStudents.get(i).getFL_ENROLLMENT());
+                        datos.put("fl_folio_utsem", listStudents.get(i).getFL_UTSEM_FOLIO());
+                        datos.put("fl_name", listStudents.get(i).getFL_NAME());
+                        content.add(datos); 
+                    }                
+                    response.setContentType("application/json"); 
+                    out.print(content);
+                    out.flush(); 
+                    out.close();
+                }     
+            }  
             if(request.getParameter("selectStudents")!=null){
                 if(request.getParameter("pt_period")!=null && request.getParameter("pt_career")!=null){
                     int pt_period = Integer.parseInt(request.getParameter("pt_period"));
@@ -410,10 +468,18 @@ public class serviceStudent extends HttpServlet {
                     datos.put("fl_photography", listStudent.get(i).getFL_PHOTOGRAPHY());
                     datos.put("fl_maritial_status", listStudent.get(i).getFL_MARITIAL_STATUS());
                     datos.put("fl_working", listStudent.get(i).getFL_WORKING());
+                    
+                    datos.put("fl_where_work_place_address", listStudent.get(i).getFL_WHERE_WORK_PLACE_ADDRESS());
+                    datos.put("fl_company_type", listStudent.get(i).getFL_COMPANY_TYPE());
+                    datos.put("fl_telephone_place_work", listStudent.get(i).getFL_TELEPHONE_PLACE_WORK());
+                    
                     datos.put("fl_bacherol_type", listStudent.get(i).getFL_BACHEROL_TYPE());
                     datos.put("fl_school_type", listStudent.get(i).getFL_SCHOOL_TYPE());
                     datos.put("fl_above_average", listStudent.get(i).getFL_ABOVE_AVERAGE());
                     datos.put("fl_period_bacherol", listStudent.get(i).getFL_PERIOD_BACHEROL());
+                    
+                    datos.put("fl_name_university_studied", listStudent.get(i).getFL_NAME_UNIVERSITY_STUDIED());
+                    datos.put("fl_period_tsu", listStudent.get(i).getFL_PERIOD_TSU());
                     datos.put("fl_file_id_oficial", ""/*listStudent.get(i).getFL_FILE_ID_OFICIAL()*/);
                     datos.put("fl_file_document_born", ""/* listStudent.get(i).getFL_FILE_DOCUMENT_BORN()*/);
                     datos.put("fl_curp", listStudent.get(i).getFL_CURP());
@@ -564,6 +630,7 @@ public class serviceStudent extends HttpServlet {
                 if(statusLogin.equals("in")){
                     String enrollment = request.getParameter("userName");
                     String password = request.getParameter("password");
+                    String folio ="";
                     int pkStudent = 0;
                     String name = "";
                     String nameSmall ="";
@@ -571,6 +638,7 @@ public class serviceStudent extends HttpServlet {
                     String career ="";
                     String gender = "";
                     String nameGroup = "";
+                    int autorized =0;
                     int pkGroup = 0;
                     int fkLevel = 0;
                     studentModel dataUser=new studentModel();
@@ -585,21 +653,36 @@ public class serviceStudent extends HttpServlet {
                                 name = list1.getFL_NAME();
                                 nameSmall = list1.getFL_NAME_FATHER();
                                 enrollment = list1.getFL_ENROLLMENT();
+                                folio = list1.getFL_UTSEM_FOLIO();
                                 mail = list1.getFL_MAIL();
                                 career = list1.getFL_NAME_ABBREVIATED();
                                 gender = list1.getFL_GENDER();
                                 nameGroup = list1.getFL_NAME_GROUP();
                                 pkGroup = list1.getPK_GROUP();
                                 fkLevel = list1.getFK_LEVEL();
+                                autorized = list1.getFL_AUTHORIZED_ACCESS_PREREGISTER_ING();
                             }
                             if(request.getParameter("typeLogin")!=null&&request.getParameter("typeLogin").equals("metadata")){                                
                                 session.setAttribute("pkStudent", pkStudent);
                                 session.setAttribute("enrollmentStudent", enrollment);
                                 session.setAttribute("mailStudent", mail);
                                 session.setAttribute("passwordStudent", password);
-                                session.setAttribute("logueadoStudent", name);
+                                session.setAttribute("logueadoStudentMetadata", name);
                                 session.setAttribute("careerStudent", career);
                                 data.put("statusLogin", "logeado");
+                            }else if(request.getParameter("typeLogin")!=null&&request.getParameter("typeLogin").equals("preregister")){   
+                                if(autorized==1){
+                                    session.setAttribute("pkStudent", pkStudent);
+                                    session.setAttribute("enrollmentStudent", enrollment);
+                                    session.setAttribute("folioSystemIng", folio);
+                                    session.setAttribute("mailStudent", mail);
+                                    session.setAttribute("passwordStudent", password);
+                                    session.setAttribute("logueadoStudentPreregister", name);
+                                    session.setAttribute("careerStudent", career);
+                                    data.put("statusLogin", "logeado");
+                                }else{
+                                    data.put("statusLogin", "noAutorized");
+                                }                                
                             }else{  
                                 String statusMailActive=new studentControl().SelectUserLoginMail(dataUser);  
                                 if(statusMailActive.equals("0")){
@@ -655,23 +738,43 @@ public class serviceStudent extends HttpServlet {
                 }else if(statusLogin.equals("logged")){
                     JSONObject status = new JSONObject();
                     response.setContentType("application/json");
-                    if(session.getAttribute("logueadoStudent")!=null){
-                        status.put("status", true);
-                    }else{
-                        status.put("status", false);                     
-                    }
+                    if(request.getParameter("typeLogin")!=null){
+                        if(request.getParameter("typeLogin").equals("metadata")){  
+                            if(session.getAttribute("logueadoStudentMetadata")!=null){
+                                status.put("status", true);
+                            }else{
+                                status.put("status", false);                     
+                            }
+                        }else if(request.getParameter("typeLogin").equals("preregister")){                                
+                            if(session.getAttribute("logueadoStudentPreregister")!=null){
+                                status.put("status", true);
+                            }else{
+                                status.put("status", false);                     
+                            }
+                        }
+                    }     
                     out.print(status);   
-                }
-                else if(statusLogin.equals("out")){
+                }else if(statusLogin.equals("outPreIng")){
                     session.removeAttribute("pkStudent");
-                    session.removeAttribute("logueadoStudent");
+                    session.removeAttribute("logueadoStudentPreregister");
+                    session.removeAttribute("folioSystemIng");
+                    session.removeAttribute("mailStudent");
+                    session.removeAttribute("enrollmentStudent");
+                    session.removeAttribute("passwordStudent");
+                    response.sendRedirect("/preregistro-ing");
+                }else if(statusLogin.equals("out")){
+                    session.removeAttribute("pkStudent");
+                    session.removeAttribute("logueadoStudentMetadata");
+                    session.removeAttribute("folioSystemIng");
                     session.removeAttribute("mailStudent");
                     session.removeAttribute("enrollmentStudent");
                     session.removeAttribute("passwordStudent");
                     response.sendRedirect("/metadato");
                 }else{
                     session.removeAttribute("pkStudent");
-                    session.removeAttribute("logueadoStudent");
+                    session.removeAttribute("logueadoStudentMetadata");
+                    session.removeAttribute("logueadoStudentPreregister");
+                    session.removeAttribute("folioSystemIng");
                     session.removeAttribute("mailStudent");
                     session.removeAttribute("enrollmentStudent");
                     session.removeAttribute("passwordStudent");
@@ -754,11 +857,7 @@ public class serviceStudent extends HttpServlet {
                 }
             }
             if(request.getParameter("getPassword")!=null){
-                if(session.getAttribute("logueadoStudent")!=null){
-                    out.print(session.getAttribute("passwordStudent"));
-                }else{
-                    out.print("");
-                }                
+                out.print(session.getAttribute("passwordStudent"));                
             }
         }
     }

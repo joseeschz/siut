@@ -1442,7 +1442,7 @@ $(document).ready(function () {
                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_facebook" name="fl_facebook" placeholder="Link de facebook..." style="width: 260px"/>
                         </div>
-                        <div class="div-row1 input-prepend">
+                        <div class="div-row input-prepend">
                             <label class="label-row" for="fl_twitter">Link de Twitter opcional</label><br>
                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                             <input data-type-role="text" data-field="true"  id="fl_twitter" name="fl_twitter" placeholder="Link de twitter..." style="width: 360px"/>

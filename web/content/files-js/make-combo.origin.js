@@ -201,7 +201,7 @@ function createDropDownCareer(filtrable, selector, update){
             source: dataAdapterCareer, 
             displayMember: "dataNameCareer", 
             valueMember: "dataPkCareer",
-            width: 310                
+            width: 410                
         }).css("display","inline-block");
     }
 }

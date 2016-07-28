@@ -69,7 +69,7 @@
                             <div id="WindowLoad"></div>
                             <div id="loadingPicture"></div>
                         </div>
-                        <span id="loginText" style="font-size: 35px; line-height: normal;">LOGIN PRE-REGISTRO</span><br>
+                        <span id="loginText" style="font-size: 35px; line-height: normal;">PRE-REGISTRO TSU</span><br>
                         <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 18px; right: 20px; top: 100px">Error datos incorrectos</span>
                         <div id="intro" style="display: block;">
                             <section style="margin-top: 32px;">

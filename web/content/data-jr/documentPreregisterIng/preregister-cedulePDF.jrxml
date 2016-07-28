@@ -1,0 +1,1965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="567" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<subDataset name="Table Dataset 1" uuid="eeb6dceb-a8c4-4d9e-bd25-af33849a10ba"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_enrollment" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_STUDENTS`('studentCedule', $P{pt_enrollment})]]>
+	</queryString>
+	<field name="FL_UTSEM_FOLIO" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO UTSEM|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CENEVAL_FOLIO" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO CENEVA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_FOLIO_TEMP_SYSTEM" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO TEMPORAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PATERN_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO PATERNO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MATERN_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO MATERNO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_SCHOOL_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[TIPO DE PREPARATORIA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_BACHEROL_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[TIPO DE BACHILLERATO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MARITIAL_STATUS" class="java.lang.String">
+		<fieldDescription><![CDATA[ESTADO CIVIL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_SECURITY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL SEGURO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PREREGISTER_DATE" class="java.lang.String">
+		<fieldDescription><![CDATA[FECHA DE PREREGISTRO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER_LEVEL_TSU" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER_LEVEL_ING" class="java.lang.String"/>
+	<field name="FL_CURP" class="java.lang.String">
+		<fieldDescription><![CDATA[CURP|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DATE_BORN" class="java.lang.String">
+		<fieldDescription><![CDATA[FECHA DE NACIMIENTO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ZIP_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[CÓDIGO POSTAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CURRENT_COLONY" class="java.lang.String">
+		<fieldDescription><![CDATA[ID COLONIA ACTUAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_STREET" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DE LA CALLE|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PHONE_HOME" class="java.lang.String">
+		<fieldDescription><![CDATA[TELÉFONO CASA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CELL_PHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[TELÉFONO CELULAR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[CORREO ELÉCTRONICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_GENDER" class="java.lang.String">
+		<fieldDescription><![CDATA[SEXO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|checkedlist|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_WORKING" class="java.lang.String">
+		<fieldDescription><![CDATA[TRABAJA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_WHERE_WORK_PLACE_ADDRESS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_TELEPHONE_PLACE_WORK" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_COMPANY_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PERIOD_BACHEROL" class="java.lang.String">
+		<fieldDescription><![CDATA[PERIDO DEL BACHILLERATO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_UNIVERSITY_STUDIED" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PERIOD_TSU" class="java.lang.String">
+		<fieldDescription><![CDATA[PERIDO DEL BACHILLERATO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_TRIPTYCH" class="java.lang.String">
+		<fieldDescription><![CDATA[TRÍPTICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_FAMILY_FRIENDS" class="java.lang.String">
+		<fieldDescription><![CDATA[AMIGOS O FAMILIARES|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_GUIDED_VISITS" class="java.lang.String">
+		<fieldDescription><![CDATA[VISITAS GUIADAS|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_DIRECTLT_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[DIRECTAMENTE EN LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_EXHIBITIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[EXPOSICIONES|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_OTHER" class="java.lang.String">
+		<fieldDescription><![CDATA[OTRO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_OTHER_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_OPTION_UTSEM_STUDY" class="java.lang.String">
+		<fieldDescription><![CDATA[QUE OPSIÓN DE ESTUDIO ES LA UTSEM PARA TÍ|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PHYSICAL_DISABILITY" class="java.lang.String">
+		<fieldDescription><![CDATA[SUFRE DE ALGUNA DISCAPACIDAD FÍSICA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_CALL" class="java.lang.String">
+		<fieldDescription><![CDATA[CONVOCATORIA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_BROCHURE" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLLETO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_CARTEL" class="java.lang.String">
+		<fieldDescription><![CDATA[CARTEL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_NEWSPAPER" class="java.lang.String">
+		<fieldDescription><![CDATA[PERIODICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_PERSONAL_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[PERSONAL DE LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_MANTA" class="java.lang.String">
+		<fieldDescription><![CDATA[MANTA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_GRADUATES" class="java.lang.String">
+		<fieldDescription><![CDATA[EGRESADOS DE LA UTSEM|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DISABILITY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DE LA DISCAPACIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_PLANTEL_TALKS" class="java.lang.String">
+		<fieldDescription><![CDATA[PLATICAS EN EL PLANTEL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_STUDENTS_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[ESTUDUANTES DE LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_INDIGENOUS_GROUP" class="java.lang.String">
+		<fieldDescription><![CDATA[PERTENECE A UN GRUPO INDÍGENA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_INDIGENOUS_GROUP_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL GRUPO INDÍGENA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_SECUTITY_MEDICAL" class="java.lang.String">
+		<fieldDescription><![CDATA[CUENTA CON SEGURO MÉDICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PATERN_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO PATERNO DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MATERN_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO MATERNO DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_BORN_ENTITY" class="java.lang.String"/>
+	<field name="FL_NAME_BORN_MUNICIPALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_LOCALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_MUNICIPALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_ENTITY" class="java.lang.String"/>
+	<field name="FL_YEARS_OLD" class="java.lang.Long"/>
+	<field name="FL_NAME_PREPARATORY" class="java.lang.String"/>
+	<field name="FL_ADDRESS_PREPARATORY" class="java.lang.String"/>
+	<field name="FL_NAME_CURREN_MUNICIPALITY" class="java.lang.String"/>
+	<sortField name="PAGE_COUNT" type="Variable"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="40" width="466" height="20" uuid="21e71b0d-2b81-4ff6-a712-2225ce12d330"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Calibri" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
+			</staticText>
+			<image>
+				<reportElement x="4" y="21" width="71" height="55" uuid="b7c70d16-f5a3-4807-a46a-18d8083ab31a"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="12">
+			<elementGroup/>
+			<elementGroup/>
+			<staticText>
+				<reportElement x="1" y="0" width="567" height="12" uuid="d8bee905-ccb7-4c67-bf58-9500f9173c9e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÉDULA DE DATOS PERSONALES Y ANTECEDENTES ACADÉMICOS INGENIERÍA O LICENCIATURA
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="675" splitType="Stretch">
+			<elementGroup/>
+			<staticText>
+				<reportElement x="467" y="1" width="100" height="14" uuid="441f1004-3b45-4509-a9fb-29c91076b07a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="30" width="444" height="14" uuid="0a6562b9-9f5f-4300-b687-2a394ff0bf29"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carrera de Ingeniería en:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="444" y="30" width="123" height="14" uuid="ceace63e-bc28-4446-8fd9-8180c49f68f3"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricula]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="467" y="15" width="100" height="15" uuid="39de664e-5417-4638-bcf3-841ccbea2767"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_PREREGISTER_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="44" width="444" height="15" uuid="a239dcc3-e63a-40b0-ac33-e9cfed5c8bff"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="444" y="44" width="123" height="15" uuid="54497188-6407-425f-a05e-dd91b0e8f86f"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pt_enrollment}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="70" width="181" height="14" uuid="19463dd8-1b5e-460b-8433-f5e1e4a453c9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido Paterno:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="60" width="39" height="10" backcolor="#999999" uuid="c2f037d3-1b18-451f-ad96-3d6c6dfedd18"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="70" width="206" height="14" uuid="1a3b1695-c5e6-4736-a795-a078d2e44b0e"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre (s)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="181" y="70" width="180" height="14" uuid="a0b93795-ec88-46b2-b60c-df94eae881e6"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido Materno:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="84" width="181" height="15" uuid="d91661f1-b736-4501-93c8-ca25cf0b0761"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_PATERN_NAME}.equals("") ? "S/D" : $F{FL_PATERN_NAME} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="84" width="180" height="15" uuid="fd26e015-3cfe-4707-aed8-3e810ee7f2a2"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_MATERN_NAME}.equals("") ? "S/D" : $F{FL_MATERN_NAME} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="361" y="84" width="206" height="15" uuid="ac4e4aab-3aad-4580-9a1f-edbccbcdb482"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_NAME}.equals("") ? "S/D" : $F{FL_NAME} )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="100" width="132" height="10" backcolor="#999999" uuid="6f6aff0f-9182-44c7-8424-310784ca86f2"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA Y LUGAR DE NACIMIENTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="124" width="115" height="15" uuid="eb1c853d-6de9-48d5-800c-04a2cc105d8c"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_BORN_ENTITY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="260" y="110" width="115" height="14" uuid="1b81b21d-2936-4981-a030-6c11fa3f320a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidad Federativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="110" width="110" height="14" uuid="935d8c5e-5434-4e15-aff6-4d39e82d0a2c"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="110" width="150" height="14" uuid="e8740205-37f3-4630-b0f8-a6302116c0eb"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CURP:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="124" width="150" height="15" uuid="9da7efa5-30d9-4708-b959-6f7b9eed4b96"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_CURP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="124" width="110" height="15" uuid="135a3162-ae35-454e-b006-e53a368ee1cc"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_DATE_BORN}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="375" y="110" width="192" height="14" uuid="748ebfa0-e2e8-4a5e-85e1-4b3bf227cfa0"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Municipio]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="375" y="124" width="192" height="15" uuid="62b284de-2acb-41ba-9289-ffbf28826347"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_BORN_MUNICIPALITY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="140" width="106" height="10" backcolor="#999999" uuid="51778839-d23b-48e6-a1fa-48aeb9fe0e10"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DOMICILIO PARTICULAR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="360" y="164" width="207" height="15" uuid="3071a16d-eb1e-43b3-8eb8-8ac4758f63fb"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_ZIP_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="360" y="150" width="207" height="14" uuid="6937fa12-04ec-445f-8aa9-61d00d7295e9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Postal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="150" width="180" height="14" uuid="134de86a-7df0-43e3-8eef-b627918a2195"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Calle]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="180" y="164" width="180" height="15" uuid="53339c10-baa9-4467-8d34-25dcb23a0d6d"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_CURRENT_COLONY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="180" y="150" width="180" height="14" uuid="9ee7bad7-ae22-4a5f-a8a2-dc1dedff5dff"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Colonia]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="164" width="180" height="15" uuid="c1778e88-17df-4ed6-afae-53f05275c2e4"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_NAME_STREET}.equals("") ? "S/D" : $F{FL_NAME_STREET} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="193" width="180" height="15" uuid="44879963-a5f2-4ee2-aa97-955ba8925db8"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_PHONE_HOME}.equals("(___)___-____") ? "S/D" : $F{FL_PHONE_HOME} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="193" width="180" height="15" uuid="ae848be1-c95c-4237-97b7-6e9faef7be51"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_CURREN_MUNICIPALITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="360" y="193" width="207" height="15" uuid="f4becf8a-dfa1-4177-bf80-0d8d0a8729fd"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_CURRENT_ENTITY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="360" y="179" width="207" height="14" uuid="5babe30f-1a9e-4a09-aefb-1f19170d0e68"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidad Federativa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="179" width="180" height="14" uuid="a464541c-2e72-45ba-82a1-9c735e64f98e"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono  Casa ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="179" width="180" height="14" uuid="33badaef-201e-492f-bbe8-b7b70f883b4c"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Municipio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="208" width="180" height="14" uuid="e383d285-1101-4af4-a111-bbdd1122e085"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono Celular ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="208" width="387" height="14" uuid="24582ed9-c4e5-4fae-9466-2ace17662b12"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[E-mail]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="222" width="180" height="15" uuid="7ece7edc-3db8-4129-9553-9c714832726c"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{FL_CELL_PHONE}.equals("(___)___-____") ? "S/D" : $F{FL_CELL_PHONE} )]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="222" width="387" height="15" uuid="b102f569-73dd-4591-b08f-92e07d76103a"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_MAIL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="238" width="61" height="10" backcolor="#999999" uuid="47db0dfe-6d13-4797-a59b-08e0dda86ef2"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OTROS DATOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="248" width="139" height="14" uuid="d70037aa-0c53-48ee-8d83-bf265a923736"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad en años cumplidos:]]></text>
+			</staticText>
+			<frame>
+				<reportElement x="0" y="248" width="168" height="29" uuid="9d514972-d9e1-4d89-82e3-98b4cd120014"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textField>
+					<reportElement x="55" y="14" width="20" height="14" uuid="a584e2d6-195b-4da3-b84c-305abbd6fad6"/>
+					<textFieldExpression><![CDATA[( $F{FL_GENDER}.equals("Mujer") ? "(X)" : "( )" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="136" y="14" width="20" height="14" uuid="ff39842c-db01-4a60-8047-e78ceb91726e"/>
+					<textFieldExpression><![CDATA[( $F{FL_GENDER}.equals("Hombre") ? "(X)" : "( )" )]]></textFieldExpression>
+				</textField>
+			</frame>
+			<staticText>
+				<reportElement x="307" y="248" width="151" height="14" uuid="1cb94c71-e4c9-475f-96c7-5bb9468c643a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado Civil:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="248" width="109" height="14" uuid="46b1a020-596f-4793-bf75-452c4f35b5f7"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trabaja:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="248" width="168" height="14" uuid="4c24b610-93e5-41d7-ab4e-e8fbbbf6e355"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sexo: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="168" y="262" width="139" height="15" uuid="e676a75e-e8e8-4fcf-9a58-5e07e1f0a44f"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_YEARS_OLD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="307" y="262" width="151" height="15" uuid="5c8c95f3-44ee-46a9-9ec2-d8919b5ce722"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_MARITIAL_STATUS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="458" y="262" width="109" height="15" uuid="14b3e55d-addf-4b4c-96f0-af372f1c1640"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_WORKING}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="4" y="262" width="50" height="14" uuid="fce9d6b5-f428-46db-b815-4a77b28040f2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Femenino]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="262" width="50" height="14" uuid="b12823a2-c514-4f69-8b43-4f100835bd7d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Masculino]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="4" y="318" width="132" height="10" backcolor="#999999" uuid="6ac7aab9-8ebf-4cf2-99ed-85791984c2e0"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANTECEDENTES ACADÉMICOS]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="342" width="347" height="24" uuid="41958ba4-5a3d-4b30-959f-68c25bd34251"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_UNIVERSITY_STUDIED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="328" width="347" height="14" uuid="d8ec8c95-50b8-4af0-945d-d8f24a6778c0"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de la escuela de procedencia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="347" y="328" width="219" height="14" uuid="5b5ced81-73e5-4efd-9cc2-6af8f299ffcb"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Periodo de Estudios de T.S.U:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="347" y="342" width="219" height="24" uuid="85356879-0375-44c9-aa15-7abb41391552"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_PERIOD_TSU}]]></textFieldExpression>
+			</textField>
+			<frame>
+				<reportElement x="0" y="407" width="568" height="195" uuid="de7ef51b-eb76-4a31-92a8-ee9d3a90cdf0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textField>
+					<reportElement x="291" y="96" width="16" height="14" uuid="2f8955e0-5f9a-4473-9e1a-ee6ff4f1398a"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_TRIPTYCH}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="152" y="110" width="16" height="14" uuid="ac282593-b11a-4136-a730-f95b091b23e9"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_FAMILY_FRIENDS}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="110" width="152" height="14" uuid="6172c717-3b1d-41c6-9da9-76871b6f5d77"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Familiares y Amigos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="110" width="123" height="14" uuid="91139964-16a6-41f2-9349-4df2f9b4bf09"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Visitas guiadas]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="110" width="16" height="14" uuid="8b6eb635-7b31-4b0d-8a38-b94e56951762"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_GUIDED_VISITS}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="152" y="124" width="16" height="14" uuid="37afd641-751e-4196-9e3b-02f43631549e"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_DIRECTLT_UT}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="124" width="152" height="14" uuid="98eff757-e4c2-4762-8e43-eaf794084cf3"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Directamente en la UT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="124" width="123" height="14" uuid="25c2d2dc-e7a4-41d5-b4dd-747fa4475e90"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Exposiciones]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="124" width="16" height="14" uuid="cd574384-da41-4ce1-b0f0-be0ea145db5b"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_EXHIBITIONS}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="152" width="307" height="41" uuid="c0268b3b-1875-4189-ba3c-3cee3e97d980"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Firma del interesado(a):]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="138" width="39" height="14" uuid="af1eb28d-81bc-4d3e-a6cc-dac17942a6c5"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cual:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="152" y="138" width="16" height="14" uuid="f16840e8-468d-43fe-9959-6b73aabf3a7b"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_OTHER}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="207" y="138" width="100" height="14" uuid="1a2ba297-8862-43fc-a3ef-64465b9d310f"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_DIFFUSION_OTHER_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="138" width="152" height="14" uuid="583dc10f-6d20-4c09-b617-3f886190d5c9"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Otro:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="307" y="40" width="89" height="14" uuid="c116047c-d17b-4a3b-8566-6d5f65a260af"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Primera]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="40" width="89" height="14" uuid="c4ab6768-d443-41d0-bf8d-e39b69f0bfc6"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Segunda]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="485" y="40" width="82" height="14" uuid="12555de0-8584-4174-9173-3151abadc282"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Otra especifica:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="307" y="54" width="89" height="14" uuid="bcbe76ff-8316-4c07-a1ae-49f1f3ca8964"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_OPTION_UTSEM_STUDY}.equals("PRIMERA") ? "(X)" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="396" y="54" width="89" height="14" uuid="6e180dae-99e0-4913-8daa-a6b958724b28"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_OPTION_UTSEM_STUDY}.equals("SEGUNDA") ? "(X)" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="485" y="54" width="82" height="14" uuid="06706e44-aee0-4d3f-a60b-59070b7097c9"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( !$F{FL_OPTION_UTSEM_STUDY}.equals("SEGUNDA") && !$F{FL_OPTION_UTSEM_STUDY}.equals("PRIMERA")? $F{FL_OPTION_UTSEM_STUDY} : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="307" y="68" width="260" height="14" uuid="34ad0063-4507-4cd0-9ea6-91395f5c1343"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Presentas alguna discapacidad Física:]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="307" y="82" width="260" height="28" uuid="9e3d255f-762b-4420-80f3-a0daeb88c421"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<staticText>
+						<reportElement x="165" y="1" width="13" height="14" uuid="318ddaff-681f-43a5-8ebb-0e6d9302de51"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[No:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="178" y="1" width="52" height="14" uuid="bedf9798-1e2a-4ffc-9a65-868eb718f19a"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_PHYSICAL_DISABILITY}.equals("No") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="41" y="0" width="13" height="14" uuid="968f253c-9e8a-451b-be99-702327e58a2f"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Si:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="40" y="14" width="190" height="14" uuid="f79fd7d0-798b-4098-9ac1-a427db9c883a"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{FL_DISABILITY_NAME}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="2" y="14" width="39" height="14" uuid="91ca0f15-7e43-4796-929d-6d802d51b1c5"/>
+						<box leftPadding="5">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Cual:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="54" y="0" width="52" height="14" uuid="0576e8eb-c0be-416c-afaf-a6707dda0cad"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_PHYSICAL_DISABILITY}.equals("Si") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement x="307" y="15" width="260" height="25" uuid="2f35cedf-b136-45d7-b6e7-554158a4477a"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Que opción es la UTsem para la Continuidad de Estudios:				]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="152" height="14" uuid="e7df73a2-62fb-47c8-af28-8617143d479b"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Convocatoria]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="15" width="307" height="25" uuid="3a5ef333-99ee-4881-96a6-ece1bde87a61"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Marca con una X el Medio de Difusión por el cual te enteraste de la Continuidad de Estudios en la UTsem. ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="152" y="40" width="16" height="14" uuid="eb5baa80-dc32-4fe8-99ad-c876c331dca8"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_CALL}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="291" y="40" width="16" height="14" uuid="75020f4d-f032-40d8-ac56-a7a06b752cf4"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_BROCHURE}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="168" y="40" width="123" height="14" uuid="ca521201-66e9-438b-8acf-f1c14fc779e8"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Folleto]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="152" y="54" width="16" height="14" uuid="c0459aca-077c-404b-9eba-daa8fce781a5"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_CARTEL}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="54" width="152" height="14" uuid="b797de28-34ad-4112-b8e8-b028afa1be5f"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Cartel ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="54" width="123" height="14" uuid="a2590026-eea9-4beb-9c82-794e3bcab16c"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Periódico]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="54" width="16" height="14" uuid="a64441da-f7ef-4e71-aebd-cd9223974906"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_NEWSPAPER}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="152" y="82" width="16" height="14" uuid="b1e835bd-6a8f-490d-9caf-dfbf456fa4b4"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_PERSONAL_UT}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="82" width="152" height="14" uuid="69f43801-c868-4948-827a-e6719ffdc761"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Personal del UT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="82" width="123" height="14" uuid="ef77b1df-68c1-4615-9427-b68786d8cf46"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Manta]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="82" width="16" height="14" uuid="87a8997e-d62a-462c-984b-4fbe205c7297"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_MANTA}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="152" y="96" width="16" height="14" uuid="b5b8ab55-e3a2-47b6-b4f3-b7b1ab1f19b7"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_GRADUATES}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="96" width="152" height="14" uuid="c553d956-5e0d-45f2-a339-9b00cd17b28a"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Egresados (as) de la UT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="96" width="123" height="14" uuid="6b31b4b4-afb6-4b24-b4fa-1a56b90202d1"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Tríptico]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="152" y="68" width="16" height="14" uuid="160321d4-32fb-4dd7-b794-3455d8b908b6"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_PLANTEL_TALKS}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="68" width="152" height="14" uuid="a3677112-f600-4036-a2b6-bcc697cc5c95"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Pláticas en el Plantel]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="168" y="68" width="123" height="14" uuid="40ca6961-a0a3-4ea2-bacf-6bd6bd0e94fc"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Estudiante de la UT]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="291" y="68" width="16" height="14" uuid="93c9c9d4-e8b0-4a1b-a676-34e36896c3e2"/>
+					<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_DIFFUSION_STUDENTS_UT}.equals("Si") ? "X" : "" )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="307" y="110" width="260" height="14" uuid="ca0695d9-387c-4978-9eed-eed46f18c9c0"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Perteneces algún grupo indígena:]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="307" y="124" width="260" height="28" uuid="f8967adc-a0f2-494d-a0c9-09055b2d733c"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<staticText>
+						<reportElement x="165" y="1" width="13" height="14" uuid="a41123e8-fe42-4fdd-8db9-afac14649b2a"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[No:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="178" y="1" width="52" height="14" uuid="7335d439-63bb-4a25-a9e5-c75c0dff89fb"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_INDIGENOUS_GROUP}.equals("No") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="41" y="1" width="13" height="14" uuid="dcd7d33d-2e28-4d82-bd57-0d96e0cc461c"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Si:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="40" y="14" width="190" height="14" uuid="736e8a4a-4ecf-45d2-a9ef-9f001527bf6d"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{FL_INDIGENOUS_GROUP_NAME}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="2" y="14" width="39" height="14" uuid="711a515c-5678-46a1-a8c9-ca660b0c897d"/>
+						<box leftPadding="5">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Cual:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="54" y="1" width="52" height="14" uuid="c00e8284-7d7f-4341-8abf-056b0c45e9ef"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_INDIGENOUS_GROUP}.equals("Si") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement x="307" y="152" width="260" height="14" uuid="dea5952a-fbe8-4f3d-8180-6217b80159a0"/>
+					<box leftPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Tiene Seguro Médico o de Salud:]]></text>
+				</staticText>
+				<frame>
+					<reportElement x="307" y="165" width="260" height="28" uuid="2cb6ed1c-eeeb-408c-beb9-b7980f3d583d"/>
+					<box>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+						<rightPen lineWidth="0.5" lineStyle="Solid"/>
+					</box>
+					<staticText>
+						<reportElement x="165" y="0" width="13" height="14" uuid="fb7bb41a-ef87-4cd9-940f-700a1ac02362"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[No:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="178" y="0" width="52" height="14" uuid="2c836402-0bd6-4952-8371-f263a639e319"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_SECUTITY_MEDICAL}.equals("No") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="41" y="1" width="13" height="14" uuid="9c30f748-1619-48b3-8d86-8d1aab76dd85"/>
+						<box leftPadding="0">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Si:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="40" y="13" width="190" height="14" uuid="38f70597-b46c-4e8a-8d65-e02ab964715c"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{FL_SECURITY_NAME}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement x="2" y="13" width="39" height="14" uuid="e3b782a6-c1b8-42cc-8ac7-e2fba025d0b1"/>
+						<box leftPadding="5">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isBold="false"/>
+						</textElement>
+						<text><![CDATA[Cual:]]></text>
+					</staticText>
+					<textField>
+						<reportElement x="54" y="0" width="52" height="14" uuid="7ad6c344-8eef-46d2-b7b9-743dd555b9e8"/>
+						<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+							<topPen lineWidth="0.0"/>
+							<leftPen lineWidth="0.0"/>
+							<bottomPen lineWidth="0.0"/>
+							<rightPen lineWidth="0.0"/>
+						</box>
+						<textElement>
+							<font fontName="Arial" isUnderline="true"/>
+						</textElement>
+						<textFieldExpression><![CDATA[( $F{FL_SECUTITY_MEDICAL}.equals("Si") ? "(X)" : "" )]]></textFieldExpression>
+					</textField>
+				</frame>
+				<staticText>
+					<reportElement mode="Opaque" x="4" y="5" width="371" height="10" backcolor="#999999" uuid="721e111f-4f58-4400-9382-8db6c1864a58"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[DIFUSIÓN                                                                                                                   Marca con una X    ]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="614" width="224" height="10" uuid="1e645c93-e79e-44f6-a1ca-c16b7c0d9a96"/>
+				<textElement>
+					<font fontName="Arial" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Firma y Sello de la Caja General por pago de Derechos	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="655" width="100" height="20" uuid="7f835151-4bd0-4e38-ab6c-0e3c5eb68b36"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[F:E: 04-06-2015                                                                                                                                                                     ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="655" width="82" height="20" uuid="7027b055-a8b2-4a38-88b8-ed0e308cfd65"/>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[FO-DSE-40/02]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="344" y="15" width="123" height="15" uuid="095c9a93-8b3f-4924-a49d-3380efabaf4a"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_UTSEM_FOLIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="344" y="1" width="123" height="14" uuid="8668622e-71e6-4e43-8914-cf8c7d4a51c2"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Folio Utsem:]]></text>
+			</staticText>
+			<frame>
+				<reportElement mode="Transparent" x="33" y="328" width="533" height="38" isPrintWhenDetailOverflows="true" backcolor="#33FF33" uuid="adf2d60f-0387-407e-968e-31aaeef1536a"/>
+			</frame>
+			<frame>
+				<reportElement mode="Transparent" x="0" y="367" width="568" height="40" backcolor="#FFFF33" uuid="1af67a29-3f32-4ed0-bdbc-711646bc5190"/>
+				<staticText>
+					<reportElement x="360" y="10" width="207" height="14" uuid="fd2609c1-4c4e-43ed-95da-7c11d8fbd854"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre (s)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="4" y="0" width="132" height="10" backcolor="#999999" uuid="a117367e-9d4e-4a7e-9f79-85171df802a3"/>
+					<textElement>
+						<font fontName="Arial" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOMBRE DEL PADRE O TUTOR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="180" y="10" width="180" height="14" uuid="7f795074-6568-49fe-969e-1eb334d4eecf"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Apellido Materno:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="24" width="180" height="15" uuid="ea5f68d0-e9e3-4a41-9840-a705c243479c"/>
+					<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_PATERN_NAME_TUTOR}.equals("") ? "S/D" : $F{FL_PATERN_NAME_TUTOR} )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="180" y="24" width="180" height="15" uuid="373d5b58-c4e1-4a05-8e8b-6e77a6a97972"/>
+					<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_MATERN_NAME_TUTOR}.equals("") ? "S/D" : $F{FL_MATERN_NAME_TUTOR} )]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="360" y="24" width="207" height="15" uuid="aa048513-ae46-42d9-8dba-42a57615e843"/>
+					<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement>
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[( $F{FL_NAME_TUTOR}.equals("") ? "S/D" : $F{FL_NAME_TUTOR} )]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="10" width="180" height="14" uuid="214ebac6-3fc2-473d-a377-9410c1944fa5"/>
+					<box>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Apellido Paterno:]]></text>
+				</staticText>
+			</frame>
+			<staticText>
+				<reportElement x="0" y="277" width="307" height="14" uuid="5d872209-89bb-4807-9b96-8ddc02decf1f"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección del Trabajo:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="0" y="291" width="307" height="24" uuid="d594e899-39bb-4ac8-ae9a-32d9d6f22c58"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_WHERE_WORK_PLACE_ADDRESS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="307" y="277" width="151" height="14" uuid="557ed49c-7931-461e-93fa-21921bb3174a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de Empresa:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="307" y="291" width="151" height="24" uuid="ef1b7b34-80fc-4b44-a595-dee9b80e110e"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_COMPANY_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="458" y="291" width="109" height="24" uuid="9f7f9b41-f77d-42e0-b30b-99fb03437aec"/>
+				<box topPadding="0" leftPadding="5" bottomPadding="0" rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_TELEPHONE_PLACE_WORK}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="458" y="277" width="109" height="14" uuid="08a5a52d-278d-43f0-904a-76004ce378e9"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

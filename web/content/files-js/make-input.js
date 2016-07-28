@@ -1,1 +1,145 @@
-function createInputEnrrollment(e,a){var t={url:"../serviceStudent?consultAllEnrollments",async:!1,datatype:"json",root:"__ENTITIES",datafields:[{name:"id"},{name:"dataNameEnrollment"}]},o=new $.jqx.dataAdapter(t);a?$(e).jqxInput({source:o}):$(e).jqxInput({theme:theme,source:o,maxLength:13,placeHolder:"Matrícula",displayMember:"dataNameEnrollment",valueMember:"id",width:"180px",height:"26px"})}function createInputFolioSystem(e,a){var t={url:"../serviceCandidate?consultAllFoliosSystem",async:!1,datatype:"json",root:"__ENTITIES",datafields:[{name:"dataProgresivNumber"},{name:"dataNameFolio"}]},o=new $.jqx.dataAdapter(t);a?$(e).jqxInput({source:o}):$(e).jqxInput({theme:theme,source:o,maxLength:8,placeHolder:"Folio Sistema",displayMember:"dataNameFolio",valueMember:"dataProgresivNumber",width:90,height:15})}function createInputFolioSystemAll(e,a){var t={url:"../serviceCandidate?consultAllFoliosSystemAll",async:!1,datatype:"json",root:"__ENTITIES",datafields:[{name:"dataProgresivNumber"},{name:"dataNameFolio"}]},o=new $.jqx.dataAdapter(t);a?$(e).jqxInput({source:o}):$(e).jqxInput({theme:theme,source:o,maxLength:8,placeHolder:"Folio Sistema",displayMember:"dataNameFolio",valueMember:"dataProgresivNumber",width:90,height:15})}function createInputFolioUtsem(e,a){var t={url:"../serviceCandidate?consultAllFoliosUtsem",async:!1,datatype:"json",root:"__ENTITIES",datafields:[{name:"dataProgresivNumber"},{name:"dataNameFolio"}]},o=new $.jqx.dataAdapter(t);a?$(e).jqxInput({source:o}):$(e).jqxInput({theme:theme,source:o,maxLength:11,placeHolder:"Folio Utsem",displayMember:"dataNameFolio",valueMember:"dataProgresivNumber",width:120,height:15})}
+function createInputEnrrollmentPreregisterING(selector, update){
+    var ordersSource =
+            {
+                url: "../serviceStudent?consultAllEnrollmentsPreregisterING",
+                async: false,
+                datatype: "json",
+                root: "__ENTITIES",
+                datafields: [
+                    { name: 'id' },
+                    { name: 'dataNameEnrollment' }
+                ]
+            };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxInput({source: dataAdapter});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxInput({ 
+            theme:theme,
+            source: dataAdapter, 
+            maxLength: 13,
+            placeHolder: "Matrícula",
+            displayMember: "dataNameEnrollment", 
+            valueMember: "id", 
+            width: "180px", 
+            height: "26px"
+        });
+    }
+}
+function createInputEnrrollment(selector, update){
+    var ordersSource =
+            {
+                url: "../serviceStudent?consultAllEnrollments",
+                async: false,
+                datatype: "json",
+                root: "__ENTITIES",
+                datafields: [
+                    { name: 'id' },
+                    { name: 'dataNameEnrollment' }
+                ]
+            };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxInput({source: dataAdapter});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxInput({ 
+            theme:theme,
+            source: dataAdapter, 
+            maxLength: 13,
+            placeHolder: "Matrícula",
+            displayMember: "dataNameEnrollment", 
+            valueMember: "id", 
+            width: "180px", 
+            height: "26px"
+        });
+    }
+}
+function createInputFolioSystem(selector, update){
+    var ordersSource =
+            {
+                url: "../serviceCandidate?consultAllFoliosSystem",
+                async: false,
+                datatype: "json",
+                root: "__ENTITIES",
+                datafields: [
+                    { name: 'dataProgresivNumber' },
+                    { name: 'dataNameFolio' }
+                ]
+            };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxInput({source: dataAdapter});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxInput({ 
+            theme:theme,
+            source: dataAdapter, 
+            maxLength: 8,
+            placeHolder: "Folio Sistema",
+            displayMember: "dataNameFolio", 
+            valueMember: "dataProgresivNumber",
+            width: 90, 
+            height: 15
+        });
+    }
+}
+function createInputFolioSystemAll(selector, update){
+    var ordersSource =
+            {
+                url: "../serviceCandidate?consultAllFoliosSystemAll",
+                async: false,
+                datatype: "json",
+                root: "__ENTITIES",
+                datafields: [
+                    { name: 'dataProgresivNumber' },
+                    { name: 'dataNameFolio' }
+                ]
+            };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxInput({source: dataAdapter});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxInput({ 
+            theme:theme,
+            source: dataAdapter, 
+            maxLength: 8,
+            placeHolder: "Folio Sistema",
+            displayMember: "dataNameFolio", 
+            valueMember: "dataProgresivNumber",
+            width: 90, 
+            height: 15
+        });
+    }
+}
+function createInputFolioUtsem(selector, update){
+    var ordersSource =
+            {
+                url: "../serviceCandidate?consultAllFoliosUtsem",
+                async: false,
+                datatype: "json",
+                root: "__ENTITIES",
+                datafields: [
+                    { name: 'dataProgresivNumber' },
+                    { name: 'dataNameFolio' }
+                ]
+            };
+    var dataAdapter = new $.jqx.dataAdapter(ordersSource);
+    if(update){
+        $(selector).jqxInput({source: dataAdapter});
+    }else{    
+        // Create a jqxListBox
+        $(selector).jqxInput({ 
+            theme:theme,
+            source: dataAdapter, 
+            maxLength: 11,
+            placeHolder: "Folio Utsem",
+            displayMember: "dataNameFolio", 
+            valueMember: "dataProgresivNumber",
+            width: 120, 
+            height: 15
+        });
+    }
+}

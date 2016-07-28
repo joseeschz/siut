@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="584" leftMargin="14" rightMargin="14" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pt_enrollment" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_STUDENTS`('studentCedule', $P{pt_enrollment})]]>
+	</queryString>
+	<field name="FL_UTSEM_FOLIO" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO UTSEM|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CENEVAL_FOLIO" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO CENEVA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_FOLIO_TEMP_SYSTEM" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLIO TEMPORAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PATERN_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO PATERNO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MATERN_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO MATERNO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_SCHOOL_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[TIPO DE PREPARATORIA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_BACHEROL_TYPE" class="java.lang.String">
+		<fieldDescription><![CDATA[TIPO DE BACHILLERATO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MARITIAL_STATUS" class="java.lang.String">
+		<fieldDescription><![CDATA[ESTADO CIVIL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_SECURITY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL SEGURO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PREREGISTER_DATE" class="java.lang.String">
+		<fieldDescription><![CDATA[FECHA DE PREREGISTRO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER_LEVEL_TSU" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER_LEVEL_ING" class="java.lang.String"/>
+	<field name="FL_CURP" class="java.lang.String">
+		<fieldDescription><![CDATA[CURP|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DATE_BORN" class="java.lang.String">
+		<fieldDescription><![CDATA[FECHA DE NACIMIENTO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ZIP_CODE" class="java.lang.String">
+		<fieldDescription><![CDATA[CÓDIGO POSTAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CURRENT_COLONY" class="java.lang.String">
+		<fieldDescription><![CDATA[ID COLONIA ACTUAL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_STREET" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DE LA CALLE|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PHONE_HOME" class="java.lang.String">
+		<fieldDescription><![CDATA[TELÉFONO CASA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_CELL_PHONE" class="java.lang.String">
+		<fieldDescription><![CDATA[TELÉFONO CELULAR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MAIL" class="java.lang.String">
+		<fieldDescription><![CDATA[CORREO ELÉCTRONICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_GENDER" class="java.lang.String">
+		<fieldDescription><![CDATA[SEXO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|checkedlist|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_WORKING" class="java.lang.String">
+		<fieldDescription><![CDATA[TRABAJA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PERIOD_BACHEROL" class="java.lang.String">
+		<fieldDescription><![CDATA[PERIDO DEL BACHILLERATO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_TRIPTYCH" class="java.lang.String">
+		<fieldDescription><![CDATA[TRÍPTICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_FAMILY_FRIENDS" class="java.lang.String">
+		<fieldDescription><![CDATA[AMIGOS O FAMILIARES|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_GUIDED_VISITS" class="java.lang.String">
+		<fieldDescription><![CDATA[VISITAS GUIADAS|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_DIRECTLT_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[DIRECTAMENTE EN LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_EXHIBITIONS" class="java.lang.String">
+		<fieldDescription><![CDATA[EXPOSICIONES|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_OTHER" class="java.lang.String">
+		<fieldDescription><![CDATA[OTRO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_OTHER_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_OPTION_UTSEM_STUDY" class="java.lang.String">
+		<fieldDescription><![CDATA[QUE OPSIÓN DE ESTUDIO ES LA UTSEM PARA TÍ|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PHYSICAL_DISABILITY" class="java.lang.String">
+		<fieldDescription><![CDATA[SUFRE DE ALGUNA DISCAPACIDAD FÍSICA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_CALL" class="java.lang.String">
+		<fieldDescription><![CDATA[CONVOCATORIA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_BROCHURE" class="java.lang.String">
+		<fieldDescription><![CDATA[FOLLETO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_CARTEL" class="java.lang.String">
+		<fieldDescription><![CDATA[CARTEL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_NEWSPAPER" class="java.lang.String">
+		<fieldDescription><![CDATA[PERIODICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_PERSONAL_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[PERSONAL DE LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_MANTA" class="java.lang.String">
+		<fieldDescription><![CDATA[MANTA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_GRADUATES" class="java.lang.String">
+		<fieldDescription><![CDATA[EGRESADOS DE LA UTSEM|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DISABILITY_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DE LA DISCAPACIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_PLANTEL_TALKS" class="java.lang.String">
+		<fieldDescription><![CDATA[PLATICAS EN EL PLANTEL|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFUSION_STUDENTS_UT" class="java.lang.String">
+		<fieldDescription><![CDATA[ESTUDUANTES DE LA UNIVERSIDAD|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_INDIGENOUS_GROUP" class="java.lang.String">
+		<fieldDescription><![CDATA[PERTENECE A UN GRUPO INDÍGENA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_INDIGENOUS_GROUP_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL GRUPO INDÍGENA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_SECUTITY_MEDICAL" class="java.lang.String">
+		<fieldDescription><![CDATA[CUENTA CON SEGURO MÉDICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PATERN_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO PATERNO DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_MATERN_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[APELLIDO MATERNO DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_BORN_ENTITY" class="java.lang.String"/>
+	<field name="FL_NAME_BORN_MUNICIPALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_LOCALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_MUNICIPALITY" class="java.lang.String"/>
+	<field name="FL_NAME_CURRENT_ENTITY" class="java.lang.String"/>
+	<field name="FL_YEARS_OLD" class="java.lang.Long"/>
+	<field name="FL_NAME_PREPARATORY" class="java.lang.String"/>
+	<field name="FL_ADDRESS_PREPARATORY" class="java.lang.String"/>
+	<field name="FL_NAME_CURREN_MUNICIPALITY" class="java.lang.String"/>
+	<sortField name="PAGE_COUNT" type="Variable"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="40" width="483" height="20" uuid="21e71b0d-2b81-4ff6-a712-2225ce12d330"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
+			</staticText>
+			<image onErrorType="Blank">
+				<reportElement x="0" y="0" width="100" height="76" uuid="fedabd46-cb17-4467-8d52-92e5a9ada8c6"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="160">
+			<elementGroup>
+				<line>
+					<reportElement x="0" y="2" width="491" height="1" uuid="0f7399f0-b77c-4d2b-a43d-94837294dc50"/>
+				</line>
+				<staticText>
+					<reportElement x="0" y="43" width="136" height="25" uuid="701c2026-2aa9-4c7d-b469-9e64f2e7dae4"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[CARRERA T.S.U:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="136" y="43" width="447" height="25" uuid="7120d955-3c78-4883-bd8b-03aab2d915a4"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_NAME_CAREER_LEVEL_TSU}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="94" width="136" height="20" uuid="593afec6-20ad-46fc-b525-bdb3433aea05"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOMBRE:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="136" y="94" width="447" height="20" uuid="2bcdddd2-fa8a-45fe-b32e-a78043b7e13d"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_NAME}+" "+$F{FL_PATERN_NAME}+" "+$F{FL_MATERN_NAME}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="23" width="136" height="20" uuid="e974432a-761b-4170-8e76-7b16a4989878"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.5"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[MATRÍCULA:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="136" y="23" width="447" height="20" uuid="cfff5312-4665-4079-a1e6-b16a5c6923d9"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_ENROLLMENT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="114" width="136" height="20" uuid="51cf3c05-46e8-441a-8a3f-18c26786f908"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<text><![CDATA[FECHA DE ELABORACIÓN:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="136" y="114" width="447" height="20" uuid="f0ac8ef9-7b83-45d7-986c-c088a9a54a3a"/>
+					<box leftPadding="5">
+						<pen lineWidth="0.5"/>
+						<topPen lineWidth="0.5"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.5"/>
+						<rightPen lineWidth="0.5"/>
+					</box>
+					<textElement verticalAlignment="Top" markup="none">
+						<font fontName="SansSerif" size="8" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_PREREGISTER_DATE}]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<elementGroup/>
+			<staticText>
+				<reportElement x="0" y="68" width="136" height="25" uuid="8dd8eb37-1c35-4f27-9f76-16b2658e76a6"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARRERA DE CONTINUIDAD:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="136" y="68" width="447" height="25" uuid="6c2886c4-8c85-4bf9-9cfa-6821c971aee8"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top" markup="none">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_CAREER_LEVEL_ING}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="114" splitType="Stretch">
+			<elementGroup/>
+			<staticText>
+				<reportElement x="0" y="19" width="583" height="95" uuid="79bd3257-c050-44bd-aa70-2441a0a13326"/>
+				<box topPadding="0" leftPadding="10" bottomPadding="10" rightPadding="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="8"/>
+				</textElement>
+				<text><![CDATA[Acuda al departamento de servicios escolares a concluir su trámite de pre-inscripción, cubriendo los requisitos que se indican en la convocatoria publicada en www.utsem.edu.mx cabe mencionar que el cupo es limitado, por lo que el llenado del pre-registro no indica que usted este pre-inscrito.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="2" width="71" height="17" uuid="cadd7bc2-7b53-4b34-b38b-45c939898774"/>
+				<box topPadding="0" leftPadding="10" bottomPadding="0" rightPadding="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
