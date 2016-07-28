@@ -1,7 +1,7 @@
 <%
     String vertion = "jqwidgets-ver4.0.0";
-    if(session.getAttribute("logueadoStudent") == null){
-        response.sendRedirect("/login.jsp");
+    if(session.getAttribute("logueadoStudentMetadata") == null){
+        response.sendRedirect("/metadato/login.jsp");
     }else{%>
         <!DOCTYPE>
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,7 +16,7 @@
                 <script>
                      $.ajax({
                         type: "GET",
-                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged",
+                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged&&typeLogin=metadata",
                         dataType: 'json',
                         async: false,
                         beforeSend: function (xhr) {
@@ -133,7 +133,7 @@
                         <br>  
                         <span style="margin-left: 30px; color: #fff; font-size: 28px; position: fixed; right: 172px; top: 50px; width: 350px;">
                             Sistema Integral Utsem
-                            <b style="font-size: 14px; display: block; margin-top: 5px"> Bienvenid@:<%out.print(" "+session.getAttribute("logueadoStudent"));%></b>
+                            <b style="font-size: 14px; display: block; margin-top: 5px"> Bienvenid@:<%out.print(" "+session.getAttribute("logueadoStudentMetadata"));%></b>
                             <div style="color: #fff; font-size: 14px; display: inline;">
                                 <div class="btn-group navbar-right" style="position: absolute;top: -30px;left: 0;">
                                     <div type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -410,7 +410,7 @@
                                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_facebook" name="fl_facebook" placeholder="Link de facebook..." style="width: 260px"/>
                                         </div>
-                                        <div class="div-row1 input-prepend">
+                                        <div class="div-row input-prepend">
                                             <label class="label-row" for="fl_twitter">Link de Twitter opcional</label><br>
                                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_twitter" name="fl_twitter" placeholder="Link de twitter..." style="width: 360px"/>
@@ -1395,7 +1395,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_depend_economically_work","field_value":$(this).val()},
                                 beforeSend: function (xhr) {
                                 },
@@ -1412,7 +1412,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_where_work","field_value":""},
                                 beforeSend: function (xhr) {
                                 },
@@ -1425,7 +1425,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_what_work","field_value":""},
                                 beforeSend: function (xhr) {
                                 },

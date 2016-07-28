@@ -26,13 +26,42 @@ import org.json.simple.JSONObject;
  */
 public class studentControl {
     public static void main(String[] args) {
-        studentModel obj = new studentModel();
-        obj.setFL_MAIL("karlos.antoni-1994@hotmail.com");
-        obj.setFL_ENROLLMENT("UTS12S-003661");
-        ArrayList<studentModel> listColumns=new studentControl().SelectAllStudents();
-        for(int i=0;i<listColumns.size();i++){
-            System.out.println(listColumns.get(i).getSemesterMl().getFL_NAME_SEMESTER());
+        ArrayList<studentModel> listCandidateING=new studentControl().SelectCandidatesING();
+        ArrayList<studentModel> listStudents=new studentControl().SelectStudentsING(15, 11);
+        JSONArray content = new JSONArray();
+        for(int i=0;i<listStudents.size();i++) {
+            JSONObject datos = new JSONObject();
+            datos.put("id", listStudents.get(i).getPK_STUDENT());
+            datos.put("pk_student", listStudents.get(i).getPK_STUDENT());
+            datos.put("fl_enrollment", listStudents.get(i).getFL_ENROLLMENT());
+            datos.put("fl_folio_utsem", listStudents.get(i).getFL_UTSEM_FOLIO());
+            datos.put("fl_name", listStudents.get(i).getFL_NAME());
+            content.add(datos); 
+        }    
+        System.out.print(content);
+    }
+    public ArrayList<studentModel> SelectCandidatesING(){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('candidatesPreinscriptionING', '')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel StudentsAll=new studentModel();
+                    StudentsAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    StudentsAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    StudentsAll.setFL_REGISTER_DATE(res.getString("FL_REGISTER_DATE_ING"));
+                    StudentsAll.setFL_NAME(res.getString("FL_NAME"));
+                    StudentsAll.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    list.add(StudentsAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return list;
     }
     public ArrayList<propetiesTableModel> SelectReportColums(){
         ArrayList<propetiesTableModel> list=new ArrayList<>();
@@ -142,6 +171,28 @@ public class studentControl {
         ArrayList<studentModel> list=new ArrayList<>();
         try {
             try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENROLLED`('studentsInscription', '', "+pt_career+", "+pt_period+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel CandidateAll=new studentModel();
+                    CandidateAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    CandidateAll.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
+                    CandidateAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    CandidateAll.setFL_NAME(res.getString("FL_NAME"));
+                    list.add(CandidateAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<studentModel> SelectStudentsING(int pt_period, int pt_career){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_ENROLLED`('studentsInscriptionING', '', "+pt_career+", "+pt_period+")"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
@@ -376,10 +427,17 @@ public class studentControl {
                         Student.setFL_PHOTOGRAPHY(res.getString("FL_PHOTOGRAPHY"));
                         Student.setFL_MARITIAL_STATUS(res.getString("FL_MARITIAL_STATUS"));
                         Student.setFL_WORKING(res.getString("FL_WORKING"));
+                        
+                        Student.setFL_WHERE_WORK_PLACE_ADDRESS(res.getString("FL_WHERE_WORK_PLACE_ADDRESS"));
+                        Student.setFL_COMPANY_TYPE(res.getString("FL_COMPANY_TYPE"));
+                        Student.setFL_TELEPHONE_PLACE_WORK(res.getString("FL_TELEPHONE_PLACE_WORK"));
+                        
                         Student.setFL_BACHEROL_TYPE(res.getString("FL_BACHEROL_TYPE"));
                         Student.setFL_SCHOOL_TYPE(res.getString("FL_SCHOOL_TYPE"));
                         Student.setFL_ABOVE_AVERAGE(res.getDouble("FL_ABOVE_AVERAGE"));
                         Student.setFL_PERIOD_BACHEROL(res.getString("FL_PERIOD_BACHEROL"));
+                        Student.setFL_NAME_UNIVERSITY_STUDIED(res.getString("FL_NAME_UNIVERSITY_STUDIED"));
+                        Student.setFL_PERIOD_TSU(res.getString("FL_PERIOD_TSU"));
                         Student.setFL_FILE_ID_OFICIAL(res.getString("FL_FILE_ID_OFICIAL"));
                         Student.setFL_FILE_DOCUMENT_BORN(res.getString("FL_FILE_DOCUMENT_BORN"));
                         Student.setFL_CURP(res.getString("FL_CURP"));
@@ -515,12 +573,33 @@ public class studentControl {
         }
         return list;
     }
+    public ArrayList<studentModel> SelectEnrollmentsPreregisterING(){
+        ArrayList<studentModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('allEnrollmentPreregisterING', '')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    studentModel StudentAll=new studentModel();
+                    StudentAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    StudentAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    list.add(StudentAll);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<studentModel> SelectEnrollments(){
         ArrayList<studentModel> list=new ArrayList<>();
         try {
             try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('allEnrollment', '')"); ResultSet res = ps.executeQuery()) {
                 while(res!=null&&res.next()){
                     studentModel StudentAll=new studentModel();
+                    StudentAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
                     StudentAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     list.add(StudentAll);
                 }
@@ -749,12 +828,14 @@ public class studentControl {
                     userLogin.setPK_STUDENT(res.getInt("PK_STUDENT"));
                     userLogin.setFL_NAME(res.getString("FL_NAME"));
                     userLogin.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    userLogin.setFL_UTSEM_FOLIO(res.getString("FL_UTSEM_FOLIO"));
                     userLogin.setFL_MAIL(res.getString("FL_MAIL"));
                     userLogin.setFL_GENDER(res.getString("FL_GENDER"));
                     userLogin.setFL_NAME_ABBREVIATED(res.getString("FL_DESCRIPTION"));
                     userLogin.setFL_NAME_FATHER(res.getString("FL_NAME_SMALL"));
                     userLogin.setPK_GROUP(res.getInt("PK_GROUP"));
                     userLogin.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    userLogin.setFL_AUTHORIZED_ACCESS_PREREGISTER_ING(res.getInt("FL_AUTHORIZED_ACCESS_PREREGISTER_ING"));
                     userLogin.setFK_LEVEL(res.getInt("FK_LEVEL"));
                     list.add(userLogin);
                 }

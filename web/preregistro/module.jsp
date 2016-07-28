@@ -943,7 +943,7 @@
                                         $.ajax({
                                             type: "POST",
                                             url: "../serviceMail",
-                                            data: {"mail" : $("#fl_mail").val(), "name" : $("#fl_name").val()+" "+$("#fl_patern_name").val()+" "+$("#fl_matern_name").val()},
+                                            data: {"userName":"", "password":"", "email" : $("#fl_mail").val(), "name" : $("#fl_name").val()+" "+$("#fl_patern_name").val()+" "+$("#fl_matern_name").val()},
                                             beforeSend: function (xhr) {
                                                 $("#pictureMessage").attr("src","../content/pictures-system/load.GIF");
                                                 $('#titleMessage').text('Generando ficha...');

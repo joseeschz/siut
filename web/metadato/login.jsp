@@ -1,6 +1,6 @@
 <%
     String vertion = "jqwidgets-ver4.0.0";
-    if(session.getAttribute("logueadoStudent") == null){%>
+    if(session.getAttribute("logueadoStudentMetadata") == null){%>
         <!DOCTYPE html>
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
@@ -17,7 +17,7 @@
                 <script>
                      $.ajax({
                         type: "GET",
-                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged",
+                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged&&typeLogin=metadata",
                         dataType: 'json',
                         async: false,
                         beforeSend: function (xhr) {
@@ -304,5 +304,5 @@
             </script>
         </html>
     <%}else{
-        response.sendRedirect("/module.jsp");
+        response.sendRedirect("/metadato/module.jsp");
     }%>

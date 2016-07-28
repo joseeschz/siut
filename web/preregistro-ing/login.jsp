@@ -1,6 +1,6 @@
 <%
     String vertion = "jqwidgets-ver4.0.0";
-    if(session.getAttribute("logueadoStudent") == null){%>
+    if(session.getAttribute("logueadoStudentPreregister") == null){%>
         <!DOCTYPE html>
         <html xmlns="http://www.w3.org/1999/xhtml">
             <head>
@@ -17,7 +17,7 @@
                 <script>
                      $.ajax({
                         type: "GET",
-                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged",
+                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged&&typeLogin=preregister",
                         dataType: 'json',
                         async: false,
                         beforeSend: function (xhr) {
@@ -28,7 +28,7 @@
                         },
                         success: function (data, textStatus, jqXHR) {
                             if(data.status){
-                                window.location = "/metadato/module.jsp";
+                                window.location = "/preregistro-ing/module.jsp";
                             }
                         }
                     });
@@ -57,7 +57,7 @@
                             <div id="WindowLoad"></div>
                             <div id="loadingPicture"></div>
                         </div>
-                        <span id="loginText" style="font-size: 35px; line-height: normal;">PRE-REGISTRO NIVEL INGENIERÍA</span><br><br>  
+                        <span id="loginText" style="font-size: 28px; line-height: normal;">PRE-REGISTRO INGENIERÍA</span><br><br>  
                         <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 18px; right: 20px; top: 90px">Error datos incorrectos</span>
                         <div id="intro" style="display: block;">
                             <section>
@@ -89,7 +89,7 @@
 
                                 </form><!--/ form-->
                             </section><!--/ seccion-->
-                            <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata.pdf" download="Documento piloto de metadato.pdf"><img src="../content/pictures-system/pdf.png"></a>
+                            <a title="Información requerida" style="color: rgb(66, 79, 89); text-decoration: none; position: absolute; right: 20px; bottom: 2px;" href="../content/files-pdf/metadata.pdf" download="Documento piloto de preregistro-ing.pdf"><img src="../content/pictures-system/pdf.png"></a>
                         </div>
                     </div>
                     <div id="stage" class="rememberPass" style="display: none">
@@ -97,7 +97,8 @@
                             <div id="WindowLoad"></div>
                             <div id="loadingPicture"></div>
                         </div>
-                        <span id="MessageError" style="display: none; position:absolute; color: red; font-size: 18px; right: 20px; top: 90px">Error datos incorrectos</span>
+                        <span id="loginText" style="font-size: 28px; line-height: normal;">RECORDATORIO DE CONTRASEÑA</span><br>
+                        <br>
                         <div id="intro" style="display: block;">
                             <section>
                                 <form id="formLoginRemember" method="post" >
@@ -235,7 +236,7 @@
                             type: "POST",
                             dataType: 'json',
                             async: true,
-                            url: "../serviceStudent?selectLoginStudent=in&&typeLogin=metadata",
+                            url: "../serviceStudent?selectLoginStudent=in&&typeLogin=preregister",
                             data:datos,
                             beforeSend: function (xhr) {
                                 $("#windowBlock").fadeIn("slow");
@@ -248,10 +249,15 @@
                                 if(data.statusLogin==="logeado"){
                                     setTimeout(function(){
                                         $("#windowBlock").fadeOut("slow");
-                                        window.location = "/metadato/";
+                                        window.location = "/preregistro-ing/";
                                     }, 2000);
+                                }else if(data.statusLogin==="noAutorized"){
+                                    $("#windowBlock").fadeOut("slow");
+                                    $("#MessageError").text("No estas autorizado para entrar...!");
+                                    $("#MessageError").fadeIn("slow");                                    
                                 }else if(data.statusLogin==="notExit"){
                                     $("#windowBlock").fadeOut("slow");
+                                    $("#MessageError").text("Error datos incorrectos");
                                     $("#MessageError").fadeIn("slow");
                                 }
                             }
@@ -304,5 +310,5 @@
             </script>
         </html>
     <%}else{
-        response.sendRedirect("/module.jsp");
+        response.sendRedirect("/preregistro-ing/module.jsp");
     }%>

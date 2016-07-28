@@ -1,7 +1,7 @@
 <%
     String vertion = "jqwidgets-ver4.0.0";
-    if(session.getAttribute("logueadoStudent") == null){
-        response.sendRedirect("/login.jsp");
+    if(session.getAttribute("logueadoStudentPreregister") == null){
+        response.sendRedirect("/preregistro-ing/login.jsp");
     }else{%>
         <!DOCTYPE>
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,7 +16,7 @@
                 <script>
                      $.ajax({
                         type: "GET",
-                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged",
+                        url: "../serviceStudent?selectLoginStudent&&statusLogin=logged&&typeLogin=preregister",
                         dataType: 'json',
                         async: false,
                         beforeSend: function (xhr) {
@@ -27,7 +27,7 @@
                         },
                         success: function (data, textStatus, jqXHR) {
                             if(!data.status){
-                                window.location = "/metadato/login.jsp";
+                                window.location = "/preregistro-ing/login.jsp";
                             }
                         }
                     });
@@ -133,14 +133,14 @@
                         <br>  
                         <span style="margin-left: 30px; color: #fff; font-size: 28px; position: fixed; right: 172px; top: 50px; width: 350px;">
                             Sistema Integral Utsem
-                            <b style="font-size: 14px; display: block; margin-top: 5px"> Bienvenid@:<%out.print(" "+session.getAttribute("logueadoStudent"));%></b>
+                            <b style="font-size: 14px; display: block; margin-top: 5px"> Bienvenid@:<%out.print(" "+session.getAttribute("logueadoStudentPreregister"));%></b>
                             <div style="color: #fff; font-size: 14px; display: inline;">
                                 <div class="btn-group navbar-right" style="position: absolute;top: -30px;left: 0;">
                                     <div type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                       <span class="caret"></span>
                                     </div>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="../serviceStudent?selectLoginStudent&&statusLogin=out" onclick="$.cookie('itemActive',0); $.removeCookie('intruccions');">Cerrar sesión</a></li>
+                                        <li><a href="../serviceStudent?selectLoginStudent&&statusLogin=outPreIng" onclick="$.cookie('itemActive',0); $.removeCookie('intruccions');">Cerrar sesión</a></li>
                                         <li role="separator" class="divider"></li>
                                         <li><a class="changePasswordBtn">Cambiar contraseña</a></li>
                                     </ul>
@@ -239,6 +239,21 @@
                                             <label style="font-size: 16px; line-height: 32px;"><input data-type-role="radio" type="radio" data-field="true" value="Si"  name="fl_working"/> Si</label><br>
                                             <label style="font-size: 16px; line-height: 32px;"><input data-type-role="radio" type="radio" data-field="true" value="No"  name="fl_working"/> No</label>
                                         </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_where_work_place_address">Dirección y lugar dónde trabaja</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" id="fl_where_work_place_address" data-field="true"  name="fl_where_work_place_address" placeholder="Lugar nombre y dirección dónde trabaja..." style="width: 360px"/>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_company_type">Tipo de empresa</label><br>
+                                            <span class="add-on"><i class="icon-list"></i></span>  
+                                            <div data-type-role="combo" data-field="true" name="fl_company_type" id="fl_company_type"></div>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_telephone_place_work">Teléfono del lugar dónde trabaja</label><br>
+                                            <span class="add-on"><i class="icon-tag"></i></span>  
+                                            <div data-type-role="text" data-field="true"  class="telephoneInput" id="fl_telephone_place_work" name="fl_telephone_place_work"></div>
+                                        </div>
                                         
                                         <div class="div-row input-prepend">
                                             <label class="label-row" for="fl_file_id_oficial">Seleccionar identificación oficial</label><br>
@@ -305,9 +320,14 @@
                                             <div data-type-role="text" data-field="true" name="fl_above_average"  id="fl_above_average"></div>
                                         </div>
                                         <div class="div-row input-prepend">
-                                            <label class="label-row" for="fl_period_bacherol">Periodo en el que realizó el bachillerato</label><br>
+                                            <label class="label-row" for="fl_name_university_studied">Nombre de la escuela universitaria de procedencia</label><br>
+                                            <span class="add-on"><i class="icon-text-width"></i></span>  
+                                            <input data-type-role="text" data-field="true"  id="fl_name_university_studied" name="fl_name_university_studied" placeholder="Nombre de la escuela de procedencia" style="width: 285px"/>
+                                        </div>
+                                        <div class="div-row input-prepend">
+                                            <label class="label-row" for="fl_period_tsu">Periodo en el que realizó los estudios T.S.U</label><br>
                                             <span class="add-on"><i class="icon-question-sign"></i></span>  
-                                            <input type="text" data-type-role="text" data-field="true" name="fl_period_bacherol"  id="fl_period_bacherol"/><br>
+                                            <input type="text" data-type-role="text" data-field="true" name="fl_period_tsu"  id="fl_period_tsu"/><br>
                                             <span style="margin-left: 20px; color: rgb(141, 141, 141)">(Año inicio)-(Año final)</span>
                                         </div>
                                     </fieldset>
@@ -410,7 +430,7 @@
                                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_facebook" name="fl_facebook" placeholder="Link de facebook..." style="width: 260px"/>
                                         </div>
-                                        <div class="div-row1 input-prepend">
+                                        <div class="div-row input-prepend">
                                             <label class="label-row" for="fl_twitter">Link de Twitter opcional</label><br>
                                             <span class="add-on"><i class="icon-thumbs-up"></i></span>  
                                             <input data-type-role="text" data-field="true"  id="fl_twitter" name="fl_twitter" placeholder="Link de twitter..." style="width: 360px"/>
@@ -917,6 +937,7 @@
                                         <label class="label-row" for="fl_option_utsem_study">¿Qué opción es para ti la UTsem para la continuidad de Estudios?</label><br>
                                         <span class="add-on"><i class="icon-list"></i></span>
                                         <div data-type-role="combo" data-field="true" name="fl_option_utsem_study" id="fl_option_utsem_study"></div>
+                                        <form action="../../content/data-jr/documentPreregisterIng/index.jsp" target="_blank" method="POST" id="exportToPdf"></form>
                                     </div>  
                                 </div>
                                 <div id="form5" class="form">
@@ -939,6 +960,7 @@
                                             <input data-type-role="checkbox" data-field="true" type="checkbox" value="Si" name="fl_acept_term" id="fl_acept_term"> 
                                             <label class="checkbox-inline label-row" for="fl_acept_term" style="margin-left: 10px; display: inline;">Acepto los terminos de privacidad</label>
                                         </div><br>
+                                            
                                     </div>
                                 </div>
                             </div>
@@ -1054,7 +1076,7 @@
                                 $("#summary-content").html(form);
                                 $.cookie('itemActive',3);
                                 if(validateSteps("5")){
-                                    $(".buttonFinish").text("Salir");
+                                    $(".buttonFinish").text("Terminar");
                                 }
                             }else{
                                 $(".buttonFinish").hide();
@@ -1068,7 +1090,7 @@
                             }else{
                                 $("#content-steps").scrollTop(0);
                                 if(validateSteps("5")){
-                                    $(".buttonFinish").text("Salir");
+                                    $(".buttonFinish").text("Terminar");
                                     if(StatusAjaxGetPassword===""){
                                         $.ajax({
                                             type: "POST",
@@ -1098,14 +1120,74 @@
                                         $("#pictureMessage").attr("src","../content/pictures-system/info.png");
                                         $('#titleMessage').text('Mensaje');
                                         $("#ContentMessage").html("Al parecer completaste la información necesaria.<br><b>Estas seguro de salir!<b>");
-                                        $("#ok").text("Si");
+                                        $("#ok").val("Ok");
                                         $("#cancel").show();
                                         $("#alert").jqxWindow('open');
-                                        $("#ok").click(function (){
-                                            $("#alert").jqxWindow('close');
-                                            $.cookie('itemActive',0);
-                                            $.removeCookie('intruccions');
-                                            window.location = "../serviceStudent?selectLoginStudent&&statusLogin=out";
+                                        $("#ok").off("click");
+                                        $("#ok").click(function (){                                            
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "../serviceMail?type=preregisterIng",
+                                                data: {"userName":"", "password":"", "email" : $("#fl_mail").val(), "name" : $("#fl_name").val()+" "+$("#fl_patern_name").val()+" "+$("#fl_matern_name").val()},
+                                                beforeSend: function (xhr) {
+                                                    $("#pictureMessage").attr("src","../content/pictures-system/load.GIF");
+                                                    $('#titleMessage').text('Generando ficha...');
+                                                    $("#ContentMessage").html("Estamos trabajando...<br>Para terminar con este proceso es necesario acudir al departamento de servicios escolares de la UTSEM.");
+                                                    $("#ok").hide();
+                                                    $("#cancel").hide();
+                                                    $("#alert").jqxWindow('open');   
+                                                },
+                                                error: function (jqXHR, textStatus, errorThrown) {
+                                                    alert("Error interno del servidor");
+                                                },
+                                                success: function (data, textStatus, jqXHR) {
+//                                                    $("#alert").jqxWindow('close');
+//                                                    $.cookie('itemActive',0);
+//                                                    $.removeCookie('intruccions');
+//                                                    window.location = "../serviceStudent?selectLoginStudent&&statusLogin=outPreIng";                                                    
+                                                    $("#pictureMessage").attr("src","../content/pictures-system/ok.png");
+                                                    $('#titleMessage').text('Pre-registro exitoso');
+                                                    $("#ContentMessage").html("Por ahora hemos terminado.<br><b>Debe de imprimir el documento!<b>");
+                                                    $("#ok").css("width","125px");
+                                                    $("#ok").val("Exportar a PDF");
+                                                    $("#ok").show();
+                                                    $("#cancel").hide();
+                                                    $("#alert").jqxWindow('open');
+                                                    $("#ok").off("click");
+                                                    $("#ok").click(function (){
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            async: false,
+                                                            url: "../serviceStudent?updateField",
+                                                            data: {"field_name":"fl_metadata_preregister_ing","field_value": 1},
+                                                            beforeSend: function (xhr) {
+                                                            },
+                                                            error: function (jqXHR, textStatus, errorThrown) {
+                                                                alert("Error interno del servidor");
+                                                            },
+                                                            success: function (data, textStatus, jqXHR) {
+                                                                $.ajax({
+                                                                    type: "POST",
+                                                                    async: false,
+                                                                    url: "../../content/data-jr/documentPreregisterIng/index.jsp?sessionPreregisterIng",
+                                                                    data: {
+                                                                        "pt_enrollment": $("#fl_enrollment").val()
+                                                                    },
+                                                                    beforeSend: function (xhr) {
+                                                                    },
+                                                                    error: function (jqXHR, textStatus, errorThrown) {
+                                                                        alert("Error interno del servidor");
+                                                                    },
+                                                                    success: function (data, textStatus, jqXHR) {
+                                                                        $("#exportToPdf").submit();
+                                                                        $("#alert").jqxWindow('close');
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                                    });
+                                                }                                    
+                                            });
                                         });                                        
                                     }  
                                 }else{
@@ -1202,7 +1284,7 @@
                                     $("#alert").jqxWindow('close');
                                     $.cookie('itemActive',0);
                                     $.removeCookie('intruccions');
-                                    window.location = "../serviceStudent?selectLoginStudent&&statusLogin=out";
+                                    window.location = "../serviceStudent?selectLoginStudent&&statusLogin=outPreIng";
                                 });
                             }
                         });
@@ -1395,7 +1477,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_depend_economically_work","field_value":$(this).val()},
                                 beforeSend: function (xhr) {
                                 },
@@ -1412,7 +1494,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_where_work","field_value":""},
                                 beforeSend: function (xhr) {
                                 },
@@ -1425,7 +1507,7 @@
                             $.ajax({
                                 type: "POST",
                                 async: true,
-                                url: "../serviceCandidate?updateField",
+                                url: "../serviceStudent?updateField",
                                 data: {"field_name":"fl_what_work","field_value":""},
                                 beforeSend: function (xhr) {
                                 },
@@ -1458,7 +1540,7 @@
                             });
                         }
                     });
-                    $("#fl_period_bacherol").jqxMaskedInput({width: '130px', height: '26px', mask:'(####) - (####)', value: 20152016});
+                    $("#fl_period_tsu").jqxMaskedInput({width: '130px', height: '26px', mask:'(####) - (####)', value: 20152016});
                     createDropDownEntity("#fk_entity",'null',false);
                     $("#fk_entity").jqxDropDownList({placeHolder: "SELECCIONAR", disabled:false,filterable:true, filterPlaceHolder: "Buscar",autoDropDownHeight: false, dropDownHeight: 300});
                     itemEntity = $('#fk_entity').jqxDropDownList('getSelectedItem');
@@ -1793,6 +1875,10 @@
                     $('.calendarInput').jqxDateTimeInput({culture: 'es-MX',formatString: "yyyy/MM/dd", theme: theme, width: '120px', height: '26px'});
 
                     //Make combo since sourse
+                    var source = ["SECTOR PRIVADO","SECTOR PÚBLICO"];
+                    $("#fl_company_type").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '220px', height: '26px' }).css("display","inline-block");
+                    
+                    
                     var source = ["GENERAL","UNIVERSITARIO", "TECNOLÓGICO"];
                     $("#fl_bacherol_type").jqxDropDownList({theme: theme, placeHolder: "SELECCIONAR", selectedIndex: -1, autoDropDownHeight:80, source: source, width: '120px', height: '26px' }).css("display","inline-block");
                     
@@ -2235,7 +2321,7 @@
                                 $('#wizard').smartWizard('showMessage',"<span id='acept_term_link' style='color: #FB3500;text-decoration: none; cursor: pointer'>Es necesario aceptar los terminos</a>");
                                 $('#wizard').smartWizard('setError',{stepnum:5,iserror: true});
                             }else{
-                                $(".buttonFinish").text("Salir");
+                                $(".buttonFinish").text("Terminar");
                                 $('#wizard').smartWizard('hideMessage');
                                 $('#wizard').smartWizard('setError',{stepnum:5,iserror:false});
                             }

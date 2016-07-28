@@ -31,10 +31,15 @@ public class studentModel extends careerModel{
     String FL_PHOTOGRAPHY="";
     String FL_MARITIAL_STATUS="";
     String FL_WORKING="";
+    String FL_WHERE_WORK_PLACE_ADDRESS="";
+    String FL_COMPANY_TYPE="";
+    String FL_TELEPHONE_PLACE_WORK="";
     String FL_BACHEROL_TYPE="";
     String FL_SCHOOL_TYPE="";
     double FL_ABOVE_AVERAGE=0;
     String FL_PERIOD_BACHEROL="";
+    String FL_NAME_UNIVERSITY_STUDIED="";
+    String FL_PERIOD_TSU="";
     String FL_FILE_ID_OFICIAL="";
     String FL_FILE_DOCUMENT_BORN="";
     String FL_CURP="";
@@ -159,6 +164,10 @@ public class studentModel extends careerModel{
     String FL_HIGH_SCHOOL_CERTIFICATE="";
     int FL_DOWN=0;
     int FL_MODIFY=0;
+    int FL_AUTHORIZED_ACCESS_PREREGISTER_ING=0;
+    int FL_METADATA_PREREGISTER_ING=0;
+    int FL_PREINSCRIPTION_ING = 0;
+    int FL_INSCRIPTION_ING=0;
     semesterModel semesterMl;
 
     public int getPK_STUDENT() {
@@ -329,6 +338,30 @@ public class studentModel extends careerModel{
         this.FL_WORKING = FL_WORKING;
     }
 
+    public String getFL_WHERE_WORK_PLACE_ADDRESS() {
+        return FL_WHERE_WORK_PLACE_ADDRESS;
+    }
+
+    public void setFL_WHERE_WORK_PLACE_ADDRESS(String FL_WHERE_WORK_PLACE_ADDRESS) {
+        this.FL_WHERE_WORK_PLACE_ADDRESS = FL_WHERE_WORK_PLACE_ADDRESS;
+    }
+
+    public String getFL_COMPANY_TYPE() {
+        return FL_COMPANY_TYPE;
+    }
+
+    public void setFL_COMPANY_TYPE(String FL_COMPANY_TYPE) {
+        this.FL_COMPANY_TYPE = FL_COMPANY_TYPE;
+    }
+
+    public String getFL_TELEPHONE_PLACE_WORK() {
+        return FL_TELEPHONE_PLACE_WORK;
+    }
+
+    public void setFL_TELEPHONE_PLACE_WORK(String FL_TELEPHONE_PLACE_WORK) {
+        this.FL_TELEPHONE_PLACE_WORK = FL_TELEPHONE_PLACE_WORK;
+    }
+
     public String getFL_BACHEROL_TYPE() {
         return FL_BACHEROL_TYPE;
     }
@@ -359,6 +392,22 @@ public class studentModel extends careerModel{
 
     public void setFL_PERIOD_BACHEROL(String FL_PERIOD_BACHEROL) {
         this.FL_PERIOD_BACHEROL = FL_PERIOD_BACHEROL;
+    }
+
+    public String getFL_NAME_UNIVERSITY_STUDIED() {
+        return FL_NAME_UNIVERSITY_STUDIED;
+    }
+
+    public void setFL_NAME_UNIVERSITY_STUDIED(String FL_NAME_UNIVERSITY_STUDIED) {
+        this.FL_NAME_UNIVERSITY_STUDIED = FL_NAME_UNIVERSITY_STUDIED;
+    }
+
+    public String getFL_PERIOD_TSU() {
+        return FL_PERIOD_TSU;
+    }
+
+    public void setFL_PERIOD_TSU(String FL_PERIOD_TSU) {
+        this.FL_PERIOD_TSU = FL_PERIOD_TSU;
     }
 
     public String getFL_FILE_ID_OFICIAL() {
@@ -1321,14 +1370,6 @@ public class studentModel extends careerModel{
         this.FL_WHAT_WORK = FL_WHAT_WORK;
     }
 
-    public int getFL_MODIFY() {
-        return FL_MODIFY;
-    }
-
-    public void setFL_MODIFY(int FL_MODIFY) {
-        this.FL_MODIFY = FL_MODIFY;
-    }
-
     public String getFL_BIRTH_CERTIFICATE_NUMBER() {
         return FL_BIRTH_CERTIFICATE_NUMBER;
     }
@@ -1351,6 +1392,46 @@ public class studentModel extends careerModel{
 
     public void setFL_DOWN(int FL_DOWN) {
         this.FL_DOWN = FL_DOWN;
+    }
+
+    public int getFL_MODIFY() {
+        return FL_MODIFY;
+    }
+
+    public void setFL_MODIFY(int FL_MODIFY) {
+        this.FL_MODIFY = FL_MODIFY;
+    }
+
+    public int getFL_AUTHORIZED_ACCESS_PREREGISTER_ING() {
+        return FL_AUTHORIZED_ACCESS_PREREGISTER_ING;
+    }
+
+    public void setFL_AUTHORIZED_ACCESS_PREREGISTER_ING(int FL_AUTHORIZED_ACCESS_PREREGISTER_ING) {
+        this.FL_AUTHORIZED_ACCESS_PREREGISTER_ING = FL_AUTHORIZED_ACCESS_PREREGISTER_ING;
+    }
+
+    public int getFL_METADATA_PREREGISTER_ING() {
+        return FL_METADATA_PREREGISTER_ING;
+    }
+
+    public void setFL_METADATA_PREREGISTER_ING(int FL_METADATA_PREREGISTER_ING) {
+        this.FL_METADATA_PREREGISTER_ING = FL_METADATA_PREREGISTER_ING;
+    }
+
+    public int getFL_PREINSCRIPTION_ING() {
+        return FL_PREINSCRIPTION_ING;
+    }
+
+    public void setFL_PREINSCRIPTION_ING(int FL_PREINSCRIPTION_ING) {
+        this.FL_PREINSCRIPTION_ING = FL_PREINSCRIPTION_ING;
+    }
+
+    public int getFL_INSCRIPTION_ING() {
+        return FL_INSCRIPTION_ING;
+    }
+
+    public void setFL_INSCRIPTION_ING(int FL_INSCRIPTION_ING) {
+        this.FL_INSCRIPTION_ING = FL_INSCRIPTION_ING;
     }
 
     public semesterModel getSemesterMl() {

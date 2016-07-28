@@ -283,65 +283,127 @@ public class serviceMail extends HttpServlet {
                     data.put("statusSendMail", message);
                     out.print(data);
                 }else{
-                    String mail = request.getParameter("mail");
-                    String name = request.getParameter("name");
-                    String message;
-                    AuthControl auth =new AuthControl("sistema.integral.utsem@gmail.com", "siut_admin");
-                    //Inicializamos las propiedades del envio del mail
-                    Properties prop=new Properties();
-                    prop.put("mail.transport.protocol", "smtp");
-                    prop.put("mail.smtp.host", "smtp.gmail.com");
-                    prop.put("mail.smtp.port", "465"); 
-                    prop.put("mail.smtp.user", auth.userName);
-                    prop.put("mail.smtp.password", auth.password);
-                    prop.put("mail.smtp.auth", "true");
-                    prop.put("mail.smtp.ssl.enable", "true");
-                    prop.put("mail.smtp.starttls.enable", "true"); 
-                    //Inicializamos la clase de autentificacion
-                    //Creamos sesion
-                    Session session = Session.getInstance(prop, auth);
-                    String contentMail="";
-                    Message msg=new MimeMessage(session);
-                    try {
-                        InternetAddress[] emails = new InternetAddress[1];
-                        emails[0] = new InternetAddress(mail);
-                        msg.setRecipients(Message.RecipientType.TO, emails);
-                        InternetAddress from=new InternetAddress(auth.userName);
-                        msg.setFrom(from);
-                        msg.setSubject("Universidad Tecnológica del Sur del Estado de México");
-                        MimeBodyPart cuerpo=new MimeBodyPart();
-                        contentMail=contentMail+"<span style='font-style: italic; font-size: 40px;'><span style='color:green'>UT</span><span>sem</span></span><br>";
-                        contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
-                        contentMail=contentMail+"<b>Área:</b><span style='font-style: italic;'> Departamento de Servicios Escolares</span><br><br>";
-                        contentMail=contentMail+"<b>Hola: "+name+"</b><br>";
-                        contentMail=contentMail+"<b>Folio UTsem</b>: <b>"+sessionWeb.getAttribute("folio")+"<br><br><br><br>";
-                        contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+mail+"</span></span><br><br><br><br><br>";
-                        contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
-                        cuerpo.setContent(contentMail, "text/html");
-                        //Mandar archivo
-                        //MimeBodyPart anexo=new MimeBodyPart();
-                        //File archivo=new File("Rutaa");
-                        //FileDataSource fds=new FileDataSource(archivo);
-                        //anexo.setFileName(archivo.getName());
-                        //mp.addBodyPart(anexo);
-                        Multipart mp=new MimeMultipart();
-                        mp.addBodyPart(cuerpo);
-                        msg.setContent(mp);
-                        //Instrucciones para enviar email
-                        Transport t = session.getTransport();
-                        t.connect("smtp.gmail.com",auth.userName, auth.password);
-                        msg.saveChanges();
-                        t.sendMessage(msg, msg.getAllRecipients());
-                        t.close();
-                        message="Success";
-                    } catch (AddressException e) {
-                        //e.printStackTrace();
-                        message = "InvalidMail";
-                    } catch( MessagingException e){
-                        //e.printStackTrace();
-                        message = "FailConnectionNetwork";
+                    if(request.getParameter("type").equals("preregisterIng")&&request.getParameter("type")!=null){
+                        String mail = request.getParameter("email");
+                        String name = request.getParameter("name");
+                        String message;
+                        AuthControl auth =new AuthControl("sistema.integral.utsem@gmail.com", "siut_admin");
+                        //Inicializamos las propiedades del envio del mail
+                        Properties prop=new Properties();
+                        prop.put("mail.transport.protocol", "smtp");
+                        prop.put("mail.smtp.host", "smtp.gmail.com");
+                        prop.put("mail.smtp.port", "465"); 
+                        prop.put("mail.smtp.user", auth.userName);
+                        prop.put("mail.smtp.password", auth.password);
+                        prop.put("mail.smtp.auth", "true");
+                        prop.put("mail.smtp.ssl.enable", "true");
+                        prop.put("mail.smtp.starttls.enable", "true"); 
+                        //Inicializamos la clase de autentificacion
+                        //Creamos sesion
+                        Session session = Session.getInstance(prop, auth);
+                        String contentMail="";
+                        Message msg=new MimeMessage(session);
+                        try {
+                            InternetAddress[] emails = new InternetAddress[1];
+                            emails[0] = new InternetAddress(mail);
+                            msg.setRecipients(Message.RecipientType.TO, emails);
+                            InternetAddress from=new InternetAddress(auth.userName);
+                            msg.setFrom(from);
+                            msg.setSubject("Universidad Tecnológica del Sur del Estado de México");
+                            MimeBodyPart cuerpo=new MimeBodyPart();
+                            contentMail=contentMail+"<span style='font-style: italic; font-size: 40px;'><span style='color:green'>UT</span><span>sem</span></span><br>";
+                            contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
+                            contentMail=contentMail+"<b>Área:</b><span style='font-style: italic;'> Departamento de Servicios Escolares</span><br><br>";
+                            contentMail=contentMail+"<b>Hola: "+name+"</b><br>";
+                            contentMail=contentMail+"<b>Matrícula:</b><b>"+sessionWeb.getAttribute("enrollmentStudent")+"<br><br><br><br>";
+                            contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+mail+"</span></span><br><br><br><br><br>";
+                            contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
+                            cuerpo.setContent(contentMail, "text/html");
+                            //Mandar archivo
+                            //MimeBodyPart anexo=new MimeBodyPart();
+                            //File archivo=new File("Rutaa");
+                            //FileDataSource fds=new FileDataSource(archivo);
+                            //anexo.setFileName(archivo.getName());
+                            //mp.addBodyPart(anexo);
+                            Multipart mp=new MimeMultipart();
+                            mp.addBodyPart(cuerpo);
+                            msg.setContent(mp);
+                            //Instrucciones para enviar email
+                            Transport t = session.getTransport();
+                            t.connect("smtp.gmail.com",auth.userName, auth.password);
+                            msg.saveChanges();
+                            t.sendMessage(msg, msg.getAllRecipients());
+                            t.close();
+                            message="Success";
+                        } catch (AddressException e) {
+                            //e.printStackTrace();
+                            message = "InvalidMail";
+                        } catch( MessagingException e){
+                            //e.printStackTrace();
+                            message = "FailConnectionNetwork";
+                        }
+                        out.print(message);
+                    }else{
+                        String mail = request.getParameter("email");
+                        String name = request.getParameter("name");
+                        String message;
+                        AuthControl auth =new AuthControl("sistema.integral.utsem@gmail.com", "siut_admin");
+                        //Inicializamos las propiedades del envio del mail
+                        Properties prop=new Properties();
+                        prop.put("mail.transport.protocol", "smtp");
+                        prop.put("mail.smtp.host", "smtp.gmail.com");
+                        prop.put("mail.smtp.port", "465"); 
+                        prop.put("mail.smtp.user", auth.userName);
+                        prop.put("mail.smtp.password", auth.password);
+                        prop.put("mail.smtp.auth", "true");
+                        prop.put("mail.smtp.ssl.enable", "true");
+                        prop.put("mail.smtp.starttls.enable", "true"); 
+                        //Inicializamos la clase de autentificacion
+                        //Creamos sesion
+                        Session session = Session.getInstance(prop, auth);
+                        String contentMail="";
+                        Message msg=new MimeMessage(session);
+                        try {
+                            InternetAddress[] emails = new InternetAddress[1];
+                            emails[0] = new InternetAddress(mail);
+                            msg.setRecipients(Message.RecipientType.TO, emails);
+                            InternetAddress from=new InternetAddress(auth.userName);
+                            msg.setFrom(from);
+                            msg.setSubject("Universidad Tecnológica del Sur del Estado de México");
+                            MimeBodyPart cuerpo=new MimeBodyPart();
+                            contentMail=contentMail+"<span style='font-style: italic; font-size: 40px;'><span style='color:green'>UT</span><span>sem</span></span><br>";
+                            contentMail=contentMail+"<b>Nombre de la Dependencia: </b><span style='font-style: italic;'>Universidad Tecnológica del Sur del Estado de México</span><br>";
+                            contentMail=contentMail+"<b>Área:</b><span style='font-style: italic;'> Departamento de Servicios Escolares</span><br><br>";
+                            contentMail=contentMail+"<b>Hola: "+name+"</b><br>";
+                            contentMail=contentMail+"<b>Folio UTsem</b>: <b>"+sessionWeb.getAttribute("folioSystem")+"<br><br><br><br>";
+                            contentMail=contentMail+"<span><b>El mensaje se envió a </b><span>"+mail+"</span></span><br><br><br><br><br>";
+                            contentMail=contentMail+"<b>Carretera Tejupilco - Amatepec Km. 12.5 Ex - Hacienda de San Miguel, Ixtapan, Tejupilco, Méx. Teléfonos: (724) 2694020, ext 220, 225 </b>";
+                            cuerpo.setContent(contentMail, "text/html");
+                            //Mandar archivo
+                            //MimeBodyPart anexo=new MimeBodyPart();
+                            //File archivo=new File("Rutaa");
+                            //FileDataSource fds=new FileDataSource(archivo);
+                            //anexo.setFileName(archivo.getName());
+                            //mp.addBodyPart(anexo);
+                            Multipart mp=new MimeMultipart();
+                            mp.addBodyPart(cuerpo);
+                            msg.setContent(mp);
+                            //Instrucciones para enviar email
+                            Transport t = session.getTransport();
+                            t.connect("smtp.gmail.com",auth.userName, auth.password);
+                            msg.saveChanges();
+                            t.sendMessage(msg, msg.getAllRecipients());
+                            t.close();
+                            message="Success";
+                        } catch (AddressException e) {
+                            //e.printStackTrace();
+                            message = "InvalidMail";
+                        } catch( MessagingException e){
+                            //e.printStackTrace();
+                            message = "FailConnectionNetwork";
+                        }
+                        out.print(message);
                     }
-                    out.print(message);
                 }
             }
         }
