@@ -48,7 +48,12 @@ public class serviceStudent extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             if(request.getParameter("tableByAllColumsMetadata")!=null){  
                 ArrayList<propetiesTableModel> listColumns=new studentControl().SelectReportColums();
-                JSONArray contentRowsCal=new studentControl().SelectMetadataRows();
+                JSONArray contentRowsCal;
+                if(request.getParameter("tableByAllColumsMetadata").equals("ing")){
+                    contentRowsCal=new studentControl().SelectMetadataRowsING();
+                }else{
+                    contentRowsCal=new studentControl().SelectMetadataRows();
+                }                
                 JSONArray contentColums = new JSONArray();
                 JSONArray contentDataFields = new JSONArray();
                 JSONArray bulding = new JSONArray();

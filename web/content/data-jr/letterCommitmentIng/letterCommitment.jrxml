@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="letterCommitment" pageWidth="612" pageHeight="792" columnWidth="472" leftMargin="70" rightMargin="70" topMargin="42" bottomMargin="42" uuid="c589d7cb-36b0-40de-bd25-6e0badeb34b0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="36"/>
+	<parameter name="pt_pk_student" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_LETTER_COMMITMENT`('reportLetterCommitmentING', $P{pt_pk_student})]]>
+	</queryString>
+	<field name="FL_DAY" class="java.lang.Long"/>
+	<field name="FL_MONTH" class="java.lang.String"/>
+	<field name="FL_YEAR" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_STUDENT_NAME" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_PERIOD_NAME" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="98" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="76" width="474" height="20" uuid="c3c6fc19-d053-40af-bfcb-3072a4cf56ec"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARTA COMPROMISO DE INSCRIPCIÓN Y PERMANENCIA DE ESTUDIANTES NIVEL T.S.U.]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="100" height="76" uuid="1567ff9e-7272-4b59-b49d-0c2353294fd6"/>
+				<imageExpression><![CDATA["logo-Utsem.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="102" y="33" width="372" height="20" uuid="44d509af-0570-4c6b-bd8c-4a595d59d831"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidad Tecnológica del Sur del Estado de México]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="590" splitType="Stretch">
+			<textField>
+				<reportElement x="166" y="26" width="306" height="20" uuid="defc4c18-12e9-4f9c-a4ec-fbe423078d2e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_STUDENT_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="474" height="20" uuid="18b65310-f097-44e2-94ed-d68c416ffa27"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tejupilco de Hidalgo, México a ___________ de _______________ del_________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="166" height="20" uuid="76ebd716-ba91-44c1-b8cb-0f24b10e2548"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE DEL ALUMNO(A):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="47" width="166" height="32" uuid="a0167700-8dc0-4d64-aae8-cc372f3e9397"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARRERA INGENIERÍA EN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="100" height="20" uuid="4f75b141-f1db-4ec2-ae68-276f09d4f15d"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MATRÍCULA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="102" width="100" height="20" uuid="de258c16-0970-48b5-800c-8c91445d7927"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GENERACIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="166" y="47" width="308" height="32" uuid="479fe3b3-8eff-4ba7-ab2c-9f0a085b9bc4"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="80" width="374" height="20" uuid="dc74ce2e-cfdb-4e25-9398-d610a49e593a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_ENROLLMENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="102" width="374" height="20" uuid="5110662a-84bf-4e9a-886a-05a46889470b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_PERIOD_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="126" width="472" height="28" uuid="f649bd7d-b49b-4fb3-9ec5-5f1965ca4a90"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Para cubrir las expectativas de ambas partes la Institución y el estudiante acuerdan los compromisos a que se sujetarán ambas partes durante su relación.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="158" width="472" height="38" uuid="68c55a9a-c3d8-42d1-bee2-8e23c9487877"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROMISO QUE ADQUIERE LA UNIVERSIDAD TECNOLÓGICA DEL SUR DEL ESTADO DE MÉXICO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="198" width="472" height="106" uuid="fff51211-cf0b-4120-ba05-43ba6b1e92e2"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[• Estudios Intensivos a nivel superior.
+• Modelo de enseñanza 60% práctica y 40% teórico.
+• Un profesor de tiempo completo por cada 25 o 30 alumnos.
+• Laboratorios de inglés y cómputo.
+• Un Programa de Tutorías.
+• Vinculación con el Sector Productivo.
+• Visitas al Sector Productivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="306" width="472" height="23" uuid="e95ae9e6-bdb3-455f-9edb-63006931e7b2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROMISO QUE ADQUIERE EL ESTUDIANTE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="329" width="472" height="112" uuid="56a13485-5545-40d8-b9e7-7a59237545bb"/>
+				<box leftPadding="5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[• Acatar la reglamentación vigente de  la Universidad Tecnológica del Sur del Estado de México.
+• Observar buena conducta dentro de la Universidad.
+• Entregar la Documentación que me soliciten para acreditar estudios de T.S.U. en un plazo no mayor a seis meses a partir del inicio de clases, de lo contrario acepto se me dé baja de la Institución.
+• Participar en acciones de mejora al Medio Ambiente y de Equidad de Género.
+• Realizar en tiempo y forma, el pago de cuotas de recuperación vigentes para mantener la categoría de estudiante de la Universidad, de lo contrario acepto se me dé baja de la Institución.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="292" y="445" width="178" height="78" uuid="ebd1be05-bb80-47e5-b39d-266bdd7e0fa8"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="466" width="289" height="20" uuid="891e05ff-8620-42aa-b6b1-614386566d57"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Sello y Firma de la Caja General por pago de derechos:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="525" width="289" height="20" uuid="c44bab81-d775-4af2-842b-4614fa75933f"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Leído y revisado por ambas partes, firman de conformidad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="548" width="208" height="34" uuid="c2558de0-5766-4a12-a2b3-72f8922c30aa"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIVERSIDAD TECNOLÓGICA DEL SUR DEL ESTADO DE MÉXICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="251" y="548" width="208" height="34" uuid="c72d3961-be94-4709-b48b-5cc9d85dbfdf"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA DEL ESTUDIANTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="248" y="6" width="28" height="14" uuid="c13dad2d-0476-4aac-977a-9a0a4d213739"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_DAY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="6" width="64" height="14" uuid="3284beed-cdd3-4f05-804d-3abf764c6431"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_MONTH}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="417" y="6" width="53" height="14" uuid="8615dd2b-94cb-4d86-8ca1-2657ff53df9f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_YEAR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="309" y="0" width="165" height="20" uuid="37c85083-6ae3-4c24-8211-e6d0463f0b82"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FO-DSE-41/03]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="0" width="163" height="20" uuid="a3e6017e-d676-4bec-9e1f-a8730f10bfbd"/>
+				<box leftPadding="5" rightPadding="5"/>
+				<textElement>
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F:E: 04-06-2015]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

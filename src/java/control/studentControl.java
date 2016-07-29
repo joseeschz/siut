@@ -97,6 +97,29 @@ public class studentControl {
         }
         return list;
     }
+    public JSONArray SelectMetadataRowsING(){
+        JSONArray contentColums = new JSONArray();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('rowsMetadataING', '')"); ResultSet res = ps.executeQuery()) {
+                ResultSetMetaData rsmd = res.getMetaData();
+                JSONObject columns;
+                while(res!=null&&res.next()){
+                    columns = new JSONObject();
+                    for(int col=1; col<rsmd.getColumnCount()+1; col++){  
+                        String value = res.getString(rsmd.getColumnLabel(col));
+                        columns.put(rsmd.getColumnName(col),value);
+                    }
+                    contentColums.add(columns);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contentColums;
+    }
     public JSONArray SelectMetadataRows(){
         JSONArray contentColums = new JSONArray();
         try {
