@@ -43,7 +43,7 @@ $(document).ready(function () {
         itemCareer=$('#careerUpdate').jqxDropDownList('getSelectedItem');
         var datos = {
             "pkStudent": pkStudent,
-            "field_name":"fl_autorized_access_preregister_ing",
+            "field_name":"fl_authorized_access_preregister_ing",
             "field_value":"1"
         }; // los datos del 
         $.ajax({

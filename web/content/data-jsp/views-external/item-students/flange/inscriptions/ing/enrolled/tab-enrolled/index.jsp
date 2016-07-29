@@ -258,7 +258,7 @@
                 $.ajax({
                     type: "POST",
                     async: false,
-                    url: "../../content/data-jr/letterCommitment/index.jsp?sessionLetterCommitment",
+                    url: "../../content/data-jr/letterCommitmentIng/index.jsp?sessionLetterCommitment",
                     data: {"pt_pk_student": pt_pk_student},
                     beforeSend: function (xhr) {
                     },
@@ -267,7 +267,7 @@
                     },
                     success: function (data, textStatus, jqXHR) {
                         var iframe = $('<iframe style="width: 1185px; height: 810px;">');
-                        iframe.attr('src','../../content/data-jr/letterCommitment/index.jsp');
+                        iframe.attr('src','../../content/data-jr/letterCommitmentIng/index.jsp');
                         $('#contentPDF').html(iframe);
                     }
                 });
