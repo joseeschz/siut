@@ -1106,7 +1106,7 @@
                                             }
                                         });
                                     }
-                                    if(StatusAjaxGetPassword===$("#fl_enrollment").val()){
+                                    if(StatusAjaxGetPassword===$("#fl_enrollment").val() && false){
                                         $("#pictureMessage").attr("src","../content/pictures-system/info.png");
                                         $('#titleMessage').text('Mensaje');
                                         $("#ContentMessage").html('Antes de salir te recomendamos cambiar tu contraseña actual para mantener la integridad de tus datos. <br><br>');
