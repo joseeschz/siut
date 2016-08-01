@@ -100,7 +100,7 @@
                 }
             });
         }        
-        var contextMenu = $("#contextMenu").jqxMenu({ width: 200, autoOpenPopup: false, mode: 'popup'});
+        var contextMenu = $("#contextMenu").jqxMenu({ width: 250, autoOpenPopup: false, mode: 'popup'});
         $("#tableGenerateRecord").on('contextmenu', function () {
             return false;
         });
@@ -122,23 +122,38 @@
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert("Error interno del servidor");
                     },
-                    success: function (data, textStatus, jqXHR) {
+                    success: function (data, textStatus, jqXHR) {                        
                         var iframe = $('<iframe style="width: 1185px; height: 810px;">');
                         iframe.attr('src','../content/data-jr/constancySimple/');
                         $('#contentPDF').html(iframe);
+                        popupWindow.jqxWindow('open');
                     }
-                });
-                popupWindow.jqxWindow('open');
+                });               
             }else if ($.trim($(args).text()) === "Contancia con Calificaciones"){
-                popupWindow.jqxWindow('open');
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../content/data-jr/constancyRecordsCalifications/index.jsp?constancyRecordsCalifications",
+                    data: {
+                        "pt_enrollment": data.dataEnrollment
+                    },
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {                        
+                        var iframe = $('<iframe style="width: 1185px; height: 810px;">');
+                        iframe.attr('src','../content/data-jr/constancyRecordsCalifications/');
+                        $('#contentPDF').html(iframe);
+                        popupWindow.jqxWindow('open');
+                    }
+                });      
             }
         });
         $("#tableGenerateRecord").on('rowclick', function (event) {
-            if (event.args.rightclick) {
-                
-                $("#tableGenerateRecord").jqxGrid('selectrow', event.args.rowindex);
-                $("#contextMenu").jqxMenu('disable', 'constancyCalifications', true);
-                
+            if (event.args.rightclick) {                
+                $("#tableGenerateRecord").jqxGrid('selectrow', event.args.rowindex);                
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
                 contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
