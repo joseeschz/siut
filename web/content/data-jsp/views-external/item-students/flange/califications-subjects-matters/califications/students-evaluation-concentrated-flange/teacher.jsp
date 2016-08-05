@@ -42,14 +42,14 @@
                     itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
                     if(itemPeriod!==undefined){
                         itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
-                        createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#qualificationsSemesterFilter", true);
+                        createDropDownSemesterByTeacher(itemPeriod.value, itemCareer.value, itemLevel.value,"#qualificationsSemesterFilter", true);
                         itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem'); 
                     }else{
-                        createDropDownSemesterByTeacher(null, null,"#qualificationsSemesterFilter", true);
+                        createDropDownSemesterByTeacher(null, null, null,"#qualificationsSemesterFilter", true);
                     }
                 }else{
                     createDropDownCareerByTeacher(null, "#qualificationsCareerFilter", true);
-                    createDropDownSemesterByTeacher(null, null,"#qualificationsSemesterFilter", true);
+                    createDropDownSemesterByTeacher(null, null, null,"#qualificationsSemesterFilter", true);
                 }
                 
             });
@@ -73,7 +73,7 @@
                     itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
                 } 
             });
-            $("#qualificationsSemesterFilter").on('change',function (){
+            $("#qualificationsSemesterFilter").on('change',function (event){
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -91,12 +91,12 @@
                     if(itemPeriod!==null){
                         itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
                         if(itemSemester!==undefined){
-                            createDropDownGruopByTeacherMattter(itemPeriod.value, itemSemester.value, itemSubjectMatter.value, "#qualificationsGroupFilter",true);
+                            createDropDownSubjectMatterByTeacher(itemPeriod.value, itemCareer.value, itemSemester.value, null, "#qualificationsSubjectMatterFilter", true);    
                         }else{
-                            createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",true);
+                            createDropDownSubjectMatterByTeacher(null, null, null, null, "#qualificationsSubjectMatterFilter", true);
                         }
                     }else{
-                        createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",true);
+                        createDropDownSubjectMatterByTeacher(null, null, null, null, "#qualificationsSubjectMatterFilter", true);
                     }
                 }
             });
@@ -115,8 +115,17 @@
                     itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
                     itemSubjectMatter = $('#qualificationsSubjectMatterFilter').jqxDropDownList('getSelectedItem');
                     itemPeriod = $('#qualificationsPeriodFilter').jqxDropDownList('getSelectedItem');
-                    createDropDownGruopByTeacherMattter(itemPeriod.value, itemSemester.value, itemSubjectMatter.value, "#qualificationsGroupFilter",true);
-                    itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                    if(itemPeriod!==null){
+                        itemSemester = $('#qualificationsSemesterFilter').jqxDropDownList('getSelectedItem');
+                        if(itemSemester!==undefined){
+                            createDropDownGruopByTeacherMattter(itemPeriod.value, itemSemester.value, itemSubjectMatter.value, "#qualificationsGroupFilter",true);
+                            itemGroup = $('#qualificationsGroupFilter').jqxDropDownList('getSelectedItem');
+                        }else{
+                            createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",true);
+                        }
+                    }else{
+                        createDropDownGruopByTeacherMattter(null, null, null, "#qualificationsGroupFilter",true);
+                    }
                 }                
             });
             $("#qualificationsGroupFilter").on('change',function (event){  
@@ -167,7 +176,7 @@
         }else{
             createDropDownCareerByTeacher(null ,"#qualificationsCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#qualificationsPeriodFilter");
-            createDropDownSemesterByTeacher(null, null,"#qualificationsSemesterFilter",false);
+            createDropDownSemesterByTeacher(null, null, null,"#qualificationsSemesterFilter",false);
             createDropDownGruopByTeacher(null, null, "#qualificationsGroupFilter",false);
         }
         function loadSource(){
