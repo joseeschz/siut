@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="originalDocuments" pageWidth="612" pageHeight="792" columnWidth="483" leftMargin="63" rightMargin="66" topMargin="42" bottomMargin="14" uuid="c589d7cb-36b0-40de-bd25-6e0badeb34b0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="144"/>
+	<property name="ireport.y" value="476"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -133,6 +133,7 @@
 	<field name="FL_SICLO" class="java.lang.String"/>
 	<field name="FL_NAME_PERIOD" class="java.lang.String"/>
 	<field name="EXPEDITION_DATE" class="java.lang.String"/>
+	<field name="AVG_GENERAL" class="java.lang.Double"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -183,7 +184,7 @@
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
 					<font fontName="SansSerif" size="10" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["QUE EL (LA) C. "+$F{FL_NAME}+"  ES ALUMNO (A) DE ESTA INSTITUCIÓN EDUCATIVA Y SE ENCUENTRA INSCRITO (A) EN LA CARRERA DE "+$F{FL_NAME_CAREER}+", CON NÚMERO DE MATRÍCULA "+$F{FL_ENROLLMENT}+", CURSANDO EL "+$F{FL_NAME_SEMESTER}+" CUATRIMESTRE EN EL PERIODO "+$F{FL_NAME_PERIOD}+", ACREDITANDO LAS SIGUIENTES MATERIAS CORRESPONDIENTES AL PLAN DE ESTUDIOS VIGENTE DE LA GENERACIÓN "+$F{FL_GENERATION}+", OBTENIENDO LAS CALIFICACIONES QUE A CONTINUACIÓN SE ANOTAN:"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["QUE EL (LA) C. "+$F{FL_NAME}+"  ES ALUMNO (A) DE ESTA INSTITUCIÓN EDUCATIVA Y SE ENCUENTRA INSCRITO (A) EN LA CARRERA DE "+$F{FL_NAME_CAREER}+", CON NÚMERO DE MATRÍCULA "+$F{FL_ENROLLMENT}+", CURSANDO EL "+$F{FL_NAME_SEMESTER}+" CUATRIMESTRE EN EL PERIODO "+$F{FL_NAME_PERIOD}+", ACREDITANDO LAS SIGUIENTES MATERIAS CORRESPONDIENTES AL PLAN DE ESTUDIOS VIGENTE DE LA GENERACIÓN "+$F{FL_GENERATION}+", CON UN PROMEDIO GENERAL DE "+$F{AVG_GENERAL}+", OBTENIENDO LAS CALIFICACIONES QUE A CONTINUACIÓN SE ANOTAN:"]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="3" width="483" height="13" uuid="dc7014a6-3f99-4922-986d-62de616b538a"/>
@@ -200,7 +201,7 @@
 					<subreportParameterExpression><![CDATA[$P{pt_enrollment}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "report_subreport_content_cals.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["report_subreport_content_cals.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band height="125" splitType="Stretch">

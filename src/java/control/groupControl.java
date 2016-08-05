@@ -20,9 +20,9 @@ import model.groupModel;
  */
 public class groupControl {
     public static void main(String[] args) {
-        ArrayList<groupModel> list=new groupControl().SelectGroupByCurrentSemester(1, 2, 13);
-        for(int i=0;i<list.size();i++){
-            System.out.println(list.get(i).getFL_NAME_GROUP());
+        ArrayList<groupModel> list=new groupControl().SelectGroupByTeacher(123, 0, 14, 9, "409");
+        for (groupModel model : list) {
+            System.out.print(model.getFK_CAREER());
         }
     }
     
