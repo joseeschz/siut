@@ -170,6 +170,7 @@ public class studentControl {
                     studentModel CandidateAll=new studentModel();
                     CandidateAll.setPK_STUDENT(res.getInt("PK_STUDENT"));
                     CandidateAll.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    CandidateAll.setFL_PASSWORD(res.getString("FL_PASSWORD"));
                     CandidateAll.setFL_NAME(res.getString("FL_NAME"));
                     CandidateAll.setFL_NAME_CAREER(res.getString("FL_NAME_CAREER"));
                     CandidateAll.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
@@ -314,29 +315,6 @@ public class studentControl {
             e.getMessage();
         }   
         return request;
-    }
-    public ArrayList<studentModel> SelectStudentsCareerSemesterGroup(int fkCareer, int fkSemester, int fkGroup, int fkPeriod){
-        ArrayList<studentModel> list=new ArrayList<>();
-        String procedure = "CALL `GET_STUDENTS_DOWN`('studentsDown', "+fkCareer+", "+fkSemester+", "+fkGroup+", "+fkPeriod+")";
-        try {
-            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure); ResultSet res = ps.executeQuery()) {
-                while(res!=null&&res.next()){
-                    studentModel Student=new studentModel();
-                    Student.setPK_STUDENT(res.getInt("PK_STUDENT"));
-                    Student.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
-                    Student.setFL_NAME(res.getString("FL_STUDENT_NAME"));
-                    Student.setFL_DOWN(res.getInt("FL_DOWN"));
-                    list.add(Student);
-                }
-                res.close();
-                ps.close();
-                conn.close();
-            }
-            return list;
-        } catch (SQLException ex) {
-            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
     }
     public ArrayList<studentModel> SelectStudentPayment(String enrollment){
         ArrayList<studentModel> list=new ArrayList<>();

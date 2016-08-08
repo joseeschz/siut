@@ -34,18 +34,18 @@
             $('#generateDownLevelFilter').on('change',function (event){  
                 itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
                 if(itemLevel!==undefined){
-                    createDropDownCareerByTeacher(itemLevel.value, "#generateDownCareerFilter", true);
+                    createDropDownCareerByTeacherTutor(itemLevel.value, "#generateDownCareerFilter", true);
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
                     if(itemPeriod!==undefined){
                         itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                        createDropDownSemesterByTeacher(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter", true);
+                        createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter", true);
                         itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem'); 
                     }else{
-                        createDropDownSemesterByTeacher(null, null,"#generateDownSemesterFilter", true);
+                        createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
                     }
                 }else{
-                    createDropDownCareerByTeacher(null, "#generateDownCareerFilter", true);
-                    createDropDownSemesterByTeacher(null, null,"#generateDownSemesterFilter", true);
+                    createDropDownCareerByTeacherTutor(null, "#generateDownCareerFilter", true);
+                    createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
                 }
                 
             });
@@ -101,9 +101,9 @@
                 }
             });
         }else{
-            createDropDownCareerByTeacher(null ,"#generateDownCareerFilter",false);
+            createDropDownCareerByTeacherTutor(null ,"#generateDownCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
-            createDropDownSemesterByTeacher(null, null,"#generateDownSemesterFilter",false);
+            createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter",false);
             createDropDownGruopByTeacher(null, null, "#generateDownGroupFilter",false);
         }
         function loadSource(){
@@ -130,15 +130,18 @@
             }            
             var ordersSource ={
                 dataFields: [
+                    { name: 'dataPkLowStundet', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataName', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataDown', type: 'string' }
+                    { name: 'dataDown', type: 'string' },
+                    { name: 'dataStatusDir', type: 'string' },
+                    { name: 'dataStatusES', type: 'string' }
                 ],
                 dataType: "json",
-                id: "dataPkStudent",
+                id: "dataPkLowStundet",
                 async: false,
-                url: '../serviceStudent?selectStudentsCareerSemesterGroup',
+                url: '../serviceLowOfStudent?selectStudentsLowsTemps',
                 data : {
                     fkPeriod : valItemPeriod,
                     fkCareer : valItemCareer,
@@ -157,7 +160,7 @@
                         statusDown="removeDown";
                     }
                     if(statusDown==="generateDown"){                 
-                        $("#messageWarning").text("Estas seguro de generar baja para el alumno ");
+                        $("#messageWarning").text("Estas seguro de gestionar baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
                         $("#period").text(" en el periodo "+itemPeriod.label);
@@ -169,18 +172,20 @@
                                 //Send the paramethers to servelt
                                 type: "POST",
                                 async: false,
-                                url: "../serviceStudent?"+statusDown,
+                                url: "../serviceLowOfStudent?insert",
                                 data:{
-                                    'fkStudent': rowdata.dataPkStudent
+                                    'pt_pk_student': rowdata.dataPkStudent,
+                                    'pt_pk_period': itemPeriod.value
                                 },
                                 beforeSend: function (xhr) {
                                 },
                                 error: function (jqXHR, textStatus, errorThrown) {
                                     //This is if exits an error with the server internal can do server off, or page not found
                                     alert("Error interno del servidor");
+                                    commit(false);
                                 },
                                 success: function (data_result, textStatus, jqXHR) { 
-                                    commit(true);
+                                    loadGridStudents();
                                     console.log(data_result);
                                 }
                             });  
@@ -191,39 +196,46 @@
                             commit(false);
                         });
                     }else{
-                        $("#messageWarning").text("Estas seguro de cancelar la baja para el alumno ");
-                        $("#studentName").text(rowdata.dataName);
-                        $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                        $("#period").text(" en el periodo "+itemPeriod.label);
-                        $("#jqxWindowAlert").jqxWindow('open');              
-                        $('#okWarning').off("click");
-                        $('#okWarning').on("click",function (){
-                            $("#jqxWindowAlert").jqxWindow('close'); 
-                            $.ajax({
-                                //Send the paramethers to servelt
-                                type: "POST",
-                                async: false,
-                                url: "../serviceStudent?"+statusDown,
-                                data:{
-                                    'fkStudent': rowdata.dataPkStudent
-                                },
-                                beforeSend: function (xhr) {
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    //This is if exits an error with the server internal can do server off, or page not found
-                                    alert("Error interno del servidor");
-                                },
-                                success: function (data_result, textStatus, jqXHR) { 
-                                    commit(true);
-                                    console.log(data_result);
-                                }
-                            });  
-                        });
-                        $('#cancelWarning').off("click");
-                        $('#cancelWarning').on("click",function (){                            
-                            $("#jqxWindowAlert").jqxWindow('close'); 
+                        if(rowdata.dataStatusDir!=="Autorizada" || rowdata.dataStatusES!=="Autorizada"){
+                            $("#messageError").text("La baja no puede ser cancelada si ya fue autorizada por el Director y/o el Departamento de Servicios Escolares");
+                            $("#jqxWindowError").jqxWindow('open'); 
                             commit(false);
-                        });
+                        }else{
+                            $("#messageWarning").text("Estas seguro de cancelar la baja para el alumno ");
+                            $("#studentName").text(rowdata.dataName);
+                            $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
+                            $("#period").text(" en el periodo "+itemPeriod.label);
+                            $("#jqxWindowAlert").jqxWindow('open');              
+                            $('#okWarning').off("click");
+                            $('#okWarning').on("click",function (){
+                                $("#jqxWindowAlert").jqxWindow('close'); 
+                                $.ajax({
+                                    //Send the paramethers to servelt
+                                    type: "POST",
+                                    async: false,
+                                    url: "../serviceLowOfStudent?delete",
+                                    data:{
+                                        'pt_pk_low_student': rowid
+                                    },
+                                    beforeSend: function (xhr) {
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        //This is if exits an error with the server internal can do server off, or page not found
+                                        alert("Error interno del servidor");
+                                        commit(false);
+                                    },
+                                    success: function (data_result, textStatus, jqXHR) { 
+                                        commit(true);
+                                        console.log(data_result);
+                                    }
+                                });  
+                            });
+                            $('#cancelWarning').off("click");
+                            $('#cancelWarning').on("click",function (){                            
+                                $("#jqxWindowAlert").jqxWindow('close'); 
+                                commit(false);
+                            });
+                        }
                     }
                     
                     
@@ -288,7 +300,9 @@
                     },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 70, cellclassname: cellclass, editable: true, filterable: true}
+                    { text: 'Gestionar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
+                    { text: 'Estado Dir', align: 'center', cellsalign: 'center', dataField: 'dataStatusDir', width: 100, cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Estado SE', align: 'center', cellsalign: 'center', dataField: 'dataStatusES', width: 100, cellclassname: cellclass, editable: false, filterable: false}
                 ],
                 columnsresize: false
             });
@@ -300,6 +314,7 @@
                 var rowBoundIndex = args.rowindex;
                 // row's data. The row's data object or null(when all rows are being selected or unselected with a single action). If you have a datafield called "firstName", to access the row's firstName, use var firstName = rowData.firstName;
                 var rowData = args.row;
+                
                 if(args){
                     $("#tableGenerateDown").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
                 }
@@ -313,14 +328,18 @@
         $("#contextMenu").on('itemclick', function (event) {
             var args = event.args;
             var rowindex = $("#tableGenerateDown").jqxGrid('getselectedrowindex');
+            var data = $('#tableGenerateDown').jqxGrid('getrowdata', rowindex);
             if ($.trim($(args).text()) === "Llenar Formato"){
+                itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",
                     async: false,
                     url: "../content/data-jsp/views-external/item-students/flange/process/tutoring/transact-flange/low.jsp",
                     data: {
-                        'fkStudentLow': 0
+                        'pt_pk_low_student' : data.dataPkLowStundet, 
+                        'pt_pk_student': data.dataPkStudent,
+                        'pt_pk_period': itemPeriod.value
                     },
                     beforeSend: function (xhr) {
                     },
@@ -334,6 +353,28 @@
                     }
                 });  
             }
+            if ($.trim($(args).text()) === "Imprimir Formato"){
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "../../content/data-jr/documentRegistedLowStudent/index.jsp?sessionLowReport",
+                    data: {
+                        'pt_pk_student': data.dataPkStudent,
+                        'pt_pk_period': itemPeriod.value
+                    },
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert("Error interno del servidor");
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        var iframe = $('<iframe style="width: 1185px; height: 810px;">');
+                        iframe.attr('src','../../content/data-jr/documentRegistedLowStudent/index.jsp');
+                        $('#contentPDF').html(iframe);
+                        $("#popupWindowDoc").jqxWindow('show');
+                    }
+                });                
+            }
         });
         $("#tableGenerateDown").on('rowclick', function (event) {
             if (event.args.rightclick) {
@@ -343,7 +384,12 @@
                     $("#contextMenu").jqxMenu('disable', 'generate', false);
                 }else{
                     $("#contextMenu").jqxMenu('disable', 'generate', true);
-                }                
+                }   
+                if(data.dataStatusES==="Autorizada"){
+                    $("#contextMenu").jqxMenu('disable', 'print', false);
+                }else{
+                    $("#contextMenu").jqxMenu('disable', 'print', true);
+                }
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
                 contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
@@ -399,5 +445,6 @@
 <div id='contextMenu'>
     <ul>
         <li id="generate">Llenar Formato</li>
+        <li id="print">Imprimir Formato</li>
     </ul>
 </div>
