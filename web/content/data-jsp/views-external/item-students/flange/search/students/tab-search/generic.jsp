@@ -17,6 +17,7 @@
                     { name: 'dataProgresivNumber', type: 'int' },
                     { name: 'dataPkStudent', type: 'string' },
                     { name: 'dataName', type: 'string' },
+                    { name: 'dataPassword', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
                     { name: 'dataNameCareer', type: 'string' },
                     { name: 'dataNameCareerAbbreviated', type: 'string' },
@@ -38,6 +39,7 @@
                 columns: [
                     { text: 'N.P', datafield: 'dataProgresivNumber', width: 40, align: "center", cellsalign: "center", resizable: false, sortable: false,  filterable: false },
                     { text: 'Matrícula', datafield: 'dataEnrollment', width: 130, align: "center", cellsalign: "center", resizable: false },
+                    { text: 'Contraseña', datafield: 'dataPassword', width: 130, align: "center", cellsalign: "center", resizable: false },
                     { text: 'Nombre', datafield: 'dataName', width: 'auto'}, 
                     { text: 'Carrera', datafield: 'dataNameCareer', width: 'auto', align: "center", filterable: false}, 
                     { text: 'Cuatrimestre Actual', datafield: 'dataNameSemester', width: 150, align: "center", cellsalign: "center", filterable: false},

@@ -1,10 +1,16 @@
 <script>
     $(document).ready(function () {
         var dataForm = {
+            pk_low_student : 0,
+            fl_folio_low : "",
+            fl_autorization_date : "",
             fl_has_schoolarshipYes : false,
             fl_has_schoolarshipNot : true,
-            fl_has_payment_penaltyYes : false,
-            fl_has_payment_penaltyNot : true,
+            pk_schoolarship_student : 0,
+            fl_has_debtYes : false,
+            fl_has_debtNot : true,
+            pk_debt : 0,
+            pk_student : 0,
             fl_name_student : "Carlos",
             fl_enrollment : "UTS12",
             fl_group : "801",
@@ -21,6 +27,7 @@
             fl_mistakes_regulation_school : false,
             fl_difficulty_matters_school : false,
             fl_that_matters : "algunas",
+            fl_absence : false,
             fl_dissatisfaction_of_expectations : false,
             fl_deficient_orientation_vocational : false,
             fl_career_not_first_option : false,
@@ -43,15 +50,38 @@
             fl_addictions : false,
             fl_problems_with_teachers : false,
             fl_others_factors_personals : false,
-            fl_that_others_factors_personals : "algunos"
+            fl_that_others_factors_personals : "algunos",
+            fl_name_worker_director : 0,
+            fl_name_worker_tutor : 0,
+            fl_name_worker_es : 0,
+            fl_name_worker_cp : 0,
+            pk_period : 0,
+            fl_authorization_director : 0,
+            fl_authorization_es : 0
         };
+        var pt_pk_low_student = <%out.print(request.getParameter("pt_pk_low_student"));%>;
+        $.ajax({
+            //Send the paramethers to servelt
+            type: "POST",
+            async: false,
+            url: "../serviceLowOfStudent?view",
+            data:{
+                'pt_pk_student' : <%out.print(request.getParameter("pt_pk_student"));%>,
+                'pt_pk_period' : <%out.print(request.getParameter("pt_pk_period"));%>
+            },
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //This is if exits an error with the server internal can do server off, or page not found
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) { 
+                dataForm = data[0];
+                console.log(dataForm);
+            }
+        });  
         
         $("#register").jqxExpander({ toggleMode: 'none', width: '800px', showArrow: false });
-        $('#sendButton').jqxButton({ width: 70, height: 30 });
-        $('#sendButton').on('click', function () {
-//            $('#testForm').jqxValidator('validate');
-            console.log(dataForm);
-        });
         $('.text-input').jqxInput({  });
         $(".jqxCheckBox").jqxCheckBox({ width: 'auto', height: 25});
         $(".jqxRadioButton1").jqxRadioButton({ width: 'auto', height: 25, groupName: "Group1", disabled: true});
@@ -122,22 +152,71 @@
                 dataForm.fl_others_factors_personals="";
                 $(".fl_others_factors_personals").hide();
             }
+            updateField(index, checked);
         }); 
         $(".jqxRadioButton1, .jqxRadioButton2, .jqxRadioButton3, .jqxRadioButton4").on('change', function (event) { 
             var checked = event.args.checked;   
             var index =$(this).attr("id");
             dataForm[index]=checked;
-            if(index==="fl_has_schoolarshipYes" && checked){
+            if(index==="fl_has_schoolarshipYes" && checked){ 
                 $(".fl_has_schoolarshipYes").show();
+                updateField("fl_has_schoolarship", true);
             }else if(index==="fl_has_schoolarshipNot" && checked){
                 $(".fl_has_schoolarshipYes").hide();
+                updateField("fl_has_schoolarship", false);
+            }            
+            
+            else if(index==="fl_temporaly_lowYes" && checked){
+                updateField("fl_temporaly_low", true);
+                updateField("fl_ultimate_low", false);
             }
+            else if(index==="fl_temporaly_lowNot" && checked){
+                updateField("fl_temporaly_low", false);
+                updateField("fl_ultimate_low", true);
+            }
+            
+            else if(index==="fl_ultimate_lowYes" && checked){
+                updateField("fl_ultimate_low", true);
+                updateField("fl_temporaly_low", false);
+            }else if(index==="fl_ultimate_lowNot" && checked){
+                updateField("fl_ultimate_low", false);
+                updateField("fl_temporaly_low", true);
+            }
+            
+            else if(index==="fl_request_for_studentYes" && checked){
+                updateField("fl_request_for_student", true);
+            }else if(index==="fl_request_for_studentNot" && checked){
+                updateField("fl_request_for_student", false);
+            }        
         }); 
         $('.text-input').on('change', function (event) {  
             var index =$(this).attr("id");
             var value =$(this).val();
             dataForm[index]=value;
+            updateField(index, value);
         }); 
+        function updateField(pt_field_name, pt_field_value){
+            $.ajax({
+                //Send the paramethers to servelt
+                type: "POST",
+                async: false,
+                url: "../serviceLowOfStudent?update",
+                data:{
+                    'pt_pk_low_student' : pt_pk_low_student,
+                    'pt_field_name' : pt_field_name,
+                    'pt_field_value' : pt_field_value
+                },
+                beforeSend: function (xhr) {
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    //This is if exits an error with the server internal can do server off, or page not found
+                    alert("Error interno del servidor");
+                },
+                success: function (data, textStatus, jqXHR) { 
+                    console.log(data);
+                }
+            });  
+        }
     });        
 </script>
 <style type="text/css">
@@ -207,8 +286,8 @@
                     </td>
                     <td valign="top">
                         <label><b>Tiene adeudos:</b></label><br>                        
-                        <div style='margin-top: 10px; display: inline-block' id='fl_has_payment_penaltyYes' class='jqxRadioButton2'>Si</div>
-                        <div style='margin-top: 10px; display: inline-block' id='fl_has_payment_penaltyNot' class='jqxRadioButton2'>No</div>
+                        <div style='margin-top: 10px; display: inline-block' id='fl_has_debtYes' class='jqxRadioButton2'>Si</div>
+                        <div style='margin-top: 10px; display: inline-block' id='fl_has_debtNot' class='jqxRadioButton2'>No</div>
                     </td>
                 </tr>
             </table>
@@ -250,7 +329,7 @@
                                 <ul>
                                     <li>
                                         <div style='margin-top: 10px; display: inline-block' id='fl_ultimate_lowYes' class='jqxRadioButton3'>BAJA DEFINITIVA</div>
-                                        <div style='margin-top: 10px; display: inline-block' id='fl_temporaly_lowNot' class='jqxRadioButton3'>BAJA TEMPORAL</div>
+                                        <div style='margin-top: 10px; display: inline-block' id='fl_temporaly_lowYes' class='jqxRadioButton3'>BAJA TEMPORAL</div>
                                     </li>
                                     <li>
                                         <label><b>¿LA BAJA FUE SOLICITADA POR EL ALUMNO?</b></label><br>
@@ -341,9 +420,6 @@
                             </li>
                         </ul>
                     </td>
-                    <tr>
-                        <td colspan="2" style="text-align: center;"><input type="button" value="Guardar" id="sendButton" /></td>
-                    </tr>
                 </tr>
             </table>
         </fieldset>

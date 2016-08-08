@@ -2,18 +2,197 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="528" leftMargin="14" rightMargin="70" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="182"/>
+	<property name="ireport.y" value="222"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\Carlos\\Documents\\NetBeansProjects\\SIUT\\web\\content\\data-jr\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="pt_enrollment" class="java.lang.String">
+	<subDataset name="dataset1" uuid="60aec535-a8f4-4a8d-b25f-31c64db6818d"/>
+	<subDataset name="schoolarTypeByStudent" uuid="8a2443f4-862b-4436-8020-017640d25a04">
+		<queryString language="SQL">
+			<![CDATA[CALL `GET_LOW_STUDENT`('schoolarTypeByStudent', null, null, null, null, null);]]>
+		</queryString>
+		<field name="PK_SCHOOLARSHIP_TYPE" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FL_NAME_SCHOOLARSHIP" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset2" uuid="069b4a61-dbc8-4002-93e0-99ef5683658f"/>
+	<parameter name="pt_pk_period" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_pk_student" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT 1;]]>
+		<![CDATA[CALL `GET_LOW_STUDENT`('byStudentPeriod', $P{pt_pk_student}, null, null, null, $P{pt_pk_period});]]>
 	</queryString>
-	<field name="1" class="java.lang.Long"/>
+	<field name="FL_FOLIO_LOW" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_AUTORIZATION_DATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="PK_LOW_STUDENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_UNIQUE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_REGISTER_DATE" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_HAS_SCHOOLARSHIP" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_SCHOLARSHIP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_HAS_DEBT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_DEBT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_STUDENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_ULTIMATE_LOW" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_TEMPORALY_LOW" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_REQUEST_FOR_STUDENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_REPPROBED" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_BACKGROUND_ACADEMICS_STUDENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_UTSEM_NOT_FIRST_OPTION" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_MISTAKES_REGULATION_SCHOOL" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DIFFICULTY_MATTERS_SCHOOL" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_THAT_MATTERS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_ABSENCE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DISSATISFACTION_OF_EXPECTATIONS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DEFICIENT_ORIENTATION_VOCATIONAL" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_CAREER_NOT_FIRST_OPTION" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_OTHERS_FACTORS_ACADEMICS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_THAT_OTHERS_FACTORS_ACADEMICS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_SITUATION_ECONOMIC_UNFAVORABLE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_STUDENT_WORK" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_MARRIAGE_AFFECTS_SITUATION_ECONOMIC" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROBLEMS_BAD_NUTRITION" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_LOSS_EMPLOYMENT_WHO_DEPENDS_STUDENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_INCOMPATIBILITY_OF_SCHEDULES_WORK_STUDIES" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_CHANGE_RESIDENCE" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_FEATURES_SOCIOCULTURALES_STUDENT" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_LACK_MOTIVATION" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_DISTANCE_OF_UTSEM" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROBLEMS_HEALTH" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NOT_PRESENT_CLASSES" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROBLEMS_WITH_COLLAGUES_OF_CLASS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROBLEMS_EMOTIONALS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_ADDICTIONS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_PROBLEMS_WITH_TEACHERS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_OTHERS_FACTORS_PERSONALS" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_THAT_OTHERS_FACTORS_PERSONALS" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_WORKER_DIRECTOR" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_WORKER_TUTOR" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_WORKER_ES" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_WORKER_CP" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_PERIOD_LOW" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_AUTHORIZATION_DIRECTOR" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_AUTHORIZATION_ES" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="PK_STUDENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID UNICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_STUDENT_NAME" class="java.lang.String"/>
+	<field name="FL_NAME_GROUP" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_DIRECTOR_CAREER" class="java.lang.String"/>
+	<field name="FL_NAME_TUTOR" class="java.lang.String">
+		<fieldDescription><![CDATA[NOMBRE DEL TUTOR|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_HEAD_ES" class="java.lang.String"/>
+	<field name="FL_NAME_HEAD_CP" class="java.lang.String"/>
 	<sortField name="PAGE_COUNT" type="Variable"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -35,7 +214,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="688" splitType="Stretch">
+		<band height="683" splitType="Stretch">
 			<elementGroup/>
 			<frame>
 				<reportElement x="0" y="35" width="528" height="28" uuid="4063b987-9fe6-414d-9ff5-9d1e75776693"/>
@@ -61,7 +240,7 @@
 					<textElement verticalAlignment="Bottom">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["2623"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_FOLIO_LOW}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="0" width="528" height="11" uuid="8f4514b0-720e-47dd-bde1-05953d920366"/>
@@ -83,7 +262,7 @@
 					<textElement verticalAlignment="Bottom">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["28-11-2014"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_AUTORIZATION_DATE}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="323" y="11" width="117" height="15" uuid="ac2895bc-7ed7-4d7a-a7b5-9def4572667f"/>
@@ -114,10 +293,10 @@
 				<textElement verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FL_REGISTER_DATE}.toLocaleString()]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement x="0" y="66" width="528" height="38" uuid="ca71465e-5a09-461f-800e-a6e95dd11c43"/>
+				<reportElement x="0" y="66" width="528" height="46" uuid="ca71465e-5a09-461f-800e-a6e95dd11c43"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -140,76 +319,33 @@
 					</textElement>
 					<text><![CDATA[Cuenta con beca:]]></text>
 				</staticText>
-				<staticText>
-					<reportElement x="0" y="25" width="37" height="11" uuid="f1f3eeb4-1852-4bb3-8a5e-f68b8d3a2c7a"/>
-					<box leftPadding="10"/>
-					<textElement verticalAlignment="Top">
-						<font size="8"/>
-					</textElement>
-					<text><![CDATA[Tipo:]]></text>
-				</staticText>
-				<textField>
-					<reportElement x="42" y="25" width="98" height="11" uuid="961a6c65-d113-4ef1-8ed3-6deeecf3c469"/>
-					<textElement verticalAlignment="Top" markup="none">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA["SOCIOECONÓMICA ( )"]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="148" y="25" width="66" height="11" uuid="aff429fd-0131-4b47-8a19-2adf840b63c7"/>
-					<textElement verticalAlignment="Top" markup="none">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA["ACADÉMICA ( )"]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="225" y="25" width="85" height="11" uuid="9939457d-9077-48e9-bec6-2c2fa3f2519c"/>
-					<textElement verticalAlignment="Top" markup="none">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA["MANUNTENCIÓN ( )"]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="327" y="25" width="72" height="11" uuid="6be3a556-e09d-46d3-a158-d2ecc1d6d379"/>
-					<textElement verticalAlignment="Top" markup="none">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA["ALIMENTICIA ( )"]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="422" y="25" width="74" height="11" uuid="ea57ffb0-f55f-4456-afbf-b7155058269b"/>
-					<textElement verticalAlignment="Top" markup="none">
-						<font size="8"/>
-					</textElement>
-					<textFieldExpression><![CDATA["TRANSPORTE ( )"]]></textFieldExpression>
-				</textField>
 				<textField>
 					<reportElement x="100" y="11" width="74" height="11" uuid="0e7f1a90-aaa6-491c-8e2e-8e80df3e4f10"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["SI ( "+( $F{FL_HAS_SCHOOLARSHIP}.toString().equals("1") ? "X" : " " )+" ) "+( $F{FL_HAS_SCHOOLARSHIP}.toString().equals("1") ? "Tipo:" : "" )+""]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="174" y="11" width="74" height="11" uuid="032d3151-f0f4-4bf0-97be-0011fc447781"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["NO ( "+( $F{FL_HAS_SCHOOLARSHIP}.toString().equals("0") ? "X" : " " )+" )"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="454" y="11" width="74" height="11" uuid="0118ef89-acc0-442a-bca8-78b928cb5612"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["NO ( "+( $F{FL_HAS_DEBT}.toString().equals("0") ? "X" : " " )+" )"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="380" y="11" width="74" height="11" uuid="9ff51547-9ef5-4b8d-b224-291a131a1544"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["SI ( "+( $F{FL_HAS_DEBT}.toString().equals("1") ? "X" : " " )+" )"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="280" y="11" width="100" height="11" uuid="1ece8f09-3c3c-43ea-ae96-49db5265c9f5"/>
@@ -219,9 +355,26 @@
 					</textElement>
 					<text><![CDATA[Tiene Adeudos:]]></text>
 				</staticText>
+				<componentElement>
+					<reportElement x="19" y="22" width="509" height="24" uuid="bcdbbb0d-9c35-4569-8c9d-30358d47c29a"/>
+					<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Horizontal" ignoreWidth="false">
+						<datasetRun subDataset="schoolarTypeByStudent" uuid="ac0df60d-7205-4a66-a042-af4f4cb82f52">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+						<jr:listContents height="11" width="111">
+							<textField>
+								<reportElement x="0" y="0" width="84" height="11" uuid="a115bb99-6c2c-4089-84fe-095051238b5e"/>
+								<textElement>
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FL_NAME_SCHOOLARSHIP}]]></textFieldExpression>
+							</textField>
+						</jr:listContents>
+					</jr:list>
+				</componentElement>
 			</frame>
 			<frame>
-				<reportElement x="0" y="107" width="528" height="73" uuid="f0be2998-cc1e-4dcd-b3bc-8c49752f4f0e"/>
+				<reportElement x="0" y="112" width="528" height="72" uuid="f0be2998-cc1e-4dcd-b3bc-8c49752f4f0e"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -262,24 +415,25 @@
 				</staticText>
 				<textField>
 					<reportElement x="63" y="15" width="427" height="11" uuid="e6c5dca4-e45f-400a-b604-e03e3441b820"/>
-					<box leftPadding="30">
+					<box leftPadding="10">
 						<bottomPen lineWidth="1.0"/>
 					</box>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["nombre"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_STUDENT_NAME}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="63" y="26" width="111" height="11" uuid="bbdc352e-0f3a-497f-be90-d2abfaece367"/>
+					<box leftPadding="10"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["matricula"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_ENROLLMENT}]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="63" y="37" width="217" height="32" uuid="faf352d1-e95a-40c1-9108-945df3a3d293"/>
-					<box>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="63" y="37" width="217" height="32" uuid="faf352d1-e95a-40c1-9108-945df3a3d293"/>
+					<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
 						<topPen lineWidth="1.0"/>
 						<leftPen lineWidth="1.0"/>
 						<bottomPen lineWidth="1.0"/>
@@ -288,7 +442,7 @@
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["carrera"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_CAREER}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="280" y="26" width="76" height="11" uuid="37360fcc-210b-416e-8a9a-c2ef49ab35f0"/>
@@ -300,13 +454,13 @@
 				</staticText>
 				<textField>
 					<reportElement x="356" y="26" width="134" height="11" uuid="b45318b5-7ead-40e2-bf93-8764d1a2541a"/>
-					<box>
+					<box leftPadding="10">
 						<bottomPen lineWidth="1.0"/>
 					</box>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["grupo"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_GROUP}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="280" y="37" width="100" height="11" uuid="1f07af8b-568a-42cd-ac57-4bb0d8f4baf6"/>
@@ -330,7 +484,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="189" width="528" height="306" uuid="ed006cdb-198d-4efb-95b5-ab472091387e"/>
+				<reportElement x="0" y="189" width="528" height="328" uuid="ed006cdb-198d-4efb-95b5-ab472091387e"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -342,7 +496,7 @@
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) REPROBACIÓN"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_REPPROBED}.toString().equals("1") ? "X" : " " )+") REPROBACIÓN"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="0" width="528" height="15" uuid="da712640-6d03-48a3-a7bb-08d39b19f433"/>
@@ -365,14 +519,14 @@
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["BAJA DEFINITIVA ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["BAJA DEFINITIVA ("+( $F{FL_ULTIMATE_LOW}.toString().equals("1") ? "X" : " " )+")"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="160" y="26" width="104" height="11" uuid="b514335a-11fb-4829-ba49-b27a32ab042f"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["BAJA TEMPORAL ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["BAJA TEMPORAL ("+( $F{FL_TEMPORALY_LOW}.toString().equals("1") ? "X" : " " )+")"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="1" y="37" width="191" height="11" uuid="8890d037-4987-45e7-812d-8e8d441166c0"/>
@@ -387,14 +541,14 @@
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["NO ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["NO ("+( $F{FL_REQUEST_FOR_STUDENT}.toString().equals("0") ? "X" : " " )+")"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="264" y="38" width="74" height="11" uuid="dcd768bb-cb0e-4f40-93cc-e5aff7787f32"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["SI ( )"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["SI ("+( $F{FL_REQUEST_FOR_STUDENT}.toString().equals("1") ? "X" : " " )+")"]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="49" width="191" height="11" uuid="5c22c6e9-8f9e-444a-9283-ad30370cdbc3"/>
@@ -417,74 +571,74 @@
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) ANTECEDENTES ACADÉMICOS DEL ESTUDIANTE"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_BACKGROUND_ACADEMICS_STUDENT}.toString().equals("1") ? "X" : " " )+") ANTECEDENTES ACADÉMICOS DEL ESTUDIANTE"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="24" y="93" width="224" height="11" uuid="06f8646e-4916-4876-84a7-4dd21a7a48c0"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) LA UTSEM NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_UTSEM_NOT_FIRST_OPTION}.toString().equals("1") ? "X" : " " )+") LA UTSEM NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="24" y="104" width="224" height="11" uuid="588a2bbc-8c7a-4423-9f89-8febe981f933"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) FALTAS AL REGLAMENTO ESCOLAR"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_MISTAKES_REGULATION_SCHOOL}.toString().equals("1") ? "X" : " " )+") FALTAS AL REGLAMENTO ESCOLAR"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="24" y="115" width="296" height="11" uuid="f85b4a31-507f-41dd-98a1-9eda13ba5f17"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) DIFICULTAD EN EL APRENDIZAJE DE ALGUNAS MATERIA(S), ¿CUÁLES?"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_DIFFICULTY_MATTERS_SCHOOL}.toString().equals("1") ? "X" : " " )+") DIFICULTAD EN EL APRENDIZAJE DE ALGUNAS MATERIA(S), ¿CUÁLES?"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="137" width="99" height="11" uuid="7cdac04a-3785-4088-abe0-2a2b0e55908a"/>
+					<reportElement x="24" y="137" width="269" height="11" uuid="7cdac04a-3785-4088-abe0-2a2b0e55908a"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) OTROS, ¿CUÁLES?"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_OTHERS_FACTORS_ACADEMICS}.toString().equals("1") ? "X" : " " )+") OTROS, ¿CUÁLES?"]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="1" y="148" width="513" height="11" uuid="af6914d3-ca28-4801-b234-2d89b33df85e"/>
+					<reportElement x="1" y="162" width="513" height="11" uuid="af6914d3-ca28-4801-b234-2d89b33df85e"/>
 					<box leftPadding="10"/>
 					<textElement verticalAlignment="Top">
 						<font size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[    b) FACTORES ECONÓMICOS]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="123" y="137" width="391" height="11" uuid="4e0b9046-eafd-43be-9cac-9107ce37a634"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="24" y="148" width="391" height="11" uuid="4e0b9046-eafd-43be-9cac-9107ce37a634"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["otros"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_THAT_OTHERS_FACTORS_ACADEMICS}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="159" width="269" height="11" uuid="7505dc96-749b-4f06-9955-89997bf758cc"/>
+					<reportElement x="24" y="173" width="269" height="11" uuid="7505dc96-749b-4f06-9955-89997bf758cc"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) SITUACIÓN ECONÓMICA DESFAVORABLE DEL ALUMNO"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_SITUATION_ECONOMIC_UNFAVORABLE}.toString().equals("1") ? "X" : " " )+") SITUACIÓN ECONÓMICA DESFAVORABLE DEL ALUMNO"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="170" width="269" height="11" uuid="e00e546a-7439-41be-8616-db3745769549"/>
+					<reportElement x="24" y="184" width="269" height="11" uuid="e00e546a-7439-41be-8616-db3745769549"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) EL ALUMNO TRABAJA"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_STUDENT_WORK}.toString().equals("1") ? "X" : " " )+") EL ALUMNO TRABAJA"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="181" width="291" height="11" uuid="b9202a79-7ad5-4e66-bca2-83bbcc31f8d6"/>
+					<reportElement x="24" y="195" width="291" height="11" uuid="b9202a79-7ad5-4e66-bca2-83bbcc31f8d6"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) MATRIMONIO DEL ALIMNO QUE AFECTE SU SITUACIÓN ECONÓMICA"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_MARRIAGE_AFFECTS_SITUATION_ECONOMIC}.toString().equals("1") ? "X" : " " )+") MATRIMONIO DEL ALIMNO QUE AFECTE SU SITUACIÓN ECONÓMICA"]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="1" y="214" width="513" height="11" uuid="318d06c9-a1b3-4be1-8004-140ed99de126"/>
+					<reportElement x="1" y="228" width="513" height="11" uuid="318d06c9-a1b3-4be1-8004-140ed99de126"/>
 					<box leftPadding="10"/>
 					<textElement verticalAlignment="Top">
 						<font size="8" isBold="true"/>
@@ -492,134 +646,141 @@
 					<text><![CDATA[    c) FACTORES PERSONALES]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="24" y="225" width="136" height="11" uuid="c04e028f-aa7e-492c-a422-47afe328de93"/>
+					<reportElement x="24" y="239" width="136" height="11" uuid="c04e028f-aa7e-492c-a422-47afe328de93"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) CAMBIO DE RESIDENCIA"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_CHANGE_RESIDENCE}.toString().equals("1") ? "X" : " " )+") CAMBIO DE RESIDENCIA"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="237" width="240" height="11" uuid="fe71a6a9-9e99-43a9-9991-4d27a2777527"/>
+					<reportElement x="24" y="251" width="240" height="11" uuid="fe71a6a9-9e99-43a9-9991-4d27a2777527"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) CARACTERISTÍCAS SOCIOCULTURALES DEL ALUMNO"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_FEATURES_SOCIOCULTURALES_STUDENT}.toString().equals("1") ? "X" : " " )+") CARACTERISTÍCAS SOCIOCULTURALES DEL ALUMNO"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="248" width="240" height="11" uuid="a63fb101-8b03-4b63-8474-1f9a3e96d341"/>
+					<reportElement x="24" y="262" width="240" height="11" uuid="a63fb101-8b03-4b63-8474-1f9a3e96d341"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) FALTA DE MOTIVACIÓN POR PROBLEMAS PERSONALES"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_LACK_MOTIVATION}.toString().equals("1") ? "X" : " " )+") FALTA DE MOTIVACIÓN POR PROBLEMAS PERSONALES"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="259" width="136" height="11" uuid="ef3e5367-4716-4958-8a8e-4cf388eccac3"/>
+					<reportElement x="24" y="273" width="136" height="11" uuid="ef3e5367-4716-4958-8a8e-4cf388eccac3"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) DISTANCIA DE LA UTSEM"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_DISTANCE_OF_UTSEM}.toString().equals("1") ? "X" : " " )+") DISTANCIA DE LA UTSEM"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="270" width="136" height="11" uuid="b7fd2c6f-67f8-4f56-951a-28a009f5ee43"/>
+					<reportElement x="24" y="284" width="136" height="11" uuid="b7fd2c6f-67f8-4f56-951a-28a009f5ee43"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PROBLEMAS DE SALUD"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_PROBLEMS_HEALTH}.toString().equals("1") ? "X" : " " )+") PROBLEMAS DE SALUD"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="24" y="281" width="136" height="11" uuid="aa713553-1376-4b01-a002-25df1eed5b89"/>
+					<reportElement x="24" y="295" width="136" height="11" uuid="aa713553-1376-4b01-a002-25df1eed5b89"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) OTROS, ¿CUÁLES?"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_OTHERS_FACTORS_PERSONALS}.toString().equals("1") ? "X" : " " )+") OTROS, ¿CUÁLES?"]]></textFieldExpression>
 				</textField>
-				<textField>
-					<reportElement x="24" y="126" width="490" height="11" uuid="5fed5abe-bb6c-4e34-a4b6-032bf031a354"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="24" y="126" width="490" height="11" uuid="5fed5abe-bb6c-4e34-a4b6-032bf031a354"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["otros"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_THAT_MATTERS}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="322" y="71" width="192" height="11" uuid="1b822e0b-73ed-4c4b-a776-7f5c1e304f5e"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) INSATISFACCIÓN DE EXPECTATIVAS"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_DISSATISFACTION_OF_EXPECTATIONS}.toString().equals("1") ? "X" : " " )+")  INSATISFACCIÓN DE EXPECTATIVAS"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="322" y="82" width="192" height="11" uuid="f7eaac31-99d1-4d8e-9200-1bb1dcd9f496"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) DEFICIENTE ORIENTACIÓN VOCACIONAL"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_DEFICIENT_ORIENTATION_VOCATIONAL}.toString().equals("1") ? "X" : " " )+") DEFICIENTE ORIENTACIÓN VOCACIONAL"]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="322" y="93" width="192" height="11" uuid="f8b0273c-f351-4bf4-85fb-8e61c00ed45b"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) LA CARRERA NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_CAREER_NOT_FIRST_OPTION}.toString().equals("1") ? "X" : " " )+")  LA CARRERA NO ERA SU PRIMERA OPCIÓN"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="322" y="159" width="192" height="11" uuid="db4a3b57-072c-451e-b76e-682f94c118c8"/>
+					<reportElement x="322" y="173" width="192" height="11" uuid="db4a3b57-072c-451e-b76e-682f94c118c8"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PROBLEMAS DE MALNUTRICIÓN"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_PROBLEMS_BAD_NUTRITION}.toString().equals("1") ? "X" : " " )+") PROBLEMAS DE MALNUTRICIÓN"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="322" y="170" width="192" height="22" uuid="c0d903ca-f2ea-4b8f-8068-252b54370f42"/>
+					<reportElement x="322" y="184" width="192" height="22" uuid="c0d903ca-f2ea-4b8f-8068-252b54370f42"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PERDIDA DEL EMPLEO DE QUIEN SOSTIENE AL ALUMNO"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_LOSS_EMPLOYMENT_WHO_DEPENDS_STUDENT}.toString().equals("1") ? "X" : " " )+") PERDIDA DEL EMPLEO DE QUIEN SOSTIENE AL ALUMNO"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="322" y="192" width="192" height="22" uuid="1cbeb58c-19fa-43d9-86d6-adcc8ac30fd0"/>
+					<reportElement x="322" y="206" width="192" height="22" uuid="1cbeb58c-19fa-43d9-86d6-adcc8ac30fd0"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) INCOMPATIBILIDAD DE HORARIOS DE TRABAJO Y ESCUELA"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_INCOMPATIBILITY_OF_SCHEDULES_WORK_STUDIES}.toString().equals("1") ? "X" : " " )+") INCOMPATIBILIDAD DE HORARIOS DE TRABAJO Y ESCUELA"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="323" y="225" width="191" height="11" uuid="03a49acb-5af2-4ea6-bccc-ed16777dbe3c"/>
+					<reportElement x="323" y="239" width="191" height="11" uuid="03a49acb-5af2-4ea6-bccc-ed16777dbe3c"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) NUNCA SE PRESENTÓ A CLASES"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_NOT_PRESENT_CLASSES}.toString().equals("1") ? "X" : " " )+") NUNCA SE PRESENTÓ A CLASES"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="323" y="236" width="191" height="22" uuid="24954c32-a3e8-4857-ac1c-dfe06df362a1"/>
+					<reportElement x="323" y="250" width="191" height="22" uuid="24954c32-a3e8-4857-ac1c-dfe06df362a1"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PROBLEMAS CON LOS COMPAÑEROS DE CLASE"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_PROBLEMS_WITH_COLLAGUES_OF_CLASS}.toString().equals("1") ? "X" : " " )+") PROBLEMAS CON LOS COMPAÑEROS DE CLASE"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="323" y="258" width="191" height="11" uuid="f4b03b70-3279-4021-a786-6c749bd5d3f8"/>
+					<reportElement x="323" y="272" width="191" height="11" uuid="f4b03b70-3279-4021-a786-6c749bd5d3f8"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PROBLEMAS EMOCIONALES"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_PROBLEMS_EMOTIONALS}.toString().equals("1") ? "X" : " " )+") PROBLEMAS EMOCIONALES"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="323" y="280" width="191" height="22" uuid="830154f5-5703-413c-92d8-74c347ac6ddb"/>
+					<reportElement x="323" y="294" width="191" height="22" uuid="830154f5-5703-413c-92d8-74c347ac6ddb"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) PROBLEMAS CON ALGUN(OS) PROFESOR(ES)"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_PROBLEMS_WITH_TEACHERS}.toString().equals("1") ? "X" : " " )+") PROBLEMAS CON ALGUN(OS) PROFESOR(ES)"]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="323" y="269" width="191" height="11" uuid="a4cbd1f8-0a7f-4d64-a933-3cd4279ebe4a"/>
+					<reportElement x="323" y="283" width="191" height="11" uuid="a4cbd1f8-0a7f-4d64-a933-3cd4279ebe4a"/>
 					<textElement verticalAlignment="Top" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["( ) ADICCIONES"]]></textFieldExpression>
+					<textFieldExpression><![CDATA["("+( $F{FL_ADDICTIONS}.toString().equals("1") ? "X" : " " )+") ADICCIONES"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement stretchType="RelativeToBandHeight" x="24" y="305" width="299" height="11" uuid="f8be8255-bdae-440c-96ff-fe807a477987"/>
+					<textElement verticalAlignment="Top" markup="none">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FL_THAT_OTHERS_FACTORS_PERSONALS}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="0" y="501" width="264" height="48" uuid="07e52470-7a2e-4b2c-b3c8-c4db207210e7"/>
+				<reportElement x="0" y="527" width="264" height="48" uuid="07e52470-7a2e-4b2c-b3c8-c4db207210e7"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -627,7 +788,7 @@
 					<rightPen lineWidth="2.0"/>
 				</box>
 				<staticText>
-					<reportElement x="52" y="26" width="164" height="22" uuid="c915111f-96ca-46ce-a333-6f9e66cf5bc9"/>
+					<reportElement x="52" y="25" width="164" height="22" uuid="c915111f-96ca-46ce-a333-6f9e66cf5bc9"/>
 					<box leftPadding="40" rightPadding="40">
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -639,15 +800,15 @@ TUTOR
 ]]></text>
 				</staticText>
 				<textField>
-					<reportElement x="52" y="0" width="164" height="26" uuid="9a064e3d-3f02-47a7-8975-b1ebe7d73fed"/>
+					<reportElement x="52" y="1" width="164" height="26" uuid="9a064e3d-3f02-47a7-8975-b1ebe7d73fed"/>
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_TUTOR}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="264" y="501" width="264" height="48" uuid="50d7f8ec-bc5b-4544-a971-56d3180431bf"/>
+				<reportElement x="264" y="527" width="264" height="48" uuid="50d7f8ec-bc5b-4544-a971-56d3180431bf"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -655,7 +816,7 @@ TUTOR
 					<rightPen lineWidth="2.0"/>
 				</box>
 				<staticText>
-					<reportElement x="62" y="26" width="164" height="22" uuid="8b8e132c-7730-4528-b003-96a6ff041be7"/>
+					<reportElement x="62" y="25" width="164" height="22" uuid="8b8e132c-7730-4528-b003-96a6ff041be7"/>
 					<box leftPadding="30" rightPadding="30">
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -671,11 +832,11 @@ DIRECTOR DE CARRERA
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_DIRECTOR_CAREER}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="264" y="554" width="264" height="48" uuid="a6655761-9854-42c5-8a30-56e0114cee89"/>
+				<reportElement x="264" y="580" width="264" height="48" uuid="a6655761-9854-42c5-8a30-56e0114cee89"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -683,7 +844,7 @@ DIRECTOR DE CARRERA
 					<rightPen lineWidth="2.0"/>
 				</box>
 				<staticText>
-					<reportElement x="62" y="15" width="164" height="33" uuid="242253c0-6abe-4205-b63c-dbbadd59df91"/>
+					<reportElement x="62" y="14" width="164" height="33" uuid="242253c0-6abe-4205-b63c-dbbadd59df91"/>
 					<box leftPadding="0" rightPadding="0">
 						<topPen lineWidth="1.0"/>
 					</box>
@@ -699,11 +860,11 @@ JEFE DEL DEPARTAMENTO DE SERVICIOS ESCOLARES
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_HEAD_ES}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="0" y="554" width="264" height="48" uuid="fdfff7dc-88c7-4a10-8ae0-a2ea957c30e0"/>
+				<reportElement x="0" y="580" width="264" height="48" uuid="fdfff7dc-88c7-4a10-8ae0-a2ea957c30e0"/>
 				<box>
 					<topPen lineWidth="2.0"/>
 					<leftPen lineWidth="2.0"/>
@@ -727,18 +888,18 @@ JEFE DEL DEPARTAMENTO DE PRESUPUESTO Y CONTABILIDAD
 					<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
 						<font size="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA["Tutor"]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{FL_NAME_HEAD_CP}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<staticText>
-				<reportElement x="0" y="677" width="100" height="11" uuid="ffeb749a-c085-4488-9653-a6eb4e90205c"/>
+				<reportElement x="0" y="669" width="100" height="11" uuid="ffeb749a-c085-4488-9653-a6eb4e90205c"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FE: 09/04/2013]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="428" y="677" width="100" height="11" uuid="6b842abf-8122-493f-905c-2dbde34f60d8"/>
+				<reportElement x="428" y="669" width="100" height="11" uuid="6b842abf-8122-493f-905c-2dbde34f60d8"/>
 				<textElement textAlignment="Center">
 					<font size="8" isBold="true"/>
 				</textElement>
