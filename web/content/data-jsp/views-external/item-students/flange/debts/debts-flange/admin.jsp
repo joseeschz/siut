@@ -27,9 +27,44 @@
 </style>
 <script>
     $(document).ready(function () {
-        var itemPeriod= null;
         var itemPeriodTemp= null;
-        function loadGridStudentsPaid(){
+        function loadSourceStudentsPenalityPaymentsHeader(){      
+            var ordersSource ={
+                dataFields: [
+                    { name: 'dataProgresivNumber', type: 'int' },
+                    { name: 'dataPkPaymentPanalty', type: 'int' },
+                    { name: 'dataDatePayment', type: 'string' },
+                    { name: 'dataUnique', type: 'string' },
+                    { name: 'dataPkCaregoryPayment', type: 'int' },
+                    { name: 'dataPkTypeConcept', type: 'int' },
+                    { name: 'dataPkTypeFormat', type: 'int' },
+                    { name: 'dataStatusPayment', type: 'string' },
+                    { name: 'dataPkStudent', type: 'int' },
+                    { name: 'dataNameStudent', type: 'string' },
+                    { name: 'dataEnrollment', type: 'string' },
+                    { name: 'dataPkStudyLevel', type: 'int' },
+                    { name: 'dataNameLevel', type: 'string' },
+                    { name: 'dataPkCareer', type: 'int' },
+                    { name: 'dataNameAbbreviated', type: 'string' },
+                    { name: 'dataNameCareer', type: 'string' },
+                    { name: 'dataPkSemester', type: 'int' },
+                    { name: 'dataNameSemester', type: 'string' },
+                    { name: 'dataPkPeriod', type: 'int' },
+                    { name: 'dataNamePeriod', type: 'string' }
+                ],
+                dataType: "json",
+                root: "__ENTITIES",
+                id: "dataPkPaymentPanalty",
+                async: false,
+                url: '../serviceStudentsPenaltyPayments?view',
+                data : {
+                    
+                }
+            };
+            return ordersSource;
+        }
+        
+        function loadGridDebtsStudents(){
             var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentsPenalityPaymentsHeader());  
             var tooltiprenderer = function (element) {
                 $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
@@ -52,14 +87,14 @@
                     { text: 'Matrícula', align: 'center', dataField: 'dataEnrollment', width: 120, rendered: tooltiprenderer },
                     { text: 'Alumno', align: 'center', dataField: 'dataNameStudent', width: 250, rendered: tooltiprenderer},
                     { text: 'Nivel de estudio', align: 'center', dataField: 'dataNameLevel', cellsalign: 'center', width: 150, rendered: tooltiprenderer},
-                    { text: 'Fecha de Recibido', align: 'center', cellsalign: 'center', dataField: 'dataDatePayment', width: 130, rendered: tooltiprenderer},
                     { text: 'Carrera', align: 'center', dataField: 'dataNameCareer', width: 350, rendered: tooltiprenderer}
                 ],
                 columnsResize: false
             });
         }    
+        loadGridDebtsStudents();
         
-        function payConcept(params){
+        function registerDebt(params){
             console.log("Opening Window");
             var records = undefined;
             var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentInfo(params.enrollment), {
@@ -96,9 +131,11 @@
             $("#labelStudentName").text("");
             $("#labelStudyLevel").text("");
             $("#labelCareer").text("");
+            $("#motive").val("");
+            $("#mount").val(0);
         }
         
-        function loadSourceStudentPenaltyPaymentsPaidDetailByHeader(pk_student_payment_penality_header){            
+        function loadSourceDebtDetailByHeader(pk_student_payment_penality_header){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
@@ -166,7 +203,7 @@
             return ordersSource;
         }
         
-        function loadSourceStudentPenaltyPaymentsDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryMaster, pt_fkTypeFormat, pt_fkStudent){            
+        function loadSourceStudentDebtDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryMaster, pt_fkTypeFormat, pt_fkStudent){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
@@ -234,68 +271,12 @@
             return ordersSource;
         }
         
-        function loadSourceStudentsPenalityPaymentsHeader(){      
-            var ordersSource ={
-                dataFields: [
-                    { name: 'dataProgresivNumber', type: 'int' },
-                    { name: 'dataPkPaymentPanalty', type: 'int' },
-                    { name: 'dataDatePayment', type: 'string' },
-                    { name: 'dataUnique', type: 'string' },
-                    { name: 'dataPkCaregoryPayment', type: 'int' },
-                    { name: 'dataPkTypeConcept', type: 'int' },
-                    { name: 'dataPkTypeFormat', type: 'int' },
-                    { name: 'dataStatusPayment', type: 'string' },
-                    { name: 'dataPkStudent', type: 'int' },
-                    { name: 'dataNameStudent', type: 'string' },
-                    { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataPkStudyLevel', type: 'int' },
-                    { name: 'dataNameLevel', type: 'string' },
-                    { name: 'dataPkCareer', type: 'int' },
-                    { name: 'dataNameAbbreviated', type: 'string' },
-                    { name: 'dataNameCareer', type: 'string' },
-                    { name: 'dataPkSemester', type: 'int' },
-                    { name: 'dataNameSemester', type: 'string' },
-                    { name: 'dataPkPeriod', type: 'int' },
-                    { name: 'dataNamePeriod', type: 'string' }
-                ],
-                dataType: "json",
-                root: "__ENTITIES",
-                id: "dataPkPaymentPanalty",
-                async: false,
-                url: '../serviceStudentsPenaltyPayments?view',
-                data : {
-                    pt_fkPeriod : itemPeriod.value
-                }
-            };
-            return ordersSource;
-        }
-
-        
-        if(itemPeriod!=null || itemPeriod!= undefined){
-            $("#payPeriodHeaderFilter").on('change',function (event){  
-                var args = event.args;
-                if (args){
-                    // index represents the item's index.                      
-                    var index = args.index;
-                    var item = args.item;
-                    // get item's label and value.
-                    var label = item.label;
-                    var value = item.value;
-                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.  
-                    loadGridStudentsPaid();
-                }                
-            });
-            
-            
-            loadGridStudentsPaid();
-        }
-        
         function loadDataWindowDetailPayment(dataHeader){
             $("#labelEnrollmentDetail").text(dataHeader.dataEnrollment);
             $("#paySemesterFilterDetail").text(dataHeader.dataNameSemester);
             $("#payPeriodTempFilterDetail").text(itemPeriod.label);
             $("#datePayment").text(dataHeader.dataDatePayment); 
-            loadGridDetailFUDPPayment(dataHeader);
+            loadGridDetailDebt(dataHeader);
             popupWindowPaymentDetail.jqxWindow('open'); 
         }
         var rendertoolbar = function(toolBar){
@@ -359,8 +340,8 @@
                 }
             });
         };
-        function loadGridDetailFUDPPayment(dataHeader){   
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentPenaltyPaymentsPaidDetailByHeader(dataHeader.dataPkPaymentPanalty));  
+        function loadGridDetailDebt(dataHeader){   
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceDebtDetailByHeader(dataHeader.dataPkPaymentPanalty));  
             var tooltiprenderer = function (element) {
                 $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
             };
@@ -410,7 +391,7 @@
                     pkStudent : pkStudent,
                     enrollment : enrollment
                 };
-                payConcept(params);
+                registerDebt(params);
             }
         });
         $("#removeEnrollment").click(function (){
@@ -426,10 +407,9 @@
             modalOpacity: 0.7,
             keyboardCloseKey: "esc"
         });
-        var height = $(window).height();
         var popupWindowPay = $("#popupWindowPay").jqxWindow({ 
             width: 400,
-            height: 650,
+            height: 680,
             resizable: false, 
             isModal: true, 
             autoOpen: false, 
@@ -449,7 +429,7 @@
                 });
                 $('#motive').jqxTextArea({ 
                     placeHolder: 'Espesifique el motivo...', 
-                    height: 90, 
+                    height: 70, 
                     width: 300, 
                     minLength: 1
                 });
@@ -475,9 +455,22 @@
         });
         $('#validateButton').click(function(){
             var validate = function (){
+                console.log($("#mount").val())
+                if($("#mount").val()>=1){
+                    $("#messageValidation").text("");
+                    if($("#motive").val()!==""){
+                        $("#messageValidation").text("");
+                    }else{
+                        $("#messageValidation").text("Debe de especificar el motivo");
+                        return false;
+                    }
+                }else{
+                    $("#messageValidation").text("El monto debe de ser mayor a $1.00");
+                    return false;
+                }
                 return true;
             };
-            if(validate){
+            if(validate()){
                 $(popupWindowConfirmPayment).jqxWindow('open');
             }
         });
@@ -502,13 +495,19 @@
                 });                
             }
         });
-         $('#okConfirm').click(function (){
+        $('#okConfirm').click(function (){
            itemPeriodTemp = $('#payPeriodTempFilter').jqxDropDownList('getSelectedItem');  
             var totalToPayment = $("#mount").val();
+            var status_debt=0;
+            if($("#statusYes").val()){
+                status_debt=1;
+            }
             var dataParams = {
                 pt_pk_period : itemPeriodTemp.value,
                 pt_pk_student : $("#hidenPkStudent").val(),    
-                pt_total : totalToPayment
+                pt_motive : $("#motive").val(),
+                pt_total : totalToPayment,
+                pt_debt_status : status_debt
             }; 
             registerPaymentsDetail(dataParams);
         });
@@ -556,9 +555,7 @@
             toggleMode: "none"
         });  
         function registerPaymentsDetail(dataParamsHeader){   
-            console.log("Begin");
-            console.log("---");
-            var failsInserted=0;            
+            console.log("Begin");          
             $.ajax({
                 url:"../serviceDebt?inserDetail",
                 data: dataParamsHeader,
@@ -569,30 +566,23 @@
                     $("#loading").show();
                 },
                 success: function (data, textStatus, jqXHR) {
+                    alert();
+                    $(popupWindowConfirmPayment).jqxWindow('close');
+                    $(popupWindowPay).jqxWindow('close');
                     if(data.Inserted){
-                        failsInserted=0;
                         $("#messageValidation").text("");
                     }else{
                         $("#loading").hide();
-                    }
+                    }                    
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
+                    alert("Error interno del servidor");
+                    $(popupWindowConfirmPayment).jqxWindow('close');
                     $("#loading").hide();
                 }
-            });
+            });           
             
-            
-            $("#loading").hide();    
-            
-            if(failsInserted>0){
-                $("#messageStatusPayment").text("No fue posible realizar correctamente la operación por favor repita el proceso");
-                $("#okConfirm").hide();
-                $("#closeButtonConfirm").show();
-            }else{
-                popupWindowPay.jqxWindow('close');
-                $("#messageStatusPayment").text("El proceso fue realizado con exito");               
-                $("#closeButtonConfirm").hide();
-            }             
+            $("#loading").hide();            
             console.log("End");
         }
     });
@@ -678,6 +668,9 @@
                     <div style='margin-top: 10px; display: inline-block' id='statusYes'>SI</div>
                     <div style='margin-top: 10px; display: inline-block' id='statusNot'>NO</div>
                 </div>
+                <div class="conditionalHiden" style="display: inline-block">
+                    <div style="text-align: left; font-size: 15px"><span id="messageValidation" style="color: red"></span></div>
+                </div>
                 <br>                 
             </div>
         </div>
@@ -686,10 +679,7 @@
                 <input type="button" value="VALIDAR DATOS" id="validateButton" />
                 <input type="button" value="SALIR" id="closeButton" />
             </div>
-        </div>
-        <div class="conditionalHiden">
-            <div style="text-align: left; font-size: 24px"><span id="messageValidation" style="color: red"></span></div>
-        </div>
+        </div>        
     </div>
 </div>
 <div id="popupWindowConfirmPayment">

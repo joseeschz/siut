@@ -9,14 +9,14 @@ package model;
  *
  * @author Lab5-E
  */
-public class debtModelDetail {
+public class debtDetailModel {
     int PK_DEBT_DETAIL=0;
-    int FK_STUDENT=0;
+    studentModel studentMdl;
     String FL_ROW_DATE="";
     String FL_MOUNT="";
-    int FK_DEBT=0;
+    debtModel debtMdl;
     String FL_MOTIVE="";
-    periodModel periMdl;    
+    periodModel periodMdl;    
     String FL_STATUS_NOW_DEBT="";
 
     public int getPK_DEBT_DETAIL() {
@@ -27,12 +27,12 @@ public class debtModelDetail {
         this.PK_DEBT_DETAIL = PK_DEBT_DETAIL;
     }
 
-    public int getFK_STUDENT() {
-        return FK_STUDENT;
+    public studentModel getStudentMdl() {
+        return studentMdl;
     }
 
-    public void setFK_STUDENT(int FK_STUDENT) {
-        this.FK_STUDENT = FK_STUDENT;
+    public void setStudentMdl(studentModel studentMdl) {
+        this.studentMdl = studentMdl;
     }
 
     public String getFL_ROW_DATE() {
@@ -51,12 +51,12 @@ public class debtModelDetail {
         this.FL_MOUNT = FL_MOUNT;
     }
 
-    public int getFK_DEBT() {
-        return FK_DEBT;
+    public debtModel getDebtMdl() {
+        return debtMdl;
     }
 
-    public void setFK_DEBT(int FK_DEBT) {
-        this.FK_DEBT = FK_DEBT;
+    public void setDebtMdl(debtModel debtMdl) {
+        this.debtMdl = debtMdl;
     }
 
     public String getFL_MOTIVE() {
@@ -67,12 +67,12 @@ public class debtModelDetail {
         this.FL_MOTIVE = FL_MOTIVE;
     }
 
-    public periodModel getPeriMdl() {
-        return periMdl;
+    public periodModel getPeriodMdl() {
+        return periodMdl;
     }
 
-    public void setPeriMdl(periodModel periMdl) {
-        this.periMdl = periMdl;
+    public void setPeriodMdl(periodModel periodMdl) {
+        this.periodMdl = periodMdl;
     }
 
     public String getFL_STATUS_NOW_DEBT() {
@@ -82,4 +82,5 @@ public class debtModelDetail {
     public void setFL_STATUS_NOW_DEBT(String FL_STATUS_NOW_DEBT) {
         this.FL_STATUS_NOW_DEBT = FL_STATUS_NOW_DEBT;
     }
+    
 }
