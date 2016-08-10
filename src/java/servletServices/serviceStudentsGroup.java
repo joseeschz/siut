@@ -62,6 +62,26 @@ public class serviceStudentsGroup extends HttpServlet {
                         content.add(datos); 
                     }
                 }
+                if(request.getParameter("view").equals("consultGroupStay")){
+                    int fk_career = Integer.parseInt(request.getParameter("fkCareer"));
+                    int fk_semester = Integer.parseInt(request.getParameter("fkSemester"));
+                    int fk_group = Integer.parseInt(request.getParameter("fkGroup"));
+                    int fk_subject_matter = Integer.parseInt(request.getParameter("fkSubjectMatter"));
+                    int fk_period = Integer.parseInt(request.getParameter("fkPeriod"));
+                    listGroupStudent = new groupStudentControl().SelectGroupStudent(fk_career, fk_semester, fk_group, fk_subject_matter, fk_period);
+                    for(int i=0;i<listGroupStudent.size();i++){
+                        JSONObject datos = new JSONObject();
+                        datos.put("dataID", i+1);
+                        datos.put("dataPkGroupMatterTeacherStudent", listGroupStudent.get(i).getPK_GROUP_MATTER_TEACHER());
+                        datos.put("dataProgresivNumber", i+1);
+                        datos.put("dataEnrollment", listGroupStudent.get(i).getFL_ENROLLMENT());
+                        datos.put("dataStudentName", listGroupStudent.get(i).getFL_STUDENT_NAME());
+                        datos.put("dataPkTutor", listGroupStudent.get(i).getFK_TUTOR_TEACHER());
+                        datos.put("dataDeliveryDescription", "No entregado");
+                        datos.put("dataDeliveryStatus", false);
+                        content.add(datos); 
+                    }
+                }
                 if(request.getParameter("view").equals("insert")){
                     for(int i=0;i<50;i++){
                         JSONObject datos = new JSONObject();

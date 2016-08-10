@@ -70,7 +70,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             });             
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#transactLowTab").load("../content/data-jsp/views-external/item-students/flange/process/director/authorized-flange/index.jsp");
+            $("#transactLowTab").load("../content/data-jsp/views-external/item-students/flange/process/director/archived-flange/index.jsp");
         });
     </script>
     <div id="popupWindowDoc">
@@ -105,7 +105,7 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="generate-down">Bajas Registradas por DSE</li>
+            <li class="jqxTabsTitle" dir="generate-down">Bajas Archivadas</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

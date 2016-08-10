@@ -73,6 +73,43 @@ public class lowOfStudentControl {
         return list;
     }
     
+    public ArrayList<lowOfStudentModel> SelectStudentsLowsArchivedByDirector(int fkCarrer, int fkPeriod){
+        procedure="CALL `GET_LOW_STUDENT`(?, null, ?, null, null, ?)";
+        ArrayList<lowOfStudentModel> list=new ArrayList<>();        
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "studentsLowsArchivedByDirector"); 
+            ps.setInt(2, fkCarrer); 
+            ps.setInt(3, fkPeriod); 
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){                    
+                    lowOfStudentModel lowOfStudentMdl = new lowOfStudentModel();
+                    studentModel  studentMdl= new studentModel();
+                    semesterModel semesterMdl=new semesterModel();
+                    groupModel groupModel=new groupModel();
+                    lowOfStudentMdl.setPK_LOW_STUDENT(res.getInt("PK_LOW_STUDENT"));
+                    studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
+                    studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));          
+                    lowOfStudentMdl.setFL_ARCHIVED_DIR(res.getString("FL_ARCHIVED_DIR"));    
+                    lowOfStudentMdl.setStudentMdl(studentMdl);       
+                    semesterMdl.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    lowOfStudentMdl.setSemesterMdl(semesterMdl);
+                    groupModel.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    lowOfStudentMdl.setGroupMdl(groupModel);
+                    list.add(lowOfStudentMdl);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(lowOfStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public ArrayList<lowOfStudentModel> SelectStudentsLowsAuthorizedByDirector(int fkCarrer, int fkPeriod){
         procedure="CALL `GET_LOW_STUDENT`(?, null, ?, null, null, ?)";
         ArrayList<lowOfStudentModel> list=new ArrayList<>();        
@@ -91,7 +128,8 @@ public class lowOfStudentControl {
                     lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
                     studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
-                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));                    
+                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));          
+                    lowOfStudentMdl.setFL_ARCHIVED_DIR(res.getString("FL_ARCHIVED_DIR"));    
                     lowOfStudentMdl.setStudentMdl(studentMdl);       
                     semesterMdl.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
                     lowOfStudentMdl.setSemesterMdl(semesterMdl);

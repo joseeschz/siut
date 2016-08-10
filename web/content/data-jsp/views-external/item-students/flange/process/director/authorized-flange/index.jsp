@@ -89,7 +89,7 @@
                     { name: 'dataSemester', type: 'string' },
                     { name: 'dataGroup', type: 'string' },
                     { name: 'dataDown', type: 'string' },
-                    { name: 'dataStatusES', type: 'string' }
+                    { name: 'dataArchive', type: 'string' }
                 ],
                 dataType: "json",
                 id: "dataPkLowStundet",
@@ -104,17 +104,17 @@
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failder.
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    var statusDown;
+                    var statusArchive;
                     if(rowdata.dataDown==="Si"){
-                        statusDown="authorizateLow";
+                        statusArchive="authorizateArchived";
                     }else{
-                        statusDown="removeLow";
+                        statusArchive="removeArchived";
                     }
-                    if(statusDown==="authorizateLow"){                 
-                        $("#messageWarning").text("Estas seguro de aprobar baja para el alumno ");
+                    if(statusArchive==="authorizateArchived"){                 
+                        $("#messageWarning").text("Estas seguro de archivar la baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                        $("#period").text(" en el periodo "+itemPeriod.label);
+                        $("#period").text(" en el periodo "+itemPeriod.label+".");
                         $("#jqxWindowAlert").jqxWindow('open');              
                         $('#okWarning').off("click");
                         $('#okWarning').on("click",function (){
@@ -126,7 +126,7 @@
                                 url: "../serviceLowOfStudent?update",
                                 data:{
                                     'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
+                                    'pt_field_name' : 'fl_archived_dir',
                                     'pt_field_value' : 1
                                 },
                                 beforeSend: function (xhr) {
@@ -148,7 +148,7 @@
                             commit(false);
                         });
                     }else{
-                        $("#messageWarning").text("Estas seguro de cancelar el proceso de la baja para el alumno ");
+                        $("#messageWarning").text("Estas seguro de no archivar la baja para el alumno  ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
                         $("#period").text(" en el periodo "+itemPeriod.label);
@@ -163,7 +163,7 @@
                                 url: "../serviceLowOfStudent?update",
                                 data:{
                                     'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
+                                    'pt_field_name' : 'fl_archived_dir',
                                     'pt_field_value' : 0
                                 },
                                 beforeSend: function (xhr) {
@@ -244,6 +244,7 @@
                             return "<div style='margin:4px;'>" + (value + 1) + "</div>";
                         }
                     },
+                    { text: 'Archivar', align: 'center', cellsalign: 'center', dataField: 'dataArchive', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
                     { text: 'Folio de Baja',align: 'center', dataField: 'dataFolio', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
@@ -262,7 +263,7 @@
                 var rowData = args.row;
                 
                 if(args){
-                    $("#tableRequestLows").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
+                    $("#tableRequestLows").jqxGrid('endcelledit', rowBoundIndex, "dataArchive", false);
                 }
             });
         }        
@@ -320,27 +321,6 @@
                         $("#popupWindowDoc").jqxWindow('show');
                     }
                 });                
-            }
-        });
-        $("#tableRequestLows").on('rowclick', function (event) {
-            if (event.args.rightclick) {
-                var data = $('#tableRequestLows').jqxGrid('getrowdata', event.args.rowindex);
-                $("#tableRequestLows").jqxGrid('selectrow', event.args.rowindex);
-                if(data.dataDown==="Si"){
-                    $("#contextMenu").jqxMenu('disable', 'authorizate', false);
-                }else{
-                    $("#contextMenu").jqxMenu('disable', 'authorizate', true);
-                }   
-                console.log(data.dataStatusES)
-                if(data.dataStatusES==="Autorizada"){
-                    $("#contextMenu").jqxMenu('disable', 'print', false);
-                }else{
-                    $("#contextMenu").jqxMenu('disable', 'print', true);
-                }
-                var scrollTop = $(window).scrollTop();
-                var scrollLeft = $(window).scrollLeft();
-//                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-                return false;
             }
         });
         

@@ -195,7 +195,7 @@
                             return "<div style='margin:4px;'>" + (value + 1) + "</div>";
                         }
                     },
-                    { text: 'Archivar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
+                    { text: 'Registrar y Archivar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 200, cellclassname: cellclass, editable: true, filterable: true},
                     { text: 'Folio de Baja',align: 'center', dataField: 'dataFolio', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Alumno', align: 'center', dataField: 'dataName', width: 250, cellclassname: cellclass, editable: false, filterable: false},

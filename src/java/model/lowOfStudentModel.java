@@ -64,6 +64,7 @@ public class lowOfStudentModel {
     groupModel groupMdl;
     String FL_STATUS_DIR;
     String FL_STATUS_ES;
+    String FL_ARCHIVED_DIR;
 
     public int getPK_LOW_STUDENT() {
         return PK_LOW_STUDENT;
@@ -495,6 +496,14 @@ public class lowOfStudentModel {
 
     public void setFL_STATUS_ES(String FL_STATUS_ES) {
         this.FL_STATUS_ES = FL_STATUS_ES;
+    }
+
+    public String getFL_ARCHIVED_DIR() {
+        return FL_ARCHIVED_DIR;
+    }
+
+    public void setFL_ARCHIVED_DIR(String FL_ARCHIVED_DIR) {
+        this.FL_ARCHIVED_DIR = FL_ARCHIVED_DIR;
     }
     
 }

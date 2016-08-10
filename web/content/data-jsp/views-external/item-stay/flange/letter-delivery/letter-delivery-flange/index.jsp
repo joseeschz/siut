@@ -3,25 +3,63 @@
         var itemLevel = 0;
         var itemCareer = 0;
         var itemPeriod = 0;
-        createDropDownStudyLevelByDirector("#generateDownLevelFilter",false);
+        var itemGroup = 0;
+        var itemSemester = 0;
+        var itemSubjectMatter =0;
+        
+        var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+        var exportButton = $(buttonTemplate);
+        var container = $("<div class='container' style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+        createDropDownStudyLevelByTeacherTutor("#generateDownLevelFilter",false);
         itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
         if(itemLevel!==undefined){
-            createDropDownCareerByDirector( itemLevel.value ,"#generateDownCareerFilter",false);
+            createDropDownCareerByTeacherTutor( itemLevel.value ,"#generateDownCareerFilter",false);
             itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
             createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
             itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
             if(itemPeriod!==undefined){
-                if(itemCareer!==undefined){
-                    loadGridStudents();
-                }                
+                createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",false);
+                itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                if(itemSemester!==undefined){
+                    createDropDownGruopByTeacherTutor(itemPeriod.value, itemSemester.value, "#generateDownGroupFilter",false);
+                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');                    
+                    if(itemGroup!==undefined || itemGroup!==null){
+                        var filtrable = {
+                            pkCareer : itemCareer.value,
+                            pkSemester : itemSemester.value,
+                            pkGroup : itemGroup.value,
+                            pkPeriod : itemPeriod.value
+                        };
+                        createDropDownSubjectMatterByGroup(filtrable, "#generateDownSubjectMatterFilter", false);
+                        itemSubjectMatter=$('#generateDownSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                        if(itemSubjectMatter !==undefined || itemSubjectMatter!==null){
+                            loadGridStudents();
+                        }else{
+                            
+                        }                        
+                    }
+                }else{
+                    createDropDownGruopByTeacherTutor(null, null, "#generateDownGroupFilter",false);
+                }
+            }else{
+                createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter",false);
+                createDropDownGruopByTeacherTutor(null, null, "#generateDownGroupFilter",false);
             }
             $('#generateDownLevelFilter').on('change',function (event){  
                 itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
                 if(itemLevel!==undefined){
-                    createDropDownCareerByDirector(itemLevel.value, "#generateDownCareerFilter", true);
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownCareerByTeacherTutor(itemLevel.value, "#generateDownCareerFilter", true);
+                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+                    if(itemPeriod!==undefined){
+                        itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
+                        createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter", true);
+                        itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem'); 
+                    }else{
+                        createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
+                    }
                 }else{
-                    createDropDownCareerByDirector(null, "#generateDownCareerFilter", true);
+                    createDropDownCareerByTeacherTutor(null, "#generateDownCareerFilter", true);
+                    createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
                 }
                 
             });
@@ -36,15 +74,15 @@
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
                     itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    if(itemPeriod!==undefined){
-                        if(itemCareer!==undefined){
-                            loadGridStudents();
-                        }                
-                    }
+                    itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",true);
+                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
                 }                
             });
-            $('#generateDownPeriodFilter').on('change',function (event){  
+            $("#generateDownSemesterFilter").on('change',function (event){
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -55,48 +93,94 @@
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
                     itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    if(itemPeriod!==undefined){
-                        if(itemCareer!==undefined){
-                            loadGridStudents();
-                        }                
-                    }
-                }                
+                    itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",true);
+                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                }
+            });
+            $("#generateDownSubjectMatterFilter").on('change',function (event){  
+                var args = event.args;
+                if (args) {
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                    loadGridStudents();
+                }
+            });
+            $("#generateDownGroupFilter").on('change',function (event){  
+                var args = event.args;
+                if (args) {
+                    // index represents the item's index.                      
+                    var index = args.index;
+                    var item = args.item;
+                    // get item's label and value.
+                    var label = item.label;
+                    var value = item.value;
+                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
+                    loadGridStudents();
+                }
             });
         }else{
-            createDropDownCareerByDirector(null ,"#generateDownCareerFilter",false);
+            createDropDownCareerByTeacherTutor(null ,"#generateDownCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
+            createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter",false);
+            createDropDownGruopByTeacher(null, null, "#generateDownGroupFilter",false);
         }
         function loadSource(){
             var valItemCareer=0;
+            var valItemGroup=0;
+            var valItemSemester=0;
             var valItemPeriod=0;
+            var valItemSubjectMatter=0;
             itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
+            itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
             itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemSubjectMatter = $('#generateDownSubjectMatterFilter').jqxDropDownList('getSelectedItem');
             
             if(itemCareer!==undefined){
                 valItemCareer=itemCareer.value;
             }
+            if(itemGroup!==undefined){
+                valItemGroup=itemGroup.value;
+            }
+            if(valItemSemester!==undefined){
+                valItemSemester=itemSemester.value;
+            }
             if(itemPeriod!==undefined){
                 valItemPeriod=itemPeriod.value;
-            }            
+            }      
+            if(valItemSubjectMatter!==undefined){
+                valItemSubjectMatter=itemSubjectMatter.value;
+            }  
             var ordersSource ={
                 dataFields: [
                     { name: 'dataPkLowStundet', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataName', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataSemester', type: 'string' },
-                    { name: 'dataGroup', type: 'string' },
                     { name: 'dataDown', type: 'string' },
+                    { name: 'dataStatusDir', type: 'string' },
                     { name: 'dataStatusES', type: 'string' }
                 ],
                 dataType: "json",
                 id: "dataPkLowStundet",
                 async: false,
-                url: '../serviceLowOfStudent?selectStudentsLowsTempsDirector',
+                url: '../serviceStudentsGroup?view=consultGroupStay',
+                root:'__ENTITIES',
                 data : {
                     fkPeriod : valItemPeriod,
-                    fkCareer : valItemCareer                 
+                    fkCareer : valItemCareer,
+                    fkSemester : valItemSemester,
+                    fkGroup : valItemGroup,
+                    fkSubjectMatter : valItemSubjectMatter
                 },
                 updaterow: function (rowid, rowdata, commit) {
                     // synchronize with the server - send update command
@@ -105,50 +189,12 @@
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
                     var statusDown;
                     if(rowdata.dataDown==="Si"){
-                        statusDown="authorizateLow";
+                        statusDown="generateDown";
                     }else{
-                        statusDown="removeLow";
+                        statusDown="removeDown";
                     }
-                    if(statusDown==="authorizateLow"){                 
-                        $("#messageWarning").text("Estas seguro de autorizar la baja para el alumno ");
-                        $("#studentName").text(rowdata.dataName);
-                        $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                        $("#period").text(" en el periodo "+itemPeriod.label+",");
-                        $("#semester").text(" correspondiente al cuatrimestre "+rowdata.dataSemester+".");
-                        $("#jqxWindowAlert").jqxWindow('open');              
-                        $('#okWarning').off("click");
-                        $('#okWarning').on("click",function (){
-                            $("#jqxWindowAlert").jqxWindow('close'); 
-                            $.ajax({
-                                //Send the paramethers to servelt
-                                type: "POST",
-                                async: false,
-                                url: "../serviceLowOfStudent?update",
-                                data:{
-                                    'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
-                                    'pt_field_value' : 1
-                                },
-                                beforeSend: function (xhr) {
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    //This is if exits an error with the server internal can do server off, or page not found
-                                    alert("Error interno del servidor");
-                                    commit(false);
-                                },
-                                success: function (data_result, textStatus, jqXHR) { 
-                                    loadGridStudents();
-                                    console.log(data_result);
-                                }
-                            });  
-                        });
-                        $('#cancelWarning').off("click");
-                        $('#cancelWarning').on("click",function (){                            
-                            $("#jqxWindowAlert").jqxWindow('close'); 
-                            commit(false);
-                        });
-                    }else{
-                        $("#messageWarning").text("Estas seguro de cancelar el proceso de la baja para el alumno ");
+                    if(statusDown==="generateDown"){                 
+                        $("#messageWarning").text("Estas seguro de gestionar baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
                         $("#period").text(" en el periodo "+itemPeriod.label);
@@ -160,11 +206,10 @@
                                 //Send the paramethers to servelt
                                 type: "POST",
                                 async: false,
-                                url: "../serviceLowOfStudent?update",
+                                url: "../serviceLowOfStudent?insert",
                                 data:{
-                                    'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
-                                    'pt_field_value' : 0
+                                    'pt_pk_student': rowdata.dataPkStudent,
+                                    'pt_pk_period': itemPeriod.value
                                 },
                                 beforeSend: function (xhr) {
                                 },
@@ -174,8 +219,9 @@
                                     commit(false);
                                 },
                                 success: function (data_result, textStatus, jqXHR) { 
-                                    commit(true);
                                     console.log(data_result);
+                                    loadGridStudents();
+                                    
                                 }
                             });  
                         });
@@ -184,7 +230,50 @@
                             $("#jqxWindowAlert").jqxWindow('close'); 
                             commit(false);
                         });
+                    }else{
+                        if(rowdata.dataStatusDir==="Autorizada"){
+                            $("#messageError").text("La baja no puede ser cancelada si ya fue autorizada por el Director");
+                            $("#jqxWindowError").jqxWindow('open'); 
+                            commit(false);
+                        }else{
+                            $("#messageWarning").text("Estas seguro de cancelar la baja para el alumno ");
+                            $("#studentName").text(rowdata.dataName);
+                            $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
+                            $("#period").text(" en el periodo "+itemPeriod.label);
+                            $("#jqxWindowAlert").jqxWindow('open');              
+                            $('#okWarning').off("click");
+                            $('#okWarning').on("click",function (){
+                                $("#jqxWindowAlert").jqxWindow('close'); 
+                                $.ajax({
+                                    //Send the paramethers to servelt
+                                    type: "POST",
+                                    async: false,
+                                    url: "../serviceLowOfStudent?delete",
+                                    data:{
+                                        'pt_pk_low_student': rowid
+                                    },
+                                    beforeSend: function (xhr) {
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        //This is if exits an error with the server internal can do server off, or page not found
+                                        alert("Error interno del servidor");
+                                        commit(false);
+                                    },
+                                    success: function (data_result, textStatus, jqXHR) { 
+                                        commit(true);
+                                        console.log(data_result);
+                                    }
+                                });  
+                            });
+                            $('#cancelWarning').off("click");
+                            $('#cancelWarning').on("click",function (){                            
+                                $("#jqxWindowAlert").jqxWindow('close'); 
+                                commit(false);
+                            });
+                        }
                     }
+                    
+                    
                 }
             };
             return ordersSource;
@@ -221,7 +310,7 @@
                 return value;
             };
             var dataAdapter = new $.jqx.dataAdapter(loadSource());  
-            $("#tableRequestLows").jqxGrid({
+            $("#tableGenerateDown").jqxGrid({
                 width: 850,
                 height: 450,
                 selectionMode: "singlerow",
@@ -233,7 +322,7 @@
                 filterable: true,
                 altRows: true,
                 ready: function(){
-                    $("#tableRequestLows").jqxGrid('focus');
+                    $("#tableGenerateDown").jqxGrid('focus');
                 },
                 columns: [
                     {
@@ -246,14 +335,13 @@
                     },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Cuatrimestre', align: 'center', cellsalign: 'center', dataField: 'dataSemester', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Grupo', align: 'center', cellsalign: 'center', dataField: 'dataGroup', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Autorizar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true}
+                    { text: 'Gestionar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
+                    { text: 'Estado Dir', align: 'center', cellsalign: 'center', dataField: 'dataStatusDir', width: 100, cellclassname: cellclass, editable: false, filterable: false}
                 ],
                 columnsresize: false
             });
-            $('#tableRequestLows').off('rowunselect');
-            $('#tableRequestLows').on('rowunselect', function (event){
+            $('#tableGenerateDown').off('rowunselect');
+            $('#tableGenerateDown').on('rowunselect', function (event){
                 // event arguments.
                 var args = event.args;
                 // row's bound index.
@@ -262,19 +350,19 @@
                 var rowData = args.row;
                 
                 if(args){
-                    $("#tableRequestLows").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
+                    $("#tableGenerateDown").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
                 }
             });
         }        
         var contextMenu = $("#contextMenu").jqxMenu({ width: 180, autoOpenPopup: false, mode: 'popup'});
-        $("#tableRequestLows").on('contextmenu', function () {
+        $("#tableGenerateDown").on('contextmenu', function () {
             return false;
         });
         // handle context menu clicks.
         $("#contextMenu").on('itemclick', function (event) {
             var args = event.args;
-            var rowindex = $("#tableRequestLows").jqxGrid('getselectedrowindex');
-            var data = $('#tableRequestLows').jqxGrid('getrowdata', rowindex);
+            var rowindex = $("#tableGenerateDown").jqxGrid('getselectedrowindex');
+            var data = $('#tableGenerateDown').jqxGrid('getrowdata', rowindex);
             if ($.trim($(args).text()) === "Llenar Formato"){
                 itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
                 $.ajax({
@@ -322,24 +410,23 @@
                 });                
             }
         });
-        $("#tableRequestLows").on('rowclick', function (event) {
+        $("#tableGenerateDown").on('rowclick', function (event) {
             if (event.args.rightclick) {
-                var data = $('#tableRequestLows').jqxGrid('getrowdata', event.args.rowindex);
-                $("#tableRequestLows").jqxGrid('selectrow', event.args.rowindex);
+                var data = $('#tableGenerateDown').jqxGrid('getrowdata', event.args.rowindex);
+                $("#tableGenerateDown").jqxGrid('selectrow', event.args.rowindex);
                 if(data.dataDown==="Si"){
-                    $("#contextMenu").jqxMenu('disable', 'authorizate', false);
+                    $("#contextMenu").jqxMenu('disable', 'generate', false);
                 }else{
-                    $("#contextMenu").jqxMenu('disable', 'authorizate', true);
+                    $("#contextMenu").jqxMenu('disable', 'generate', true);
                 }   
-                console.log(data.dataStatusES)
-                if(data.dataStatusES==="Autorizada"){
+                if(data.dataStatusDir==="Autorizada"){
                     $("#contextMenu").jqxMenu('disable', 'print', false);
                 }else{
                     $("#contextMenu").jqxMenu('disable', 'print', true);
                 }
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
-//                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
                 return false;
             }
         });
@@ -371,15 +458,31 @@
     Carrera <br>
     <div id='generateDownCareerFilter'></div>
 </div>
-<div style="float: right; margin-right: 5px;">
+<div id="contentHistoryPeriods" style="display: none; float: right; right: 100px; position: absolute; z-index: 10000;">
+    Periodo historial <br>
+    <div id='generateDownPeriodHistoryFilter'></div>
+</div>
+<div style="float: right; margin-right: 5px; display: none">
     Periodo <br>
     <div id='generateDownPeriodFilter'></div>
 </div>
 <br><br><br>
-<div style="float: left; margin-right: 5px" id="tableRequestLows"></div>
+<div style="float: left; margin-right: 5px;">
+    Cuatrimestre<br>
+    <div id='generateDownSemesterFilter'></div>
+</div>
+<div style="float: left; margin-right: 5px;">
+    Grupo<br>
+    <div id='generateDownGroupFilter'></div>
+</div>
+<div style="float: left; margin-right: 5px;">
+    Materia<br>
+    <div id='generateDownSubjectMatterFilter'></div>
+</div>
+<div style="float: left; margin-right: 5px" id="tableGenerateDown"></div>
 <div id='contextMenu'>
     <ul>
-        <li id="authorizate">Llenar Formato</li>
+        <li id="generate">Llenar Formato</li>
         <li id="print">Imprimir Formato</li>
     </ul>
 </div>
