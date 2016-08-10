@@ -110,7 +110,7 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="generate-down">Bajas Gestionadas</li>
+            <li class="jqxTabsTitle" dir="generate-down">Bajas en Proceso</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

@@ -37,6 +37,41 @@ public class serviceLowOfStudent extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("selectStudentsLowsArchivedByDirector")!=null){
+                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
+                ArrayList<lowOfStudentModel> listStudents=new lowOfStudentControl().SelectStudentsLowsArchivedByDirector(fkCareer, fkPeriod);  
+                JSONArray content = new JSONArray();
+                listStudents.stream().map((lowOfStudentMdl) -> {
+                    JSONObject data = new JSONObject();
+                    data.put("dataPkLowStundet", lowOfStudentMdl.getPK_LOW_STUDENT());
+                    data.put("dataPkStudent", lowOfStudentMdl.getStudentMdl().getPK_STUDENT());                    
+                    data.put("dataName", lowOfStudentMdl.getStudentMdl().getFL_NAME());
+                    data.put("dataFolio", lowOfStudentMdl.getFL_FOLIO_LOW());
+                    data.put("dataEnrollment", lowOfStudentMdl.getStudentMdl().getFL_ENROLLMENT());
+                    if(lowOfStudentMdl.getStudentMdl().getFL_DOWN()==1){
+                        data.put("dataDown", "Si");
+                    }else{
+                        data.put("dataDown", "No");
+                    }
+                    if(lowOfStudentMdl.getFL_ARCHIVED_DIR().equals("1")){
+                        data.put("dataArchive", "Si");
+                    }else{
+                        data.put("dataArchive", "No");
+                    }
+                    data.put("dataStatusES", lowOfStudentMdl.getFL_STATUS_ES());
+                    data.put("dataSemester", lowOfStudentMdl.getSemesterMdl().getFL_NAME_SEMESTER());
+                    data.put("dataGroup", lowOfStudentMdl.getGroupMdl().getFL_NAME_GROUP());
+                    return data;
+                }).forEach((data) -> {
+                    content.add(data);
+                });
+              
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();               
+            }
             if(request.getParameter("selectStudentsLowsAuthorizedByDirector")!=null){
                 int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
                 int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
@@ -53,6 +88,11 @@ public class serviceLowOfStudent extends HttpServlet {
                         data.put("dataDown", "Si");
                     }else{
                         data.put("dataDown", "No");
+                    }
+                    if(lowOfStudentMdl.getFL_ARCHIVED_DIR().equals("1")){
+                        data.put("dataArchive", "Si");
+                    }else{
+                        data.put("dataArchive", "No");
                     }
                     data.put("dataStatusES", lowOfStudentMdl.getFL_STATUS_ES());
                     data.put("dataSemester", lowOfStudentMdl.getSemesterMdl().getFL_NAME_SEMESTER());

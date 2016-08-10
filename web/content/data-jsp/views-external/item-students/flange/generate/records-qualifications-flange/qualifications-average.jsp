@@ -90,6 +90,7 @@
             $('#qualificationsLevelFilter').on('change',function (event){  
                 var args = event.args;
                 if (args){
+                    itemLevel = $('#qualificationsLevelFilter').jqxDropDownList('getSelectedItem');
                     createDropDownCareerByTeacher(itemLevel.value, "#qualificationsCareerFilter", true);
                     itemCareer = $('#qualificationsCareerFilter').jqxDropDownList('getSelectedItem');
                     if(itemCareer==null || itemCareer==undefined){
