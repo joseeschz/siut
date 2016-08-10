@@ -9,8 +9,8 @@ if(session.getAttribute("logueado") != null){%>
         $(document).ready(function (){
             $("#jqxWindowAlert").jqxWindow({
                 theme: theme,
-                height: 195,
-                width: 500,
+                height: 150,
+                width: 400,
                 resizable: false,
                 draggable: true,
                 okButton: $('#okWarning'),
@@ -70,7 +70,7 @@ if(session.getAttribute("logueado") != null){%>
                 $.cookie('tabActive',selectedTab);
             });             
             $('#jqxTabs').jqxTabs({theme:theme,selectedItem:tabActive||0, width:'99.9%',height:'100%',scrollPosition: 'both', position: 'top',  collapsible: false }); 
-            $("#transactLowTab").load("../content/data-jsp/views-external/item-students/flange/process/director/transact-flange/index.jsp");
+            $("#transactLowTab").load("../content/data-jsp/views-external/item-students/flange/process/director/authorized-flange/index.jsp");
         });
     </script>
     <div id="popupWindowDoc">
@@ -95,12 +95,7 @@ if(session.getAttribute("logueado") != null){%>
         <div>
             <div id="iconWarning" class="warning" style="position: absolute;"></div>
             <span style="color: olive; width: 70%; position: absolute; right: 20px;">
-                <b id="messageWarning"></b>
-                <b id="studentName"></b>
-                <b id="enrollment"></b>
-                <b id="period"></b>
-                <b id="semester"></b><br>
-                <b id="messageWarning2" style="font-size: 11px;font-style: italic;text-decoration: underline;"></b>
+                <b id="messageWarning"></b><b id="studentName"></b><b id="enrollment"></b><b id="period"></b>
             </span>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="okWarning" value="OK" style="margin-right: 10px" />
@@ -110,7 +105,7 @@ if(session.getAttribute("logueado") != null){%>
     </div>
     <div id='jqxTabs'>
         <ul>
-            <li class="jqxTabsTitle" dir="generate-down">Bajas Gestionadas</li>
+            <li class="jqxTabsTitle" dir="generate-down">Bajas Autorizadas</li>
         </ul>
         <div>
             <div class="hidenTab" style="display: none;">

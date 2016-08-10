@@ -14,6 +14,9 @@ public class debtModel {
     int FK_STUDENT=0;
     String FL_ROW_DATE="";
     String FL_STATUS_NOW_DEBT="";
+    studentModel studentMdl;
+    careerModel careerMdl;
+    studyLevelModel studyLevelMdl;
 
     public int getPK_DEBT() {
         return PK_DEBT;
@@ -45,6 +48,30 @@ public class debtModel {
 
     public void setFL_STATUS_NOW_DEBT(String FL_STATUS_NOW_DEBT) {
         this.FL_STATUS_NOW_DEBT = FL_STATUS_NOW_DEBT;
+    }
+
+    public studentModel getStudentMdl() {
+        return studentMdl;
+    }
+
+    public void setStudentMdl(studentModel studentMdl) {
+        this.studentMdl = studentMdl;
+    }
+
+    public careerModel getCareerMdl() {
+        return careerMdl;
+    }
+
+    public void setCareerMdl(careerModel careerMdl) {
+        this.careerMdl = careerMdl;
+    }
+
+    public studyLevelModel getStudyLevelMdl() {
+        return studyLevelMdl;
+    }
+
+    public void setStudyLevelMdl(studyLevelModel studyLevelMdl) {
+        this.studyLevelMdl = studyLevelMdl;
     }
     
 }

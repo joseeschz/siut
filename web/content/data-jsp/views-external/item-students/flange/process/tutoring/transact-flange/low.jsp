@@ -16,9 +16,7 @@
             fl_group : "801",
             fl_career : "TICS",
             fl_ultimate_lowYes : false,
-            fl_ultimate_lowNot : true,
             fl_temporaly_lowYes : false,
-            fl_temporaly_lowNot : true,
             fl_request_for_studentYes : false,
             fl_request_for_studentNot : true,
             fl_repprobed : false,
@@ -77,7 +75,6 @@
             },
             success: function (data, textStatus, jqXHR) { 
                 dataForm = data[0];
-                console.log(dataForm);
             }
         });  
         
@@ -94,10 +91,12 @@
 //                   { input: '#userInput', message: 'Username is required!', action: 'keyup, blur', rule: 'required' }
 //            ]
 //        });
+        console.log(dataForm)
         $.each(dataForm, function(index, value) {
             if($("[id="+index+"]").is("i")){
                 $("[id="+index+"]").text(value);
             }else{
+                console.log(index+" "+value)
                 $("[id="+index+"]").val(value);                
                 if(index==="fl_has_schoolarshipYes" && value){
                     $(".fl_has_schoolarshipYes").show();
@@ -170,17 +169,10 @@
                 updateField("fl_temporaly_low", true);
                 updateField("fl_ultimate_low", false);
             }
-            else if(index==="fl_temporaly_lowNot" && checked){
-                updateField("fl_temporaly_low", false);
-                updateField("fl_ultimate_low", true);
-            }
             
             else if(index==="fl_ultimate_lowYes" && checked){
                 updateField("fl_ultimate_low", true);
                 updateField("fl_temporaly_low", false);
-            }else if(index==="fl_ultimate_lowNot" && checked){
-                updateField("fl_ultimate_low", false);
-                updateField("fl_temporaly_low", true);
             }
             
             else if(index==="fl_request_for_studentYes" && checked){

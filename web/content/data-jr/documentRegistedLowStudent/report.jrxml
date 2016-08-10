@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="612" pageHeight="792" columnWidth="528" leftMargin="14" rightMargin="70" topMargin="14" bottomMargin="14" uuid="4b0a134b-f2e9-4b95-9884-bf1862422d23">
 	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="222"/>
+	<property name="ireport.y" value="126"/>
 	<style name="Crosstab Data Text" hAlign="Center"/>
 	<subDataset name="dataset1" uuid="60aec535-a8f4-4a8d-b25f-31c64db6818d"/>
 	<subDataset name="schoolarTypeByStudent" uuid="8a2443f4-862b-4436-8020-017640d25a04">
@@ -24,19 +24,19 @@
 	<queryString>
 		<![CDATA[CALL `GET_LOW_STUDENT`('byStudentPeriod', $P{pt_pk_student}, null, null, null, $P{pt_pk_period});]]>
 	</queryString>
-	<field name="FL_FOLIO_LOW" class="java.lang.String">
+	<field name="FL_AUTORIZATION_DATE" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="FL_AUTORIZATION_DATE" class="java.lang.String">
+	<field name="FL_REGISTER_DATE" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FL_FOLIO_LOW" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="PK_LOW_STUDENT" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_UNIQUE" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="FL_REGISTER_DATE" class="java.sql.Timestamp">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="FL_HAS_SCHOOLARSHIP" class="java.lang.Integer">
@@ -293,7 +293,7 @@
 				<textElement verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{FL_REGISTER_DATE}.toLocaleString()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{FL_REGISTER_DATE}]]></textFieldExpression>
 			</textField>
 			<frame>
 				<reportElement x="0" y="66" width="528" height="46" uuid="ca71465e-5a09-461f-800e-a6e95dd11c43"/>
