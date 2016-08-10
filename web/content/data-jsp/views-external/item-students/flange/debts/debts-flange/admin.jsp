@@ -28,35 +28,21 @@
 <script>
     $(document).ready(function () {
         var itemPeriodTemp= null;
-        function loadSourceStudentsPenalityPaymentsHeader(){      
+        function loadSourceDebtsHeader(){      
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
-                    { name: 'dataPkPaymentPanalty', type: 'int' },
-                    { name: 'dataDatePayment', type: 'string' },
-                    { name: 'dataUnique', type: 'string' },
-                    { name: 'dataPkCaregoryPayment', type: 'int' },
-                    { name: 'dataPkTypeConcept', type: 'int' },
-                    { name: 'dataPkTypeFormat', type: 'int' },
-                    { name: 'dataStatusPayment', type: 'string' },
+                    { name: 'dataPkDebt', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
-                    { name: 'dataNameStudent', type: 'string' },
+                    { name: 'dataName', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataPkStudyLevel', type: 'int' },
-                    { name: 'dataNameLevel', type: 'string' },
-                    { name: 'dataPkCareer', type: 'int' },
-                    { name: 'dataNameAbbreviated', type: 'string' },
-                    { name: 'dataNameCareer', type: 'string' },
-                    { name: 'dataPkSemester', type: 'int' },
-                    { name: 'dataNameSemester', type: 'string' },
-                    { name: 'dataPkPeriod', type: 'int' },
-                    { name: 'dataNamePeriod', type: 'string' }
+                    { name: 'dataCareer', type: 'string' },
+                    { name: 'dataStudyLevel', type: 'string' }
                 ],
                 dataType: "json",
-                root: "__ENTITIES",
-                id: "dataPkPaymentPanalty",
+                id: "dataPkDebt",
                 async: false,
-                url: '../serviceStudentsPenaltyPayments?view',
+                url: '../serviceDebt?selectDebts',
                 data : {
                     
                 }
@@ -65,7 +51,7 @@
         }
         
         function loadGridDebtsStudents(){
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceStudentsPenalityPaymentsHeader());  
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceDebtsHeader());  
             var tooltiprenderer = function (element) {
                 $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
             };
@@ -85,9 +71,9 @@
                 columns: [
                     { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
                     { text: 'Matrícula', align: 'center', dataField: 'dataEnrollment', width: 120, rendered: tooltiprenderer },
-                    { text: 'Alumno', align: 'center', dataField: 'dataNameStudent', width: 250, rendered: tooltiprenderer},
-                    { text: 'Nivel de estudio', align: 'center', dataField: 'dataNameLevel', cellsalign: 'center', width: 150, rendered: tooltiprenderer},
-                    { text: 'Carrera', align: 'center', dataField: 'dataNameCareer', width: 350, rendered: tooltiprenderer}
+                    { text: 'Alumno', align: 'center', dataField: 'dataName', width: 250, rendered: tooltiprenderer},
+                    { text: 'Nivel de estudio', align: 'center', dataField: 'dataStudyLevel', cellsalign: 'center', width: 150, rendered: tooltiprenderer},
+                    { text: 'Carrera', align: 'center', dataField: 'dataCareer', width: 350, rendered: tooltiprenderer}
                 ],
                 columnsResize: false
             });
@@ -135,39 +121,27 @@
             $("#mount").val(0);
         }
         
-        function loadSourceDebtDetailByHeader(pk_student_payment_penality_header){            
+        function loadSourceDebtDetailByHeader(pk_debt){            
             var ordersSource ={
                 dataFields: [
                     { name: 'dataProgresivNumber', type: 'int' },
-                    { name: 'dataPkStudentPenaltyPaymentDetail', type: 'int' },
-                    { name: 'dataAmountPenalty', type: 'double' },
-                    { name: 'dataMotiveJustify', type: 'string' },
-                    { name: 'dataReferenceNumber', type: 'string' },
-                    { name: 'dataStatusJustify', type: 'string' },
-                    { name: 'dataStatusPay', type: 'string' },
-                    { name: 'dataPkTypeConcept', type: 'string' },
-                    { name: 'dataPkTypeFormat', type: 'string' },
-                    { name: 'dataUnique', type: 'string' },
+                    { name: 'dataPkDebtDetail', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
-                    { name: 'dataPkSemester', type: 'int' },
-                    { name: 'dataNameSemester', type: 'string' },
+                    { name: 'dataRowDate', type: 'string' },
+                    { name: 'dataMount', type: 'number' },
+                    { name: 'dataFkDebt', type: 'int' },
+                    { name: 'dataMotive', type: 'string' },
+                    { name: 'dataPeriod', type: 'string' },
                     { name: 'dataPkPeriod', type: 'int' },
-                    { name: 'dataNamePeriod', type: 'string' },
-                    { name: 'dataPkStudentPaymentPenalty', type: 'int' },
-                    { name: 'dataPkPaymentPenaltyType', type: 'int' },
-                    { name: 'dataPkCategory', type: 'int' },
-                    { name: 'dataNamePenalty', type: 'string' },
-                    { name: 'dataTariff', type: 'double' }
+                    { name: 'dataStatusNowDebt', type: 'boolean' }                    
                 ],
                 dataType: "json",
-                id: "dataPkStudentPenaltyPaymentDetail",
-                async: false,
-                root: "__ENTITIES",
-                url: '../serviceStudentsPenaltyPaymentsDetail?view=viewHeader',
+                id: "dataPkDebtDetail",
+                url: '../serviceDebt?selectDetailDebts',
                 data : {
-                    pk_student_payment_penality_header : pk_student_payment_penality_header                  
+                    pt_pk_debt_detail : pk_debt                  
                 },
-                deleteRow: function (rowID, commit) {
+                deleterow: function (rowID, commit) {
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
@@ -175,9 +149,9 @@
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
-                        url: "../serviceStudentsPenaltyPaymentsDetail?delete",
+                        url: "../serviceDebt?delete",
                         data:{
-                            'pt_pk_student_penality_payment_detail':rowID
+                            'pt_pk_debt_detail':rowID[0]
                         },
                         beforeSend: function (xhr) {
                         },
@@ -186,63 +160,44 @@
                             alert("Error interno del servidor");
                         },
                         success: function (data, textStatus, jqXHR) {
-                            var rows = $("#gridPaymentDetail").jqxDataTable('getRows');
+                            var rows = $("#gridDebtDetail").jqxGrid('getrows');
                             if(rows.length==1){
-                                $("#tableDebtsHeader").jqxDataTable('updateBoundData');
+                                $("#tableDebtsHeader").jqxGrid('updateBoundData');
                                 commit(true);
-                                $("#gridPaymentDetail").jqxDataTable('updateBoundData');
+                                $("#gridDebtDetail").jqxGrid('updateBoundData');
                                 popupWindowPaymentDetail.jqxWindow('close');
                             }else{
                                 commit(true);
-                                $("#gridPaymentDetail").jqxDataTable('updateBoundData');
+                                $("#gridDebtDetail").jqxGrid('updateBoundData');
                             }
                         }
                     });
-                }
-            };
-            return ordersSource;
-        }
-        
-        function loadSourceStudentDebtDetail(pt_fkPeriod, pt_fkSemester, pt_fkCategoryMaster, pt_fkTypeFormat, pt_fkStudent){            
-            var ordersSource ={
-                dataFields: [
-                    { name: 'dataProgresivNumber', type: 'int' },
-                    { name: 'dataPkStudentPenaltyPaymentDetail', type: 'int' },
-                    { name: 'dataAmountPenalty', type: 'number' },
-                    { name: 'dataMotiveJustify', type: 'string' },
-                    { name: 'dataReferenceNumber', type: 'string' },
-                    { name: 'dataStatusJustify', type: 'string' },
-                    { name: 'dataStatusPay', type: 'string' },
-                    { name: 'dataStatusPayFlag', type: 'string' },
-                    { name: 'dataCant', type: 'int' },
-                    { name: 'dataPkTypeConcept', type: 'string' },
-                    { name: 'dataNameConcept', type: 'string' },
-                    { name: 'dataPkTypeFormat', type: 'string' },
-                    { name: 'dataNameFormat', type: 'string' },
-                    { name: 'dataUnique', type: 'string' },
-                    { name: 'dataPkStudent', type: 'int' },
-                    { name: 'dataPkSemester', type: 'int' },
-                    { name: 'dataNameSemester', type: 'string' },
-                    { name: 'dataPkPeriod', type: 'int' },
-                    { name: 'dataNamePeriod', type: 'string' },
-                    { name: 'dataPkStudentPaymentPenalty', type: 'int' },
-                    { name: 'dataPkPaymentPenaltyType', type: 'int' },
-                    { name: 'dataPkCategory', type: 'int' },
-                    { name: 'dataNamePenalty', type: 'string' },
-                    { name: 'dataTariff', type: 'number' },
-                    { name: 'dataSubTotal', type: 'number' }
-                ],
-                dataType: "json",
-                id: "dataPkPaymentPenaltyType",
-                async: false,
-                root: "__ENTITIES",
-                url: '../serviceStudentsPenaltyPaymentsDetail?view',
-                data : {
-                    pt_fkPeriod : pt_fkPeriod ,
-                    pt_fkSemester : pt_fkSemester,
-                    pt_fkStudent : pt_fkStudent,
-                    pt_fkCategoryMaster : pt_fkCategoryMaster,
-                    pt_fkTypeFormat : pt_fkTypeFormat
+                },
+                updaterow: function (rowid, rowdata, commit) {
+                    // synchronize with the server - send update command
+                    // call commit with parameter true if the synchronization with the server was successful 
+                    // and with parameter false if the synchronization has failed.
+                    $.ajax({
+                        //Send the paramethers to servelt
+                        type: "POST",
+                        async: false,
+                        url: "../serviceDebt?update",
+                        data:rowdata,
+                        beforeSend: function (xhr) {
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            //This is if exits an error with the server internal can do server off, or page not found
+                            alert("Error interno del servidor");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                            var rows = $("#gridDebtDetail").jqxGrid('getrows');
+                            if(rows.length==1){
+                                commit(true);
+                            }else{
+                                commit(true);
+                            }
+                        }
+                    });
                 }
             };
             return ordersSource;
@@ -273,102 +228,101 @@
         
         function loadDataWindowDetailPayment(dataHeader){
             $("#labelEnrollmentDetail").text(dataHeader.dataEnrollment);
-            $("#paySemesterFilterDetail").text(dataHeader.dataNameSemester);
-            $("#payPeriodTempFilterDetail").text(itemPeriod.label);
-            $("#datePayment").text(dataHeader.dataDatePayment); 
+            $("#labelNameStudent").text(dataHeader.dataName); 
             loadGridDetailDebt(dataHeader);
             popupWindowPaymentDetail.jqxWindow('open'); 
         }
+        var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
+        var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
+
+        var deleteButton = $(buttonTemplate);
         var rendertoolbar = function(toolBar){
+            $('#gridDebtDetail').jqxGrid('clearselection');
             var theme = "";
             var toTheme = function (className) {
                 if (theme === "") return className;
                 return className + " " + className + "-" + theme;
             };
             // appends buttons to the status bar.
-            var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-            var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
-
-            var deleteButton = $(buttonTemplate);
+            
             container.append(deleteButton);
             toolBar.append(container);
             
-            deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: false,  height: 25, width: 25 });
+            deleteButton.jqxButton({ cursor: "pointer", disabled: true, enableDefault: true,  height: 25, width: 25 });
             deleteButton.find('div:first').addClass(toTheme('jqx-icon-delete'));
             deleteButton.jqxTooltip({ position: 'bottom', content: "Eliminar"});
             
-            var updateButtons = function (action) {
-                switch (action) {
-                    case "Select":
-                        deleteButton.jqxButton({ disabled: false });
-                        break;
-                    case "Unselect":
-                        deleteButton.jqxButton({ disabled: true });
-                        break;
-                    case "Edit":
-                        deleteButton.jqxButton({ disabled: true });
-                        break;
-                    case "End Edit":
-                        deleteButton.jqxButton({ disabled: false });
-                        break;
-                }
-            };
             var rowIndex = null;
-            $("#gridPaymentDetail").on('rowSelect', function (event) {
+            $("#gridDebtDetail").on('rowunselect', function (event) {
+                deleteButton.jqxButton({ disabled: true });  
+            });
+            $("#gridDebtDetail").on('rowselect');
+            $("#gridDebtDetail").on('rowselect', function (event) {
                 var args = event.args;
                 rowIndex = args.index;
-                updateButtons('Select');
+                $(deleteButton).jqxButton({ disabled: false });    
             });
-            $("#gridPaymentDetail").on('rowUnselect', function (event) {
-                updateButtons('Unselect');
+            $("#gridDebtDetail").off('rowunselect');
+            
+            $("#gridDebtDetail").off('rowendedit');
+            $("#gridDebtDetail").on('rowendedit', function (event) {
             });
-            $("#gridPaymentDetail").on('rowEndEdit', function (event) {
-                updateButtons('End Edit');
+            $("#gridDebtDetail").off('rowbeginedit');
+            $("#gridDebtDetail").on('rowbeginedit', function (event) {
+                
             });
-            $("#gridPaymentDetail").on('rowBeginEdit', function (event) {
-                updateButtons('Edit');
-            });
+            deleteButton.off('click');
             deleteButton.click(function () {
                 if (!deleteButton.jqxButton('disabled')) {
                     $("#jqxWindowWarning").jqxWindow('open');
+                    $("#okWarning").off('click');
                     $("#okWarning").click(function (){
-                        $("#okWarning").unbind("click"); 
                         $("#jqxWindowWarning").jqxWindow('close');
-                        $("#gridPaymentDetail").jqxDataTable('deleteRow', rowIndex);
+                        var rowindex = $('#gridDebtDetail').jqxGrid('getselectedrowindex');
+                        var data = $('#gridDebtDetail').jqxGrid('getrowdata', rowindex);
+                        var rowIDs = new Array();
+                        rowIDs.push(data.dataPkDebtDetail);
+                        $("#gridDebtDetail").jqxGrid('deleterow', rowIDs);
+                        $('#gridDebtDetail').jqxGrid('clearselection');
                     });
-                    updateButtons('delete');
+                    $("#cancelWarning").off('click');
+                    $("#cancelWarning").click(function (){
+                        $("#jqxWindowWarning").jqxWindow('close');
+                        $('#gridDebtDetail').jqxGrid('clearselection');
+                    });
+                    deleteButton.jqxButton({ disabled: true }); 
                 }
             });
         };
         function loadGridDetailDebt(dataHeader){   
-            var dataAdapter = new $.jqx.dataAdapter(loadSourceDebtDetailByHeader(dataHeader.dataPkPaymentPanalty));  
+            var dataAdapter = new $.jqx.dataAdapter(loadSourceDebtDetailByHeader(dataHeader.dataPkDebt));  
             var tooltiprenderer = function (element) {
                 $(element).jqxTooltip({position: 'mouse', content: $(element).text() });
             };
-            $("#gridPaymentDetail").jqxDataTable('clear');
-            $("#gridPaymentDetail").jqxDataTable({
+            $("#gridDebtDetail").jqxGrid('clear');
+            $("#gridDebtDetail").jqxGrid({
                 width: 710,
                 height: 250,
                 selectionMode: "singlerow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
-                renderToolbar : rendertoolbar,
-                showToolbar: true,
-                toolbarHeight: 35,
+                rendertoolbar : rendertoolbar,
+                showtoolbar: true,
+                toolbarheight: 35,
                 pageable: true,
-                editable: false,
+                editable: true,
                 altRows: true,
                 filterable: false,
                 ready: function(){
-                    $("#tableDebtsHeader").jqxGrid('focus');
+                    $("#gridDebtDetail").jqxGrid('focus');
                 },
                 columns: [
-                    { text: '#', filterable: false, align: 'center', cellsalign: 'center', dataField: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
-                    { text: 'REFERENCIA', align: 'center', dataField: 'dataReferenceNumber', width: 260, rendered: tooltiprenderer },
-                    { text: 'DESCRIPCIÓN', align: 'center', dataField: 'dataNamePenalty', rendered: tooltiprenderer},
-                    { text: 'MONTO', align: 'center', dataField: 'dataTariff', cellsformat: 'C2', cellsalign: 'right', width: 80, rendered: tooltiprenderer}
-                ],
-                columnsResize: false
+                    { editable: false, text: '#', filterable: false, align: 'center', cellsalign: 'center', datafield: 'dataProgresivNumber', width: 40, rendered: tooltiprenderer },
+                    { text: 'MOTIVO', align: 'center', datafield: 'dataMotive',  rendered: tooltiprenderer },
+                    { editable: false, text: 'PERIODO', align: 'center', datafield: 'dataPeriod', width: 180, rendered: tooltiprenderer},                    
+                    { text: 'MONTO', columntype: 'numberinput', align: 'center', datafield: 'dataMount', cellsformat: 'C2', cellsalign: 'right', width: 80, rendered: tooltiprenderer},
+                    { text: 'ESTADO DE PAGO', align: 'center', columntype: 'checkbox', datafield: 'dataStatusNowDebt', width: 160, rendered: tooltiprenderer}
+                ]
             });
         }
         $("#removeEnrollment").hide();
@@ -455,7 +409,6 @@
         });
         $('#validateButton').click(function(){
             var validate = function (){
-                console.log($("#mount").val())
                 if($("#mount").val()>=1){
                     $("#messageValidation").text("");
                     if($("#motive").val()!==""){
@@ -557,7 +510,7 @@
         function registerPaymentsDetail(dataParamsHeader){   
             console.log("Begin");          
             $.ajax({
-                url:"../serviceDebt?inserDetail",
+                url:"../serviceDebt?insert",
                 data: dataParamsHeader,
                 type: 'POST',
                 dataType: 'json',
@@ -566,7 +519,6 @@
                     $("#loading").show();
                 },
                 success: function (data, textStatus, jqXHR) {
-                    alert();
                     $(popupWindowConfirmPayment).jqxWindow('close');
                     $(popupWindowPay).jqxWindow('close');
                     if(data.Inserted){
@@ -708,24 +660,16 @@
                 <td style="width: 20%"><label>MATRÍCULA:</label></td>
                 <td><b id="labelEnrollmentDetail"></b></td>
             </tr>
-            <tr>      
-                <td><label>CUATRIMESTRE:</label></td>
-                <td><b id="paySemesterFilterDetail"></b></td>
-            </tr>
             <tr>
-                <td><label>PERIODO:</label></td>
-                <td><b id="payPeriodTempFilterDetail"></b></td>
-            </tr>
-            <tr>
-                <td><label>FECHA DE RECIBIDO:</label></td>
-                <td><b id="datePayment"></b></td>
-            </tr>          
+                <td style="width: 20%"><label>NOMBRE:</label></td>
+                <td><b id="labelNameStudent"></b></td>
+            </tr>         
             <tr>
                 <td colspan="2" align="center"><label style="font-size: 18px"><b>CONCEPTOS DE DEUDAS</b></label></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <div id="gridPaymentDetail"></div>
+                    <div id="gridDebtDetail"></div>
                 </td>
             </tr>
         </table>

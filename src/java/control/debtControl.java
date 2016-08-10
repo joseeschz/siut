@@ -24,9 +24,10 @@ import model.studyLevelModel;
 public class debtControl {
     public static void main(String[] args) {
         ArrayList<debtDetailModel> list = new debtControl().SelectDebtsDetail(4097);
-        list.stream().forEach((debtMdl) -> {
-            System.out.println(debtMdl.getStudentMdl().getPK_STUDENT());
-        });
+        int i=0;
+        for (debtDetailModel detailModel : list) {
+            System.out.print(detailModel.getFL_MOTIVE());
+        }
     }
     private String procedure;
     public ArrayList<debtModel> SelectDebts(){
@@ -76,7 +77,8 @@ public class debtControl {
                     debtDetailMdl.setFL_MOUNT(res.getString("FL_MOUNT"));
                     debtMdl.setPK_DEBT(res.getInt("FK_DEBT"));
                     debtDetailMdl.setFL_MOTIVE(res.getString("FL_MOTIVE"));
-                    periodMdl.setPK_PERIOD(res.getInt("FK_PERIOD"));
+                    periodMdl.setPK_PERIOD(res.getInt("PK_PERIOD"));
+                    periodMdl.setFL_NAME(res.getString("FL_NAME"));
                     debtDetailMdl.setFL_STATUS_NOW_DEBT(res.getString("FL_STATUS_NOW_DEBT"));  
                     
                     debtDetailMdl.setDebtMdl(debtMdl);
@@ -93,7 +95,7 @@ public class debtControl {
     
     public String InsertDebt(debtDetailModel debtDetailMdl){
         String request;
-        procedure = "CALL `SET_DEBT`('insert', null, ?, ?, ?, ?, ?)";
+        procedure = "CALL `SET_DEBT`(?, null, ?, ?, ?, ?, ?)";
         PreparedStatement ps;
         Connection conn=new connectionControl().getConexion();
         try {

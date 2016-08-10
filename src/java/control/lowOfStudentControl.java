@@ -28,13 +28,126 @@ import model.workerModel;
  */
 public class lowOfStudentControl {
     public static void main(String[] args) {
-        ArrayList<lowOfStudentModel> list=new lowOfStudentControl().SelectStudentsLowsES( 14);
+        ArrayList<lowOfStudentModel> list=new lowOfStudentControl().SelectStudentsLowsAuthorizedByDirector(6, 14);
         list.stream().forEach((ofStudentModel) -> {
-            System.out.print(ofStudentModel.getGroupMdl().getFL_NAME_GROUP());
+            System.out.print(ofStudentModel.getPK_LOW_STUDENT());
         });
     }
     String procedure;
-    public ArrayList<lowOfStudentModel> SelectStudentsLowsES(int fkPeriod){
+    
+    public ArrayList<lowOfStudentModel> SelectStudentsLows(int fkPeriod){
+        procedure="CALL `GET_LOW_STUDENT`(?, null, null, null, null, ?)";
+        ArrayList<lowOfStudentModel> list=new ArrayList<>();        
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "studentsLowsDir"); 
+            ps.setInt(2, fkPeriod); 
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){                    
+                    lowOfStudentModel lowOfStudentMdl = new lowOfStudentModel();
+                    careerModel careerMdl = new careerModel();
+                    studentModel  studentMdl= new studentModel();
+                    semesterModel semesterMdl=new semesterModel();
+                    groupModel groupModel=new groupModel();
+                    lowOfStudentMdl.setPK_LOW_STUDENT(res.getInt("PK_LOW_STUDENT"));
+                    studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
+                    studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));                    
+                    lowOfStudentMdl.setStudentMdl(studentMdl);       
+                    semesterMdl.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    careerMdl.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    lowOfStudentMdl.setCareerMdl(careerMdl);
+                    lowOfStudentMdl.setSemesterMdl(semesterMdl);
+                    groupModel.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    lowOfStudentMdl.setGroupMdl(groupModel);
+                    list.add(lowOfStudentMdl);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(lowOfStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<lowOfStudentModel> SelectStudentsLowsAuthorizedByDirector(int fkCarrer, int fkPeriod){
+        procedure="CALL `GET_LOW_STUDENT`(?, null, ?, null, null, ?)";
+        ArrayList<lowOfStudentModel> list=new ArrayList<>();        
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "studentsLowsAuthorizedByDirector"); 
+            ps.setInt(2, fkCarrer); 
+            ps.setInt(3, fkPeriod); 
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){                    
+                    lowOfStudentModel lowOfStudentMdl = new lowOfStudentModel();
+                    studentModel  studentMdl= new studentModel();
+                    semesterModel semesterMdl=new semesterModel();
+                    groupModel groupModel=new groupModel();
+                    lowOfStudentMdl.setPK_LOW_STUDENT(res.getInt("PK_LOW_STUDENT"));
+                    studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
+                    studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));                    
+                    lowOfStudentMdl.setStudentMdl(studentMdl);       
+                    semesterMdl.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    lowOfStudentMdl.setSemesterMdl(semesterMdl);
+                    groupModel.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    lowOfStudentMdl.setGroupMdl(groupModel);
+                    list.add(lowOfStudentMdl);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(lowOfStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<lowOfStudentModel> SelectStudentsLowsArchivedES(int fkPeriod){
+        procedure="CALL `GET_LOW_STUDENT`(?, null, null, null, null, ?)";
+        ArrayList<lowOfStudentModel> list=new ArrayList<>();        
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "studentsLowsArchivedES"); 
+            ps.setInt(2, fkPeriod); 
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){                    
+                    lowOfStudentModel lowOfStudentMdl = new lowOfStudentModel();
+                    careerModel careerMdl = new careerModel();
+                    studentModel  studentMdl= new studentModel();
+                    semesterModel semesterMdl=new semesterModel();
+                    groupModel groupModel=new groupModel();
+                    lowOfStudentMdl.setPK_LOW_STUDENT(res.getInt("PK_LOW_STUDENT"));
+                    studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
+                    studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
+                    studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));                    
+                    lowOfStudentMdl.setStudentMdl(studentMdl);       
+                    semesterMdl.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
+                    careerMdl.setFL_NAME_ABBREVIATED(res.getString("FL_NAME_ABBREVIATED"));
+                    lowOfStudentMdl.setCareerMdl(careerMdl);
+                    lowOfStudentMdl.setSemesterMdl(semesterMdl);
+                    groupModel.setFL_NAME_GROUP(res.getString("FL_NAME_GROUP"));
+                    lowOfStudentMdl.setGroupMdl(groupModel);
+                    list.add(lowOfStudentMdl);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(lowOfStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public ArrayList<lowOfStudentModel> SelectStudentsLowsESAuthorizedDirector(int fkPeriod){
         procedure="CALL `GET_LOW_STUDENT`(?, null, null, null, null, ?)";
         ArrayList<lowOfStudentModel> list=new ArrayList<>();        
         try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
@@ -49,6 +162,7 @@ public class lowOfStudentControl {
                     groupModel groupModel=new groupModel();
                     lowOfStudentMdl.setPK_LOW_STUDENT(res.getInt("PK_LOW_STUDENT"));
                     studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    lowOfStudentMdl.setFL_FOLIO_LOW(res.getString("FL_FOLIO_LOW"));
                     studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
                     studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));
                     studentMdl.setFL_DOWN(res.getInt("FL_DOWN"));                    

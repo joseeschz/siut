@@ -1,49 +1,11 @@
 <script>
     $(document).ready(function () {
-        var itemLevel = 0;
-        var itemCareer = 0;
         var itemPeriod = 0;
-        createDropDownStudyLevelByDirector("#generateDownLevelFilter",false);
-        itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
-        if(itemLevel!==undefined){
-            createDropDownCareerByDirector( itemLevel.value ,"#generateDownCareerFilter",false);
-            itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-            createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
-            itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-            if(itemPeriod!==undefined){
-                if(itemCareer!==undefined){
-                    loadGridStudents();
-                }                
-            }
-            $('#generateDownLevelFilter').on('change',function (event){  
-                itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
-                if(itemLevel!==undefined){
-                    createDropDownCareerByDirector(itemLevel.value, "#generateDownCareerFilter", true);
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                }else{
-                    createDropDownCareerByDirector(null, "#generateDownCareerFilter", true);
-                }
-                
-            });
-            $('#generateDownCareerFilter').on('change',function (event){  
-                var args = event.args;
-                if (args) {
-                    // index represents the item's index.                      
-                    var index = args.index;
-                    var item = args.item;
-                    // get item's label and value.
-                    var label = item.label;
-                    var value = item.value;
-                    var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    if(itemPeriod!==undefined){
-                        if(itemCareer!==undefined){
-                            loadGridStudents();
-                        }                
-                    }
-                }                
-            });
+        createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
+        itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+        if(itemPeriod!==undefined){
+            loadGridStudents();                
+            
             $('#generateDownPeriodFilter').on('change',function (event){  
                 var args = event.args;
                 if (args) {
@@ -54,28 +16,18 @@
                     var label = item.label;
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
                     itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
                     if(itemPeriod!==undefined){
-                        if(itemCareer!==undefined){
-                            loadGridStudents();
-                        }                
+                        loadGridStudents();              
                     }
                 }                
             });
         }else{
-            createDropDownCareerByDirector(null ,"#generateDownCareerFilter",false);
             createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
         }
         function loadSource(){
-            var valItemCareer=0;
             var valItemPeriod=0;
-            itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
             itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-            
-            if(itemCareer!==undefined){
-                valItemCareer=itemCareer.value;
-            }
             if(itemPeriod!==undefined){
                 valItemPeriod=itemPeriod.value;
             }            
@@ -84,19 +36,19 @@
                     { name: 'dataPkLowStundet', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataName', type: 'string' },
+                    { name: 'dataFolio', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
+                    { name: 'dataCareer', type: 'string' },
                     { name: 'dataSemester', type: 'string' },
                     { name: 'dataGroup', type: 'string' },
-                    { name: 'dataDown', type: 'string' },
-                    { name: 'dataStatusES', type: 'string' }
+                    { name: 'dataDown', type: 'string' }
                 ],
                 dataType: "json",
                 id: "dataPkLowStundet",
                 async: false,
-                url: '../serviceLowOfStudent?selectStudentsLowsTempsDirector',
+                url: '../serviceLowOfStudent?selectStudentsLowsArchivedTempsES',
                 data : {
-                    fkPeriod : valItemPeriod,
-                    fkCareer : valItemCareer                 
+                    fkPeriod : valItemPeriod           
                 },
                 updaterow: function (rowid, rowdata, commit) {
                     // synchronize with the server - send update command
@@ -110,12 +62,10 @@
                         statusDown="removeLow";
                     }
                     if(statusDown==="authorizateLow"){                 
-                        $("#messageWarning").text("Estas seguro de autorizar la baja para el alumno ");
+                        $("#messageWarning").text("Estas seguro de archivar la baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                        $("#period").text(" en el periodo "+itemPeriod.label+",");
-                        $("#semester").text(" correspondiente al cuatrimestre "+rowdata.dataSemester+".");
-                        $("#messageWarning2").text("Comprendiendo que no hay marcha a tras y todas sus calificaciones propias a este cuatrimestre se perderan...");
+                        $("#period").text(" en el periodo "+itemPeriod.label);
                         $("#jqxWindowAlert").jqxWindow('open');              
                         $('#okWarning').off("click");
                         $('#okWarning').on("click",function (){
@@ -127,7 +77,7 @@
                                 url: "../serviceLowOfStudent?update",
                                 data:{
                                     'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
+                                    'pt_field_name' : 'fl_authorization_es',
                                     'pt_field_value' : 1
                                 },
                                 beforeSend: function (xhr) {
@@ -148,7 +98,7 @@
                             $("#jqxWindowAlert").jqxWindow('close'); 
                             commit(false);
                         });
-                    }else{
+                    }else{                        
                         $("#messageWarning").text("Estas seguro de cancelar el proceso de la baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
@@ -164,7 +114,7 @@
                                 url: "../serviceLowOfStudent?update",
                                 data:{
                                     'pt_pk_low_student': rowid,
-                                    'pt_field_name' : 'fl_authorization_director',
+                                    'pt_field_name' : 'fl_authorization_es',
                                     'pt_field_value' : 0
                                 },
                                 beforeSend: function (xhr) {
@@ -185,7 +135,7 @@
                             $("#jqxWindowAlert").jqxWindow('close'); 
                             commit(false);
                         });
-                    }
+                    }                    
                 }
             };
             return ordersSource;
@@ -245,11 +195,13 @@
                             return "<div style='margin:4px;'>" + (value + 1) + "</div>";
                         }
                     },
+                    { text: 'Folio de Baja',align: 'center', dataField: 'dataFolio', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
-                    { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Alumno', align: 'center', dataField: 'dataName', width: 250, cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Carrera', align: 'center', cellsalign: 'center', dataField: 'dataCareer', width: 150, cellclassname: cellclass, editable: false, filterable: false},
                     { text: 'Cuatrimestre', align: 'center', cellsalign: 'center', dataField: 'dataSemester', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Grupo', align: 'center', cellsalign: 'center', dataField: 'dataGroup', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Autorizar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true}
+                    { text: 'Grupo', align: 'center', cellsalign: 'center', dataField: 'dataGroup', width: 100, cellclassname: cellclass, editable: false, filterable: false}
+                    
                 ],
                 columnsresize: false
             });
@@ -332,7 +284,6 @@
                 }else{
                     $("#contextMenu").jqxMenu('disable', 'authorizate', true);
                 }   
-                console.log(data.dataStatusES)
                 if(data.dataStatusES==="Autorizada"){
                     $("#contextMenu").jqxMenu('disable', 'print', false);
                 }else{
@@ -363,14 +314,6 @@
             <div id='generateDownMotiveDownFilter'></div>
         </div>
     </div>
-</div>
-<div style="float: left; margin-right: 5px;">
-    Nivel de estudio<br>
-    <div id='generateDownLevelFilter'></div>
-</div>
-<div style="float: left; margin-right: 5px;">
-    Carrera <br>
-    <div id='generateDownCareerFilter'></div>
 </div>
 <div style="float: right; margin-right: 5px;">
     Periodo <br>

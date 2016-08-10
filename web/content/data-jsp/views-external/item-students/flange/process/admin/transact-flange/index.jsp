@@ -36,6 +36,7 @@
                     { name: 'dataPkLowStundet', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
                     { name: 'dataName', type: 'string' },
+                    { name: 'dataFolio', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
                     { name: 'dataCareer', type: 'string' },
                     { name: 'dataSemester', type: 'string' },
@@ -45,7 +46,7 @@
                 dataType: "json",
                 id: "dataPkLowStundet",
                 async: false,
-                url: '../serviceLowOfStudent?selectStudentsLowsTempsES',
+                url: '../serviceLowOfStudent?selectStudentsLowsESAuthorizedDirector',
                 data : {
                     fkPeriod : valItemPeriod           
                 },
@@ -61,7 +62,7 @@
                         statusDown="removeLow";
                     }
                     if(statusDown==="authorizateLow"){                 
-                        $("#messageWarning").text("Estas seguro de aprobar baja para el alumno ");
+                        $("#messageWarning").text("Estas seguro de archivar la baja para el alumno ");
                         $("#studentName").text(rowdata.dataName);
                         $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
                         $("#period").text(" en el periodo "+itemPeriod.label);
@@ -194,12 +195,14 @@
                             return "<div style='margin:4px;'>" + (value + 1) + "</div>";
                         }
                     },
+                    { text: 'Archivar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
+                    { text: 'Folio de Baja',align: 'center', dataField: 'dataFolio', width: 120, cellclassname: cellclass, editable: false },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
-                    { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Carrera', align: 'center', cellsalign: 'center', dataField: 'dataCareer', width: 100, cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Alumno', align: 'center', dataField: 'dataName', width: 250, cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Carrera', align: 'center', cellsalign: 'center', dataField: 'dataCareer', width: 150, cellclassname: cellclass, editable: false, filterable: false},
                     { text: 'Cuatrimestre', align: 'center', cellsalign: 'center', dataField: 'dataSemester', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Grupo', align: 'center', cellsalign: 'center', dataField: 'dataGroup', width: 100, cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Autorizar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true}
+                    { text: 'Grupo', align: 'center', cellsalign: 'center', dataField: 'dataGroup', width: 100, cellclassname: cellclass, editable: false, filterable: false}
+                    
                 ],
                 columnsresize: false
             });

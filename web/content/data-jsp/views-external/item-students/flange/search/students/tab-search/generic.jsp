@@ -37,11 +37,11 @@
                 filterable: true,
                 sortable: true,
                 columns: [
-                    { text: 'N.P', datafield: 'dataProgresivNumber', width: 40, align: "center", cellsalign: "center", resizable: false, sortable: false,  filterable: false },
+                    { text: 'N.P', datafield: 'dataProgresivNumber', width: 50, align: "center", cellsalign: "center", resizable: false, sortable: false,  filterable: false },
                     { text: 'Matrícula', datafield: 'dataEnrollment', width: 130, align: "center", cellsalign: "center", resizable: false },
-                    { text: 'Contraseña', datafield: 'dataPassword', width: 130, align: "center", cellsalign: "center", resizable: false },
-                    { text: 'Nombre', datafield: 'dataName', width: 'auto'}, 
-                    { text: 'Carrera', datafield: 'dataNameCareer', width: 'auto', align: "center", filterable: false}, 
+                    { text: 'Contraseña', datafield: 'dataPassword', width: 250, align: "center", cellsalign: "center", resizable: false },
+                    { text: 'Nombre', datafield: 'dataName', width: 250}, 
+                    { text: 'Carrera', datafield: 'dataNameCareer', width: 350, align: "center", filterable: false}, 
                     { text: 'Cuatrimestre Actual', datafield: 'dataNameSemester', width: 150, align: "center", cellsalign: "center", filterable: false},
                     { text: 'Grupo Actual', datafield: 'dataNameGroup', width: 100, align: "center", cellsalign: "center", filterable: false}
                 ]
