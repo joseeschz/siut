@@ -44,6 +44,28 @@ public class serviceStudent extends HttpServlet {
         HttpSession session = request.getSession();
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            if(request.getParameter("selectStudentsLetterDelivered")!=null){
+                int fkCareer = Integer.parseInt(request.getParameter("fkCareer"));
+                int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));
+                ArrayList<studentModel> listStudents=new studentControl().SelectStudentsLetterDelivered(fkCareer, fkPeriod);  
+                JSONArray content = new JSONArray();
+                listStudents.stream().map((studentMdl) -> {
+                    JSONObject data = new JSONObject();
+                    data.put("dataPkCertifiedOfStudy", studentMdl.getPK_CERTIFIED_OF_STUDY());
+                    data.put("dataPkStudent", studentMdl.getPK_STUDENT());
+                    data.put("dataEnrollment", studentMdl.getFL_ENROLLMENT());
+                    data.put("dataName", studentMdl.getFL_NAME());
+                    data.put("dataDateRecivedES", studentMdl.getFL_REGISTER_DATE());
+                    return data;
+                }).forEach((data) -> {
+                    content.add(data);
+                });
+              
+                response.setContentType("application/json"); 
+                out.print(content);
+                out.flush(); 
+                out.close();               
+            }
             if(request.getParameter("tableByAllColumsMetadata")!=null){  
                 ArrayList<propetiesTableModel> listColumns=new studentControl().SelectReportColums();
                 JSONArray contentRowsCal;
@@ -329,6 +351,16 @@ public class serviceStudent extends HttpServlet {
                 out.print(content);
                 out.flush(); 
                 out.close();
+            }
+            if(request.getParameter("updateDateLetterDelivery")!=null){      
+                response.setContentType("application/json"); 
+                if(request.getParameter("pk_certified_of_study") != null && request.getParameter("pt_field_value") != null){
+                    JSONObject data = new JSONObject();
+                    int pk_certified_of_study=Integer.parseInt(request.getParameter("pk_certified_of_study"));
+                    String field_value = request.getParameter("pt_field_value");
+                    data.put("status", new studentControl().UpdateDateLetterDelivery(pk_certified_of_study, field_value));
+                    out.print(data);
+                }                
             }
             if(request.getParameter("updateStudentExpedient")!=null){
                 int pk_student = Integer.parseInt(request.getParameter("pk_student"));

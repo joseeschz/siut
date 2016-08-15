@@ -1,35 +1,34 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        var itemLevel = 0;
-        var itemCareer = 0;
-        var contextMenu = $("#contextMenu").jqxMenu({ width: 230, autoOpenPopup: false, mode: 'popup'});
-        $("#tableStudyPlan").on('contextmenu', function () {
-            return false;
-        });
-        function loadSource(fkCareer){
+        var pt_pk_study_plann = <%out.print(request.getParameter("pt_pk_study_plann"));%>;
+        var pt_pk_type = <%out.print(request.getParameter("pt_pk_type"));%>;
+        function loadSource(pt_pk_study_plann, pt_pk_type){
             var ordersSource ={
                 dataFields: [
-                    { name: 'id', type:'int'},
+                    { name: 'dataPkCompetenceProfessional', type:'int'},
                     { name: 'dataProgresivNumber', type:'int'},
-                    { name: 'dataNameStudyPlan', type: 'string' }
+                    { name: 'dataNameCompetences', type: 'string' },
+                    { name: 'dataPkStudyPlann', type:'int'}
                 ],
-                root: "__ENTITIES",
                 dataType: "json",
                 async: false,
-                id: 'id',
-                url: '../serviceStudyPlan?view&&fkCareer='+fkCareer+'',
+                id: 'dataPkCompetenceProfessional',
+                url: '../serviceCompetenceProfessional?view&&pt_pk_study_plann='+pt_pk_study_plann+'&&pt_fk_type='+pt_pk_type,
                 addRow: function (rowID, rowData, position, commit) {
                     // synchronize with the server - send insert command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
                     // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-                    itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
-                        url: "../serviceStudyPlan?insert",
-                        data:{'nameStudyPlan':" ",'fkCareer':itemCareer.value},
+                        url: "../serviceCompetenceProfessional?insert",
+                        data:{
+                            'pt_fk_type' : pt_pk_type,
+                            'pt_pk_study_plann' : pt_pk_study_plann,
+                            'pt_concept' : ""
+                        },
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -38,9 +37,9 @@
                         },
                         success: function (data, textStatus, jqXHR) {
                             commit(true);
-                            $("#tableStudyPlan").jqxDataTable('updateBoundData');
-                            $("#tableStudyPlan").jqxDataTable('goToPage', 0);
-                            $("#tableStudyPlan").jqxDataTable('beginRowEdit', 0);
+                            $("#tableCompetences").jqxDataTable('updateBoundData');
+                            $("#tableCompetences").jqxDataTable('goToPage', 0);
+                            $("#tableCompetences").jqxDataTable('beginRowEdit', 0);
                         }
                     });
                 },
@@ -48,14 +47,16 @@
                     // synchronize with the server - send update command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
-                    itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
-                    var dataNameStudyPlan = rowData.dataNameStudyPlan;
+                    var dataNameCompetences = rowData.dataNameCompetences;
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
-                        url: "../serviceStudyPlan?update",
-                        data:{'pkStudyPlan':rowID,'nameStudyPlan':dataNameStudyPlan,'fkCareer': itemCareer.value},
+                        url: "../serviceCompetenceProfessional?update",
+                        data:{
+                            'pt_pk_competence_professional':rowID,
+                            'pt_concept':dataNameCompetences
+                        },
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -72,13 +73,14 @@
                     // synchronize with the server - send delete command
                     // call commit with parameter true if the synchronization with the server is successful 
                     // and with parameter false if the synchronization failed.
-                    itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
-                        url: "../serviceStudyPlan?delete",
-                        data:{'pkStudyPlan':rowID},
+                        url: "../serviceCompetenceProfessional?delete",
+                        data:{
+                            'pt_pk_competence_professional':rowID
+                        },
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -87,7 +89,7 @@
                         },
                         success: function (data, textStatus, jqXHR) {
                             commit(true);
-                            $("#tableStudyPlan").jqxDataTable('updateBoundData');
+                            $("#tableCompetences").jqxDataTable('updateBoundData');
                         }
                     });
                 }
@@ -95,28 +97,18 @@
             return ordersSource;
         };
         var dataAdapter;
-        createDropDownStudyLevel("#studyPlanLevelFilter", false);
-        itemLevel = $('#studyPlanLevelFilter').jqxDropDownList('getSelectedItem');
-        if(itemLevel!==undefined){
-            createDropDownCareer(itemLevel.value, "#studyPlanCareerFilter", false);
-            itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
-            if(itemCareer!==undefined){
-                loadTable(itemCareer.value);
-            }
-        }else{
-            createDropDownCareer(null, "#studyPlanCareerFilter", false);
-        }
-        function loadTable(pkCareer){
-            dataAdapter = new $.jqx.dataAdapter(loadSource(pkCareer));
-            $("#tableStudyPlan").jqxDataTable({
-                width: 405,
-                height : 200,
+        loadTable(pt_pk_study_plann, pt_pk_type);
+        function loadTable(pt_pk_study_plann, pt_pk_type){
+            dataAdapter = new $.jqx.dataAdapter(loadSource(pt_pk_study_plann, pt_pk_type));
+            $("#tableCompetences").jqxDataTable({
+                width: 450,
+                height : 240,
                 selectionMode: "singleRow",
                 localization: getLocalization("es"),
                 source: dataAdapter,
                 pageable: true,
                 editable: true,
-                filterable: true,
+                filterable: false,
                 showToolbar: true,
                 altRows: true,
                 pagerButtonsCount: 10,
@@ -189,58 +181,58 @@
                         }
                     };
                     var rowIndex = null;
-                    $("#tableStudyPlan").on('rowSelect', function (event) {
+                    $("#tableCompetences").on('rowSelect', function (event) {
                         var args = event.args;
                         rowIndex = args.index;
                         updateButtons('Select');
                     });
-                    $("#tableStudyPlan").on('rowUnselect', function (event) {
+                    $("#tableCompetences").on('rowUnselect', function (event) {
                         updateButtons('Unselect');
                     });
-                    $("#tableStudyPlan").on('rowEndEdit', function (event) {
+                    $("#tableCompetences").on('rowEndEdit', function (event) {
                         updateButtons('End Edit');
                     });
-                    $("#tableStudyPlan").on('rowBeginEdit', function (event) {
+                    $("#tableCompetences").on('rowBeginEdit', function (event) {
                         updateButtons('Edit');
                     });
                     addButton.click(function (event) {
                         if (!addButton.jqxButton('disabled')) {
                             // add new empty row.
-                            $("#tableStudyPlan").jqxDataTable('addRow', null, {}, 'first');
+                            $("#tableCompetences").jqxDataTable('addRow', null, {}, 'first');
                             // select the first row and clear the selection.
-                            $("#tableStudyPlan").jqxDataTable('clearSelection');
-                            $("#tableStudyPlan").jqxDataTable('selectRow', 0);
+                            $("#tableCompetences").jqxDataTable('clearSelection');
+                            $("#tableCompetences").jqxDataTable('selectRow', 0);
                             // edit the new row.
-                            //$("#tableStudyPlan").jqxDataTable('beginRowEdit', 0);
+                            //$("#tableCompetences").jqxDataTable('beginRowEdit', 0);
                             updateButtons('add');
                         }
                     });
                     cancelButton.click(function (event) {
                         if (!cancelButton.jqxButton('disabled')) {
                             // cancel changes.
-                            $("#tableStudyPlan").jqxDataTable('endRowEdit', rowIndex, true);
+                            $("#tableCompetences").jqxDataTable('endRowEdit', rowIndex, true);
                         }
                     });
                     updateButton.click(function (event) {
                         if (!updateButton.jqxButton('disabled')) {
                             // save changes.
-                            $("#tableStudyPlan").jqxDataTable('endRowEdit', rowIndex, false);
+                            $("#tableCompetences").jqxDataTable('endRowEdit', rowIndex, false);
                         }
                     });
                     editButton.click(function () {
                         if (!editButton.jqxButton('disabled')) {
-                            $("#tableStudyPlan").jqxDataTable('beginRowEdit', rowIndex);
+                            $("#tableCompetences").jqxDataTable('beginRowEdit', rowIndex);
                             updateButtons('edit');
                         }
                     });
                     deleteButton.click(function () {
                         if (!deleteButton.jqxButton('disabled')) {
-                            $("#jqxWindowWarning").jqxWindow('open');
-                            $("#ok").click(function (){
-                                $("#tableStudyPlan").unbind("bindingComplete");
-                                $("#ok").unbind("click"); 
-                                $("#jqxWindowWarning").jqxWindow('close');
-                                $("#tableStudyPlan").jqxDataTable('deleteRow', rowIndex);
+                            $("#jqxWindowWarningCompetences").jqxWindow('open');
+                            $("#okCompetences").click(function (){
+                                $("#tableCompetences").unbind("bindingComplete");
+                                $("#okCompetences").unbind("click"); 
+                                $("#jqxWindowWarningCompetences").jqxWindow('close');
+                                $("#tableCompetences").jqxDataTable('deleteRow', rowIndex);
                             });
                             updateButtons('delete');
                         }
@@ -251,7 +243,7 @@
                 },
                 columns: [
                     { text: 'NP',filterable: false, editable: false, dataField: 'dataProgresivNumber', width: 25 },
-                    { text: 'Plan de estudio', dataField: 'dataNameStudyPlan',
+                    { text: 'Competencia', dataField: 'dataNameCompetences',
                         createEditor: function (row, cellvalue, editor, cellText, width, height) {
                             // construct the editor. 
                             $(editor).keyup(function() {
@@ -266,92 +258,7 @@
                 ]
             }); 
         }
-        $("#contextMenu").on('itemclick', function (event) {
-            var args = event.args;
-            var selection = $("#tableStudyPlan").jqxDataTable('getSelection');
-            var rowData;
-            var type;
-            for (var i = 0; i < selection.length; i++) {
-                // get a selected row.
-                rowData = selection[i];
-            }
-            if ($.trim($(args).text()) === "Competencias Específicas"){
-                type=1;
-            }
-            if ($.trim($(args).text()) === "Competencias Genéricas"){    
-                type=2;
-            }
-            $.ajax({
-                //Send the paramethers to servelt
-                type: "POST",
-                async: false,
-                url: "../content/data-jsp/views-external/item-catalogs/flange/academic-flange/studyPlan-item/competences.jsp",
-                data: {
-                    'pt_pk_study_plann' : rowData.id,
-                    'pt_pk_type' : type
-                },
-                beforeSend: function (xhr) {
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    //This is if exits an error with the server internal can do server off, or page not found
-                    alert("Error interno del servidor");
-                },
-                success: function (data_result, textStatus, jqXHR) { 
-                    $("#contentPDF").html(data_result);
-                    $("#popupWindowDoc").jqxWindow('open');
-                }
-            });  
-        });
-        $("#tableStudyPlan").on('rowClick', function (event) {
-            if (event.args.originalEvent.button==2) {
-                var scrollTop = $(window).scrollTop();
-                var scrollLeft = $(window).scrollLeft();
-                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
-                return false;
-            }
-        });
-        $('#studyPlanLevelFilter').on('change',function (event){    
-            itemLevel = $('#studyPlanLevelFilter').jqxDropDownList('getSelectedItem');
-            if(itemLevel!==undefined){
-                createDropDownCareer(itemLevel.value, "#studyPlanCareerFilter", true);
-                itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
-            }else{
-                createDropDownCareer(null, "#studyPlanCareerFilter", true);
-            }
-        });
-        $('#studyPlanCareerFilter').on('change',function (event){      
-            itemCareer = $('#studyPlanCareerFilter').jqxDropDownList('getSelectedItem');
-            if(itemCareer.value){
-                dataAdapter = new $.jqx.dataAdapter(loadSource(itemCareer.value));
-                $("#tableStudyPlan").jqxDataTable({source: dataAdapter});
-            }          
-        });
-        $("#popupWindowDoc").jqxWindow({ 
-            width: 470,
-            height: 300,
-            resizable: false, 
-            isModal: true, 
-            autoOpen: false, 
-            modalOpacity: 0.7 
-        });
     });
 </script>
-<div id="popupWindowDoc">
-    <div>Registros</div>
-    <div style="" id="contentPDF"></div>
-</div>
-<div style="float: left; margin-right: 5px;">
-    Nivel de estudio <br>
-    <div id='studyPlanLevelFilter'></div>
-</div>
-<div style="float: left; margin-right: 5px;">
-    Carrera <br>
-    <div id='studyPlanCareerFilter'></div>
-</div><br><br><br>
-<div id="tableStudyPlan"></div>
-<div id='contextMenu'>
-    <ul>
-        <li id="spesifics">Competencias Específicas</li>
-        <li id="generics">Competencias Genéricas</li>
-    </ul>
-</div>
+
+<div id="tableCompetences"></div>

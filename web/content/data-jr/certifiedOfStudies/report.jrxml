@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="originalDocuments" pageWidth="612" pageHeight="792" columnWidth="483" leftMargin="63" rightMargin="66" topMargin="42" bottomMargin="14" uuid="c589d7cb-36b0-40de-bd25-6e0badeb34b0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="509"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#339900">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#008000">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#E6FFE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F8FFF8"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataset1" uuid="37c561a4-7338-42e5-b07d-38d263a5f4cc">
+		<parameter name="pt_pk_study_plann" class="java.lang.Long">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('competencesSpecific', null, $P{pt_pk_study_plann}, null, null)]]>
+		</queryString>
+		<field name="PK_COMPETENCE_PROFESSIONAL" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FL_CONCEPT" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FK_TYPE" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FK_STUDY_PLANN" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset2" uuid="1333fb61-6b87-4926-9565-acae1688ab6a">
+		<parameter name="pt_pk_study_plann" class="java.lang.Long">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('competencesGenerics', null, $P{pt_pk_study_plann}, null, null);]]>
+		</queryString>
+		<field name="PK_COMPETENCE_PROFESSIONAL" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FL_CONCEPT" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FK_TYPE" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="FK_STUDY_PLANN" class="java.lang.Long">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="dataset3" uuid="77369562-0614-4ddc-aa8d-6da26a729a97">
+		<parameter name="pt_pk_study_plann" class="java.lang.Long">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('competencesLegend', null, $P{pt_pk_study_plann}, null, null);]]>
+		</queryString>
+		<field name="FL_LEGEND" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="pt_enrollment" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Carlos Antonio\\Documents\\GitHub\\siut\\web\\content\\data-jr\\constancyRecordsCalifications\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('studentByEnrollmentCertifiedOfStudies', $P{pt_enrollment}, null, null, null);]]>
+	</queryString>
+	<field name="PK_STUDENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID UNICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_ENROLLMENT" class="java.lang.String">
+		<fieldDescription><![CDATA[MATRÍCULA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|createfilterpanel|custom|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_NAME" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="FK_CAREER" class="java.lang.Long">
+		<fieldDescription><![CDATA[ID CARRERA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|checkedlist|true|FL_COLUMNTYPE]]></fieldDescription>
+	</field>
+	<field name="FL_GENERATION" class="java.lang.String"/>
+	<field name="FL_NAME_CAREER" class="java.lang.String">
+		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
+	</field>
+	<field name="FL_SICLO" class="java.lang.String"/>
+	<field name="FL_NAME_PERIOD" class="java.lang.String"/>
+	<field name="EXPEDITION_DATE" class="java.lang.String"/>
+	<field name="AVG_GENERAL" class="java.lang.String"/>
+	<field name="FL_NAME_PLAN" class="java.lang.String">
+		<fieldDescription><![CDATA[Es el mobre del plan de estudios]]></fieldDescription>
+	</field>
+	<field name="PK_STUDY_PLAN" class="java.lang.Long">
+		<fieldDescription><![CDATA[Este campo es la llave primaria del registro con ella podemos borrar o actualizar algún registro y en su caso podremos realizar con este relaciones externas entre tablas]]></fieldDescription>
+	</field>
+	<field name="FL_NAME_DIRECTOR_CAREER" class="java.lang.String"/>
+	<field name="FL_NAME_HEAD_ES" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="109">
+			<staticText>
+				<reportElement x="52" y="31" width="369" height="19" uuid="d5326a31-96cf-4d24-ac9b-8d7b5567ec97"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[LOGOS]]></text>
+			</staticText>
+		</band>
+		<band height="174">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="113" y="31" width="369" height="99" uuid="aeaeb786-a8b9-4aea-85be-84cd98262dc3"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
+					<font fontName="SansSerif" size="11" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["La Universidad Tecnológica certifica que según constancias existentes en el archivo  escolar,  el(a) <style isBold=\"true\">"+$F{FL_NAME}+"</style> con matrícula <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_ENROLLMENT}+"</style> cursó y aprobó las asignaturas que integran el plan de estudios <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_NAME_PLAN}+"</style> en el periodo escolar <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_NAME_PERIOD}+"</style> de la  carrera <style isBold=\"true\">"+$F{FL_NAME_CAREER}+"</style> obteniendo las calificaciones finales que a continuación se anotan."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="113" y="12" width="369" height="19" uuid="dc7014a6-3f99-4922-986d-62de616b538a"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO DE ESTUDIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="12" width="98" height="118" uuid="e647da67-b2e1-40d0-98d0-dad542d8deb5"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="159" width="472" height="1" uuid="db60f234-9284-4644-884b-b11074b5a77a"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+		</band>
+		<band height="100" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="483" height="87" uuid="a6b75e2d-227e-4d3e-aed0-fb219ad52a4d"/>
+				<subreportParameter name="pt_enrollment1">
+					<subreportParameterExpression><![CDATA[$P{pt_enrollment}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="pt_avg1">
+					<subreportParameterExpression><![CDATA[$F{AVG_GENERAL}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["report_subreport_content_cals.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="58">
+			<staticText>
+				<reportElement x="0" y="1" width="483" height="18" uuid="ff5fd3bb-daa5-42ad-91b9-9bbe2a45c418"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPETENCIAS PROFESIONALES QUE AVALA EL PRESENTE CERTIFICADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="19" width="483" height="11" uuid="1fcf2a75-da10-4025-a949-481cf22261f1"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Competencias Específicas]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 3" style="table 3" x="0" y="30" width="483" height="28" uuid="46af6584-5659-44ee-9d0f-6fda63b343ba"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset1" uuid="08b5a1ce-6dd6-4c09-ac80-5abdb6ce5cb9">
+						<datasetParameter name="pt_pk_study_plann">
+							<datasetParameterExpression><![CDATA[$F{PK_STUDY_PLAN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="483" uuid="364ee291-5f17-40b5-bc1a-31de5f39e665">
+						<jr:detailCell height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="20" uuid="3fb74f46-a387-473c-807c-5426cf9f9bcd"/>
+								<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FL_CONCEPT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="43">
+			<staticText>
+				<reportElement x="0" y="1" width="483" height="11" uuid="3fff1d14-86cc-4fb2-b055-ac7d217ca238"/>
+				<box leftPadding="5" rightPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Competencias Genéricas]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement key="table 3" style="table 3" x="0" y="12" width="483" height="28" uuid="ffc79350-59e1-4d70-9175-3c74b6a910b8"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset2" uuid="6da15ced-b128-4f99-a54d-c0fb5af926cd">
+						<datasetParameter name="pt_pk_study_plann">
+							<datasetParameterExpression><![CDATA[$F{PK_STUDY_PLAN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="483" uuid="6678bdc6-64f0-4ed9-9887-31f1918647f4">
+						<jr:detailCell height="20" rowSpan="1">
+							<box>
+								<topPen lineWidth="0.0"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textField isStretchWithOverflow="true">
+								<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="483" height="20" uuid="25351785-a465-4626-ab33-de86df4e89de"/>
+								<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5"/>
+								<textElement verticalAlignment="Middle">
+									<font size="8"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{FL_CONCEPT}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+		<band height="166">
+			<textField>
+				<reportElement stretchType="RelativeToBandHeight" x="1" y="87" width="483" height="29" uuid="e5341bc3-107d-4d60-a9b7-9e0a6e22b3a9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Expedido en la Ciudad de Tejupilco de Hidalgo, Estado de México, a los "+$F{EXPEDITION_DATE}.toLowerCase()+"."]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="1" y="19" width="483" height="50" uuid="1801ee8c-6367-462f-9a31-58570041d667"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset3" uuid="023feaae-2c66-4ce1-bcf7-2ec61d0ca017">
+						<datasetParameter name="pt_pk_study_plann">
+							<datasetParameterExpression><![CDATA[$F{PK_STUDY_PLAN}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:listContents height="50" width="483">
+						<textField>
+							<reportElement x="0" y="0" width="483" height="50" uuid="2479bfb2-ca33-4774-add8-e5d78bdd336c"/>
+							<textFieldExpression><![CDATA[$F{FL_LEGEND}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="149">
+			<staticText>
+				<reportElement x="88" y="84" width="78" height="10" uuid="56d4df54-a9ed-40de-ac59-efac655a3929"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[AU = Autónomo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="84" width="12" height="10" uuid="b10eb947-8a40-41c4-939c-1a0039939cb3"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="84" width="92" height="10" uuid="a6ae54c9-21fe-449b-8a59-3174202b7b18"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DE = Destacado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="84" width="12" height="10" uuid="eebf2c71-98c1-4b1b-ac16-e5ece8de9957"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="84" width="12" height="10" uuid="2e53b643-0efd-4a6b-9ca9-04767d1b62a5"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[8]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="84" width="83" height="10" uuid="7014bc97-7931-427f-8008-04fcc5462a2f"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NA = No Acreditado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="94" width="78" height="10" uuid="cea4ade0-32c1-49c2-a7c0-45e8f51f20ff"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CA = Competente Autónomo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="94" width="12" height="10" uuid="6e2a7ecd-b1a3-4e62-948e-ef265680ddd2"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="94" width="92" height="10" uuid="33b2e012-e7bb-4906-99e4-057bcfee7b63"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CD = Competente Destacado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="94" width="12" height="10" uuid="1ae8edec-f031-4686-bbfe-a3c025d94596"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[9]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="94" width="12" height="10" uuid="c2443410-b10c-41f9-b25b-a182489f3de3"/>
+				<box>
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[8]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="400" y="94" width="83" height="10" uuid="628154eb-6f30-4339-8218-c7ff9015ce72"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NA = No Acreditado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="84" width="106" height="10" uuid="c272c909-431d-4fa4-8108-4300337fe982"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SA= Satisfactorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="282" y="94" width="106" height="10" uuid="c84fb155-a138-49a6-83f8-3f3c2b9b1ce7"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CO = Competente]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="11" y="20" width="181" height="52" uuid="3ee1faf3-aeb3-4daa-8af9-48e94e908533"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_HEAD_ES}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="RelativeToBandHeight" x="282" y="20" width="185" height="52" uuid="32eec1be-2d82-4657-a4cb-5651ecc7e9ce"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FL_NAME_DIRECTOR_CAREER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="122" width="483" height="14" uuid="9867fee5-2b9d-412c-ac23-4872dcccd7b2"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Control de registro: folio 000710, libro: 01 y fojas: 000710  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="84" width="88" height="10" uuid="469c1afb-209b-4bb4-8861-f3a36cdad873"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASIGNATURAS NO INTEGRADORAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="94" width="88" height="10" uuid="097abca3-b01e-4267-8599-bdfc4e19afc3"/>
+				<box leftPadding="5">
+					<pen lineStyle="Dashed"/>
+					<topPen lineWidth="0.5" lineStyle="Dotted"/>
+					<leftPen lineWidth="0.5" lineStyle="Dotted"/>
+					<bottomPen lineWidth="0.5" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.5" lineStyle="Dotted"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="5" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ASIGNATURAS INTEGRADORAS]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -920,7 +920,7 @@
                                     </div>  
                                 </div>
                                 <div id="form5" class="form">
-                                    <h2 class="StepTitle">Aacuerdos del registro</h2><br>
+                                    <h2 class="StepTitle">Acuerdos del registro</h2><br>
                                     <div class="panel-body" style="text-align: left; padding: 20px; color:#53A753;">
                                         <p>Los datos personales son necesarios para que un individuo pueda interactuar con otros 
                                             o con una o más organizaciones, sin que sea confundido con el resto de la colectividad.</p>

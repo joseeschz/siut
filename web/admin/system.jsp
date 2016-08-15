@@ -18,23 +18,29 @@ if(session.getAttribute("logueado") == null){
             <link href="../content/files-css/clock.css" rel="stylesheet"/>
             <script type="text/javascript" src="../content/files-jq/jquery-2.0.2.min.js"></script>
             <script>
-                $.ajax({
-                    type: "GET",
-                    url: "../login?statusLogin=logged",
-                    dataType: 'json',
-                    async: false,
-                    beforeSend: function (xhr) {
-                        console.log("Checking session of out cache...");
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        alert("Error interno del servidor");
-                    },
-                    success: function (data, textStatus, jqXHR) {
-                         if(!data.status){
-                             window.location = "/admin/login.jsp";
-                         }
-                    }
-               });
+                setInterval(function (){
+                    logged();
+                },300000);
+                function logged(){
+                    $.ajax({
+                        type: "GET",
+                        url: "../login?statusLogin=logged",
+                        dataType: 'json',
+                        async: true,
+                        beforeSend: function (xhr) {
+                            console.log("Checking session of out cache...");
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Server is low");
+                        },
+                        success: function (data, textStatus, jqXHR) {
+                             if(!data.status){
+                                 window.location = "/admin/login.jsp";
+                             }
+                        }
+                    });
+                }
+                logged();
             </script>
             <script>
                 // Check if a new cache is available on page load.

@@ -10,19 +10,19 @@
         var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
         var exportButton = $(buttonTemplate);
         var container = $("<div class='container' style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
-        createDropDownStudyLevelByTeacherTutor("#generateDownLevelFilter",false);
-        itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
+        createDropDownStudyLevelByTeacherTutor("#letterDeliveryLevelFilter",false);
+        itemLevel = $('#letterDeliveryLevelFilter').jqxDropDownList('getSelectedItem');
         if(itemLevel!==undefined){
-            createDropDownCareerByTeacherTutor( itemLevel.value ,"#generateDownCareerFilter",false);
-            itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-            createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
-            itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+            createDropDownCareerByTeacherTutor( itemLevel.value ,"#letterDeliveryCareerFilter",false);
+            itemCareer = $('#letterDeliveryCareerFilter').jqxDropDownList('getSelectedItem');
+            createDropDownPeriod("comboActiveYear","#letterDeliveryPeriodFilter");
+            itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
             if(itemPeriod!==undefined){
-                createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",false);
-                itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#letterDeliverySemesterFilter",false);
+                itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
                 if(itemSemester!==undefined){
-                    createDropDownGruopByTeacherTutor(itemPeriod.value, itemSemester.value, "#generateDownGroupFilter",false);
-                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');                    
+                    createDropDownGruopByTeacherTutor(itemPeriod.value, itemSemester.value, "#letterDeliveryGroupFilter",false);
+                    itemGroup = $('#letterDeliveryGroupFilter').jqxDropDownList('getSelectedItem');                    
                     if(itemGroup!==undefined || itemGroup!==null){
                         var filtrable = {
                             pkCareer : itemCareer.value,
@@ -30,8 +30,8 @@
                             pkGroup : itemGroup.value,
                             pkPeriod : itemPeriod.value
                         };
-                        createDropDownSubjectMatterByGroup(filtrable, "#generateDownSubjectMatterFilter", false);
-                        itemSubjectMatter=$('#generateDownSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                        createDropDownSubjectMatterByGroup(filtrable, "#letterDeliverySubjectMatterFilter", false);
+                        itemSubjectMatter=$('#letterDeliverySubjectMatterFilter').jqxDropDownList('getSelectedItem');
                         if(itemSubjectMatter !==undefined || itemSubjectMatter!==null){
                             loadGridStudents();
                         }else{
@@ -39,31 +39,31 @@
                         }                        
                     }
                 }else{
-                    createDropDownGruopByTeacherTutor(null, null, "#generateDownGroupFilter",false);
+                    createDropDownGruopByTeacherTutor(null, null, "#letterDeliveryGroupFilter",false);
                 }
             }else{
-                createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter",false);
-                createDropDownGruopByTeacherTutor(null, null, "#generateDownGroupFilter",false);
+                createDropDownSemesterByTeacherTutor(null, null,"#letterDeliverySemesterFilter",false);
+                createDropDownGruopByTeacherTutor(null, null, "#letterDeliveryGroupFilter",false);
             }
-            $('#generateDownLevelFilter').on('change',function (event){  
-                itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
+            $('#letterDeliveryLevelFilter').on('change',function (event){  
+                itemLevel = $('#letterDeliveryLevelFilter').jqxDropDownList('getSelectedItem');
                 if(itemLevel!==undefined){
-                    createDropDownCareerByTeacherTutor(itemLevel.value, "#generateDownCareerFilter", true);
-                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownCareerByTeacherTutor(itemLevel.value, "#letterDeliveryCareerFilter", true);
+                    itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
                     if(itemPeriod!==undefined){
-                        itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                        createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter", true);
-                        itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem'); 
+                        itemCareer = $('#letterDeliveryCareerFilter').jqxDropDownList('getSelectedItem');
+                        createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#letterDeliverySemesterFilter", true);
+                        itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem'); 
                     }else{
-                        createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
+                        createDropDownSemesterByTeacherTutor(null, null,"#letterDeliverySemesterFilter", true);
                     }
                 }else{
-                    createDropDownCareerByTeacherTutor(null, "#generateDownCareerFilter", true);
-                    createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter", true);
+                    createDropDownCareerByTeacherTutor(null, "#letterDeliveryCareerFilter", true);
+                    createDropDownSemesterByTeacherTutor(null, null,"#letterDeliverySemesterFilter", true);
                 }
                 
             });
-            $('#generateDownCareerFilter').on('change',function (event){  
+            $('#letterDeliveryCareerFilter').on('change',function (event){  
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -73,16 +73,16 @@
                     var label = item.label;
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
-                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
-                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",true);
-                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemCareer = $('#letterDeliveryCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#letterDeliveryGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemLevel = $('#letterDeliveryLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#letterDeliverySemesterFilter",true);
+                    itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
                 }                
             });
-            $("#generateDownSemesterFilter").on('change',function (event){
+            $("#letterDeliverySemesterFilter").on('change',function (event){
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -92,16 +92,16 @@
                     var label = item.label;
                     var value = item.value;
                     var type = args.type; // keyboard, mouse or null depending on how the item was selected.
-                    itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
-                    itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
-                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    itemLevel = $('#generateDownLevelFilter').jqxDropDownList('getSelectedItem');
-                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#generateDownSemesterFilter",true);
-                    itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemCareer = $('#letterDeliveryCareerFilter').jqxDropDownList('getSelectedItem');
+                    itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
+                    itemGroup = $('#letterDeliveryGroupFilter').jqxDropDownList('getSelectedItem');
+                    itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
+                    itemLevel = $('#letterDeliveryLevelFilter').jqxDropDownList('getSelectedItem');
+                    createDropDownSemesterByTeacherTutor(itemPeriod.value, itemLevel.value,"#letterDeliverySemesterFilter",true);
+                    itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
                 }
             });
-            $("#generateDownSubjectMatterFilter").on('change',function (event){  
+            $("#letterDeliverySubjectMatterFilter").on('change',function (event){  
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -114,7 +114,7 @@
                     loadGridStudents();
                 }
             });
-            $("#generateDownGroupFilter").on('change',function (event){  
+            $("#letterDeliveryGroupFilter").on('change',function (event){  
                 var args = event.args;
                 if (args) {
                     // index represents the item's index.                      
@@ -128,10 +128,11 @@
                 }
             });
         }else{
-            createDropDownCareerByTeacherTutor(null ,"#generateDownCareerFilter",false);
-            createDropDownPeriod("comboActiveYear","#generateDownPeriodFilter");
-            createDropDownSemesterByTeacherTutor(null, null,"#generateDownSemesterFilter",false);
-            createDropDownGruopByTeacher(null, null, "#generateDownGroupFilter",false);
+            createDropDownCareerByTeacherTutor(null ,"#letterDeliveryCareerFilter",false);
+            createDropDownPeriod("comboActiveYear","#letterDeliveryPeriodFilter");
+            createDropDownSemesterByTeacherTutor(null, null,"#letterDeliverySemesterFilter",false);
+            createDropDownGruopByTeacherTutor(null, null, "#letterDeliveryGroupFilter",false);
+            createDropDownSubjectMatterByGroup({}, "#letterDeliverySubjectMatterFilter", false);
         }
         function loadSource(){
             var valItemCareer=0;
@@ -139,11 +140,11 @@
             var valItemSemester=0;
             var valItemPeriod=0;
             var valItemSubjectMatter=0;
-            itemCareer = $('#generateDownCareerFilter').jqxDropDownList('getSelectedItem');
-            itemSemester = $('#generateDownSemesterFilter').jqxDropDownList('getSelectedItem');
-            itemGroup = $('#generateDownGroupFilter').jqxDropDownList('getSelectedItem');
-            itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-            itemSubjectMatter = $('#generateDownSubjectMatterFilter').jqxDropDownList('getSelectedItem');
+            itemCareer = $('#letterDeliveryCareerFilter').jqxDropDownList('getSelectedItem');
+            itemSemester = $('#letterDeliverySemesterFilter').jqxDropDownList('getSelectedItem');
+            itemGroup = $('#letterDeliveryGroupFilter').jqxDropDownList('getSelectedItem');
+            itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
+            itemSubjectMatter = $('#letterDeliverySubjectMatterFilter').jqxDropDownList('getSelectedItem');
             
             if(itemCareer!==undefined){
                 valItemCareer=itemCareer.value;
@@ -162,16 +163,15 @@
             }  
             var ordersSource ={
                 dataFields: [
-                    { name: 'dataPkLowStundet', type: 'int' },
+                    { name: 'dataID', type: 'int' },
                     { name: 'dataPkStudent', type: 'int' },
-                    { name: 'dataName', type: 'string' },
+                    { name: 'dataStudentName', type: 'string' },
                     { name: 'dataEnrollment', type: 'string' },
-                    { name: 'dataDown', type: 'string' },
-                    { name: 'dataStatusDir', type: 'string' },
-                    { name: 'dataStatusES', type: 'string' }
+                    { name: 'dataDeliveryDescription', type: 'string' },
+                    { name: 'dataDeliveryStatus', type: 'string' }
                 ],
                 dataType: "json",
-                id: "dataPkLowStundet",
+                id: "dataID",
                 async: false,
                 url: '../serviceStudentsGroup?view=consultGroupStay',
                 root:'__ENTITIES',
@@ -181,99 +181,6 @@
                     fkSemester : valItemSemester,
                     fkGroup : valItemGroup,
                     fkSubjectMatter : valItemSubjectMatter
-                },
-                updaterow: function (rowid, rowdata, commit) {
-                    // synchronize with the server - send update command
-                    // call commit with parameter true if the synchronization with the server is successful 
-                    // and with parameter false if the synchronization failder.
-                    itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
-                    var statusDown;
-                    if(rowdata.dataDown==="Si"){
-                        statusDown="generateDown";
-                    }else{
-                        statusDown="removeDown";
-                    }
-                    if(statusDown==="generateDown"){                 
-                        $("#messageWarning").text("Estas seguro de gestionar baja para el alumno ");
-                        $("#studentName").text(rowdata.dataName);
-                        $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                        $("#period").text(" en el periodo "+itemPeriod.label);
-                        $("#jqxWindowAlert").jqxWindow('open');              
-                        $('#okWarning').off("click");
-                        $('#okWarning').on("click",function (){
-                            $("#jqxWindowAlert").jqxWindow('close'); 
-                            $.ajax({
-                                //Send the paramethers to servelt
-                                type: "POST",
-                                async: false,
-                                url: "../serviceLowOfStudent?insert",
-                                data:{
-                                    'pt_pk_student': rowdata.dataPkStudent,
-                                    'pt_pk_period': itemPeriod.value
-                                },
-                                beforeSend: function (xhr) {
-                                },
-                                error: function (jqXHR, textStatus, errorThrown) {
-                                    //This is if exits an error with the server internal can do server off, or page not found
-                                    alert("Error interno del servidor");
-                                    commit(false);
-                                },
-                                success: function (data_result, textStatus, jqXHR) { 
-                                    console.log(data_result);
-                                    loadGridStudents();
-                                    
-                                }
-                            });  
-                        });
-                        $('#cancelWarning').off("click");
-                        $('#cancelWarning').on("click",function (){                            
-                            $("#jqxWindowAlert").jqxWindow('close'); 
-                            commit(false);
-                        });
-                    }else{
-                        if(rowdata.dataStatusDir==="Autorizada"){
-                            $("#messageError").text("La baja no puede ser cancelada si ya fue autorizada por el Director");
-                            $("#jqxWindowError").jqxWindow('open'); 
-                            commit(false);
-                        }else{
-                            $("#messageWarning").text("Estas seguro de cancelar la baja para el alumno ");
-                            $("#studentName").text(rowdata.dataName);
-                            $("#enrollment").text(" con matrícula "+rowdata.dataEnrollment);
-                            $("#period").text(" en el periodo "+itemPeriod.label);
-                            $("#jqxWindowAlert").jqxWindow('open');              
-                            $('#okWarning').off("click");
-                            $('#okWarning').on("click",function (){
-                                $("#jqxWindowAlert").jqxWindow('close'); 
-                                $.ajax({
-                                    //Send the paramethers to servelt
-                                    type: "POST",
-                                    async: false,
-                                    url: "../serviceLowOfStudent?delete",
-                                    data:{
-                                        'pt_pk_low_student': rowid
-                                    },
-                                    beforeSend: function (xhr) {
-                                    },
-                                    error: function (jqXHR, textStatus, errorThrown) {
-                                        //This is if exits an error with the server internal can do server off, or page not found
-                                        alert("Error interno del servidor");
-                                        commit(false);
-                                    },
-                                    success: function (data_result, textStatus, jqXHR) { 
-                                        commit(true);
-                                        console.log(data_result);
-                                    }
-                                });  
-                            });
-                            $('#cancelWarning').off("click");
-                            $('#cancelWarning').on("click",function (){                            
-                                $("#jqxWindowAlert").jqxWindow('close'); 
-                                commit(false);
-                            });
-                        }
-                    }
-                    
-                    
                 }
             };
             return ordersSource;
@@ -310,7 +217,7 @@
                 return value;
             };
             var dataAdapter = new $.jqx.dataAdapter(loadSource());  
-            $("#tableGenerateDown").jqxGrid({
+            $("#tableLetterDeliveryStudentsGroup").jqxGrid({
                 width: 850,
                 height: 450,
                 selectionMode: "singlerow",
@@ -322,7 +229,7 @@
                 filterable: true,
                 altRows: true,
                 ready: function(){
-                    $("#tableGenerateDown").jqxGrid('focus');
+                    $("#tableLetterDeliveryStudentsGroup").jqxGrid('focus');
                 },
                 columns: [
                     {
@@ -334,14 +241,65 @@
                         }
                     },
                     { text: 'Matrícula',align: 'center', dataField: 'dataEnrollment', width: 120, cellclassname: cellclass, editable: false },
-                    { text: 'Alumno', align: 'center', dataField: 'dataName', cellclassname: cellclass, editable: false, filterable: false},
-                    { text: 'Gestionar Baja', align: 'center', cellsalign: 'center', dataField: 'dataDown', createeditor: createGridEditor, initeditor: initGridEditor, geteditorvalue: gridEditorValue, columntype: 'custom', width: 120, cellclassname: cellclass, editable: true, filterable: true},
-                    { text: 'Estado Dir', align: 'center', cellsalign: 'center', dataField: 'dataStatusDir', width: 100, cellclassname: cellclass, editable: false, filterable: false}
+                    { text: 'Alumno', align: 'center', dataField: 'dataStudentName', cellclassname: cellclass, editable: false, filterable: false},
+                    { text: 'Descripción',align: 'center', cellsalign : 'center', dataField: 'dataDeliveryDescription', width: 130, cellclassname: cellclass, editable: false },
+                    { text: 'Estado', align: 'center', datafield: 'dataDeliveryStatus', threestatecheckbox: true, columntype: 'checkbox', width: 100 }
                 ],
                 columnsresize: false
             });
-            $('#tableGenerateDown').off('rowunselect');
-            $('#tableGenerateDown').on('rowunselect', function (event){
+            $("#tableLetterDeliveryStudentsGroup").off('cellendedit');
+            $("#tableLetterDeliveryStudentsGroup").on('cellendedit', function (event) {
+                // event arguments.
+                var args = event.args;
+                // column data field.
+                var dataField = event.args.datafield;
+                // row's bound index.
+                var rowBoundIndex = event.args.rowindex;
+                // cell value
+                var value = args.value;
+                // cell old value.
+                var oldvalue = args.oldvalue;
+                // row's data.
+                var rowData = $('#tableLetterDeliveryStudentsGroup').jqxGrid('getrowdata', rowBoundIndex);
+                var deliveryStatusParam ="";
+                if(rowData.dataDeliveryStatus==true){
+                    $("#tableLetterDeliveryStudentsGroup").jqxGrid('setcellvaluebyid', rowData.dataID, "dataDeliveryDescription", "Acreditada");
+                    deliveryStatusParam="InsertCalSubjectMatterStay";
+                }else if(rowData.dataDeliveryStatus==false){
+                    deliveryStatusParam="UpdateCalSubjectMatterStay";
+                    $("#tableLetterDeliveryStudentsGroup").jqxGrid('setcellvaluebyid', rowData.dataID, "dataDeliveryDescription", "No acreditada");
+                }else{
+                    $("#tableLetterDeliveryStudentsGroup").jqxGrid('setcellvaluebyid', rowData.dataID, "dataDeliveryDescription", "No entregada");
+                    deliveryStatusParam="DeleteCalSubjectMatterStay";
+                }
+                itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
+                itemSubjectMatter = $('#letterDeliverySubjectMatterFilter').jqxDropDownList('getSelectedItem');
+                console.log(rowData)
+                $.ajax({
+                    //Send the paramethers to servelt
+                    type: "POST",
+                    async: false,
+                    url: "../serviceCalification?"+deliveryStatusParam,
+                    data:{
+                        'pt_pk_study_level' : itemLevel.value,
+                        'pt_pk_student' : rowData.dataPkStudent,
+                        'pt_pk_subject_matter' : itemSubjectMatter.value,
+                        'pt_pk_period' : itemPeriod.value 
+                    },
+                    beforeSend: function (xhr) {
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        //This is if exits an error with the server internal can do server off, or page not found
+                        alert("Error interno del servidor");
+                        $("#tableLetterDeliveryStudentsGroup").jqxGrid('setcellvaluebyid', rowData.dataID, dataField, oldvalue);
+                    },
+                    success: function (data_result, textStatus, jqXHR) { 
+                        console.log(data_result);
+                    }
+                });  
+            });
+            $('#tableLetterDeliveryStudentsGroup').off('rowunselect');
+            $('#tableLetterDeliveryStudentsGroup').on('rowunselect', function (event){
                 // event arguments.
                 var args = event.args;
                 // row's bound index.
@@ -350,21 +308,21 @@
                 var rowData = args.row;
                 
                 if(args){
-                    $("#tableGenerateDown").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
+                    $("#tableLetterDeliveryStudentsGroup").jqxGrid('endcelledit', rowBoundIndex, "dataDown", false);
                 }
             });
         }        
         var contextMenu = $("#contextMenu").jqxMenu({ width: 180, autoOpenPopup: false, mode: 'popup'});
-        $("#tableGenerateDown").on('contextmenu', function () {
+        $("#tableLetterDeliveryStudentsGroup").on('contextmenu', function () {
             return false;
         });
         // handle context menu clicks.
         $("#contextMenu").on('itemclick', function (event) {
             var args = event.args;
-            var rowindex = $("#tableGenerateDown").jqxGrid('getselectedrowindex');
-            var data = $('#tableGenerateDown').jqxGrid('getrowdata', rowindex);
+            var rowindex = $("#tableLetterDeliveryStudentsGroup").jqxGrid('getselectedrowindex');
+            var data = $('#tableLetterDeliveryStudentsGroup').jqxGrid('getrowdata', rowindex);
             if ($.trim($(args).text()) === "Llenar Formato"){
-                itemPeriod = $('#generateDownPeriodFilter').jqxDropDownList('getSelectedItem');
+                itemPeriod = $('#letterDeliveryPeriodFilter').jqxDropDownList('getSelectedItem');
                 $.ajax({
                     //Send the paramethers to servelt
                     type: "POST",
@@ -410,23 +368,13 @@
                 });                
             }
         });
-        $("#tableGenerateDown").on('rowclick', function (event) {
+        $("#tableLetterDeliveryStudentsGroup").on('rowclick', function (event) {
             if (event.args.rightclick) {
-                var data = $('#tableGenerateDown').jqxGrid('getrowdata', event.args.rowindex);
-                $("#tableGenerateDown").jqxGrid('selectrow', event.args.rowindex);
-                if(data.dataDown==="Si"){
-                    $("#contextMenu").jqxMenu('disable', 'generate', false);
-                }else{
-                    $("#contextMenu").jqxMenu('disable', 'generate', true);
-                }   
-                if(data.dataStatusDir==="Autorizada"){
-                    $("#contextMenu").jqxMenu('disable', 'print', false);
-                }else{
-                    $("#contextMenu").jqxMenu('disable', 'print', true);
-                }
+                var data = $('#tableLetterDeliveryStudentsGroup').jqxGrid('getrowdata', event.args.rowindex);
+                $("#tableLetterDeliveryStudentsGroup").jqxGrid('selectrow', event.args.rowindex);
                 var scrollTop = $(window).scrollTop();
                 var scrollLeft = $(window).scrollLeft();
-                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
+//                contextMenu.jqxMenu('open', parseInt(event.args.originalEvent.clientX) + 5 + scrollLeft, parseInt(event.args.originalEvent.clientY) + 5 + scrollTop);
                 return false;
             }
         });
@@ -446,43 +394,42 @@
     <div style="overflow: hidden;" id="contentPDF">
         <div style="float: left; margin-right: 5px;">
             Motivo<br>
-            <div id='generateDownMotiveDownFilter'></div>
+            <div id='letterDeliveryMotiveDownFilter'></div>
         </div>
     </div>
 </div>
 <div style="float: left; margin-right: 5px;">
     Nivel de estudio<br>
-    <div id='generateDownLevelFilter'></div>
+    <div id='letterDeliveryLevelFilter'></div>
 </div>
 <div style="float: left; margin-right: 5px;">
     Carrera <br>
-    <div id='generateDownCareerFilter'></div>
+    <div id='letterDeliveryCareerFilter'></div>
 </div>
 <div id="contentHistoryPeriods" style="display: none; float: right; right: 100px; position: absolute; z-index: 10000;">
     Periodo historial <br>
-    <div id='generateDownPeriodHistoryFilter'></div>
+    <div id='letterDeliveryPeriodHistoryFilter'></div>
 </div>
 <div style="float: right; margin-right: 5px; display: none">
     Periodo <br>
-    <div id='generateDownPeriodFilter'></div>
+    <div id='letterDeliveryPeriodFilter'></div>
 </div>
 <br><br><br>
 <div style="float: left; margin-right: 5px;">
     Cuatrimestre<br>
-    <div id='generateDownSemesterFilter'></div>
+    <div id='letterDeliverySemesterFilter'></div>
 </div>
 <div style="float: left; margin-right: 5px;">
     Grupo<br>
-    <div id='generateDownGroupFilter'></div>
+    <div id='letterDeliveryGroupFilter'></div>
 </div>
 <div style="float: left; margin-right: 5px;">
     Materia<br>
-    <div id='generateDownSubjectMatterFilter'></div>
+    <div id='letterDeliverySubjectMatterFilter'></div>
 </div>
-<div style="float: left; margin-right: 5px" id="tableGenerateDown"></div>
+<div style="float: left; margin-right: 5px" id="tableLetterDeliveryStudentsGroup"></div>
 <div id='contextMenu'>
     <ul>
-        <li id="generate">Llenar Formato</li>
-        <li id="print">Imprimir Formato</li>
+        <li id="noUsed">No en usooo!</li>
     </ul>
 </div>

@@ -26,19 +26,37 @@ import org.json.simple.JSONObject;
  */
 public class studentControl {
     public static void main(String[] args) {
-        ArrayList<studentModel> listCandidateING=new studentControl().SelectCandidatesING();
-        ArrayList<studentModel> listStudents=new studentControl().SelectStudentsING(15, 11);
-        JSONArray content = new JSONArray();
-        for(int i=0;i<listStudents.size();i++) {
-            JSONObject datos = new JSONObject();
-            datos.put("id", listStudents.get(i).getPK_STUDENT());
-            datos.put("pk_student", listStudents.get(i).getPK_STUDENT());
-            datos.put("fl_enrollment", listStudents.get(i).getFL_ENROLLMENT());
-            datos.put("fl_folio_utsem", listStudents.get(i).getFL_UTSEM_FOLIO());
-            datos.put("fl_name", listStudents.get(i).getFL_NAME());
-            content.add(datos); 
-        }    
-        System.out.print(content);
+        ArrayList<studentModel> listCandidateING=new studentControl().SelectStudentsLetterDelivered(6, 14);
+        for (studentModel model : listCandidateING) {
+            System.out.println(model.getFL_NAME());
+        }
+    }
+    String procedure;
+    public ArrayList<studentModel> SelectStudentsLetterDelivered(int fkCarrer, int fkPeriod){
+        procedure="CALL `GET_CERTIFIED_OF_STUDIES`(?, null, null, ?, ?)";
+        ArrayList<studentModel> list=new ArrayList<>();        
+        try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement(procedure)) { 
+            ps.setString(1, "selectStudentsCertified"); 
+            ps.setInt(2, fkCarrer); 
+            ps.setInt(3, fkPeriod); 
+            try (ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){                    
+                    studentModel  studentMdl= new studentModel();
+                    studentMdl.setPK_CERTIFIED_OF_STUDY(res.getInt("PK_CERTIFIED_OF_STUDY"));
+                    studentMdl.setPK_STUDENT(res.getInt("PK_STUDENT"));
+                    studentMdl.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    studentMdl.setFL_NAME(res.getString("FL_STUDENT_NAME"));  
+                    studentMdl.setFL_REGISTER_DATE(res.getString("FL_DATE_EXPEDITION"));
+                    list.add(studentMdl);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
     public ArrayList<studentModel> SelectCandidatesING(){
         ArrayList<studentModel> list=new ArrayList<>();
@@ -283,6 +301,26 @@ public class studentControl {
             Logger.getLogger(studentModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public String UpdateDateLetterDelivery(int pk_certified_of_study, String field_value){
+        String request;
+        procedure = "CALL `SET_CERTIFIED_OF_STUDIES`(?, ?, ?)";
+        try {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.setString(1, "updateDate");
+                ps.setInt(2, pk_certified_of_study);
+                ps.setString(3, field_value);
+                ps.executeUpdate();
+                request="Updated";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
     }
     public String updateStudentExpedient(int pt_pk_requirement, int pt_pk_student){
         String request;

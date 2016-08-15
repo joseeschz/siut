@@ -109,7 +109,7 @@
             var args = event.args;
             var rowindex = $("#tableGenerateRecord").jqxGrid('getselectedrowindex');
             var data = $('#tableGenerateRecord').jqxGrid('getrowdata', rowindex);
-            if ($.trim($(args).text()) === "Contancia Simple"){
+            if ($.trim($(args).text()) === "Constancia Simple"){
                 $.ajax({
                     type: "POST",
                     async: false,
@@ -129,7 +129,7 @@
                         popupWindow.jqxWindow('open');
                     }
                 });               
-            }else if ($.trim($(args).text()) === "Contancia con Calificaciones"){
+            }else if ($.trim($(args).text()) === "Constancia con Calificaciones"){
                 $.ajax({
                     type: "POST",
                     async: false,
@@ -178,8 +178,8 @@
 
 <div id='contextMenu'>
     <ul>
-        <li id="constancySimple">Contancia Simple</li>
-        <li id="constancyCalifications">Contancia con Calificaciones</li>
+        <li id="constancySimple">Constancia Simple</li>
+        <li id="constancyCalifications">Constancia con Calificaciones</li>
     </ul>
 </div>
 <div id="popupWindowConstancy">
