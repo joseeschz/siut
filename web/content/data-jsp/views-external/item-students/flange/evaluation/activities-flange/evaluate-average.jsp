@@ -1349,6 +1349,39 @@
                 $('#tableRegisterCalActivities').jqxGrid({ enablehover: false, selectionmode: 'none'});
             }
             $("#tableRegisterCalActivities").jqxGrid('focus');
+            $('#tableRegisterCalActivities').off('keypress');
+            $('#tableRegisterCalActivities').on('keypress', function (event) {
+                if(event.key==="."){
+                    var cell = $('#tableRegisterCalActivities').jqxGrid('getselectedcell');
+                    var editable = $("#tableRegisterCalActivities").jqxGrid('begincelledit', cell.rowindex, cell.datafield);
+                }
+            });
+            function setCaretPosition(elem, pos){
+                elem.focus();
+                elem[0].setSelectionRange(pos, pos);
+            }
+            $("#tableRegisterCalActivities").off('cellbeginedit');
+            $("#tableRegisterCalActivities").on('cellbeginedit', function (event) {
+                // event arguments.
+                var args = event.args;
+                // column data field.
+                var dataField = event.args.datafield;
+                // row's bound index.
+                var rowBoundIndex = event.args.rowindex;
+                // cell value
+                var value = args.value;
+                // row's data.
+                var rowData = args.row;
+                setTimeout(function (){
+                    var element = $(".jqx-input-content");
+                    var val = $(element).val();
+                    if(val.length<=4){
+                        setCaretPosition(element, 2);
+                    }else{
+                        setCaretPosition(element, 3);
+                    }                    
+                }, 150);                
+            });
             $("#tableRegisterCalActivities").off('cellvaluechanged');
             $("#tableRegisterCalActivities").on('cellvaluechanged', function (event) {
                 // event arguments.

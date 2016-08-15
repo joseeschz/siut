@@ -35,6 +35,30 @@ public class groupStudentControl {
         dataStudent.setFK_TUTOR_TEACHER(1);
         System.out.println(new groupStudentControl().InsertGroupStudent(dataStudent));
     }
+    public ArrayList<groupStudentModel> SelectGroupStay(int pt_fk_career, int pt_fk_semester, int pt_fk_group, int fk_subject_matter, int pt_fk_period){
+        ArrayList<groupStudentModel> list=new ArrayList<>();
+        try {
+            //Was removed the parameter pt_fk_semester because is not necesary...
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_GROUP_BY_STUDENTS`('groupByStay', "+pt_fk_career+", "+pt_fk_semester+" ,"+pt_fk_group+", "+fk_subject_matter+", "+pt_fk_period+")"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    groupStudentModel allGroupStudent=new groupStudentModel();
+                    allGroupStudent.setFK_STUDENT(res.getInt("PK_STUDENT"));
+                    allGroupStudent.setFL_ENROLLMENT(res.getString("FL_ENROLLMENT"));
+                    allGroupStudent.setFL_STUDENT_NAME(res.getString("FL_STUDENT_NAME"));
+                    allGroupStudent.setFL_DELIVERY_STATUS(res.getString("FL_DELIVERY_STATUS"));
+                    allGroupStudent.setFL_DELIVERY_DESCRIPTION(res.getString("FL_DELIVERY_DESCRIPTION"));                    
+                    list.add(allGroupStudent);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(groupStudentModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
     public ArrayList<groupStudentModel> SelectGroupStudent(int pt_fk_career, int pt_fk_semester, int pt_fk_group, int fk_subject_matter, int pt_fk_period){
         ArrayList<groupStudentModel> list=new ArrayList<>();
         try {

@@ -11,6 +11,7 @@ package model;
  */
 public class studentModel extends careerModel{
     int PK_STUDENT=0;
+    int PK_CERTIFIED_OF_STUDY=0;
     String FL_FOLIO_TEMP_SYSTEM="";
     String FL_ENROLLMENT="";
     int FK_CAREER=0;
@@ -176,6 +177,14 @@ public class studentModel extends careerModel{
 
     public void setPK_STUDENT(int PK_STUDENT) {
         this.PK_STUDENT = PK_STUDENT;
+    }
+
+    public int getPK_CERTIFIED_OF_STUDY() {
+        return PK_CERTIFIED_OF_STUDY;
+    }
+
+    public void setPK_CERTIFIED_OF_STUDY(int PK_CERTIFIED_OF_STUDY) {
+        this.PK_CERTIFIED_OF_STUDY = PK_CERTIFIED_OF_STUDY;
     }
 
     public String getFL_FOLIO_TEMP_SYSTEM() {

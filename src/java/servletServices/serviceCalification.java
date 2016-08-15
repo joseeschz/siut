@@ -45,6 +45,48 @@ public class serviceCalification extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             response.setContentType("application/json"); 
+            if(request.getParameter("InsertCalSubjectMatterStay")!=null){
+                response.setContentType("application/json"); 
+                JSONObject data = new JSONObject();
+                try {
+                    int pt_pk_study_level = Integer.parseInt(request.getParameter("pt_pk_study_level"));
+                    int pt_pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
+                    int pt_pk_subject_matter = Integer.parseInt(request.getParameter("pt_pk_subject_matter"));
+                    int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));
+                    data.put("status", new calificationControl().InsertCalificationStay(pt_pk_student, pt_pk_subject_matter, pt_pk_period, pt_pk_study_level));
+                } catch (Exception e) {
+                    data.put("status", "emptyParams");
+                }
+                out.print(data);
+            }
+            if(request.getParameter("UpdateCalSubjectMatterStay")!=null){
+                response.setContentType("application/json"); 
+                JSONObject data = new JSONObject();
+                try {
+                    int pt_pk_study_level = Integer.parseInt(request.getParameter("pt_pk_study_level"));
+                    int pt_pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
+                    int pt_pk_subject_matter = Integer.parseInt(request.getParameter("pt_pk_subject_matter"));
+                    int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));
+                    data.put("status", new calificationControl().UpdateCalificationStay(pt_pk_student, pt_pk_subject_matter, pt_pk_period, pt_pk_study_level));
+                } catch (Exception e) {
+                    data.put("status", "emptyParams");
+                }
+                out.print(data);               
+            }
+            if(request.getParameter("DeleteCalSubjectMatterStay")!=null){                
+                response.setContentType("application/json"); 
+                JSONObject data = new JSONObject();
+                try {
+                    int pt_pk_study_level = Integer.parseInt(request.getParameter("pt_pk_study_level"));
+                    int pt_pk_student = Integer.parseInt(request.getParameter("pt_pk_student"));
+                    int pt_pk_subject_matter = Integer.parseInt(request.getParameter("pt_pk_subject_matter"));
+                    int pt_pk_period = Integer.parseInt(request.getParameter("pt_pk_period"));
+                    data.put("status", new calificationControl().DeleteCalificationStay(pt_pk_student, pt_pk_subject_matter, pt_pk_period, pt_pk_study_level));
+                } catch (Exception e) {
+                    data.put("status", "emptyParams");
+                }
+                out.print(data);               
+            }
             if(request.getParameter("view")!=null){
                 if(request.getParameter("view").equals("calificationsNow")){
                     int fkPeriod = Integer.parseInt(request.getParameter("fkPeriod"));

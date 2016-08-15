@@ -29,6 +29,29 @@ if(session.getAttribute("logueado") != null){%>
                     $('#ok').focus();
                 }
             });
+            
+            $('#jqxWindowWarningCompetences').jqxWindow({
+                theme: theme,
+                height: 150,
+                width: 350,
+                resizable: false,
+                draggable: false,
+                okButton: $('#okCompetences'),
+                autoOpen: false,
+                isModal: true,
+                cancelButton: $('#cancelCompetences'),
+                initContent: function () {
+                    $('#okCompetences').jqxButton({
+                        width: '80px',
+                        theme: theme
+                    });
+                    $('#cancelCompetences').jqxButton({
+                        width: '80px',
+                        theme: theme
+                    });
+                    $('#okCompetences').focus();
+                }
+            });
             var tabActive;
             var selectedTab = $.cookie('tabActive');
             $('#jqxTabs').on('selected', function (event) { 
@@ -49,6 +72,19 @@ if(session.getAttribute("logueado") != null){%>
             <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
                 <input type="button" id="ok" value="OK" style="margin-right: 10px" />
                 <input type="button" id="cancel" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+    <div id='jqxWindowWarningCompetences'>
+        <div>Advertencia</div>
+        <div>
+            <div class="warning" style="position: absolute;"></div>
+            <span style="color: olive; width: 70%; position: absolute; right: 20px;">
+                <b>¡Estas seguro de borrar este registro!</b>
+            </span>
+            <div style="float: right; bottom: 10px; right: 20px;  position: absolute;">
+                <input type="button" id="okCompetences" value="OK" style="margin-right: 10px" />
+                <input type="button" id="cancelCompetences" value="Cancelar" />
             </div>
         </div>
     </div>

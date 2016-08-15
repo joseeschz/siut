@@ -25,12 +25,9 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-        ArrayList<calificationModel> listColumns=new calificationControl().SelectActievementQuartely(0, 13, 1);
-         for(int i=0;i<listColumns.size();i++){
-             System.out.println(listColumns.get(i).getFL_NAME_CAREER());
-        }
+        System.out.print(new calificationControl().IsCloseWorkPlanningByGroupMatter(1,340, 23, 14));
     }
-    
+    String procedure="";
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
         String request;
         try {
@@ -682,7 +679,7 @@ public class calificationControl {
             }
             return status;
         } catch (SQLException ex) {
-            status="error";
+            status="error"+ex;
             Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
         }
         return status;
@@ -802,4 +799,72 @@ public class calificationControl {
         }
         return list;
     }
+    
+    public String InsertCalificationStay(int pt_pk_student, int pt_pk_subject_matter, int pt_pk_period, int pt_pk_level_study){
+        String request;
+        procedure = "CALL `SET_CALIFICATION_ESTAY`(?, ?, ?, ?, ?)";
+        try {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.setString(1, "insert");
+                ps.setInt(2, pt_pk_student);
+                ps.setInt(3, pt_pk_subject_matter);
+                ps.setInt(4, pt_pk_period);
+                ps.setInt(5, pt_pk_level_study);
+                ps.executeUpdate();
+                request="Inserted";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }    
+    public String UpdateCalificationStay(int pt_pk_student, int pt_pk_subject_matter, int pt_pk_period, int pt_pk_level_study){
+        String request;
+        procedure = "CALL `SET_CALIFICATION_ESTAY`(?, ?, ?, ?, ?)";
+        try {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.setString(1, "update");
+                ps.setInt(2, pt_pk_student);
+                ps.setInt(3, pt_pk_subject_matter);
+                ps.setInt(4, pt_pk_period);
+                ps.setInt(5, pt_pk_level_study);
+                ps.executeUpdate();
+                request="Updated";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }   
+    public String DeleteCalificationStay(int pt_pk_student, int pt_pk_subject_matter, int pt_pk_period, int pt_pk_level_study){
+        String request;
+        procedure = "CALL `SET_CALIFICATION_ESTAY`(?, ?, ?, ?, ?)";
+        try {
+            Connection conn=new connectionControl().getConexion();
+            try (PreparedStatement ps = conn.prepareStatement(procedure)) {
+                ps.setString(1, "delete");
+                ps.setInt(2, pt_pk_student);
+                ps.setInt(3, pt_pk_subject_matter);
+                ps.setInt(4, pt_pk_period);
+                ps.setInt(5, pt_pk_level_study);
+                ps.executeUpdate();
+                request="Deleted";
+                ps.close();
+                conn.close();
+            }
+        } catch (SQLException e) {
+            request=""+e.getMessage();
+            e.getMessage();
+        }   
+        return request;
+    }   
+    
 }

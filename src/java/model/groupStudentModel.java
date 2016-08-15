@@ -15,6 +15,8 @@ public class groupStudentModel extends  groupMatterTeacherModel{
     int FK_STUDENT = 0;
     String FL_STUDENT_NAME = "";
     int FK_TUTOR_TEACHER = 0;
+    String FL_DELIVERY_STATUS=null;
+    String FL_DELIVERY_DESCRIPTION="";
 
     public int getPK_GRUPOS_BY_STUDENT() {
         return PK_GRUPOS_BY_STUDENT;
@@ -54,6 +56,22 @@ public class groupStudentModel extends  groupMatterTeacherModel{
 
     public void setFK_TUTOR_TEACHER(int FK_TUTOR_TEACHER) {
         this.FK_TUTOR_TEACHER = FK_TUTOR_TEACHER;
+    }
+
+    public String getFL_DELIVERY_STATUS() {
+        return FL_DELIVERY_STATUS;
+    }
+
+    public void setFL_DELIVERY_STATUS(String FL_DELIVERY_STATUS) {
+        this.FL_DELIVERY_STATUS = FL_DELIVERY_STATUS;
+    }
+
+    public String getFL_DELIVERY_DESCRIPTION() {
+        return FL_DELIVERY_DESCRIPTION;
+    }
+
+    public void setFL_DELIVERY_DESCRIPTION(String FL_DELIVERY_DESCRIPTION) {
+        this.FL_DELIVERY_DESCRIPTION = FL_DELIVERY_DESCRIPTION;
     }
     
 }
