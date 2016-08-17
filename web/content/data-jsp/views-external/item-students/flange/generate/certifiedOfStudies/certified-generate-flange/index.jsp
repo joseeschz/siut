@@ -212,13 +212,15 @@
             var args = event.args;
             var rowindex = $("#tableCertified").jqxGrid('getselectedrowindex');
             var data = $('#tableCertified').jqxGrid('getrowdata', rowindex);
+            itemCareer = $('#generateCertifiedCareerFilter').jqxDropDownList('getSelectedItem');
             if ($.trim($(args).text()) === "Imprimir Certificado"){
                 $.ajax({
                     type: "POST",
                     async: false,
                     url: "../../content/data-jr/certifiedOfStudies/index.jsp?sessionCertifiedReport",
                     data: {
-                        'pt_enrollment': data.dataEnrollment
+                        'pt_enrollment': data.dataEnrollment,
+                        'pt_pk_career': itemCareer.value
                     },
                     beforeSend: function (xhr) {
                     },

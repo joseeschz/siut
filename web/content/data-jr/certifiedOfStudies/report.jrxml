@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="originalDocuments" pageWidth="612" pageHeight="792" columnWidth="483" leftMargin="63" rightMargin="66" topMargin="42" bottomMargin="14" uuid="c589d7cb-36b0-40de-bd25-6e0badeb34b0">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="509"/>
+	<property name="ireport.y" value="77"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -142,8 +142,11 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\Carlos Antonio\\Documents\\GitHub\\siut\\web\\content\\data-jr\\constancyRecordsCalifications\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="pt_pk_career" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('studentByEnrollmentCertifiedOfStudies', $P{pt_enrollment}, null, null, null);]]>
+		<![CDATA[CALL `GET_CERTIFIED_OF_STUDIES`('studentByEnrollmentCertifiedOfStudies', $P{pt_enrollment}, null, $P{pt_pk_career}, null);]]>
 	</queryString>
 	<field name="PK_STUDENT" class="java.lang.Long">
 		<fieldDescription><![CDATA[ID UNICO|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|FL_FILTERTYPE|FL_FILTERABLE|FL_COLUMNTYPE]]></fieldDescription>
@@ -157,11 +160,12 @@
 	<field name="FK_CAREER" class="java.lang.Long">
 		<fieldDescription><![CDATA[ID CARRERA|FL_RESIZABLE|FL_SORTABLE|FL_ALIGN|FL_CELLSALING|FL_CELLSRENDERER|FL_RENDERED|FL_COLUMNGROUP|FL_WIDHT|FL_DATA_FIELD|FL_PINNED|FL_CREATEFILTERPANE|checkedlist|true|FL_COLUMNTYPE]]></fieldDescription>
 	</field>
+	<field name="FL_GENERATION_TSU" class="java.lang.String"/>
+	<field name="FL_GENERATION_ING" class="java.lang.String"/>
 	<field name="FL_GENERATION" class="java.lang.String"/>
 	<field name="FL_NAME_CAREER" class="java.lang.String">
 		<fieldDescription><![CDATA[CARRERA]]></fieldDescription>
 	</field>
-	<field name="FL_SICLO" class="java.lang.String"/>
 	<field name="FL_NAME_PERIOD" class="java.lang.String"/>
 	<field name="EXPEDITION_DATE" class="java.lang.String"/>
 	<field name="AVG_GENERAL" class="java.lang.String"/>
@@ -173,26 +177,21 @@
 	</field>
 	<field name="FL_NAME_DIRECTOR_CAREER" class="java.lang.String"/>
 	<field name="FL_NAME_HEAD_ES" class="java.lang.String"/>
+	<field name="FL_FOLIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="109">
-			<staticText>
-				<reportElement x="52" y="31" width="369" height="19" uuid="d5326a31-96cf-4d24-ac9b-8d7b5567ec97"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="styled">
-					<font fontName="SansSerif" size="12" isBold="true" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[LOGOS]]></text>
-			</staticText>
-		</band>
+		<band height="109"/>
 		<band height="174">
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="113" y="31" width="369" height="99" uuid="aeaeb786-a8b9-4aea-85be-84cd98262dc3"/>
 				<textElement textAlignment="Justified" verticalAlignment="Middle" markup="styled">
 					<font fontName="SansSerif" size="11" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["La Universidad Tecnológica certifica que según constancias existentes en el archivo  escolar,  el(a) <style isBold=\"true\">"+$F{FL_NAME}+"</style> con matrícula <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_ENROLLMENT}+"</style> cursó y aprobó las asignaturas que integran el plan de estudios <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_NAME_PLAN}+"</style> en el periodo escolar <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_NAME_PERIOD}+"</style> de la  carrera <style isBold=\"true\">"+$F{FL_NAME_CAREER}+"</style> obteniendo las calificaciones finales que a continuación se anotan."]]></textFieldExpression>
+				<textFieldExpression><![CDATA["La Universidad Tecnológica certifica que según constancias existentes en el archivo  escolar,  el(a) <style isBold=\"true\">"+$F{FL_NAME}+"</style> con matrícula <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_ENROLLMENT}+"</style> cursó y aprobó las asignaturas que integran el plan de estudios <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_NAME_PLAN}+"</style> en el periodo escolar <style isBold=\"true\" isUnderline=\"true\" >"+$F{FL_GENERATION}+"</style> de la  carrera <style isBold=\"true\">"+$F{FL_NAME_CAREER}+"</style> obteniendo las calificaciones finales que a continuación se anotan."]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="113" y="12" width="369" height="19" uuid="dc7014a6-3f99-4922-986d-62de616b538a"/>
@@ -578,13 +577,13 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{FL_NAME_DIRECTOR_CAREER}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement x="0" y="122" width="483" height="14" uuid="9867fee5-2b9d-412c-ac23-4872dcccd7b2"/>
-				<textElement textAlignment="Center">
+			<textField>
+				<reportElement x="0" y="122" width="483" height="14" uuid="8bdd19c7-2ad7-440e-bd45-8a39a94f0e94"/>
+				<textElement textAlignment="Center" markup="none">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Control de registro: folio 000710, libro: 01 y fojas: 000710  ]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Control de registro: folio "+$F{FL_FOLIO}+", libro: 01 y fojas: "+$F{FL_FOLIO}+"  "]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="0" y="84" width="88" height="10" uuid="469c1afb-209b-4bb4-8861-f3a36cdad873"/>
 				<box leftPadding="5">
