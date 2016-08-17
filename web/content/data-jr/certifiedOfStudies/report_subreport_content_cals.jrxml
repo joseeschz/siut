@@ -251,7 +251,9 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement textAlignment="Right" verticalAlignment="Middle"/>
+							<textElement textAlignment="Right" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
 							<text><![CDATA[Promedio Final]]></text>
 						</staticText>
 						<textField>
@@ -262,7 +264,9 @@
 								<bottomPen lineWidth="0.5"/>
 								<rightPen lineWidth="0.5"/>
 							</box>
-							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle">
+								<font isBold="true"/>
+							</textElement>
 							<textFieldExpression><![CDATA[$F{FL_AVG}]]></textFieldExpression>
 						</textField>
 					</jr:listContents>

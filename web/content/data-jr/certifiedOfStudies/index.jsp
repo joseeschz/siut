@@ -14,7 +14,9 @@
  if(session.getAttribute("logueado") != null){
     if(request.getParameter("sessionCertifiedReport")!=null){
         String pt_enrollment =  request.getParameter("pt_enrollment");
+        String pt_pk_career =  request.getParameter("pt_pk_career");
         session.setAttribute("pt_enrollment", pt_enrollment);
+        session.setAttribute("pt_pk_career", pt_pk_career);
         out.print("success");
     }else{        
         //Parametros para realizar la conexión// 
@@ -25,6 +27,7 @@
         //cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf// 
         Map parameters = new HashMap(); 
         parameters.put("pt_enrollment", session.getAttribute("pt_enrollment")); 
+        parameters.put("pt_pk_career", session.getAttribute("pt_pk_career")); 
         //Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)//
 //        
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, connection.getConexion()); 
