@@ -64,7 +64,7 @@ $(document).ready(function () {
             type: "POST",
             dataType: 'json',
             async: false,
-            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentCalificationsSubjectMatters",
+            url: "http://148.223.215.19/serviceCalification?studentByEnrollmentCalificationsSubjectMatters",
             data: {
                 "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent"),
                 pt_pk_semester : rowData.dataPkSemester
@@ -96,7 +96,7 @@ $(document).ready(function () {
             type: "POST",
             dataType: 'json',
             async: false,
-            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentAVG",
+            url: "http://148.223.215.19/serviceCalification?studentByEnrollmentAVG",
             data: {
                 "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent")
             },
@@ -120,7 +120,7 @@ $(document).ready(function () {
             type: "POST",
             dataType: 'json',
             async: false,
-            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentCalificationsDetailGroupBySemester",
+            url: "http://148.223.215.19/serviceCalification?studentByEnrollmentCalificationsDetailGroupBySemester",
             data: {
                 "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent")
             },
