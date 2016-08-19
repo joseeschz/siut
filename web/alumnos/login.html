@@ -204,7 +204,7 @@
                         crossDomain: true,
                         type: "POST",
                         datatype: "json",
-                        url: "http://10.10.25.5/serviceStudent?descryptUrl",
+                        url: "http://127.0.0.1/serviceStudent?descryptUrl",
                         data: {
                             "ac" : $.url().param('ac')
                         },
@@ -273,7 +273,7 @@
                         async: true,
                         crossDomain: true,
                         type: "POST",
-                        url: "http://10.10.25.5/serviceStudent?selectLoginStudent",
+                        url: "http://127.0.0.1/serviceStudent?selectLoginStudent",
                         datatype: "json",
                         data: data,
                         beforeSend: function (xhr) {
@@ -378,7 +378,7 @@
                         crossDomain: true,
                         type: "POST",
                         datatype: "json",
-                        url: "http://10.10.25.5/serviceMail?validateMail",
+                        url: "http://127.0.0.1/serviceMail?validateMail",
                         data: {
                             "pkStudent" : $("#pkStudent").val(),
                             "enrollment": $("#userNameActive").val(),

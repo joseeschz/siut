@@ -248,7 +248,7 @@
                                         </div>
                                     </fieldset>
                                     <fieldset>
-                                        <h2 class="StepTitle">Registra tus datos donde vives en la actualidad</h2>	
+                                        <h2 class="StepTitle">Registra tus datos de lugar de procedencia</h2>	
                                         <div class="div-row input-prepend">
                                             <label class="label-row" for="fk_current_entity">Entidad</label><br>
                                             <span class="add-on"><i class="icon-list"></i></span>  

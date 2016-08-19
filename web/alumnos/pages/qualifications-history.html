@@ -1,0 +1,143 @@
+<!-- Content Header (Page header) -->
+<section class="content-header"  style="padding: 0px">   
+    <br>
+    <br>
+    <div style="display: none">
+        <div id="qualificationsPeriod"></div>
+    </div>
+    <div style="text-align: right">
+        <b id="periodLabel"></b>
+    </div> 
+    
+    <ol class="breadcrumb">
+        <li>
+            <i class="fa fa-dashboard"></i><a class="qualifications" href="#">Calificaciones</a>
+        </li>
+        <li class="active">Por materias
+        </li>
+    </ol>
+<!-- /.row -->
+</section>
+<!-- Main content -->
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-12" style="padding: 0px">
+           <b style="font-size: 28px" class="page-header">Lista de materias por cuatrimestre</b>
+           <!--<p class="lead">En el siguiente desglose de actividades puedes ver el progreso de tus calificaciones, también puedes comparar el puntaje que se lleva con el puntaje a obtener.</p>-->
+        </div>
+    </div>
+    <!-- /.row -->
+    <div id="ContentPanels">
+    </div>
+    <div class="row">
+        <div class="col-lg-12" style="padding: 5px; text-align: right;">
+            <b style="font-size: 18px" class="page-header">Promedio General<span id="avg"></span></b>
+           <!--<p class="lead">En el siguiente desglose de actividades puedes ver el progreso de tus calificaciones, también puedes comparar el puntaje que se lleva con el puntaje a obtener.</p>-->
+        </div>
+    </div>    
+    <!-- /.row -->
+</section>
+<script>
+$(document).ready(function () {
+    var itemPeriod=0;
+    function buidPanels(rowData){
+        var content_panels = $("#ContentPanels");
+        var row = $('<div class="row"></div>').appendTo(content_panels);
+        var col_lg_12 =$('<div class="col-lg-12" style="padding: 0px"></div>').appendTo(row);
+        var panel = $('<div class="panel panel-default"></div>').appendTo(col_lg_12);
+        var panel_heading = $('<div class="panel-heading"></div>').appendTo(panel);
+        var panel_title = $('<h3 style="" class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Panel '+rowData.dataNameSemester+' '+rowData.dataPeriodName+'</h3>').appendTo(panel_heading);
+        
+        var panel_body = $('<div class="panel-body" style="padding: 0px"></div>').appendTo(panel);;
+        var table_responsive = $('<div class="table-responsive"></div>').appendTo(panel_body);
+        
+        var table = $('<table width="100%" class="table-bordered table-hover table-striped"></table>').appendTo(table_responsive);
+        
+        var tableHead = $('<thead></thead>').appendTo(table);
+        var tableHeadTr = $('<tr> <th style="width: 70%">Materias</th><th style="text-align: center;">Calificación</th></tr>').appendTo(tableHead);
+        
+        var tableBody = $('<tbody id="tbodyMatters"></tbody>').appendTo(table);
+        var total = 0;
+        $.ajax({
+            crossDomain: true,
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentCalificationsSubjectMatters",
+            data: {
+                "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent"),
+                pt_pk_semester : rowData.dataPkSemester
+            },
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) {     
+                var cal = 0;
+                for(var i=0; i<data[0].rows.length; i++){
+                    var rowSubjectMatter = data[0].rows[i];
+                    var tableBodyTr = $('<tr> <td style="width: 70%">'+rowSubjectMatter.dataNameSubjectMatter+'</td><td style="text-align: center;">'+rowSubjectMatter.dataTotalObtanied+'</td></tr>').appendTo(tableBody);
+                    
+                    cal = cal + parseFloat(rowSubjectMatter.dataTotalObtanied);
+                    
+                }
+                total = (cal/data[0].rows.length);
+            }
+        });
+        
+        var tableFoot = $('<tfoot id="tfootMatters"></tfoot>').appendTo(table);
+        var tableFootTr = $('<tr> <th style="width: 70%; text-align: right;">Total</th><th style="text-align: center;">'+parseFloat(total).toFixed(1)+'</th></tr>').appendTo(tableBody);
+    }
+    function avg(){
+        $.ajax({
+            crossDomain: true,
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentAVG",
+            data: {
+                "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent")
+            },
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) {
+                console.log(data[0].rows[0].dataAvg)
+                $("#avg").text(" "+data[0].rows[0].dataAvg);
+            }
+        });
+    }
+    createDropDownPeriodActive("comboActiveYear","#qualificationsPeriod");  
+    itemPeriod=$('#qualificationsPeriod').jqxDropDownList('getSelectedItem');
+    if(itemPeriod!==undefined){
+        $("#periodLabel").text(itemPeriod.label);
+        $.ajax({
+            crossDomain: true,
+            type: "POST",
+            dataType: 'json',
+            async: false,
+            url: "http://127.0.0.1/serviceCalification?studentByEnrollmentCalificationsDetailGroupBySemester",
+            data: {
+                "pt_enrollment" : localStorage.getItem("userNameStudent") || sessionStorage.getItem("userNameStudent")
+            },
+            beforeSend: function (xhr) {
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Error interno del servidor");
+            },
+            success: function (data, textStatus, jqXHR) {
+                for(var i=0; i<data[0].rows.length; i++){
+                    var row = data[0].rows[i];
+                    buidPanels(row);
+                }
+                avg();
+            }
+        });
+    }
+    
+});
+</script>

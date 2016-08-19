@@ -201,6 +201,16 @@
                         </li>
                     </ul>
                 </li>
+                <li class="active treeview">
+                  <a href="#">
+                    <i class="fa fa-dashboard"></i> <span>Historial Académico</span> <i class="fa fa-angle-left pull-right"></i>
+                  </a>
+                    <ul class="treeview-menu">
+                        <li data-href="qualifications-history.html">
+                            <a href="#"><i class="fa fa-circle-o"></i> Calificaciones</a>
+                        </li>
+                    </ul>
+                </li>
                 <li data-href="qualifications-criterion.html"><a href="#"><i class="fa fa-arrow-up"></i>Criterios de evaluación</a></li>
                 <li data-href="about.html"><a href="#"><i class="fa fa-book"></i> Acerca de...</a></li>
               </ul>
@@ -301,7 +311,7 @@
                     data:{
                         "pkStudent" : localStorage.getItem("pkStudent") || sessionStorage.getItem("pkStudent")
                     },
-                    url: 'http://10.10.25.5/serviceCalification?calMattersStudentChart'
+                    url: 'http://127.0.0.1/serviceCalification?calMattersStudentChart'
                 };
                 var dataAdapter = new $.jqx.dataAdapter(source, {
                     async: false,

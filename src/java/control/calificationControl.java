@@ -25,7 +25,10 @@ import org.json.simple.JSONObject;
  */
 public class calificationControl {
     public static void main(String[] args){
-        System.out.print(new calificationControl().IsCloseWorkPlanningByGroupMatter(1,340, 23, 14));
+        ArrayList<calificationModel> listColumns=new calificationControl().SelectAVG("UTS15S-004825");
+        for (calificationModel listColumn : listColumns) {
+            System.out.print(listColumn.getFL_AVG());
+        }
     }
     String procedure="";
     public String UpdateCalificationByStudent(int updateTypeEval, int pt_pk_calification_student, int pt_scale_evaluation, double pt_value){
@@ -720,6 +723,72 @@ public class calificationControl {
                     allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_GLOBAL"));
                     allData.setFL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED(res.getInt("FL_STUDENTS_FINISHED_SEMESTER_AS_REPPROVED"));
                     allData.setFL_AVG(res.getString("FL_CAREER_AVERAGE"));
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<calificationModel> SelectAVG(String pt_enrollment){
+        ArrayList<calificationModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('studentByEnrollmentConstancy', '"+pt_enrollment+"');"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setFK_STUDENT(res.getInt("PK_STUDENT"));
+                    allData.setFL_AVG(res.getString("AVG_GENERAL"));
+                    
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<calificationModel> SelectSubjectMattersCalification(int pt_pk_semester, String pt_enrollment){
+        ArrayList<calificationModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('studentByEnrollmentConstancyCalificationsDetail-"+pt_pk_semester+"', '"+pt_enrollment+"')"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setFK_STUDENT(res.getInt("FK_STUDENT"));
+                    allData.setFL_NAME_SUBJECT_MATTER(res.getString("FL_NAME_SUBJECT_MATTER"));
+                    allData.setFL_TOTAL_OBTAINED(res.getString("FL_FINAL_CALIFICATION"));
+                    
+                    list.add(allData);
+                }
+                res.close();
+                ps.close();
+                conn.close();
+            }
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(calificationModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public ArrayList<calificationModel> SelectSemestersCalification(String pt_enrollment){
+        ArrayList<calificationModel> list=new ArrayList<>();
+        try {
+            try (Connection conn = new connectionControl().getConexion(); PreparedStatement ps = conn.prepareStatement("CALL `GET_STUDENTS`('studentByEnrollmentConstancyCalificationsDetailGroup', '"+pt_enrollment+"');"); ResultSet res = ps.executeQuery()) {
+                while(res!=null&&res.next()){
+                    calificationModel allData=new calificationModel();
+                    allData.setFK_STUDENT(res.getInt("FK_STUDENT"));
+                    allData.setFK_PERIOD(res.getInt("PK_PERIOD"));
+                    allData.setFL_NAME(res.getString("FL_NAME"));
+                    allData.setFK_SEMESTER(res.getInt("PK_SEMESTER"));
+                    allData.setFL_NAME_SEMESTER(res.getString("FL_NAME_SEMESTER"));
                     list.add(allData);
                 }
                 res.close();
