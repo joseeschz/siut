@@ -27,7 +27,7 @@
                         type: "POST",
                         async: false,
                         url: "../serviceCareer?insert",
-                        data:{'nameCareer':" ", "nameCareerAbreiated":" ",'status':" ",'fkLevel':fkLevel},
+                        data:{'nameCareer':" ", "nameCareerAbbreviated":" ",'status':" ",'fkLevel':fkLevel},
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -48,17 +48,17 @@
                     // and with parameter false if the synchronization failed.
                     fkLevel = $('#careerStudyLevelFilter').jqxDropDownList('getSelectedItem');
                     fkLevel = fkLevel.value;
-                    var itemStudyPlanLevel = $('#studyPlanLevelFilter').jqxDropDownList('getSelectedItem');
-                    itemStudyPlanLevel = itemStudyPlanLevel.value;
                     var nameCareer = rowData.dataNameCareer;
-                    var nameCareerAbreiated = rowData.dataNameCareerAbbreviated;
+                    var nameCareerAbbreviated = rowData.dataNameCareerAbbreviated;
+                    
                     var status = rowData.dataStatus;
+                    
                     $.ajax({
                         //Send the paramethers to servelt
                         type: "POST",
                         async: false,
                         url: "../serviceCareer?update",
-                        data:{'pkCareer':rowID,'nameCareer':nameCareer,'nameCareerAbreiated':nameCareerAbreiated, 'status':status, 'fkLevel':fkLevel},
+                        data:{'pkCareer':rowID,'nameCareer':nameCareer,'nameCareerAbbreviated':nameCareerAbbreviated, 'status':status, 'fkLevel':fkLevel},
                         beforeSend: function (xhr) {
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
@@ -68,7 +68,6 @@
                         success: function (data, textStatus, jqXHR) { 
                             //If is updated rechange the drowdown in the other flange...
                             commit(true);
-                            createDropDownCareer(itemStudyPlanLevel, "#studyPlanCareerFilter", true);
                         }
                     });
                 },
@@ -124,7 +123,7 @@
                         if (theme === "") return className;
                         return className + " " + className + "-" + theme;
                     };
-                    // appends buttons to the nameCareerAbreiated bar.
+                    // appends buttons to the nameCareerAbbreviated bar.
                     var container = $("<div style='overflow: hidden; position: relative; height: 100%; width: 100%;'></div>");
                     var buttonTemplate = "<div style='float: left; padding: 3px; margin: 2px;'><div style='margin: 4px; width: 16px; height: 16px;'></div></div>";
                     var addButton = $(buttonTemplate);
