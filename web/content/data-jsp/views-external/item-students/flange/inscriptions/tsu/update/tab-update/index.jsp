@@ -186,11 +186,11 @@ $(document).ready(function () {
         }
     }
     function loadData(data){
-        if(data.dataModify=="0"){
-            $("#careerUpdate").jqxDropDownList({disabled: true});
-        }else{
-            $("#careerUpdate").jqxDropDownList({disabled: false});
-        }
+//        if(data.dataModify=="0"){
+//            $("#careerUpdate").jqxDropDownList({disabled: true});
+//        }else{
+//            $("#careerUpdate").jqxDropDownList({disabled: false});
+//        }
         itemLevel = $("#studyLevelUpdate").jqxDropDownList('getItemByValue', data.dataPkLevelStudy);
         $("#studyLevelUpdate").jqxDropDownList('selectItem', itemLevel); 
         itemCareer = $("#careerUpdate").jqxDropDownList('getItemByValue', data.dataFkCareer);
