@@ -642,7 +642,80 @@ public class serviceCalification extends HttpServlet {
                 out.flush(); 
                 out.close();
             }
-            
+            if(request.getParameter("studentByEnrollmentAVG")!=null){
+                String pt_enrollment = request.getParameter("pt_enrollment");
+                ArrayList<calificationModel> listColumns=new calificationControl().SelectAVG(pt_enrollment);
+                JSONArray contentRows = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rows = new JSONObject();
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataRows = new JSONObject();
+                    dataRows.put("dataFkStudent", listColumns.get(i).getFK_STUDENT());
+                    dataRows.put("dataAvg", listColumns.get(i).getFL_AVG());
+                    contentRows.add(dataRows); 
+                }
+                rows.put("rows", contentRows);
+                bulding.add(rows);            
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("studentByEnrollmentCalificationsSubjectMatters")!=null){
+                String pt_enrollment = request.getParameter("pt_enrollment");
+                int pt_pk_semester = Integer.parseInt(request.getParameter("pt_pk_semester"));
+                ArrayList<calificationModel> listColumns=new calificationControl().SelectSubjectMattersCalification(pt_pk_semester, pt_enrollment);
+                JSONArray contentRows = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rows = new JSONObject();
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataRows = new JSONObject();
+                    dataRows.put("dataFkStudent", listColumns.get(i).getFK_STUDENT());
+                    dataRows.put("dataNameSubjectMatter", listColumns.get(i).getFL_NAME_SUBJECT_MATTER());
+                    dataRows.put("dataTotalObtanied", listColumns.get(i).getFL_TOTAL_OBTAINED());
+                    contentRows.add(dataRows); 
+                }
+                rows.put("rows", contentRows);
+                bulding.add(rows);            
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
+            if(request.getParameter("studentByEnrollmentCalificationsDetailGroupBySemester")!=null){
+                String pt_enrollment = request.getParameter("pt_enrollment");
+                ArrayList<calificationModel> listColumns=new calificationControl().SelectSemestersCalification(pt_enrollment);
+                JSONArray contentRows = new JSONArray();
+                JSONArray bulding = new JSONArray();
+                JSONObject rows = new JSONObject();
+                for(int i=0;i<listColumns.size();i++){
+                    JSONObject dataRows = new JSONObject();
+                    dataRows.put("dataFkStudent", listColumns.get(i).getFK_STUDENT());
+                    dataRows.put("dataFkPeriod", listColumns.get(i).getFK_PERIOD());
+                    dataRows.put("dataPeriodName", listColumns.get(i).getFL_NAME().toLowerCase());
+                    dataRows.put("dataPkSemester", listColumns.get(i).getFK_SEMESTER());
+                    dataRows.put("dataNameSemester", listColumns.get(i).getFL_NAME_SEMESTER().toLowerCase());
+                    contentRows.add(dataRows); 
+                }
+                rows.put("rows", contentRows);
+                bulding.add(rows);            
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
+                response.setHeader("Access-Control-Max-Age", "3600");
+                response.setHeader("Access-Control-Allow-Headers"," Origin, X-Requested-With, Content-Type, Accept,AUTH-TOKEN");
+                response.setContentType("application/json");
+                out.print(bulding);
+                out.flush(); 
+                out.close();
+            }
             if(request.getParameter("tableCalMattersStudent")!=null){
                 int pkStudent = 0;
                 if(session.getAttribute("pkStudent")!=null){
